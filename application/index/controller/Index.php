@@ -11,6 +11,18 @@ class Index
 
     public function login()
     {
+
+
+//        $this->success('新增成功', 'User/list');
+
         return view();
     }
+
+
+    public function upload()
+    {
+
+        return view();
+    }
+
 }
