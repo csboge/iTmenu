@@ -1,15 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>上传图片</title>
+
+    <link rel="stylesheet" href="__CROPPER__/css/cropper.min.css">
+    <link rel="stylesheet" href="__CROPPER__/css/main.css">
+    <script src="__CROPPER__/js/cropper.min.js" type="text/javascript"></script>
+    <script src="__CROPPER__/js/main.js" type="text/javascript"></script>
+
+    <script>
+        function setFile(f1){
+            document.frm.logoImg.value=f1;
+        }
+    </script>
 </head>
-<body>
-
-<a class="btn" id="btn">上传图片</a> 最大500KB，支持jpg，gif，png格式。
-<ul id="ul_pics" class="ul_pics clearfix"></ul>
-
+//id="art-thumb" 返回的图片地址
+//id="preview" 返回的 img 小图
+<body class="page-header-fixed">
+<div class="form-group">
+    <label class="control-label col-md-2">浓缩图片</label>
+    <div class="col-md-3"><input type="text" name="art_thumb" id="art-thumb" class="form-control"></div>
+    <div class="col-md-2">
+        {// 调用 avatar-view}
+        <a class="btn red btn-outline sbold avatar-view"><i class="glyphicon glyphicon-folder-open"></i> 选择图片</a>
+    </div>
+    <div class="col-md-3"><div id="preview"></div></div>
+</div>
+{// file-thumd-modal.html 可以引用到其他页面要用到的地方}
+{// 引入上传图片modal}
+{include file="public/file-thumd-modal"}
+<script  language="javascript" type="text/javascript">
+    $(function () {
+        var $imgDiv = $('.avatar-wrapper');
+        $imgDiv.find('img').cropper({aspectRatio:NaN}); //设置自由裁剪， NaN 为自由裁剪，此为覆盖默认 1:1比例裁剪框
+    })
+</script>
 </body>
-
-
 </html>

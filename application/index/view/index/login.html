@@ -17,9 +17,9 @@
 <body>
 <div class="login-logo"><h1>X-ADMIN V1.1</h1></div>
 <div class="login-box">
-    <form class="layui-form layui-form-pane" action="{:url('Index/login')}">
+    <form class="layui-form layui-form-pane" action="{:url('index/Index/check')}">
 
-        <h3>登录你的帐号</h3>
+        <h3></h3>
         <label class="login-title" for="username">帐号</label>
         <div class="layui-form-item">
             <label class="layui-form-label login-form"><i class="iconfont">&#xe6b8;</i></label>
@@ -64,15 +64,41 @@
     $(function  () {
         layui.use('form', function(){
             var form = layui.form();
+            jq = layui.jquery;
             //监听提交
-            form.on('submit(login)', function(data){
-                layer.msg(JSON.stringify(data.field),function(){
-                    location.href='index.html'
+
+
+
+            form.on('submit(login)', function(res){
+                loading = layer.load(2,{
+                    shade: [0.2,'#000']
+                });
+                var param = res.field;
+                jq.post('{:url("index/check")}',param,function(data){
+                    if(data.code === 200){
+
+                        layer.close(loading);
+
+                        layer.msg(data.msg, {icon: 1, time: 1000}, function(){
+                            location.href = '{:url("index/index")}';
+                        });
+
+                    }else{
+
+                        layer.close(loading);
+                        layer.msg(data.msg, {icon: 2 ,anim: 6, time: 1000});
+                    }
                 });
                 return false;
             });
+
+
+
+
+
         });
     })
+
 
 </script>
 <script>
