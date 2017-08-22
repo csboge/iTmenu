@@ -66,10 +66,23 @@ class Member
      */
     function login()
     {
+        /*
+
+        $printer    = new \app\core\provider\BotPrinter();
+        $printer->getWords();
+        exit;
+
+        */
+
         $wechat     = new \app\core\provider\WeChat();
 
-         $jscode    = input('post.jscode/s');
-         $result    = $wechat->getSessionKey($jscode);
+        $jscode     = input('post.jscode/s');
+        $userinfo   = input('post.userinfo/s');
+
+
+        $result     = $wechat->getSessionKey($jscode);
+
+        $result['userinfo'] = $userinfo;
 
         return jsonData(1, 'ok', $result);
     }

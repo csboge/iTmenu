@@ -40,7 +40,7 @@ class BotPrinter
     function getWords(){
 
         //$printer    = new \app\core\provider\BotPrinter();
-        //$sn         = '217502439';
+        $sn         = '217502439';
 
         $orderInfo = '<CB>伯格 - 电子菜谱</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
@@ -60,8 +60,8 @@ class BotPrinter
 		$orderInfo .= '订餐时间：'.date('Y-m-d H:i:s', time()).'<BR>';
 		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
 
-        //$re = $printer->wp_print($sn, $orderInfo, 1);
-        //echo $re;
+        $re = $this->wp_print($sn, $orderInfo, 1);
+        echo $re;
         //exit;
     }
 

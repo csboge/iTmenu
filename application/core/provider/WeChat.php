@@ -3,11 +3,11 @@ namespace app\core\provider;
 
 //小程序授权
 define('APPID', 'wx3fcef4db43bcfaed');	                //*必填*：小程序唯一标识
-define('SECRET', '4bd411eefdd24762fbdb710032ef0acd');	//*必填*: 小程序的 app secret
+define('SECRET', '1354bdaf7a9e13b5fe97c22de97b90b3');	//*必填*: 小程序的 app secret
 
 //以下参数不需要修改
-define('IP', 'https://api.weixin.qq.com');			    //接口IP或域名
-define('PORT', 80);						                //接口IP端口
+define('IP', 'ssl://api.weixin.qq.com');			    //接口IP或域名
+define('PORT', 443);						            //接口IP端口
 
 
 /**
@@ -28,7 +28,7 @@ class WeChat
 
 
     /**
-     * 用户登录
+     * 获得用户授权(unionid / openid)
      *
      * @param   string   $jscode    客户端登录code
      *
@@ -42,12 +42,13 @@ class WeChat
             'grant_type'=> 'authorization_code'
         );
 
-        $path = '/sns/jscode2session/';
+        $path = '/sns/jscode2session';
         if(!$this->client->get($path, $content)){
             return false;
 
         }else{
-            return $this->client->getContent();
+            $json = $this->client->getContent();
+            return json_decode($json, true);
         }
     }
 

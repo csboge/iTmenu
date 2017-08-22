@@ -67,6 +67,7 @@ class HttpClient {
     	return $querystring;
     }
     function doRequest() {
+        
 		if (!$fp = @fsockopen($this->host, $this->port, $errno, $errstr, $this->timeout)) {
             switch($errno) {
 				case -3:
@@ -84,6 +85,8 @@ class HttpClient {
         }
         socket_set_timeout($fp, $this->timeout);
         $request = $this->buildRequest();
+        
+
         $this->debug('Request', $request);
         fwrite($fp, $request);
     	$this->headers = array();
@@ -177,6 +180,9 @@ class HttpClient {
         $headers[] = "Host: {$this->host}";
         $headers[] = "User-Agent: {$this->user_agent}";
         $headers[] = "Accept: {$this->accept}";
+
+        //print_r($headers);
+        //exit;
         if ($this->use_gzip) {
             $headers[] = "Accept-encoding: {$this->accept_encoding}";
         }
@@ -225,7 +231,7 @@ class HttpClient {
         return $this->cookies;
     }
     function getRequestURL() {
-        $url = 'http://'.$this->host;
+        $url = 'https://'.$this->host;
         if ($this->port != 80) {
             $url .= ':'.$this->port;
         }            
