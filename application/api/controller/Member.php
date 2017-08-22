@@ -66,42 +66,10 @@ class Member
      */
     function login()
     {
-        /**
-         * 验证手机号 / 邮箱 合法性
-         * 账号，密码， 验证合法性
-         * 执行登录
-         * 
-         */
+         $jscode    = input('post.jscode/s');
+         $result    = $wechat->getSessionKey($jscode);
 
-        $printer    = new \app\core\provider\BotPrinter();
-        $sn         = '217502439';
-
-        $orderInfo = '<CB>伯格 - 电子菜谱</CB><BR>';
-		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
-		$orderInfo .= '--------------------------------<BR>';
-		$orderInfo .= '饭　　　　　 　10.0   10  10.0<BR>';
-		$orderInfo .= '伯格  　　　　 10.0   10  10.0<BR>';
-		$orderInfo .= '蛋炒饭　　　　 10.0   100 100.0<BR>';
-		$orderInfo .= '伯格网络　　　 100.0  100 100.0<BR>';
-		$orderInfo .= '西红柿炒饭　　 1000.0 1   100.0<BR>';
-		$orderInfo .= '西红柿蛋炒饭　 100.0  100 100.0<BR>';
-		$orderInfo .= '西红柿鸡蛋炒饭 15.0   1   15.0<BR>';
-		$orderInfo .= '备注：加辣，伯格网络专用辣椒<BR>';
-		$orderInfo .= '--------------------------------<BR>';
-		$orderInfo .= '合计：100.0元<BR>';
-		$orderInfo .= '送货地点：长沙市万达广场C2-3508<BR>';
-		$orderInfo .= '联系电话：0731-85056818<BR>';
-		$orderInfo .= '订餐时间：'.date('Y-m-d H:i:s', time()).'<BR>';
-		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
-
-        $re = $printer->wp_print($sn, $orderInfo, 1);
-        echo $re;
-        exit;
-
-        $session    = ['userid'=>1072, 'examid'=>2];
-        $data       = $this->p_auth->setToken($session);
-
-        return jsonData(1, 'ok', $data);
+        return jsonData(1, 'ok', $result);
     }
 
 
