@@ -99,15 +99,16 @@ class WeChat
         //签名
         $content['sign'] = $this->getSign($content);
 
-        return $content;
-        
+        //return $content;
+
         $path    = '/pay/unifiedorder';
         if(!$client->get($path, $content)){
-            return false;
+            return $content;
 
         }else{
             $json = $client->getContent();
-            return $json;//json_decode($json, true);
+            $content['result'] = $json;
+            return $content;//json_decode($json, true);
         }
     }
 
