@@ -76,8 +76,8 @@ class Member
 
         $wechat     = new \app\core\provider\WeChat();
 
-        $jscode     = input('post.jscode/s');
-        $userinfo   = input('post.userinfo/s');
+        $jscode     = input('get.jscode/s');
+        $userinfo   = input('get.userinfo/s');
 
 
         $result     = $wechat->getSessionKey($jscode);

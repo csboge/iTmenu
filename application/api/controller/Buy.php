@@ -34,5 +34,31 @@ class Buy
     }
 
 
+    /**
+     * 提交订单
+     *
+     *
+     */
+    public function submitOrder()
+    {
+
+        //$jscode     = input('post.jscode/s');
+
+        $wechat     = new \app\core\provider\WeChat();
+        
+        $result     = $wechat->payment();
+
+
+        return jsonData(1, 'ok', $result);
+
+    }
+
+    //微信支付 回调
+    public function notify()
+    {
+        # code...
+    }
+
+
 
 }

@@ -5,9 +5,16 @@ namespace app\core\provider;
 define('APPID', 'wx3fcef4db43bcfaed');	                //*必填*：小程序唯一标识
 define('SECRET', '1354bdaf7a9e13b5fe97c22de97b90b3');	//*必填*: 小程序的 app secret
 
+
+//支付授权
+define('MCHID', '1487245952');	                        //*必填*: 商户号
+define('SIGNKEY', 'csboge1073payKEY2913epoqiwpemans');	//*必填*: 密钥
+
+
+
 //以下参数不需要修改
-define('IP', 'ssl://api.weixin.qq.com');			    //接口IP或域名
-define('PORT', 443);						            //接口IP端口
+//define('IP', 'ssl://api.weixin.qq.com');			    //接口IP或域名
+//define('PORT', 443);						            //接口IP端口
 
 
 /**
@@ -19,11 +26,7 @@ define('PORT', 443);						            //接口IP端口
 class WeChat
 {
 
-    public function __construct()
-    {
-        //初始化 **请求工具
-        $this->client = new \app\core\provider\HttpClient(IP, PORT);
-    }
+    public function __construct(){}
     
 
 
@@ -35,6 +38,16 @@ class WeChat
      */
     function getSessionKey($jscode)
     {
+
+        /**
+         * 初始请求
+         *
+         */
+        $host    = 'ssl://api.weixin.qq.com'; 
+        $port    = 443;
+        $client  = new \app\core\provider\HttpClient($host, $port);
+
+        //业务参数
         $content = array(			
             'appid'     => APPID,
             'secret'    => SECRET,
@@ -43,16 +56,85 @@ class WeChat
         );
 
         $path = '/sns/jscode2session';
-        if(!$this->client->get($path, $content)){
+        if(!$client->get($path, $content)){
             return false;
 
         }else{
-            $json = $this->client->getContent();
+            $json = $client->getContent();
             return json_decode($json, true);
         }
     }
 
 
+    /***
+     * 预支付请求
+     *
+     */
+    function payment()
+    {
+
+        /**
+         * 初始请求
+         *
+         */
+        $host    = 'ssl://api.mch.weixin.qq.com'; 
+        $port    = 443;
+        $client  = new \app\core\provider\HttpClient($host, $port);
 
 
+        $content = array(
+            'appid'             => APPID,
+            'mch_id'            => MCHID,
+            'nonce_str'         => MD5(time() + rand(10000, 99999)),
+            'body'              => 'JSAPI支付测试',
+            'out_trade_no'      => 'SN150848529131073',
+            'total_fee'         => 0.01,
+            'spbill_create_ip'  => '47.93.97.136',
+            'notify_url'        => 'https://api.ai-life.me/api/Buy/notify/',
+            'trade_type'        => 'JSAPI',
+            'openid'            => 'opkjx0OfG53ZhOpEj-VWqpN_MxR0'
+        );
+
+
+        //签名
+        $content['sign'] = $this->getSign($content);
+
+        return $content;
+        
+        $path    = '/pay/unifiedorder';
+        if(!$client->get($path, $content)){
+            return false;
+
+        }else{
+            $json = $client->getContent();
+            return $json;//json_decode($json, true);
+        }
+    }
+
+
+
+    /**
+     * 数字签名
+     *
+     */
+    private function getSign($data)
+    {
+        $keys = [];
+        foreach($data as $k=>$v){
+            if (trim($v)) { $keys[] = $k; }
+        }
+        array_multisort($keys);
+
+
+        $arr = [];
+        foreach($keys as $k=>$v){
+            $arr[] = $v . '=' . $data[$v]; 
+        }
+
+        $stringA        = implode('&', $arr);
+        $stringSignTemp = $stringA . "&key=" . SIGNKEY;         //注：key为商户平台设置的密钥key
+        $sign           = strtoupper(MD5($stringSignTemp));     //注：MD5签名方式
+
+        return $sign;
+    }
 }
