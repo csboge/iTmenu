@@ -10,8 +10,25 @@ use think\Model;
 use think\db;
 use app\core\traits\InterfaceModel;
 
-class User extends Model {
+class User extends Model 
+{
 
-    protected $table = 'user';
+
+    /**
+     * 查询用户（手机号）
+     *
+     * @param   string   $mobile    手机号
+     *
+     * @return  result 
+     *
+     */
+    public function getUserForMobile($mobile)
+    {
+        $row = $this->where('mobile', trim($mobile))->find();
+
+        return $row;
+    }
+
+
 
 }

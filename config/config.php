@@ -62,7 +62,7 @@ return [
     // 默认控制器名
     'default_controller'     => 'Index',
     // 默认操作名
-    'default_action'         => 'login',
+    'default_action'         => 'index',
     // 默认验证器
     'default_validate'       => '',
     // 默认的空控制器名
@@ -191,7 +191,7 @@ return [
 
     'cache'                  => [
         // 驱动方式 file、memcache、wincache、sqlite、redis和xcache。
-        'type'   => 'file',
+        'type'   => 'File',
         // 缓存保存目录
         'path'   => CACHE_PATH,
         // 缓存前缀
