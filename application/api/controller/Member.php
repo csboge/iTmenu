@@ -66,7 +66,7 @@ class Member
      */
     function login()
     {
-        $wechat = new \app\core\provider\WeChat();
+        $wechat     = new \app\core\provider\WeChat();
 
          $jscode    = input('post.jscode/s');
          $result    = $wechat->getSessionKey($jscode);
