@@ -6,7 +6,7 @@ define('APPID', 'wx3fcef4db43bcfaed');	                //*必填*：小程序唯
 define('SECRET', '4bd411eefdd24762fbdb710032ef0acd');	//*必填*: 小程序的 app secret
 
 //以下参数不需要修改
-define('IP', 'https://api.weixin.qq.com');			            //接口IP或域名
+define('IP', 'https://api.weixin.qq.com');			    //接口IP或域名
 define('PORT', 80);						                //接口IP端口
 
 
@@ -43,7 +43,7 @@ class WeChat
         );
 
         $path = '/sns/jscode2session/';
-        if(!$this->client->post($path, $content)){
+        if(!$this->client->get($path, $content)){
             return false;
 
         }else{
