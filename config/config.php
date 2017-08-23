@@ -145,6 +145,10 @@ return [
         '__X-ADMIN__'=>'/static/x-admin',
         '__CROPPER__'=>'/static/cropper',
     ],
+
+    //电子菜谱 KEY
+    'global_system_key' => 'BGmenu-1.0-@)!&*@#',
+
     
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',

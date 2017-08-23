@@ -16,7 +16,7 @@ class User
     public function __construct()
     {
         //用户模型
-        $this->m_user = new \app\index\model\User();
+        $this->m_user = new \app\core\model\User();
     }
 
 
@@ -113,10 +113,37 @@ class User
      */
     public function initUserData($openid, $session)
     {
+
         $unionid = $session['unionid'];
+        $data    = array(
+            'nickname'  => $session['userinfo']['nickName'],
+            'avatar'    => $session['userinfo']['avatarUrl'],
+            'sex'       => $session['userinfo']['gender'],
+            'openid'    => $session['openid'],
+            'unionid'   => $session['unionid'],
+            'created'   => time(),
+            'updated'   => time(),
+            'city'      => $session['userinfo']['city'],
+            'province'  => $session['userinfo']['province']
+        );
 
+        //查询用户
+        $result  = $this->m_user->getUserForUnionid($unionid);
 
-        return 1;
+        //修改
+        if ($result) {
+            unset($data['created']);
+
+            //记录 *登录次数
+            $data['logcount'] = $result['logcount'] + 1;
+
+            $this->m_user->save($data, ['id' => $result['id']]);
+            return $result['id'];
+        }
+
+        //新增
+        $this->m_user->data($data)->save();
+        return $this->m_user->id;
     }
 
 

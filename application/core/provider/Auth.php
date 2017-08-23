@@ -31,10 +31,10 @@ class Auth
          $redis = $this->redisFactory();
 
          /***
-          * 生成授权码
+          * 生成授权码 *过期时间
           *
           */
-         $access_token = md5(substr(md5($userid . date('Y-m-d')), 5));
+         $access_token = md5(substr(md5($userid . $userid), 5));
          $expires_in   = $session['expires_in'];
 
 
@@ -75,16 +75,16 @@ class Auth
      */
     public function check($request, $actions = [])
     {
+
         //当前请求信息
         $module     = $request->module();
         $action     = $request->action();
         $controller = $request->controller();
 
-  
         //验证配置
         $isauth     = true;
-        $public     = isset($actions['public']) ? $actions['public'] : [];
-        $private    = isset($actions['private']) ? $actions['private'] : [];
+        $public     = isset($actions['public']) ? array_map(function($v){ return strtolower($v); }, $actions['public']) : [];
+        $private    = isset($actions['private']) ? array_map(function($v){ return strtolower($v); }, $actions['private']) : [];
 
         //验证开关
         $isauth     = (in_array($action, $public) || in_array('*', $public)) ? false : true;
@@ -108,8 +108,8 @@ class Auth
           * 错误：抛出不同错误信息，错误代码，全局作用范围
           *
           */
-          $code     = '-404';
-          $message  = '授权无效';
+          $code     = '-2012';
+          $message  = '授权凭证 access_token 已经失效';
             
           echo json_encode(['code'=>$code, 'message'=>$message]);
           exit;

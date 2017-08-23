@@ -18,7 +18,7 @@ class Member
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['*'],
+            'public' => ['getcode', 'register', 'login', 'getUserInfo'],
             'private'=> []
         ]);
 
@@ -116,6 +116,7 @@ class Member
 
     function getUserInfo()
     {
+        
         $session = $this->p_auth->session();
         print_r($session);
 

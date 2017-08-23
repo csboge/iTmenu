@@ -24,8 +24,8 @@ class Buy
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['*'],
-            'private'=> []
+            'public' => [],
+            'private'=> ['*']
         ]);
 
         //授权服务
