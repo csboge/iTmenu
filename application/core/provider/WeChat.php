@@ -63,9 +63,9 @@ class WeChat
             $json = $client->getContent();
             $data = json_decode($json, true);
 
-            if (isset($data['errcode'])) {
+            /*if (isset($data['errcode'])) {
                 return false;
-            }
+            }*/
 
             return $data;
         }
