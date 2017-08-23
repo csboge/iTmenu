@@ -78,26 +78,26 @@ class Member
         //微信 **用户授权
         $wechat     = new \app\core\provider\WeChat();
         $session    = $wechat->getSessionKey($jscode);
-        if (!$session) {
-            return jsonData(0, '请求失败,请重新发起');
-        }
+        //if (!$session) {
+         //   return jsonData(0, '请求失败,请重新发起');
+        //}
 
         //微信 **用户信息
         $session['userinfo']    = $userinfo;
 
         //数据库 userid
-        $user                   = new \app\core\provider\User();
-        $openid                 = $session['openid'];
-        $session['userid']      = $user->initUserData($openid, $session);
-        if ($session['userid'] == 0) {
-            return jsonData(0, '用户初始化失败');
-        }
+        //$user                   = new \app\core\provider\User();
+        //$openid                 = $session['openid'];
+        //$session['userid']      = $user->initUserData($openid, $session);
+       // if ($session['userid'] == 0) {
+       //     return jsonData(0, '用户初始化失败');
+       // }
 
         //设置用户SESSION
         //$this->p_auth->setToken($userid, $session);
 
         //返回
-        return jsonData(1, 'ok', $result);
+        return jsonData(1, 'ok', $session);
     }
 
 
