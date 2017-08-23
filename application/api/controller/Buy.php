@@ -46,7 +46,7 @@ class Buy
 
         $session        = $this->p_auth->session();
 
-        $openid         = $session['openid'];       
+        $openid         = 'opkjx0OfG53ZhOpEj-VWqpN_MxR0';//$session['openid'];       
         $body           = "充值余额";  
         $total_fee      = floatval($total * 100);  
 
