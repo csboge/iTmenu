@@ -72,8 +72,8 @@ class Member
         exit;
         */
 
-        $jscode     = input('get.jscode/s');
-        $userinfo   = input('get.userinfo/s');
+        $jscode     = input('param.jscode/s');
+        $userinfo   = input('param.userinfo/s');
 
         //微信 **用户授权
         $wechat     = new \app\core\provider\WeChat();
