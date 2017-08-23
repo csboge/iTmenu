@@ -70,14 +70,20 @@ class WeChat
      * 预支付请求
      *
      */
-    function payment()
+    function payment($openid, $body, $total_fee)
     {
+
+        $out_trade_no   = MCHID . time();      
+        $weixinpay      = new \app\core\provider\WeixinPay(APPID, $openid, MCHID, SIGNKEY, $out_trade_no, $body, $total_fee);  
+        $result         = $weixinpay->pay(); 
+
+        return $result;
 
         /**
          * 初始请求
          *
          */
-        $host    = 'ssl://api.mch.weixin.qq.com'; 
+        /*$host    = 'ssl://api.mch.weixin.qq.com'; 
         $port    = 443;
         $client  = new \app\core\provider\HttpClient($host, $port);
 
@@ -109,7 +115,7 @@ class WeChat
             $json = $client->getContent();
             $content['result'] = $json;
             return $content;//json_decode($json, true);
-        }
+        }*/
     }
 
 

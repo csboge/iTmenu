@@ -42,11 +42,16 @@ class Buy
     public function submitOrder()
     {
 
-        //$jscode     = input('post.jscode/s');
+        $total     = input('post.total/d');
 
-        $wechat     = new \app\core\provider\WeChat();
-        
-        $result     = $wechat->payment();
+
+        $openid         = "opkjx0OfG53ZhOpEj-VWqpN_MxR0";       
+        $body           = "充值余额";  
+        $total_fee      = floatval($total * 100);  
+
+
+        $wechat         = new \app\core\provider\WeChat();
+        $result         = $wechat->payment($openid, $body, $total_fee);
 
 
         return jsonData(1, 'ok', $result);
