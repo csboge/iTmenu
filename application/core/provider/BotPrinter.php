@@ -54,7 +54,7 @@ class BotPrinter
 		$orderInfo .= '西红柿鸡蛋炒饭 15.0   1   15.0<BR>';
 		$orderInfo .= '备注：加辣，伯格网络专用辣椒<BR>';
 		$orderInfo .= '--------------------------------<BR>';
-		$orderInfo .= '合计：100.0元<BR>';
+		$orderInfo .= '合计：200.0元<BR>';
 		$orderInfo .= '送货地点：长沙市万达广场C2-3508<BR>';
 		$orderInfo .= '联系电话：0731-85056818<BR>';
 		$orderInfo .= '订餐时间：'.date('Y-m-d H:i:s', time()).'<BR>';

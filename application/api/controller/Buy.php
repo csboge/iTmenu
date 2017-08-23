@@ -87,11 +87,13 @@ class Buy
         $redis->set($openid . '_update', json_encode($attr));
 
 
+        $printer    = new \app\core\provider\BotPrinter();
+        $printer->getWords();
+
+        
         $wechat         = new \app\core\provider\WeChat();
         $wechat->return_success();
 
-        //$printer    = new \app\core\provider\BotPrinter();
-        //$printer->getWords();
 
 
         # code...
