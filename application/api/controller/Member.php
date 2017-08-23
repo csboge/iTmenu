@@ -157,7 +157,7 @@ class Member
         $password='d41d8cd98f00b204e9800998ecf8427e';//密码 
         $post_data['name'] = $name; 
         $post_data['pwd'] = md5($password.$mttime); 
-        $post_data['content'] = '【阅信】验证码'. rand(10000, 99999).'。'; //$post_data['content'] = '123456'; 语音验证码内容 
+        $post_data['content'] = '【伯格网络】验证码'. rand(10000, 99999).'。'; //$post_data['content'] = '123456'; 语音验证码内容 
         $post_data['phone'] = $phone;//'15084852913';//手机号码 $post_data['subid'] = ''; 
         $post_data['mttime']= $mttime; 
         $post_data['rpttype'] = '1'; 
