@@ -47,6 +47,41 @@ class SMS
     public function send($mobile, $words)
     {
 
+        date_default_timezone_set('PRC'); //设置时区为东八区否则时间比北京时间早8 小时 
+        $url = 'http://106.14.55.160:9000/HttpSmsMt';//接口地址 
+        $mttime=date("YmdHis"); 
+        $name = 'yxcs03';//开通的用户名 
+        $password='d41d8cd98f00b204e9800998ecf8427e';//密码 
+        $post_data['name'] = $name; 
+        $post_data['pwd'] = md5($password.$mttime); 
+        $post_data['content'] = '【伯格网络】验证码'. rand(10000, 99999).'。'; //$post_data['content'] = '123456'; 语音验证码内容 
+        $post_data['phone'] = $phone;//'15084852913';//手机号码 $post_data['subid'] = ''; 
+        $post_data['mttime']= $mttime; 
+        $post_data['rpttype'] = '1'; 
+        $o = ""; 
+        
+        //foreach ( $post_data as $k => $v ) { 
+        //    $o.= "$k=" . urlencode( $v ). "&" ; 
+        //} 
+        
+        //$post_data = substr($o,0,-1); 
+        //$res = request_post($url, $post_data); 
+
+
+        $host    = '106.14.55.160'; 
+        $port    = 9000;
+        $client  = new \app\core\provider\HttpClient($host, $port);
+
+        $path = '/HttpSmsMt';
+        if(!$client->post($path, $post_data)){
+            print 0;
+
+        }else{
+            $res = $client->getContent();
+            print $res;
+        }
+
+        
         return true;
     }
 
