@@ -84,70 +84,7 @@ class WeChat
         $result         = $weixinpay->pay(); 
 
         return $result;
-
-        /**
-         * 初始请求
-         *
-         */
-        /*$host    = 'ssl://api.mch.weixin.qq.com'; 
-        $port    = 443;
-        $client  = new \app\core\provider\HttpClient($host, $port);
-
-
-        $content = array(
-            'appid'             => APPID,
-            'mch_id'            => MCHID,
-            'nonce_str'         => MD5(time() + rand(10000, 99999)),
-            'body'              => 'JSAPI支付测试',
-            'out_trade_no'      => 'SN150848529131073',
-            'total_fee'         => 0.01,
-            'spbill_create_ip'  => '47.93.97.136',
-            'notify_url'        => 'https://api.ai-life.me/api/Buy/notify/',
-            'trade_type'        => 'JSAPI',
-            'openid'            => 'opkjx0OfG53ZhOpEj-VWqpN_MxR0'
-        );
-
-
-        //签名
-        $content['sign'] = $this->getSign($content);
-
-        //return $content;
-
-        $path    = '/pay/unifiedorder';
-        if(!$client->get($path, $content)){
-            return $content;
-
-        }else{
-            $json = $client->getContent();
-            $content['result'] = $json;
-            return $content;//json_decode($json, true);
-        }*/
     }
 
 
-
-    /**
-     * 数字签名
-     *
-     */
-    private function getSign($data)
-    {
-        $keys = [];
-        foreach($data as $k=>$v){
-            if (trim($v)) { $keys[] = $k; }
-        }
-        array_multisort($keys);
-
-
-        $arr = [];
-        foreach($keys as $k=>$v){
-            $arr[] = $v . '=' . $data[$v]; 
-        }
-
-        $stringA        = implode('&', $arr);
-        $stringSignTemp = $stringA . "&key=" . SIGNKEY;         //注：key为商户平台设置的密钥key
-        $sign           = strtoupper(MD5($stringSignTemp));     //注：MD5签名方式
-
-        return $sign;
-    }
 }

@@ -15,7 +15,7 @@ class Auth
      */
     public function getAccessToken()
     {
-        return input('get.access_token/s');
+        return input('param.access_token/s');
     }
 
 
@@ -35,7 +35,7 @@ class Auth
           *
           */
          $access_token = md5(substr(md5($userid . date('Y-m-d')), 5));
-         $expires_in   = 7200;
+         $expires_in   = $session['expires_in'];
 
 
          //设置授权身份信息

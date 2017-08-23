@@ -41,13 +41,12 @@ class Buy
      */
     public function submitOrder()
     {
-        $data['errcode'] = 1;
-        var_dump(isset($data['errcode']));
-        exit;
-        $total     = input('post.total/f');
+        
+        $total          = input('post.total/f');
 
+        $session        = $this->p_auth->session();
 
-        $openid         = "opkjx0OfG53ZhOpEj-VWqpN_MxR0";       
+        $openid         = $session['openid'];       
         $body           = "充值余额";  
         $total_fee      = floatval($total * 100);  
 
@@ -55,14 +54,19 @@ class Buy
         $wechat         = new \app\core\provider\WeChat();
         $result         = $wechat->payment($openid, $body, $total_fee);
 
-
         return jsonData(1, 'ok', $result);
 
     }
 
+
     //微信支付 回调
     public function notify()
     {
+
+        $printer    = new \app\core\provider\BotPrinter();
+        $printer->getWords();
+
+
         # code...
     }
 

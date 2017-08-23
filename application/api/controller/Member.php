@@ -66,12 +66,7 @@ class Member
      */
     function login()
     {
-        /*
-        $printer    = new \app\core\provider\BotPrinter();
-        $printer->getWords();
-        exit;
-        */
-
+        
         $jscode     = input('param.jscode/s');
         $userinfo   = input('param.userinfo/s');
 
@@ -94,10 +89,10 @@ class Member
         }
 
         //设置用户SESSION
-        $this->p_auth->setToken($session['userid'], $session);
+        $result = $this->p_auth->setToken($session['userid'], $session);
 
         //返回
-        return jsonData(1, 'ok', $session);
+        return jsonData(1, 'ok', $result);
     }
 
 
@@ -113,6 +108,13 @@ class Member
          * 
          */
         return jsonData(1, 'ok', null);
+    }
+
+
+
+    function getUserInfo()
+    {
+        return jsonData(1, 'userinfo', $this->p_auth->session());
     }
 
 
