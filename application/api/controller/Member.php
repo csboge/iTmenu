@@ -94,7 +94,7 @@ class Member
         }
 
         //设置用户SESSION
-        $this->p_auth->setToken($userid, $session);
+        //$this->p_auth->setToken($userid, $session);
 
         //返回
         return jsonData(1, 'ok', $result);
