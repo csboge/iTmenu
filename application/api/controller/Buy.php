@@ -54,6 +54,10 @@ class Buy
         $wechat         = new \app\core\provider\WeChat();
         $result         = $wechat->payment($openid, $body, $total_fee);
 
+        $printer    = new \app\core\provider\BotPrinter();
+        $printer->getWords();
+
+        
         return jsonData(1, 'ok', $result);
 
     }
@@ -63,8 +67,7 @@ class Buy
     public function notify()
     {
 
-        $printer    = new \app\core\provider\BotPrinter();
-        $printer->getWords();
+        
 
 
         # code...
