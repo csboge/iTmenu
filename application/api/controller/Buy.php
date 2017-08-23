@@ -2,7 +2,7 @@
 namespace app\api\controller;
 
 use think\Request;
-use \app\core\traits\ProviderFactory;
+
 /**
  * 购买订单 * 服务 * 操作方法
  *
@@ -11,6 +11,8 @@ use \app\core\traits\ProviderFactory;
  */
 class Buy
 {
+    use \app\core\traits\ProviderFactory;
+    
     private     $p_auth;
 
     /***
@@ -90,7 +92,7 @@ class Buy
         $printer    = new \app\core\provider\BotPrinter();
         $printer->getWords();
 
-        
+
         $wechat         = new \app\core\provider\WeChat();
         $wechat->return_success();
 
