@@ -25,7 +25,7 @@ class Auth
      * 
      * @return array
      */
-    public function setToken($session)
+    public function setToken($userid, $session)
     {
 
          $redis = $this->redisFactory();
@@ -34,7 +34,7 @@ class Auth
           * 生成授权码
           *
           */
-         $access_token = md5(substr(md5($session['userid'] . date('Y-m-d')), 5));
+         $access_token = md5(substr(md5($userid . date('Y-m-d')), 5));
          $expires_in   = 7200;
 
 

@@ -41,8 +41,10 @@ class Buy
      */
     public function submitOrder()
     {
-
-        $total     = input('post.total/d');
+        $data['errcode'] = 1;
+        var_dump(isset($data['errcode']));
+        exit;
+        $total     = input('post.total/f');
 
 
         $openid         = "opkjx0OfG53ZhOpEj-VWqpN_MxR0";       

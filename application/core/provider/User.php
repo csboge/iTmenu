@@ -103,7 +103,21 @@ class User
     }
 
 
+    /**
+     * 初始化 用户信息
+     *
+     * @param   int     $openid    用户唯一标识
+     * @param   array   $session   登录信息
+     *
+     * @return  int
+     */
+    public function initUserData($openid, $session)
+    {
+        $unionid = $session['unionid'];
 
+
+        return 1;
+    }
 
 
 }
