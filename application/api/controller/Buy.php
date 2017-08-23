@@ -42,7 +42,7 @@ class Buy
     public function submitOrder()
     {
         
-        $total          = input('post.total');
+        $total          = input('post.total/f');
 
         $session        = $this->p_auth->session();
 

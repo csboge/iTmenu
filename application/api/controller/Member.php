@@ -91,6 +91,8 @@ class Member
         //设置用户SESSION
         $result = $this->p_auth->setToken($session['userid'], $session);
 
+        $result['session'] = $session;
+
         //返回
         return jsonData(1, 'ok', $result);
     }
