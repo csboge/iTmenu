@@ -116,7 +116,10 @@ class Member
 
     function getUserInfo()
     {
-        return jsonData(1, 'userinfo', $this->p_auth->session());
+        $session = $this->p_auth->session();
+        print_r($session);
+
+        return jsonData(1, 'userinfo', $session);
     }
 
 
