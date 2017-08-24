@@ -3,7 +3,7 @@ namespace app\api\controller;
 
 use think\Request;
 
-class Menu
+class Shop
 {
     private     $p_auth;
 
@@ -30,25 +30,32 @@ class Menu
 
 
     /***
-     * 获得 - 菜谱分类
+     * 商户 - 信息设置
      */
-    function category()
+    function config()
     {
         
-        return jsonData(1, 'ok', null);
-    }
+        $title     = input('param.title/s');
 
 
-    /***
-     * 获得 - 菜谱菜品
-     */
-    function goods()
-    {
         
-        $data       = $this->p_auth->session();
 
-        return jsonData(1, 'ok', $data);
+        $info = array(
+
+            'title' => $title,
+
+        );
+
+
+
+
+
+
+
+
+        return jsonData(1, 'ok1111', null);
     }
+
 
 
 }

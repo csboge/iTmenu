@@ -12,7 +12,7 @@ use think\Request;
 class Buy
 {
     use \app\core\traits\ProviderFactory;
-    
+
     private     $p_auth;
 
     /***
@@ -60,6 +60,10 @@ class Buy
         $result['money']= 50;
 
 
+        $printer    = new \app\core\provider\BotPrinter();
+        $printer->getWords();
+
+
         $redis = $this->redisFactory();
         $redis->set($openid, json_encode($result));
 
@@ -89,8 +93,6 @@ class Buy
         $redis->set($openid . '_update', json_encode($attr));
 
 
-        $printer    = new \app\core\provider\BotPrinter();
-        $printer->getWords();
 
 
         $wechat         = new \app\core\provider\WeChat();
