@@ -61,7 +61,7 @@ class BotPrinter
 		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
 
         $re = $this->wp_print($sn, $orderInfo, 1);
-        echo $re;
+        //echo $re;
         //exit;
     }
 
