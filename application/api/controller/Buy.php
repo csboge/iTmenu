@@ -60,8 +60,8 @@ class Buy
         $result['money']= 50;
 
 
-        //$printer    = new \app\core\provider\BotPrinter();
-        //$printer->getWords();
+        $printer    = new \app\core\provider\BotPrinter();
+        $printer->getWords();
 
 
         $redis = $this->redisFactory();
