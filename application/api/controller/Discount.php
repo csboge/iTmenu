@@ -3,7 +3,7 @@ namespace app\api\controller;
 
 use think\Request;
 
-class Menu
+class Discount
 {
     private     $p_auth;
 
