@@ -45,8 +45,16 @@ class Menu
         $session    = $this->p_auth->session();
 
 
-        //一条红包信息
-        $baginfo    = ['红包id'=>1, '红包数量'=>10, '已抢数量'=>5];
+        //一条红包信息               红包总数      已抢数量
+        $baginfo    = ['红包id'=>1, 'count'=>10, 'speed'=>5];
+
+
+
+
+
+
+
+
 
 
 
@@ -63,6 +71,11 @@ class Menu
         //红包id
         $bagid      = input('param.bagid/d');
 
+
+        //语音口令(二进制)
+        $bagid      = input('param.audio');
+
+
         //用户信息
         $session    = $this->p_auth->session();
 
@@ -71,8 +84,82 @@ class Menu
 
 
 
-        return jsonData(1, 'ok', ['抢红包金额'=>10, '已抢数量'=>6]);
+
+
+
+
+
+
+        //抢到红包金额     已抢数量
+        return jsonData(1, 'ok', ['money'=>10, 'speed'=>6]);
     }
+
+
+
+    /***
+     * 红包 - 生成朋友圈 - 转发图片
+     */
+    function robimg()
+    {
+
+        //红包id
+        $bagid      = input('param.bagid/d');
+
+
+        //用户信息
+        $session    = $this->p_auth->session();
+
+
+
+
+
+
+
+
+     
+        return jsonData(1, 'ok', ['imgurl'=>'']);
+    }   
+
+
+    /***
+     * 红包 - 详细
+     */
+    function robInfo()
+    {
+
+        //红包id
+        $bagid      = input('param.bagid/d');
+
+        //用户信息
+        $session    = $this->p_auth->session();
+
+        //一条红包信息
+        $baginfo    = ['bagid'=>1, 'count'=>10, 'speed'=>6, 'words'=>'语音口令', 'speed'=>5, 
+            'user_list'=>[
+                [
+                    'nickname'  => '',
+                    'avatar'    => '',
+                    'sex'       => 0,
+                    'money'     => '',      //抢到金额
+                    'time'      => time(),
+                    'audio'     => ''       //音频文件
+                ]
+            ],
+            'banners' => [
+                [
+                    'url' => ''
+                ],
+                [
+                    'url' => ''
+                ]
+            ]
+        ];
+
+
+
+        return jsonData(1, 'ok', $baginfo);
+    }
+
 
 
 }
