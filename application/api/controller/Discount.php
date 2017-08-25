@@ -30,24 +30,48 @@ class Menu
 
 
     /***
-     * 获得 - 菜谱分类
+     * 红包 - 生成
      */
-    function category()
+    function create()
     {
-        
-        return jsonData(1, 'ok', null);
+
+        //订单号
+        $ordersn    = input('param.ordersn/s');
+
+        //语音口令
+        $words      = input('param.words/s');
+
+        //用户信息
+        $session    = $this->p_auth->session();
+
+
+        //一条红包信息
+        $baginfo    = ['红包id'=>1, '红包数量'=>10, '已抢数量'=>5];
+
+
+
+        return jsonData(1, 'ok', $baginfo);
     }
 
 
     /***
-     * 获得 - 菜谱菜品
+     * 红包 - 抢夺
      */
-    function goods()
+    function robbed()
     {
-        
-        $data       = $this->p_auth->session();
 
-        return jsonData(1, 'ok', $data);
+        //红包id
+        $bagid      = input('param.bagid/d');
+
+        //用户信息
+        $session    = $this->p_auth->session();
+
+
+
+
+
+
+        return jsonData(1, 'ok', ['抢红包金额'=>10, '已抢数量'=>6]);
     }
 
 
