@@ -18,7 +18,7 @@ class Discount
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['*'],
+            'public' => [],
             'private'=> []
         ]);
 
@@ -46,7 +46,7 @@ class Discount
 
 
         //一条红包信息               红包总数      已抢数量
-        $baginfo    = ['红包id'=>1, 'count'=>10, 'speed'=>5];
+        $baginfo    = ['bagid'=>1, 'count'=>10, 'speed'=>5];
 
 
 
@@ -134,7 +134,7 @@ class Discount
         $session    = $this->p_auth->session();
 
         //一条红包信息
-        $baginfo    = ['bagid'=>1, 'count'=>10, 'speed'=>6, 'words'=>'语音口令', 'speed'=>5, 
+        $baginfo    = ['bagid'=>1, 'count'=>10, 'speed'=>6, 'words'=>'语音口令', 'total_money'=>5, 
             'user_list'=>[
                 [
                     'nickname'  => '',
