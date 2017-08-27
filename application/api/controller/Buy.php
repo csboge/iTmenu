@@ -28,8 +28,8 @@ class Buy
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => [],
-            'private'=> ['*']
+            'public' => ['*'],
+            'private'=> []
         ]);
 
         //授权服务
@@ -42,6 +42,19 @@ class Buy
         //订单模型
         $this->m_order  = $m_order;
 
+    }
+
+    public function demoData()
+    {
+
+        $redis = $this->redisFactory();
+        $openid = $redis->get('global-current-openid');
+
+
+        echo '--update: ' . $redis->get($openid . '_update');
+
+
+        echo '--init:' . $redis->get($openid);
     }
 
 
