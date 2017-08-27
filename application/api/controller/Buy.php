@@ -163,17 +163,19 @@ return $receipt;
     //微信支付 回调
     public function notify()
     {
-
-
         $printer    = new \app\core\provider\BotPrinter();
         $printer->getWords();
-        
+
+
+        $wechat         = new \app\core\provider\WeChat();
+        $wechat->return_success();
+
+
         $postXml = $this->post_data();//$GLOBALS["HTTP_RAW_POST_DATA"]; //接收微信参数  
         //if (empty($postXml)) {  
         //    return false;  
         //}
 
-        //$wechatpay         = new \app\core\provider\WeixinPay();
         $attr = $this->xmlToArray($postXml);  
   
         $total_fee      = $attr[total_fee];  
@@ -190,7 +192,6 @@ return $receipt;
 
 
 
-        $wechat->return_success();
 
 
 

@@ -87,4 +87,17 @@ class WeChat
     }
 
 
+    /*
+     * 给微信发送确认订单金额和签名正确，SUCCESS信息 -xzz0521
+     */
+    public function return_success(){
+        $return['return_code'] = 'SUCCESS';
+        $return['return_msg'] = 'OK';
+        $xml_post = '<xml>
+                    <return_code>'.$return['return_code'].'</return_code>
+                    <return_msg>'.$return['return_msg'].'</return_msg>
+                    </xml>';
+        echo $xml_post;
+        exit;
+    }
 }
