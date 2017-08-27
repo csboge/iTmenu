@@ -117,7 +117,7 @@ class WeixinPay {
 
 
     //xml转换成数组
-    public function xmlToArray($xml) {
+    private function xmlToArray($xml) {
 
 
         //禁止引用外部xml实体 

@@ -142,6 +142,23 @@ $receipt = $GLOBALS['HTTP_RAW_POST_DATA'];
 }
 return $receipt;
 }
+    public function xmlToArray($xml) {
+
+
+        //禁止引用外部xml实体 
+
+
+        libxml_disable_entity_loader(true);
+
+
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+
+        $val = json_decode(json_encode($xmlstring), true);
+
+
+        return $val;
+    }
 
     //微信支付 回调
     public function notify()
@@ -151,8 +168,8 @@ return $receipt;
         //    return false;  
         //}
 
-        $wechatpay         = new \app\core\provider\WeixinPay();
-        $attr = $wechatpay->xmlToArray($postXml);  
+        //$wechatpay         = new \app\core\provider\WeixinPay();
+        $attr = $this->xmlToArray($postXml);  
   
         $total_fee      = $attr[total_fee];  
         $open_id        = $attr[openid];  
