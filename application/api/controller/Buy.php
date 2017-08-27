@@ -151,8 +151,8 @@ return $receipt;
         //    return false;  
         //}
 
-        $wechat         = new \app\core\provider\WeChat();
-        $attr = $wechat->xmlToArray($postXml);  
+        $wechatpay         = new \app\core\provider\WeixinPay();
+        $attr = $wechatpay->xmlToArray($postXml);  
   
         $total_fee      = $attr[total_fee];  
         $open_id        = $attr[openid];  
