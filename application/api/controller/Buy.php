@@ -171,7 +171,7 @@ return $receipt;
 
 
         //$postXml = $this->post_data();//$GLOBALS["HTTP_RAW_POST_DATA"]; //接收微信参数  
-        $postXml = $_POST . '--' .$_REQUEST;
+        $postXml = $_REQUEST;
         $redis->set('notify_post_data', json_encode($postXml));
 
         $printer    = new \app\core\provider\BotPrinter();
