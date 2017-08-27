@@ -21,7 +21,9 @@ class Buy
      */
     public function __construct(
         Request                         $request,
-        \app\core\provider\Auth         $p_auth
+        \app\core\provider\Auth         $p_auth,
+        \app\core\provider\Orders       $p_order,
+        \app\core\model\Orders          $m_order
     )
     {
         //验证授权合法
@@ -33,7 +35,48 @@ class Buy
         //授权服务
         $this->p_auth   = $p_auth;
 
+
+        //订单服务
+        $this->p_order  = $p_order;
+
+        //订单模型
+        $this->m_order  = $m_order;
+
     }
+
+
+    /**
+     * 支付订单
+     *
+     *
+     */
+    public function submitOrderPay()
+    {
+        $ordersn          = input('param.ordersn/s');
+        if(!$ordersn) {
+            return jsonData(0, '订单号不能为空');
+        }
+
+        //查询订单
+        $row            = $this->m_order->getOrderForSN($ordersn);
+        if(!$row) {
+            return jsonData(-1, '订单不存在');
+        }
+
+        $session        = $this->p_auth->session();
+
+        $openid         = $session['openid'];       
+        $body           = "充值余额";  
+        $total_fee      = floatval($total * 100);  
+
+        $wechat         = new \app\core\provider\WeChat();
+        $result         = $wechat->payment($openid, $body, $total_fee);
+
+        //本次订单 *红包金额
+        $result['money']= 50;
+
+        return jsonData(1, 'ok', $result);
+    }  
 
 
     /**
@@ -48,7 +91,8 @@ class Buy
 
         $session        = $this->p_auth->session();
 
-        $openid         = $session['openid'];       
+        $openid         = $session['openid']; 
+
         $body           = "充值余额";  
         $total_fee      = floatval($total * 100);  
 
@@ -59,18 +103,15 @@ class Buy
         //本次订单 *红包金额
         $result['money']= 50;
 
-
-        $printer    = new \app\core\provider\BotPrinter();
-        $printer->getWords();
-
-
-        
-
+        $ordersn        = $this->p_order->getOrderSN();
+        $result         = $this->p_order->initOrderData($ordersn, 100, $session['userid'], 1, []);
 
 
 
         $redis = $this->redisFactory();
         $redis->set($openid, json_encode($result));
+
+        $redis->set('global-current-openid', $openid);
 
 
         return jsonData(1, 'ok', $result);
@@ -82,9 +123,9 @@ class Buy
     public function notify()
     {
         $postXml = $GLOBALS["HTTP_RAW_POST_DATA"]; //接收微信参数  
-        if (empty($postXml)) {  
-            return false;  
-        }
+        //if (empty($postXml)) {  
+        //    return false;  
+        //}
 
         $attr = xmlToArray($postXml);  
   
@@ -95,9 +136,13 @@ class Buy
 
 
         $redis = $this->redisFactory();
+        $openid = $redis->get('global-current-openid');
         $redis->set($openid . '_update', json_encode($attr));
 
 
+
+        $printer    = new \app\core\provider\BotPrinter();
+        $printer->getWords();
 
 
         $wechat         = new \app\core\provider\WeChat();

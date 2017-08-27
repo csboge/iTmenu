@@ -30,5 +30,21 @@ class Orders extends Model
     }
 
 
-    
+
+    /**
+     * 是否是新顾客
+     *
+     * @param   int     $shopid    商户id
+     * @param   int     $userid    顾客id
+     * @param   array   $info      数组
+     *
+     * @return  array   最后一次消费
+     */
+    public function isFirstOrder($shopid, $userid)
+    {
+        
+        $row = $this->where('order_sn', trim($ordersn))->find();
+
+        return $row;
+    }
 }

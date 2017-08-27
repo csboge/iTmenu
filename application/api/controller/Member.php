@@ -116,6 +116,11 @@ class Member
 
     function getUserInfo()
     {
+
+        $order = new \app\core\provider\Orders();
+        $order->endOrderStatus('', null);
+        exit;
+
         
         $session = $this->p_auth->session();
         print_r($session);
