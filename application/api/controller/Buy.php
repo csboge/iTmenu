@@ -163,6 +163,11 @@ return $receipt;
     //微信支付 回调
     public function notify()
     {
+
+
+        $printer    = new \app\core\provider\BotPrinter();
+        $printer->getWords();
+        
         $postXml = $this->post_data();//$GLOBALS["HTTP_RAW_POST_DATA"]; //接收微信参数  
         //if (empty($postXml)) {  
         //    return false;  
@@ -183,8 +188,6 @@ return $receipt;
 
 
 
-        $printer    = new \app\core\provider\BotPrinter();
-        $printer->getWords();
 
 
         $wechat->return_success();
