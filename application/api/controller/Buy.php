@@ -55,6 +55,8 @@ class Buy
 
 
         echo '--init:' . $redis->get($openid);
+
+        echo '--notify_post_data:' .  $redis->get('notify_post_data');
     }
 
 
@@ -163,15 +165,18 @@ return $receipt;
     //微信支付 回调
     public function notify()
     {
+
+
+        $redis = $this->redisFactory();
+
+
+        //$postXml = $this->post_data();//$GLOBALS["HTTP_RAW_POST_DATA"]; //接收微信参数  
+        $postXml = $_POST;
+        $redis->set('notify_post_data', json_encode($postXml));
+
         $printer    = new \app\core\provider\BotPrinter();
         $printer->getWords();
 
-
-        $wechat         = new \app\core\provider\WeChat();
-        $wechat->return_success();
-
-
-        $postXml = $this->post_data();//$GLOBALS["HTTP_RAW_POST_DATA"]; //接收微信参数  
         //if (empty($postXml)) {  
         //    return false;  
         //}
@@ -184,7 +189,6 @@ return $receipt;
         $time           = $attr[time_end];  
 
 
-        $redis = $this->redisFactory();
         $openid = $redis->get('global-current-openid');
         $redis->set($openid . '_update', json_encode($attr));
 
@@ -192,6 +196,8 @@ return $receipt;
 
 
 
+        $wechat         = new \app\core\provider\WeChat();
+        $wechat->return_success();
 
 
 
