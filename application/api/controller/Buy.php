@@ -117,7 +117,7 @@ class Buy
         $result['money']= 50;
 
         $ordersn        = $this->p_order->getOrderSN();
-        $result         = $this->p_order->initOrderData($ordersn, 100, $session['userid'], 1, []);
+        //$result         = $this->p_order->initOrderData($ordersn, 100, $session['userid'], 1, []);
 
 
 
