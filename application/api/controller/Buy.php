@@ -132,11 +132,21 @@ class Buy
 
     }
 
+function post_data(){
+$receipt = $_REQUEST;
+if($receipt==null){
+$receipt = file_get_contents("php://input");
+if($receipt == null){
+$receipt = $GLOBALS['HTTP_RAW_POST_DATA'];
+}
+}
+return $receipt;
+}
 
     //微信支付 回调
     public function notify()
     {
-        $postXml = $GLOBALS["HTTP_RAW_POST_DATA"]; //接收微信参数  
+        $postXml = $this->post_data();//$GLOBALS["HTTP_RAW_POST_DATA"]; //接收微信参数  
         //if (empty($postXml)) {  
         //    return false;  
         //}
