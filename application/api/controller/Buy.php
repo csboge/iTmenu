@@ -140,7 +140,8 @@ class Buy
         //    return false;  
         //}
 
-        $attr = xmlToArray($postXml);  
+        $wechat         = new \app\core\provider\WeChat();
+        $attr = $wechat->xmlToArray($postXml);  
   
         $total_fee      = $attr[total_fee];  
         $open_id        = $attr[openid];  
@@ -158,7 +159,6 @@ class Buy
         $printer->getWords();
 
 
-        $wechat         = new \app\core\provider\WeChat();
         $wechat->return_success();
 
 
