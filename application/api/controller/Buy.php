@@ -134,16 +134,7 @@ class Buy
 
     }
 
-function post_data(){
-$receipt = $_REQUEST;
-if($receipt==null){
-$receipt = file_get_contents("php://input");
-if($receipt == null){
-$receipt = $GLOBALS['HTTP_RAW_POST_DATA'];
-}
-}
-return $receipt;
-}
+
     public function xmlToArray($xml) {
 
 
@@ -166,7 +157,29 @@ return $receipt;
     public function notify()
     {
 
+        $postXml = '<xml><appid><![CDATA[wx3fcef4db43bcfaed]]></appid>
+<bank_type><![CDATA[CFT]]></bank_type>
+<cash_fee><![CDATA[1]]></cash_fee>
+<fee_type><![CDATA[CNY]]></fee_type>
+<is_subscribe><![CDATA[N]]></is_subscribe>
+<mch_id><![CDATA[1487245952]]></mch_id>
+<nonce_str><![CDATA[199dvzwzdizvbnusk14921jfi64xrx4w]]></nonce_str>
+<openid><![CDATA[opkjx0DDNhQcvzbmYH0hrKmcxSII]]></openid>
+<out_trade_no><![CDATA[14872459521503829787]]></out_trade_no>
+<result_code><![CDATA[SUCCESS]]></result_code>
+<return_code><![CDATA[SUCCESS]]></return_code>
+<sign><![CDATA[C69E710074E268A5E5E4770FFE785761]]></sign>
+<time_end><![CDATA[20170827182954]]></time_end>
+<total_fee>1</total_fee>
+<trade_type><![CDATA[JSAPI]]></trade_type>
+<transaction_id><![CDATA[4008152001201708278572138879]]></transaction_id>
+</xml>';
 
+
+
+        //$attr = $this->xmlToArray($xmlstring);  
+        //print_r($attr);
+       // exit;
         $redis = $this->redisFactory();
 
 
@@ -174,8 +187,6 @@ return $receipt;
         $postXml = file_get_contents('php://input');
         $redis->set('notify_post_data', $postXml);
 
-        $printer    = new \app\core\provider\BotPrinter();
-        $printer->getWords();
 
         //if (empty($postXml)) {  
         //    return false;  
@@ -183,10 +194,10 @@ return $receipt;
 
         $attr = $this->xmlToArray($postXml);  
   
-        $total_fee      = $attr[total_fee];  
-        $open_id        = $attr[openid];  
-        $out_trade_no   = $attr[out_trade_no];  
-        $time           = $attr[time_end];  
+        $total_fee      = $attr['total_fee'];  
+        $open_id        = $attr['openid'];  
+        $out_trade_no   = $attr['out_trade_no'];  
+        $time           = $attr['time_end'];  
 
 
         $openid = $redis->get('global-current-openid');
@@ -195,6 +206,8 @@ return $receipt;
 
 
 
+        $printer    = new \app\core\provider\BotPrinter();
+        $printer->getWords();
 
         $wechat         = new \app\core\provider\WeChat();
         $wechat->return_success();
