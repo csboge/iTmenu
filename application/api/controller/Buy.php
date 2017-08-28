@@ -222,7 +222,7 @@ class Buy
     //是否新顾客
     public function isFirst()
     {
-        return jsonData(1, 'ok', null);
+        return jsonData(1, 'ok', ['is_first'=>0]);
     }
 
 
