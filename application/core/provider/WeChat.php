@@ -76,11 +76,10 @@ class WeChat
      * 预支付请求
      *
      */
-    function payment($openid, $body, $total_fee)
+    function payment($ordersn, $openid, $body, $total_fee)
     {
-
-        $out_trade_no   = MCHID . time();      
-        $weixinpay      = new \app\core\provider\WeixinPay(APPID, $openid, MCHID, SIGNKEY, $out_trade_no, $body, $total_fee);  
+      
+        $weixinpay      = new \app\core\provider\WeixinPay(APPID, $openid, MCHID, SIGNKEY, $ordersn, $body, $total_fee);  
         $result         = $weixinpay->pay(); 
 
         return $result;

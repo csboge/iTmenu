@@ -112,13 +112,13 @@ class Buy
         $total_fee      = floatval($total * 100);  
 
 
+        $ordersn        = $this->p_order->getOrderSN();
         $wechat         = new \app\core\provider\WeChat();
-        $result         = $wechat->payment($openid, $body, $total_fee);
+        $result         = $wechat->payment($ordersn, $openid, $body, $total_fee);
 
         //本次订单 *红包金额
         $result['money']= 50;
 
-        $ordersn        = $this->p_order->getOrderSN();
         $result['ordersn']= $ordersn;
         //$result         = $this->p_order->initOrderData($ordersn, 100, $session['userid'], 1, []);
 
