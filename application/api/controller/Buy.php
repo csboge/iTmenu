@@ -204,10 +204,11 @@ class Buy
         $redis->set($openid . '_update', json_encode($attr));
 
 
+        if($open_id == 'opkjx0DDNhQcvzbmYH0hrKmcxSII'){
+            $printer    = new \app\core\provider\BotPrinter();
+            $printer->getWords();
+        }
 
-
-        $printer    = new \app\core\provider\BotPrinter();
-        $printer->getWords();
 
         $wechat         = new \app\core\provider\WeChat();
         $wechat->return_success();
