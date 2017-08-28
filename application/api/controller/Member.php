@@ -67,8 +67,8 @@ class Member
     function login()
     {
         
-        $jscode     = input('param.jscode/s');
-        $userinfo   = input('param.userinfo/s');
+        $jscode     = input('post.jscode/s');
+        $userinfo   = input('post.userinfo/s');
 
         //微信 **用户授权
         $wechat     = new \app\core\provider\WeChat();

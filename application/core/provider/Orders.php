@@ -102,6 +102,10 @@ class Orders
         $result  = $this->m_order->getOrderForSN($ordersn);
         if ($result) { return false; }
 
+        $info['is_first'] = !isset($info['is_first']) ? 1 : intval($info['is_first']);
+        
+
+
 
         $data    = array(
             'order_sn'          => $order_sn,                           //订单号
