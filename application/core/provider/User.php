@@ -120,7 +120,7 @@ class User
             'avatar'    => $session['userinfo']['avatarUrl'],
             'sex'       => $session['userinfo']['gender'],
             'openid'    => $session['openid'],
-            'unionid'   => $session['unionid'],
+            'unionid'   => $unionid,
             'created'   => time(),
             'updated'   => time(),
             'city'      => $session['userinfo']['city'],
