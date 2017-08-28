@@ -219,6 +219,13 @@ class Buy
     }
 
 
+    //是否新顾客
+    public function isFirst()
+    {
+        return jsonData(1, 'ok', null);
+    }
+
+
     public function getOrder()
     {
         $openid          = input('get.openid');

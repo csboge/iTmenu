@@ -112,7 +112,7 @@ class Orders
 
             'status'            => 0,
 
-            'is_first'          => $info['is_first'],                   //首次消费      1 等于首次消费
+            'is_first'          => $info['is_first'],                   //首次消费      0 等于首次消费
 
             'mode_rate'         => 0.8,                                 //红包比率
             'mode_money'        => $info['pay_price'] * 0.8,            //红包金额
