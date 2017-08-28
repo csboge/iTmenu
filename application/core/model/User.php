@@ -46,5 +46,19 @@ class User extends Model
     }
 
 
+     /**
+     * 查询用户（openid）
+     *
+     * @param   string   $openid     用户开放唯一标识
+     *
+     * @return  result 
+     *
+     */
+    public function getUserForOpenid($openid)
+    {
+        $row = $this->where('openid', trim($openid))->find();
+
+        return $row;
+    }
     
 }

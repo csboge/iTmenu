@@ -114,7 +114,7 @@ class User
     public function initUserData($openid, $session)
     {
 
-        $unionid = $session['unionid'];
+        $unionid = (isset($session['unionid'])) ? $session['unionid'] : '';
         $data    = array(
             'nickname'  => $session['userinfo']['nickName'],
             'avatar'    => $session['userinfo']['avatarUrl'],
@@ -128,7 +128,7 @@ class User
         );
 
         //查询用户
-        $result  = $this->m_user->getUserForUnionid($unionid);
+        $result  = $this->m_user->getUserForOpenid($openid);
 
         //修改
         if ($result) {
