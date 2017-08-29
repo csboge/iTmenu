@@ -148,12 +148,10 @@ class Buy
         $info['remark']         = !isset($info['remark']) ? '' : trim($info['remark']);
 
         $total                  = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
-
+        $info['ordersn']        = !isset($info['ordersn']) ? '' : trim($info['ordersn']);
 
         //测试支付
         $total                  = 0.01;
-
-
 
         $offset_money           =  $info['offset_money'];
 
@@ -179,6 +177,7 @@ class Buy
         //本地 - 订单信息
         $orderinfo      = array(
 
+            'ordersn'           => $info['ordersn'],                    //是否老订单
             'shop_id'           => $shopid,                             //商户id
             'user_id'           => $userid,                             //顾客id
             'desk_id'           => $deskid,                             //桌位id
@@ -220,13 +219,7 @@ class Buy
             'updated'           => time()
         );
 
-        $result['order_info']   = $this->p_order->initOrderData($ordersn, $shopid, $userid, $deskid, $orderinfo);
-
-
-        //本次订单 *红包金额
-        $result['money']= $orderinfo['mode_money'];
-
-        $result['ordersn']= $ordersn;
+        $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $deskid, $orderinfo);
 
         $redis = $this->redisFactory();
         $redis->set($openid, json_encode($result));

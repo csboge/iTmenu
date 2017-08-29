@@ -97,8 +97,12 @@ class Orders
      */
     public function initOrderData($ordersn, $shopid, $userid, $deskid, $info)
     {
-        $result  = $this->m_order->getOrderForSN($ordersn);
-        if ($result) { return false; }
+        //如果有订单号 - 说明是老订单
+        if (isset($info['ordersn']) && $info['ordersn']) {
+            $result  = $this->m_order->getOrderForSN($info['ordersn']);
+            if ($result) { return $result; }
+        }
+        
 
 
         $data    = array(
@@ -111,6 +115,7 @@ class Orders
             'status'            => 0,
 
             'is_first'          => $info['is_first'],                   //首次消费      0 等于首次消费
+            'first_money'       => $info['first_money'],                //首次立减金额
 
             'mode_rate'         => $info['mode_rate'],                  //红包比率
             'mode_money'        => $info['mode_money'],                 //红包金额
