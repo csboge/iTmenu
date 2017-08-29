@@ -323,7 +323,7 @@ class Buy
 
             $order_pay_price        = floatval($order_info['pay_price'] * 100); 
             $is_pay_price           = ($order_pay_price == $pay_price) ? true : false;
-            $is_user_id             = ($order_info['user_id'] == $session['userid']) ? true : false;
+            $is_user_id             = (intval($order_info['user_id']) == intval($session['userid'])) ? true : false;
 
 
             //订单状态
@@ -350,7 +350,7 @@ class Buy
                 }
             }
 
-            var_dump( $is_pay_price, $is_user_id);
+            var_dump( $is_pay_price, $is_user_id, $order_info['user_id'] , $session['userid']);
             echo '验证失败';
         }
     }
