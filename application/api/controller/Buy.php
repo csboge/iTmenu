@@ -177,7 +177,7 @@ class Buy
         $body           = "点餐订单, 总价:{$total_fee},红包抵扣:{$offset_money}";
         $result         = $wechat->payment($ordersn, $openid, $body, $total_fee);
 
-        $deskid         = 10;   //$desk_sn;
+        //$deskid         = 10;   //$desk_sn;
 
         
         //本地 - 订单信息
@@ -187,7 +187,7 @@ class Buy
             'shop_id'           => $shopid,                             //商户id
             'user_id'           => $userid,                             //顾客id
 
-            'desk_sn'           => $desk_sn,                            //桌位编号
+            'desk_sn'           => $info['desk_sn'],                    //桌位编号
             'user_count'        => $info['user_count'],                 //就餐人数
 
 
@@ -227,7 +227,7 @@ class Buy
             'updated'           => time()
         );
 
-        $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $desk_sn, $orderinfo);
+        $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
         $redis = $this->redisFactory();
         $redis->set($openid, json_encode($result));
