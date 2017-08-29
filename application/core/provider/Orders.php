@@ -47,11 +47,8 @@ class Orders
     {
         if (!$order_info || !$post_data) { return false; }
 
-        $endtime    = $post_data['time_end'];
-        $endtime    = $post_data['time_end'];
-        $data       = ['status' => 1, 'pay_time' => $endtime, 'updated' => $endtime];
-
-        $data['sign_code'] = $post_data['sign'];
+        $pay_time   = time();
+        $data       = ['status' => 1, 'pay_time' => $pay_time, 'updated' => $pay_time, 'transaction_id' => $post_data['transaction_id'], 'time_end' => $post_data['time_end']];
 
         //更新订单
         $ret  = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id'=>$order_info['user_id']]);
