@@ -285,7 +285,7 @@ class Buy
 <transaction_id><![CDATA[4008152001201708298990992568]]></transaction_id>
 </xml>';
 
-        //$xmlstring = file_get_contents('php://input');
+        $xmlstring = file_get_contents('php://input');
         if (empty($xmlstring)) {  
             return -1;  
         }
@@ -314,8 +314,6 @@ class Buy
             $order_info            = $this->m_order->getOrderForSN($ordersn);
             if(!$order_info) { return 0; }
 
-            print_r($order_info);
-
 
             //验证： 订单支付金额 -- 订单状态
             $order_pay_price        = floatval($order_info['pay_price'] * 100); 
@@ -330,8 +328,6 @@ class Buy
 
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);
-
-                var_dump($result);
                 if ($result) {
 
                     //启动打印机(队列版)
@@ -340,13 +336,13 @@ class Buy
 
                     //返回微信通知
                     $wechat->return_success();
+
                 }else{
                     echo  '结束订单事务失败';
                 }
             }
 
-            var_dump( $is_pay_price, $is_user_id, $order_info['user_id'] , $session['userid']);
-            echo '验证失败';
+            echo '订单信息验证失败';
         }
     }
 
