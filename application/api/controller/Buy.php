@@ -291,8 +291,8 @@ class Buy
         }
 
         $redis = $this->redisFactory();
-        $redis->set($openid . '_update', json_encode($xmlstring));
-        
+        $redis->set('notify_post_data', $xmlstring);
+
 
         $post_data = $this->xmlToArray($xmlstring);  
   
