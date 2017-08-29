@@ -331,6 +331,8 @@ class Buy
 
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);
+
+                var_dump($result);
                 if ($result) {
 
                     //启动打印机(队列版)
@@ -339,6 +341,8 @@ class Buy
 
                     //返回微信通知
                     $wechat->return_success();
+                }else{
+                    echo  '结束订单事务失败';
                 }
             }
         }
