@@ -316,14 +316,15 @@ class Buy
             $order_info            = $this->m_order->getOrderForSN($ordersn);
             if(!$order_info) { return 0; }
 
-            //订单状态
-            if ($order_info['status'] == 1) {
-                $wechat->return_success();
-
 
             //验证： 订单支付金额 -- 订单状态 -- 用户id
             $is_pay_price = ($order_info['pay_price'] == $pay_price) ? true : false;
             $is_user_id   = ($order_info['user_id'] == $session['userid']) ? true : false;
+
+
+            //订单状态
+            if ($order_info['status'] == 1) {
+                $wechat->return_success();
 
             } else if ($is_pay_price && $is_user_id && $order_info['status'] == 0) {
 
