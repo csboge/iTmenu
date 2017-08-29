@@ -143,7 +143,7 @@ class Buy
         $info['message']        = !isset($info['message']) ? '' : trim($info['message']);
         $info['remark']         = !isset($info['remark']) ? '' : trim($info['remark']);
 
-        $total                  = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
+        $info['total_price']    = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
         $info['ordersn']        = !isset($info['ordersn']) ? '' : trim($info['ordersn']);
 
         //桌位
@@ -161,7 +161,7 @@ class Buy
         }
 
         //测试支付
-        $total                  = 0.01;
+        $info['pay_price']      = 0.01;
 
         $offset_money           =  $info['offset_money'];
 
@@ -173,7 +173,7 @@ class Buy
 
 
         //付款 - 单位转换
-        $total_fee      = floatval($total * 100);  
+        $total_fee      = floatval($info['pay_price'] * 100);  
         $body           = "点餐订单, 总价:{$total_fee},红包抵扣:{$offset_money}";
         $result         = $wechat->payment($ordersn, $openid, $body, $total_fee);
 
@@ -199,7 +199,7 @@ class Buy
 
             
             //￥ = goods_price
-            'total_price'       => $total,                              //总价
+            'total_price'       => $info['total_price'],                //总价
             'coupon_list_id'    => $info['coupon_list_id'],             //优惠卷id     
             'coupon_price'      => $info['coupon_price'],               //优惠金额
 
@@ -297,7 +297,7 @@ class Buy
         $post_data = $this->xmlToArray($xmlstring);  
   
         //实际支付金额
-        $pay_price      = $post_data['total_fee'];
+        $pay_price      = $post_data['pay_price'];
         $openid         = $post_data['openid'];
         $ordersn        = $post_data['out_trade_no'];
 
