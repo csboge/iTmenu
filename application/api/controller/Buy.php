@@ -287,7 +287,7 @@ class Buy
 
         //$xmlstring = file_get_contents('php://input');
         if (empty($xmlstring)) {  
-            return false;  
+            return -1;  
         }
 
         $redis = $this->redisFactory();
@@ -314,7 +314,7 @@ class Buy
 
             //查询订单
             $order_info            = $this->m_order->getOrderForSN($ordersn);
-            if(!$order_info) { return false; }
+            if(!$order_info) { return 0; }
 
             //订单状态
             if ($order_info['status'] == 1) {
