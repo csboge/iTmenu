@@ -187,7 +187,7 @@ class Buy
             'first_money'       => $info['first_money'],                //首次立减金额
 
             'mode_rate'         => 0.08,                                //红包比率
-            'mode_money'        => $info['pay_price'] * 0.08,           //红包金额
+            'mode_money'        => $info['must_price'] * 0.08,          //红包金额
 
             
             //￥ = goods_price
@@ -346,7 +346,7 @@ class Buy
     //是否新顾客
     public function isFirst()
     {
-        return jsonData(1, 'ok', ['is_first'=>0, 'first_money'=>5]);
+        return jsonData(1, 'ok', ['is_first'=>0, 'first_money'=>5, 'order_rate'=>0.02, 'mode_rate'=>0.08]);
     }
 
 

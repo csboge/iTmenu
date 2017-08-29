@@ -113,7 +113,7 @@ class Orders
             'is_first'          => $info['is_first'],                   //首次消费      0 等于首次消费
 
             'mode_rate'         => $info['mode_rate'],                  //红包比率
-            'mode_money'        => $info['pay_price'],                  //红包金额
+            'mode_money'        => $info['mode_money'],                 //红包金额
 
             //￥ = goods_price
             'total_price'       => $info['total_price'],                //总价
