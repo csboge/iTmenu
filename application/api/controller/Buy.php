@@ -310,8 +310,6 @@ class Buy
         $checkSign          = $wechat->checkSign($post_sign, $post_data);
         if($post_data['return_code'] =='SUCCESS' && $checkSign){
 
-            $session        = $this->p_auth->session();
-
             //查询订单
             $order_info            = $this->m_order->getOrderForSN($ordersn);
             if(!$order_info) { return 0; }
@@ -319,19 +317,16 @@ class Buy
             print_r($order_info);
 
 
-            //验证： 订单支付金额 -- 订单状态 -- 用户id
-
+            //验证： 订单支付金额 -- 订单状态
             $order_pay_price        = floatval($order_info['pay_price'] * 100); 
             $is_pay_price           = ($order_pay_price == $pay_price) ? true : false;
-            $is_user_id             = (intval($order_info['user_id']) == intval($session['userid'])) ? true : false;
 
 
             //订单状态
             if ($order_info['status'] == 1) {
                 $wechat->return_success();
 
-            } else if ($is_pay_price && $is_user_id && $order_info['status'] == 0) {
-
+            } else if ($is_pay_price && $order_info['status'] == 0) {
 
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);
