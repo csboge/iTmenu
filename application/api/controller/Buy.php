@@ -273,19 +273,19 @@ class Buy
 <fee_type><![CDATA[CNY]]></fee_type>
 <is_subscribe><![CDATA[N]]></is_subscribe>
 <mch_id><![CDATA[1487245952]]></mch_id>
-<nonce_str><![CDATA[199dvzwzdizvbnusk14921jfi64xrx4w]]></nonce_str>
+<nonce_str><![CDATA[ioxvqyvja6ln4u74qlg68xbnrh8t3hbj]]></nonce_str>
 <openid><![CDATA[opkjx0DDNhQcvzbmYH0hrKmcxSII]]></openid>
-<out_trade_no><![CDATA[14872459521503829787]]></out_trade_no>
+<out_trade_no><![CDATA[2017082953509897]]></out_trade_no>
 <result_code><![CDATA[SUCCESS]]></result_code>
 <return_code><![CDATA[SUCCESS]]></return_code>
-<sign><![CDATA[C69E710074E268A5E5E4770FFE785761]]></sign>
-<time_end><![CDATA[20170827182954]]></time_end>
+<sign><![CDATA[4D6080870C994FCDB63A671B42A63299]]></sign>
+<time_end><![CDATA[20170829202130]]></time_end>
 <total_fee>1</total_fee>
 <trade_type><![CDATA[JSAPI]]></trade_type>
-<transaction_id><![CDATA[4008152001201708278572138879]]></transaction_id>
+<transaction_id><![CDATA[4008152001201708298990992568]]></transaction_id>
 </xml>';
 
-        $xmlstring = file_get_contents('php://input');
+        //$xmlstring = file_get_contents('php://input');
         if (empty($xmlstring)) {  
             return false;  
         }
