@@ -173,9 +173,9 @@ class Buy
 
 
         //付款 - 单位转换
-        $total_fee      = floatval($info['pay_price'] * 100);  
-        $body           = "点餐订单, 总价:{$total_fee},红包抵扣:{$offset_money}";
-        $result         = $wechat->payment($ordersn, $openid, $body, $total_fee);
+        $pay_price      = floatval($info['pay_price'] * 100);  
+        $body           = "点餐订单, 总价:{$pay_price},红包抵扣:{$offset_money}";
+        $result         = $wechat->payment($ordersn, $openid, $body, $pay_price);
 
         //$deskid         = 10;   //$desk_sn;
 
@@ -297,7 +297,7 @@ class Buy
         $post_data = $this->xmlToArray($xmlstring);  
   
         //实际支付金额
-        $pay_price      = $post_data['pay_price'];
+        $pay_price      = $post_data['total_fee'];  
         $openid         = $post_data['openid'];
         $ordersn        = $post_data['out_trade_no'];
 
@@ -320,8 +320,10 @@ class Buy
 
 
             //验证： 订单支付金额 -- 订单状态 -- 用户id
-            $is_pay_price = ($order_info['pay_price'] == $pay_price) ? true : false;
-            $is_user_id   = ($order_info['user_id'] == $session['userid']) ? true : false;
+
+            $order_pay_price        = floatval($order_info['pay_price'] * 100); 
+            $is_pay_price           = ($order_pay_price == $pay_price) ? true : false;
+            $is_user_id             = ($order_info['user_id'] == $session['userid']) ? true : false;
 
 
             //订单状态
