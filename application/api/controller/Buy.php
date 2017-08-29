@@ -316,6 +316,8 @@ class Buy
             $order_info            = $this->m_order->getOrderForSN($ordersn);
             if(!$order_info) { return 0; }
 
+            var_dump($order_info);
+
 
             //验证： 订单支付金额 -- 订单状态 -- 用户id
             $is_pay_price = ($order_info['pay_price'] == $pay_price) ? true : false;
