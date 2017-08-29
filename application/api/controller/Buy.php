@@ -180,7 +180,7 @@ class Buy
             'first_money'       => $info['first_money'],                //首次立减金额
 
             //￥ = goods_price
-            'total_price'       => $total_fee,                          //总价
+            'total_price'       => $total,                              //总价
             'coupon_list_id'    => $info['coupon_list_id'],             //优惠卷id     
             'coupon_price'      => $info['coupon_price'],               //优惠金额
 
