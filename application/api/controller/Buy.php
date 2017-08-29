@@ -152,7 +152,7 @@ class Buy
         //就餐人数
         $info['user_count']     = !isset($info['user_count']) ? 0 : intval($info['user_count']);
 
-        if ($info['desk_sn']) {
+        if (!$info['desk_sn']) {
             return jsonData(0, '请填写桌位编码');
         }
 
