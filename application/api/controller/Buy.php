@@ -147,8 +147,15 @@ class Buy
         $info['message']        = !isset($info['message']) ? '' : trim($info['message']);
         $info['remark']         = !isset($info['remark']) ? '' : trim($info['remark']);
 
-        $total          = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
-        $offset_money   =  $info['offset_money'];
+        $total                  = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
+
+
+        //测试支付
+        $total                  = 0.01;
+
+
+
+        $offset_money           =  $info['offset_money'];
 
         if ($desk_sn) {
             return jsonData(0, 'desk_sn 桌位不能为空');
@@ -202,7 +209,6 @@ class Buy
             'goods_list'        => $info['goods_list'],                 //购物车(商品列表)
             'user_list'         => $info['user_list'],                  //同桌用户
 
-            
             'message'           => $info['message'],                    //给商家留言
             'remark'            => $info['remark'],                     //口味备注
 
