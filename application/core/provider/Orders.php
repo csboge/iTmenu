@@ -35,28 +35,26 @@ class Orders
     
 
     /**
-     * 结束订单（订单号）
+     * 结束订单
      *
-     * @param   string   $ordersn    订单号
-     * @param   array    $info       业务参数
+     * @param   string   $ordersn       订单号
+     * @param   array    $order_info    订单数据
      *
      * @return  result 
      *
      */
-    public function endOrderStatus($ordersn, $info)
+    public function endOrderStatus($order_info, $post_data)
     {
-        $result     = $this->m_order->getOrderForSN($ordersn);
-        if (!$result) return false;
+        if (!$order_info || !$post_data) { return false; }
 
-        $endtime    = time();
+        $endtime    = $post_data['time_end'];
+        $endtime    = $post_data['time_end'];
         $data       = ['status' => 1, 'pay_time' => $endtime, 'updated' => $endtime];
 
-        //支付签名
-        $signData          = array_merge($data, $result);
-        $data['sign_code'] = $this->getSign($signData);
+        $data['sign_code'] = $post_data['sign'];
 
         //更新订单
-        $ret  = $this->m_order->save($data, ['order_sn' => $ordersn]);
+        $ret  = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id'=>$order_info['user_id']]);
         
         return $ret;
     }
@@ -102,13 +100,9 @@ class Orders
         $result  = $this->m_order->getOrderForSN($ordersn);
         if ($result) { return false; }
 
-        $info['is_first'] = !isset($info['is_first']) ? 1 : intval($info['is_first']);
-        
-
-
 
         $data    = array(
-            'order_sn'          => $order_sn,                           //订单号
+            'order_sn'          => $ordersn,                            //订单号
 
             'shop_id'           => $shopid,                             //商户id
             'user_id'           => $userid,                             //顾客id
@@ -166,7 +160,7 @@ class Orders
 
 
     //作用：生成签名
-    private function getSign($obj, $sign = 'csboge_end_order') {
+    public function getSign($obj, $sign = 'csboge_end_order') {
 
         foreach ($obj as $k => $v) {
             $Parameters[$k] = $v;
@@ -177,7 +171,7 @@ class Orders
         $String = $this->formatBizQueryParaMap($Parameters, false);
 
         //签名步骤二：在string后加入KEY
-        $String = $String . "&sign=" . $sign;
+        $String = $String . "&key=" . $sign;
         
         //签名步骤三：MD5加密
         $String = md5($String);

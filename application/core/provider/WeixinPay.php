@@ -166,7 +166,7 @@ class WeixinPay {
 
 
     //作用：生成签名
-    private function getSign($Obj) {
+    public function getSign($Obj) {
         foreach ($Obj as $k => $v) {
             $Parameters[$k] = $v;
         }

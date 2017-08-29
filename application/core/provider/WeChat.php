@@ -86,6 +86,24 @@ class WeChat
     }
 
 
+    /***
+     * 支付回调 - 签名验证
+     *
+     * @param   string   $post_sign    表单签名
+     * @param   string   $post_data    表单数据
+     *
+     */
+    public function checkSign($post_sign, $post_data)
+    {
+        $weixinpay      = new \app\core\provider\WeixinPay(APPID, NULL, MCHID, SIGNKEY, NULL, NULL, NULL);  
+
+        unset($post_data['sign']);
+        $my_sign = $weixinpay->getSign($post_data);
+
+        return ($my_sign === $post_sign) ? true : false;
+    }
+
+
     /*
      * 给微信发送确认订单金额和签名正确，SUCCESS信息 -xzz0521
      */
