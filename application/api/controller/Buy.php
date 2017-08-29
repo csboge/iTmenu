@@ -111,11 +111,6 @@ class Buy
         $openid         = $session['openid']; 
         $userid         = $session['userid']; 
         $shopid         = input('param.shop_id/d');
-        $desk_sn        = input('param.desk_sn/s');
-
-        if ($desk_sn) {
-            return jsonData(0, 'desk_sn 桌位不能为空');
-        }
 
         //接收 - 订单数据包
         $order_info     = input('param.order/s');
@@ -130,6 +125,7 @@ class Buy
         $info['first_money']    = 5;
         $info['coupon_list_id'] = !isset($info['coupon_list_id']) ? 0 : intval($info['coupon_list_id']);
         $info['coupon_price']   = !is_numeric($info['coupon_price']) ? 0 : $info['coupon_price'];
+
 
         $info['must_price']     = !is_numeric($info['must_price']) ? 0 : $info['must_price'];
         $info['pay_price']      = !is_numeric($info['pay_price']) ? 0 : $info['pay_price'];
@@ -150,14 +146,24 @@ class Buy
         $total                  = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
         $info['ordersn']        = !isset($info['ordersn']) ? '' : trim($info['ordersn']);
 
+        //桌位
+        $info['desk_sn']        = !isset($info['desk_sn']) ? '' : trim($info['desk_sn']);
+
+        //就餐人数
+        $info['user_count']     = !isset($info['user_count']) ? 0 : intval($info['user_count']);
+
+        if ($info['desk_sn']) {
+            return jsonData(0, '请填写桌位编码');
+        }
+
+        if ($info['user_count'] <= 0) {
+            return jsonData(0, '请填写就餐人数');
+        }
+
         //测试支付
         $total                  = 0.01;
 
         $offset_money           =  $info['offset_money'];
-
-        if ($desk_sn) {
-            return jsonData(0, 'desk_sn 桌位不能为空');
-        }
 
         //向微信发送预订单
         $wechat         = new \app\core\provider\WeChat();
@@ -171,7 +177,7 @@ class Buy
         $body           = "点餐订单, 总价:{$total_fee},红包抵扣:{$offset_money}";
         $result         = $wechat->payment($ordersn, $openid, $body, $total_fee);
 
-        $deskid         = 10;//$desk_sn;
+        $deskid         = 10;   //$desk_sn;
 
         
         //本地 - 订单信息
@@ -180,7 +186,10 @@ class Buy
             'ordersn'           => $info['ordersn'],                    //是否老订单
             'shop_id'           => $shopid,                             //商户id
             'user_id'           => $userid,                             //顾客id
-            'desk_id'           => $deskid,                             //桌位id
+
+            'desk_sn'           => $desk_sn,                            //桌位编号
+            'user_count'        => $info['user_count'],                 //就餐人数
+
 
             'is_first'          => $info['is_first'],                   //首次消费       0 等于首次消费
             'first_money'       => $info['first_money'],                //首次立减金额
@@ -201,7 +210,6 @@ class Buy
             'order_money'       => $info['order_money'],                //手续费金额
 
             'offset_money'      => $info['offset_money'],               //使用红包抵扣金额
- 
             'shop_price'        => $info['must_price'],                 //商家实际到账金额          
 
             'goods_price'       => $info['goods_price'],                //商品总价
@@ -211,15 +219,15 @@ class Buy
             'message'           => $info['message'],                    //给商家留言
             'remark'            => $info['remark'],                     //口味备注
 
-            
             'pay_way'           => $info['pay_way'],                    //支付方式
             'pay_time'          => 0,                                   //支付完成时间
+
 
             'created'           => time(),
             'updated'           => time()
         );
 
-        $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $deskid, $orderinfo);
+        $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $desk_sn, $orderinfo);
 
         $redis = $this->redisFactory();
         $redis->set($openid, json_encode($result));

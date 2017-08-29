@@ -90,12 +90,12 @@ class Orders
      * @param   string  $ordersn   订单号
      * @param   int     $shopid    商户id
      * @param   int     $userid    顾客id
-     * @param   int     $deskid    桌位id
+     * @param   int     $desk_sn   桌位编号
      * @param   array   $info      数组
      *
      * @return  array
      */
-    public function initOrderData($ordersn, $shopid, $userid, $deskid, $info)
+    public function initOrderData($ordersn, $shopid, $userid, $desk_sn, $info)
     {
         //如果有订单号 - 说明是老订单
         if (isset($info['ordersn']) && $info['ordersn']) {
@@ -110,7 +110,9 @@ class Orders
 
             'shop_id'           => $shopid,                             //商户id
             'user_id'           => $userid,                             //顾客id
-            'desk_id'           => $deskid,                             //桌位id
+
+            'desk_sn'           => $desk_sn,                            //桌位编号
+            'user_count'        => $info['user_count'],                 //就餐人数
 
             'status'            => 0,
 
