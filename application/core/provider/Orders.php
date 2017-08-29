@@ -112,8 +112,8 @@ class Orders
 
             'is_first'          => $info['is_first'],                   //首次消费      0 等于首次消费
 
-            'mode_rate'         => 0.8,                                 //红包比率
-            'mode_money'        => $info['pay_price'] * 0.8,            //红包金额
+            'mode_rate'         => $info['mode_rate'],                  //红包比率
+            'mode_money'        => $info['pay_price'],                  //红包金额
 
             //￥ = goods_price
             'total_price'       => $info['total_price'],                //总价
@@ -123,8 +123,8 @@ class Orders
             'must_price'        => $info['must_price'],                 //应该支付金额
             'pay_price'         => $info['pay_price'],                  //实际支付金额
             
-            'order_rate'        => 0.02,                                //手续费比率
-            'order_money'       => $info['order_money'] * 0.02,         //手续费金额
+            'order_rate'        => $info['order_rate'],                 //手续费比率
+            'order_money'       => $info['order_money'],                //手续费金额
 
             'offset_money'      => $info['offset_money'],               //使用红包抵扣金额
 

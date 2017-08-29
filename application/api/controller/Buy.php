@@ -179,6 +179,10 @@ class Buy
             'is_first'          => $info['is_first'],                   //首次消费       0 等于首次消费
             'first_money'       => $info['first_money'],                //首次立减金额
 
+            'mode_rate'         => 0.08,                                //红包比率
+            'mode_money'        => $info['pay_price'] * 0.08,           //红包金额
+
+            
             //￥ = goods_price
             'total_price'       => $total,                              //总价
             'coupon_list_id'    => $info['coupon_list_id'],             //优惠卷id     
@@ -214,7 +218,7 @@ class Buy
 
 
         //本次订单 *红包金额
-        $result['money']= 50;
+        $result['money']= $orderinfo['mode_money'];
 
         $result['ordersn']= $ordersn;
 
