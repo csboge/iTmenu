@@ -137,7 +137,7 @@ class Buy
         $info['order_money']    = !is_numeric($info['order_money']) ? 0 : $info['order_money'];
         $info['offset_money']   = !is_numeric($info['offset_money']) ? 0 : $info['offset_money'];
 
-        $info['shop_price']     = !is_numeric($info['shop_price']) ? 0 : $info['shop_price'];
+        //$info['shop_price']     = !is_numeric($info['shop_price']) ? 0 : $info['shop_price'];
         $info['goods_price']    = !is_numeric($info['goods_price']) ? 0 : $info['goods_price'];
         $info['pay_way']        = !is_numeric($info['pay_way']) ? 0 : intval($info['pay_way']);
 
@@ -192,7 +192,7 @@ class Buy
 
             'offset_money'      => $info['offset_money'],               //使用红包抵扣金额
  
-            'shop_price'        => $info['shop_price'],                 //商家实际到账金额          
+            'shop_price'        => $info['must_price'],                 //商家实际到账金额          
 
             'goods_price'       => $info['goods_price'],                //商品总价
             'goods_list'        => $info['goods_list'],                 //购物车(商品列表)
