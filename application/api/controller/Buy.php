@@ -231,7 +231,6 @@ class Buy
 
         $redis = $this->redisFactory();
         $redis->set($openid, json_encode($result));
-
         $redis->set('global-current-openid', $openid);
 
 
@@ -291,7 +290,9 @@ class Buy
             return false;  
         }
 
-        //$redis = $this->redisFactory();
+        $redis = $this->redisFactory();
+        $redis->set($openid . '_update', json_encode($xmlstring));
+        
 
         $post_data = $this->xmlToArray($xmlstring);  
   
