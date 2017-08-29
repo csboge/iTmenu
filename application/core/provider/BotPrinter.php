@@ -71,7 +71,7 @@ class BotPrinter
      *
      *
      */
-    function printOrderInfo($order_info, $post_data, $session){
+    function printOrderInfo($order_info, $post_data){
 
         //$printer    = new \app\core\provider\BotPrinter();
         $sn         = '217502439';

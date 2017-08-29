@@ -336,7 +336,7 @@ class Buy
 
                     //启动打印机(队列版)
                     $printer    = new \app\core\provider\BotPrinter();
-                    $printer->printOrderInfo($order_info, $post_data, $session);
+                    $printer->printOrderInfo($order_info, $post_data);
 
                     //返回微信通知
                     $wechat->return_success();
