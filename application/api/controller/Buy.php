@@ -147,8 +147,8 @@ class Buy
         $info['message']        = !isset($info['message']) ? '' : trim($info['message']);
         $info['remark']         = !isset($info['remark']) ? '' : trim($info['remark']);
 
-        $total          = input('param.total_price/f');
-        $offset_money   = input('param.offset_money/f');
+        $total          = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
+        $offset_money   =  $info['offset_money'];
 
         if ($desk_sn) {
             return jsonData(0, 'desk_sn 桌位不能为空');
