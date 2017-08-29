@@ -93,6 +93,11 @@ class Buy
         return jsonData(1, 'ok', $result);
     }  
 
+    function is_json($string) {
+    json_decode($string);
+    return (json_last_error() == JSON_ERROR_NONE);
+    }
+
 
     /**
      * 提交订单
@@ -101,7 +106,6 @@ class Buy
      */
     public function submitOrder()
     {
-        
         //用户信息
         $session        = $this->p_auth->session();
         $openid         = $session['openid']; 
@@ -113,8 +117,15 @@ class Buy
             return jsonData(0, 'desk_sn 桌位不能为空');
         }
 
-        //本地订单
-        $info                   = $_POST;
+        //接收 - 订单数据包
+        $order_info     = input('param.order/s');
+        if (!$this->is_json($order_info)){
+            return jsonData(0, 'order 数据不合法');
+        }
+
+        //转换数组
+        $info = json_decode($order_info, true);
+
         $info['is_first']       = !isset($info['is_first']) ? 1 : intval($info['is_first']);
         $info['first_money']    = 5;
         $info['coupon_list_id'] = !isset($info['coupon_list_id']) ? 0 : intval($info['coupon_list_id']);
