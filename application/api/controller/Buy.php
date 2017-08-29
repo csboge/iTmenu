@@ -345,6 +345,9 @@ class Buy
                     echo  '结束订单事务失败';
                 }
             }
+
+            var_dump( $is_pay_price, $is_user_id);
+            echo '验证失败';
         }
     }
 
