@@ -267,7 +267,7 @@ class Buy
          */
 
 
-        $xmlstring = '<xml><appid><![CDATA[wx3fcef4db43bcfaed]]></appid>
+        /*$xmlstring = '<xml><appid><![CDATA[wx3fcef4db43bcfaed]]></appid>
 <bank_type><![CDATA[CFT]]></bank_type>
 <cash_fee><![CDATA[1]]></cash_fee>
 <fee_type><![CDATA[CNY]]></fee_type>
@@ -283,7 +283,7 @@ class Buy
 <total_fee>1</total_fee>
 <trade_type><![CDATA[JSAPI]]></trade_type>
 <transaction_id><![CDATA[4008152001201708298990992568]]></transaction_id>
-</xml>';
+</xml>';*/
 
         $xmlstring = file_get_contents('php://input');
         if (empty($xmlstring)) {  
@@ -330,9 +330,23 @@ class Buy
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);
                 if ($result) {
 
-                    //启动打印机(队列版)
                     $printer    = new \app\core\provider\BotPrinter();
-                    $printer->printOrderInfo($order_info, $post_data);
+
+
+                    //启动打印机(队列版)
+                    if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
+                        $printer->getWords('217502991');
+                    }
+
+                    //2号  -- 殷宏华
+                    if ($openid == 'opkjx0L3kMBBrU413UHLyTyE_4is') {
+                        $printer->getWords('217502989');
+
+
+                    }else{
+                        $printer->printOrderInfo($order_info, $post_data);    
+                    }
+
 
                     //返回微信通知
                     $wechat->return_success();
@@ -356,16 +370,15 @@ class Buy
 
 
 
-    public function getOrder()
+    public function printOrder()
     {
-        $openid          = input('get.openid');
+        $print_bot_sn = '217502989';
 
+        //启动打印机(测试版)
+        $printer    = new \app\core\provider\BotPrinter();
+        $printer->getWords($print_bot_sn);
+       
 
-        $redis = $this->redisFactory();
-        print $redis->get($openid);
-
-        print '---------';
-        print $redis->get($openid . '_update');
     }
 
 }

@@ -37,10 +37,10 @@ class BotPrinter
      *
      *
      */
-    function getWords(){
+    function getWords($sn = ''){
 
         //$printer    = new \app\core\provider\BotPrinter();
-        $sn         = '217502439';
+        $sn         = ($sn) ? $sn : '217502439';
 
         $orderInfo = '<CB>电子菜谱</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
