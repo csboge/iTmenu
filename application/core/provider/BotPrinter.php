@@ -61,6 +61,27 @@ class BotPrinter
 		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
 
         $re = $this->wp_print($sn, $orderInfo, 1);
+
+
+
+        $orderInfo = '<CB>顾客换菜</CB><BR>';
+		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+		$orderInfo .= '*****辣椒炒肉　10.0   10  10.0<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+		$orderInfo .= '白辣椒炒肉　　　10.0   10  10.0<BR>';
+		$orderInfo .= '备注：加辣，多辣都行！<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+		$orderInfo .= '合计：10.0元<BR>';
+		$orderInfo .= '送货地点：长沙市万达广场C2-3508<BR>';
+		$orderInfo .= '联系电话：0731-85056818<BR>';
+		$orderInfo .= '订餐时间：'.date('Y-m-d H:i:s', time()).'<BR>';
+		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
+
+        $re = $this->wp_print($sn, $orderInfo, 1);
+
+
+
         //echo $re;
         //exit;
     }
