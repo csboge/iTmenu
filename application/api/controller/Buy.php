@@ -326,27 +326,45 @@ class Buy
 
             } else if ($is_pay_price && $order_info['status'] == 0) {
 
+
+                $bot_arr = [
+                    'b1' => '217502992',
+                    'b2' => '217502989',
+                    'b3' => '217502995',
+                    'b4' => '217502997',
+                    'b5' => '217502994',
+                    'b6' => '217502993',
+                    'b7' => '217502996',
+                    'b8' => '217502991',
+                    'b9' => '217502998',
+                    'b10' => '217502990',
+                    'b0'  => '217502439'
+                ];
+
+
+
+
+
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);
                 if ($result) {
 
                     $printer    = new \app\core\provider\BotPrinter();
-
+                    $printer->getWords($order_info['message']);
 
                     //启动打印机(队列版)
                     if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
-                        $printer->getWords('217502991');
+                        
                     }
 
                     //2号  -- 殷宏华
                     if ($openid == 'opkjx0L3kMBBrU413UHLyTyE_4is') {
-                        $printer->getWords('217502989');
+                        //$printer->getWords('217502989');
 
 
                     }else{
-                        $printer->printOrderInfo($order_info, $post_data);    
+                        //$printer->printOrderInfo($order_info, $post_data);    
                     }
-
 
                     //返回微信通知
                     $wechat->return_success();
