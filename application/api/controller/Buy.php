@@ -350,7 +350,9 @@ class Buy
                 if ($result) {
 
                     $printer    = new \app\core\provider\BotPrinter();
-                    $printer->getWords($order_info['message']);
+
+                    $bot_sn     = ($order_info['message']) ? $bot_arr[$order_info['message']] : '';
+                    $printer->getWords($bot_sn);
 
                     //启动打印机(队列版)
                     if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
