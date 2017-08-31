@@ -389,6 +389,8 @@ class Buy
             ['typeid'=>0, 'title'=>'在线支付', 'is_default'=>1], ['typeid'=>1, 'title'=>'现金支付', 'is_default'=>0]], 
         'remark'=>[['txt'=>'', 'color'=>''], ['txt'=>'', 'color'=>'']], 'message'=>'：给买家留言,特殊要求。', 'user_list'=>[
         ['avatar'=>'', 'userid'=>1, 'sex'=>0, 'nickname'=>'用户1'],['avatar'=>'', 'userid'=>2, 'sex'=>0, 'nickname'=>'用户2'],['avatar'=>'', 'userid'=>3, 'sex'=>1, 'nickname'=>'用户3']
+        ], 'use_base'=>[
+            ['id'=>1, 'name'=>'餐具', 'price'=>2.00, 'img_url'=>'', 'cate_id'=>2, 'num'=>0], ['id'=>2, 'name'=>'纸巾', 'price'=>1.00, 'img_url'=>'', 'cate_id'=>2, 'num'=>2]
         ]];
 
         return jsonData(1, 'ok', $arr);
