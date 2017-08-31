@@ -82,6 +82,11 @@ class BotPrinter
         //$printer    = new \app\core\provider\BotPrinter();
         $sn         = '217502439';
 
+        $str       = '[{"id":1,"name":"腐竹烧肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":3,"name":"梅菜扣肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":15,"name":"绿豆粥","img_url":"http://img.my-shop.cc/goods/tang5.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":16,"name":"红枣银耳羹","img_url":"http://img.my-shop.cc/goods/tang6.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":2,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":2},{"id":19,"name":"腐竹烧肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1},{"id":20,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1}]';
+
+
+        $arr = json_decode($str, true);
+        
         $orderInfo = '<CB>电子菜谱</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';

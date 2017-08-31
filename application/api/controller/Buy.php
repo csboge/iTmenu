@@ -342,9 +342,6 @@ class Buy
                 ];
 
 
-
-
-
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);
                 if ($result) {
@@ -385,7 +382,16 @@ class Buy
     //是否新顾客
     public function isFirst()
     {
-        return jsonData(1, 'ok', ['is_first'=>0, 'first_money'=>5, 'order_rate'=>0.02, 'mode_rate'=>0.08]);
+        $arr = ['offset_money'=>1, 'is_first'=>0, 'first_money'=>6, 'coupon'=>[
+            'coupon_list_id'=>0, 'status'=>1, 'get_time'=>0, 'use_time'=>0, 'u_status'=>0,'dis_price'=>0.00, 'start_time'=>0, 'end_time'=>0, 'conditon'=>''], 
+        'order_rate'=>0.02,'mode_rate'=>0.08, 
+        'pay_type'=>[
+            ['typeid'=>0, 'title'=>'在线支付', 'is_default'=>1], ['typeid'=>1, 'title'=>'现金支付', 'is_default'=>0]], 
+        'remark'=>[['txt'=>'', 'color'=>''], ['txt'=>'', 'color'=>'']], 'message'=>'：给买家留言,特殊要求。', 'user_list'=>[
+        ['avatar'=>'', 'userid'=>1, 'sex'=>0, 'nickname'=>'用户1'],['avatar'=>'', 'userid'=>2, 'sex'=>0, 'nickname'=>'用户2'],['avatar'=>'', 'userid'=>3, 'sex'=>1, 'nickname'=>'用户3']
+        ]];
+
+        return jsonData(1, 'ok', $arr);
     }
 
 
@@ -395,10 +401,29 @@ class Buy
         $print_bot_sn = '217502989';
 
         //启动打印机(测试版)
-        $printer    = new \app\core\provider\BotPrinter();
-        $printer->getWords($print_bot_sn);
+        //$printer    = new \app\core\provider\BotPrinter();
+        //$printer->getWords($print_bot_sn);
        
+        $this->getLine();
+
+
 
     }
+
+    private function getLine()
+    {
+        $str = '西红柿鸡蛋炒饭';
+        //$str = '123PHPp我们00我';
+
+		//$orderInfo .= '饭　　　　　 　10.0   10  10.0<BR>';
+		//$orderInfo .= '饭　　　　　 　               <BR>';
+
+        print $this->_strlen($str);
+    }
+
+    function _strlen($str)  
+    {  
+        return (strlen($str) + mb_strlen($str, 'UTF8')) / 2; 
+    }  
 
 }
