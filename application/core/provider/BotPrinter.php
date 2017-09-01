@@ -78,33 +78,49 @@ class BotPrinter
      *
      */
     function printOrderInfo($order_info, $post_data){
-
+        header("Content-type: text/html; charset=utf-8");
         //$printer    = new \app\core\provider\BotPrinter();
-        $sn         = '217502439';
+        $sn         = '217502993';
 
-        $str       = '[{"id":1,"name":"腐竹烧肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":3,"name":"梅菜扣肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":15,"name":"绿豆粥","img_url":"http://img.my-shop.cc/goods/tang5.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":16,"name":"红枣银耳羹","img_url":"http://img.my-shop.cc/goods/tang6.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":2,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":2},{"id":19,"name":"腐竹烧肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1},{"id":20,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1}]';
-
+        $str       = '[{"id":1,"name":"腐竹烧肉萨卡的方式","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":3,"name":"梅菜扣肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":15,"name":"绿豆粥","img_url":"http://img.my-shop.cc/goods/tang5.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":16,"name":"红枣银耳羹","img_url":"http://img.my-shop.cc/goods/tang6.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":2,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":2},{"id":19,"name":"腐竹烧肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1},{"id":20,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1}]';
 
         $arr = json_decode($str, true);
-        
+        $total = '';
+        foreach ($arr as &$value){
+            $total += $value['price']*$value['num'];
+            $value['extras'] = $value['price']*$value['num'];
+        }
         $orderInfo = '<CB>电子菜谱</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';
-		$orderInfo .= '饭　　　　　 　10.0   10  10.0<BR>';
-		$orderInfo .= '伯格  　　　　 10.0   10  10.0<BR>';
-		$orderInfo .= '蛋炒饭　　　　 10.0   100 100.0<BR>';
-		$orderInfo .= '伯格网络　　　 100.0  100 100.0<BR>';
-		$orderInfo .= '西红柿炒饭　　 1000.0 1   100.0<BR>';
-		$orderInfo .= '西红柿蛋炒饭　 100.0  100 100.0<BR>';
-		$orderInfo .= '西红柿鸡蛋炒饭 15.0   1   15.0<BR>';
-		$orderInfo .= '备注：加辣，多辣都行！<BR>';
+        foreach($arr as $item){
+            $length = strlen($item['name']);
+            if($length <= 18){
+                $length = strlen($item['name']);
+                $len = mb_strlen($item['name'],'utf-8');
+                $a = (8-$len)*2;
+                $b = $length+$a;
+                $item['name'] = str_pad($item['name'],$b);
+                $orderInfo .= $item['name'].$item['price']."   ".$item['num']."  ".$item['extras']."<BR>";
+            }else{
+                $name_a = mb_substr($item['name'],0,6,'utf-8');
+                $length = strlen($name_a);
+                $len = mb_strlen($name_a,'utf-8');
+                $a = (8-$len)*2;
+                $b = $length+$a;
+                $name_a = str_pad($name_a,$b);
+                $name_b = mb_substr($item['name'],6,100,'utf-8');
+                $orderInfo .= $name_a.$item['price']."   ".$item['num']."  ".$item['extras']."<BR>";
+                $orderInfo .= $name_b."<BR>";
+            }
+        }
 		$orderInfo .= '--------------------------------<BR>';
-		$orderInfo .= '合计：200.0元<BR>';
+		$orderInfo .= '合计：'.$total.'元<BR>';
 		$orderInfo .= '送货地点：长沙市万达广场C2-3508<BR>';
 		$orderInfo .= '联系电话：0731-85056818<BR>';
 		$orderInfo .= '订餐时间：'.date('Y-m-d H:i:s', time()).'<BR>';
 		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
-
+        echo "<pre>";print_r($orderInfo);exit;
         $re = $this->wp_print($sn, $orderInfo, 1);
         //echo $re;
         //exit;

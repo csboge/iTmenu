@@ -58,8 +58,19 @@ class Menu
         $cate_list[] = ['id'=>10, 'name'=>'米饭', 'list'=>[]];
         $cate_list[] = ['id'=>11, 'name'=>'饮品', 'list'=>[]];
 
-        
+
         return jsonData(1, 'ok', ['cate_list'=>$cate_list]);
+    }
+
+    /***
+     * 新增 - 菜品分类
+     * 参数 $name 分类名称
+     * 参数 $parent_id 父级id 0为顶级
+     * 参数 $rank 排序 asc
+     * 参数 $shop_id 店铺id
+     */
+    function add_category(){
+
     }
 
 
@@ -68,7 +79,7 @@ class Menu
      */
     function goods()
     {
-        
+
         $goods_list = [];
         $goods_list[] = ['id'=>1, 'name'=>'腐竹烧肉', 'img_url'=>'http://img.my-shop.cc/goods/new1.jpg', 'price'=>28.00, 'stars'=>5, 'cate_id'=>2];
         $goods_list[] = ['id'=>2, 'name'=>'台湾卤肉', 'img_url'=>'http://img.my-shop.cc/goods/new1.jpg', 'price'=>28.00, 'stars'=>5, 'cate_id'=>2];
