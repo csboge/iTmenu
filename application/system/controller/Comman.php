@@ -1,5 +1,5 @@
 <?php
-namespace app\apisystem\controller;
+namespace app\system\controller;
 
 use think\Request;
 use think\Db;

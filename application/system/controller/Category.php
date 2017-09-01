@@ -1,5 +1,5 @@
 <?php
-namespace app\apisystem\controller;
+namespace app\system\controller;
 
 use think\Request;
 use think\Db;
@@ -57,5 +57,23 @@ class Category
         }else{
             return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'']);
         }
+    }
+
+    /***
+     * 修改 -- 菜品分类
+     * @参数 id           id
+     * @参数 name         分类名称
+     * @参数 parent_id    父级id 0为顶级
+     * @参数 rank         排序 asc
+     * @参数 shop_id      店铺id
+     * @参数 status       是否隐藏
+     */
+    public function update(){
+        $data = input('post.');
+        if(empty($data)){
+            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'']);
+        }
+        $data['updated'] = time();
+        var_dump($data);exit;
     }
 }
