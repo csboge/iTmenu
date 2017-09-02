@@ -10,7 +10,7 @@ use think\Db;
  *
  *
  */
-class Menu
+class Goods
 {
 
     use \app\core\traits\ProviderFactory;
@@ -38,21 +38,51 @@ class Menu
 
     /***
      * 新增 -- 菜品
-     * @参数 name         数据库名
-     * @参数 id           id
-     * @参数 status       字段名
-     * @参数 value        修改的值
+     * @参数 title         商品标题
+     * @参数 shop_id       店铺id
+     * @参数 cat_id        分类id
+     * @参数 image         商品封面
+     * @参数 rank          排序 asc
+     * @参数 attrs         规格（序列化格式）
+     * @参数 price         商品价格
      */
-    public function get_status(){
+    public function add(){
         $data = input('post.');
         if(empty($data)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'']);
+            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }
-        $res = Db::name($data['name'])->where('id',$data['id'])->setField($data['status'],$data['value']);
+        $data['created'] = time();
+        $res = Db::name('goods')->insert($data);
         if($res){
-            return json_encode(['code'=>1,'message'=>'OK','data'=>'']);
+            return json_encode(['code'=>1,'message'=>'OK','data'=>'','status'=>200]);
         }else{
-            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'']);
+            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'','status'=>202]);
+        }
+    }
+
+
+    /***
+     * 修改 -- 菜品
+     * @参数 id            id
+     * @参数 title         商品标题
+     * @参数 shop_id       店铺id
+     * @参数 cat_id        分类id
+     * @参数 image         商品封面
+     * @参数 rank          排序 asc
+     * @参数 attrs         规格（序列化格式）
+     * @参数 price         商品价格
+     */
+    public function update(){
+        $data = input('post.');
+        if(empty($data)){
+            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+        }
+        $data['updated'] = time();
+        $res = Db::name('goods')->where(['id'=>$data['id']])->update($data);
+        if($res){
+            return json_encode(['code'=>1,'message'=>'OK','data'=>'','status'=>200]);
+        }else{
+            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'','status'=>202]);
         }
     }
 
