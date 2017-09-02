@@ -46,7 +46,6 @@ class User
             return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }
         $res = Db::name('user')->where(['openid'=>$data['openid']])->find();
-
         if($res){
             if($res['is_admin'] == 1){
                 return json_encode(['code'=>1,'message'=>'OK','data'=>$res['shop_id'],'status'=>200]);
@@ -54,9 +53,7 @@ class User
                 return json_encode(['code'=>0,'message'=>'不是管理员','data'=>'','status'=>203]);
             }
         }else{
-            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'','status'=>405]);
+            return json_encode(['code'=>0,'message'=>'未查到到数据','data'=>'','status'=>405]);
         }
-
     }
-
 }

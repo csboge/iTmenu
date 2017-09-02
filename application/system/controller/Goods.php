@@ -45,6 +45,7 @@ class Goods
      * @参数 rank          排序 asc
      * @参数 attrs         规格（序列化格式）
      * @参数 price         商品价格
+     * @参数 status        1：启用 0：禁用
      */
     public function add(){
         $data = input('post.');

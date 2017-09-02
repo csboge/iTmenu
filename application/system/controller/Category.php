@@ -48,14 +48,14 @@ class Category
     public function add(){
         $data = input('post.');
         if(empty($data)){
-           return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'']);
+           return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }
         $data['created'] = time();
         $res = Db::name('category')->insert($data);
         if($res){
-            return json_encode(['code'=>1,'message'=>'OK','data'=>'']);
+            return json_encode(['code'=>1,'message'=>'OK','data'=>'','status'=>200]);
         }else{
-            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'']);
+            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'','status'=>202]);
         }
     }
 
@@ -71,14 +71,14 @@ class Category
     public function update(){
         $data = input('post.');
         if(empty($data)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'']);
+            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }
         $data['updated'] = time();
         $res = Db::name('category')->where('id',$data['id'])->update($data);
         if($res){
-            return json_encode(['code'=>1,'message'=>'OK','data'=>'']);
+            return json_encode(['code'=>1,'message'=>'OK','data'=>'','status'=>200]);
         }else{
-            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'']);
+            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'','status'=>202]);
         }
     }
 

@@ -2,6 +2,7 @@
 namespace app\api\controller;
 
 use think\Request;
+use think\Db;
 
 /**
  * 菜谱方面 * 服务 * 操作方法
@@ -36,7 +37,8 @@ class Menu
 
 
     /***
-     * 获得 - 菜谱分类
+     * 获得 - 菜谱分类    测试
+     * @参数 shop_id      店铺id
      */
     function category()
     {
@@ -63,15 +65,66 @@ class Menu
     }
 
     /***
-     * 新增 - 菜品分类
-     * 参数 $name 分类名称
-     * 参数 $parent_id 父级id 0为顶级
-     * 参数 $rank 排序 asc
-     * 参数 $shop_id 店铺id
+     * 获得 - 菜谱分类
+     * @参数 shop_id      店铺id
      */
-    function add_category(){
-
+    public function category_list(){
+        $data = input('post.');
+        if(empty($data)){
+            return jsonData(404, '未接收到数据', '');
+        }
+        $map =[
+            'shop_id' => $data['shop_id'],
+            'parent_id'=>0,
+            'status' => 1,
+            'hd_status' => 1
+        ];
+        $res = Db::name('category')->where($map)->field('id,name')->order('rank asc')->select();
+        if($res){
+            foreach ($res as &$value){
+                $ma = [
+                    'parent_id' => $value['id'],
+                    'status' => 1,
+                    'hd_status' => 1
+                ];
+                $dp = Db::name('category')->where($ma)->field('id,name')->order('rank asc')->select();
+                if(empty($dp)){
+                    return jsonData(405, '未查到数据', '');
+                }
+                $value['list'] = $dp;
+            }
+            return jsonData(200, 'OK', $res);
+        }else{
+            return jsonData(405, '未查到数据', '');
+        }
     }
+
+    /***
+     * 获取 - 菜品详情
+     * @参数 shop_id      店铺id
+     * @参数 cat_id       分类id
+     */
+    public function goods_list(){
+        $data = input('post.');
+        if(empty($data)){
+            return jsonData(404, '未接收到数据', '');
+        }
+        $map = [
+            'shop_id' => $data['shop_id'],
+            'cat_id' => $data['cat_id'],
+            'status' => 1
+        ];
+        $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price')->order('rank asc')->select();
+        if($res){
+            foreach ($res as &$value){
+                $value['image'] = getImgUrl($value['image'])?getImgUrl($value['image']):'';
+            }
+            return jsonData(200, 'OK', $res);
+        }else{
+            return jsonData(405, '未查到数据', '');
+        }
+    }
+
 
 
     /***
