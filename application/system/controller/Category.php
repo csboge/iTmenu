@@ -5,7 +5,7 @@ use think\Request;
 use think\Db;
 
 /**
- * 后台接口 * 分类 * 操作方法
+ * 后台接口 * 菜品分类 * 操作方法
  *
  *
  *
