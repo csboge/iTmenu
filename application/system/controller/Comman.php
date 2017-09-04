@@ -69,11 +69,11 @@ class Comman
             return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }
         // 移动到框架应用根目录/public/uploads/ 目录下
-        $info = $file->move(ROOT_PATH . 'public' . DS . 'upload');
+        $info = $file->move(ROOT_PATH . 'Uploads');
         if($info){
             // 成功上传后 获取上传信息
             $data = [
-                'path' => 'public/uploads/'.$info->getSaveName(),
+                'path' => 'http://img.my-shop.cc/'.$info->getSaveName(),
                 'status' => 1,
                 'create_time' => time()
             ];
@@ -81,7 +81,7 @@ class Comman
             if($res){
                 $post = [
                     'id' => $res,
-                    'path' =>'public/uploads/'.$info->getSaveName(),
+                    'path' =>'http://img.my-shop.cc/'.$info->getSaveName(),
                 ];
                 return json_encode(['code'=>1,'message'=>'OK','data'=>$post,'status'=>200]);
             }else{

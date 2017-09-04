@@ -33,3 +33,14 @@ function getImgUrl($id,$field = 'path'){
         $imgUrl = false;
     return $imgUrl;
 }
+
+//获取图片
+function ImgUrl($id,$field = 'path'){
+    $db = new \think\Db;
+    $info = $db::name('picture')->where(['id'=>$id])->find();
+    if($info)
+        $imgUrl = $info[$field];
+    else
+        $imgUrl = false;
+    return $imgUrl;
+}
