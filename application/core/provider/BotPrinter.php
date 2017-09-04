@@ -63,13 +63,105 @@ class BotPrinter
         $re = $this->wp_print($sn, $orderInfo, 1);
 
 
+        $sn1         = ($sn) ? $sn : '217502439';
+        $orderInfo = '<CB>单个菜品</CB><BR>';
+		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+		$orderInfo .= '辣椒宫保鸡丁   15.0   1   15.0    <BR>';
+		$orderInfo .= '                                <BR>';
+		$orderInfo .= '备注：加辣，多辣都行！<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+        $re = $this->wp_print($sn, $orderInfo, 1);
 
-
-
-
-        //echo $re;
-        //exit;
     }
+
+
+
+    /**
+     * 排版 - 打印内容(碎片接口)
+     *
+     *
+     */
+    function getWordsChip($sn = ''){
+
+        $sn1         = ($sn) ? $sn : '217502992';
+        $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
+		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+		$orderInfo .= '辣椒宫保鸡丁   15.0   1   15.0    <BR>';
+		$orderInfo .= '                                <BR>';
+		$orderInfo .= '备注：加辣，多辣都行！<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+        $re = $this->wp_print($sn, $orderInfo, 1);
+        $re = $this->wp_print($sn2, $orderInfo, 1);
+        $re = $this->wp_print($sn3, $orderInfo, 1);
+        $re = $this->wp_print($sn4, $orderInfo, 1);
+        $this->getWords($sn1);
+
+        $sn2         = ($sn) ? $sn : '217502989';
+        $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
+		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+		$orderInfo .= '西红柿鸡蛋炒饭 15.0   1   15.0    <BR>';
+		$orderInfo .= '                                <BR>';
+		$orderInfo .= '备注：加辣，多辣都行！<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+
+        $re = $this->wp_print($sn, $orderInfo, 1);
+        $re = $this->wp_print($sn1, $orderInfo, 1);
+        $re = $this->wp_print($sn3, $orderInfo, 1);
+        $re = $this->wp_print($sn4, $orderInfo, 1);
+        $this->getWords($sn2);
+
+        $sn3         = ($sn) ? $sn : '217502995';
+        $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
+		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+		$orderInfo .= '白辣椒炒花猪肉 15.0   1   15.0    <BR>';
+		$orderInfo .= '                                <BR>';
+		$orderInfo .= '备注：加辣，多辣都行！<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+
+        $re = $this->wp_print($sn, $orderInfo, 1);
+        $re = $this->wp_print($sn1, $orderInfo, 1);
+        $re = $this->wp_print($sn2, $orderInfo, 1);
+        $re = $this->wp_print($sn4, $orderInfo, 1);
+        $this->getWords($sn3);
+
+
+        $sn4         = ($sn) ? $sn : '217502997';
+        $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
+		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+		$orderInfo .= '酸辣鸡珍饭    15.0   1   15.0    <BR>';
+		$orderInfo .= '                                <BR>';
+		$orderInfo .= '备注：加辣，多辣都行！<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+        $re = $this->wp_print($sn, $orderInfo, 1);
+        $re = $this->wp_print($sn1, $orderInfo, 1);
+        $re = $this->wp_print($sn2, $orderInfo, 1);
+        $re = $this->wp_print($sn3, $orderInfo, 1);
+        $this->getWords($sn4);
+
+
+        $sn5         = ($sn) ? $sn : '217502994';
+        $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
+		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+		$orderInfo .= '台湾经典卤肉饭 15.0   1   15.0    <BR>';
+		$orderInfo .= '                                <BR>';
+		$orderInfo .= '备注：加辣，多辣都行！<BR>';
+		$orderInfo .= '--------------------------------<BR>';
+        $re = $this->wp_print($sn, $orderInfo, 1);
+        $re = $this->wp_print($sn1, $orderInfo, 1);
+        $re = $this->wp_print($sn2, $orderInfo, 1);
+        $re = $this->wp_print($sn3, $orderInfo, 1);
+        $re = $this->wp_print($sn4, $orderInfo, 1);
+        $this->getWords($sn5);
+
+
+    }
+
 
 
     /**
