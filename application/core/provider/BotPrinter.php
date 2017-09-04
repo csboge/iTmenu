@@ -120,7 +120,6 @@ class BotPrinter
 		$orderInfo .= '联系电话：0731-85056818<BR>';
 		$orderInfo .= '订餐时间：'.date('Y-m-d H:i:s', time()).'<BR>';
 		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
-        echo "<pre>";print_r($orderInfo);exit;
         $re = $this->wp_print($sn, $orderInfo, 1);
         //echo $re;
         //exit;

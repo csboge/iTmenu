@@ -1,0 +1,97 @@
+{extend name="child" /}
+{block name="child"}
+<!-- 中部开始 -->
+
+<style type="text/css">
+    .SpanHeight{line-height:1.5;width:190px;height:40px}
+</style>
+<div class="wrapper">
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red"></span>商店名称
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="title" name="title" required="" lay-verify=""
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="logo" class="layui-form-label">
+                        <span class="x-red"></span>logo
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="logo" name="logo" required="" lay-verify="number"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="mobile" class="layui-form-label">
+                        <span class="x-red"></span>联系手机
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="mobile" name="mobile" required="" lay-verify="number"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="tel" class="layui-form-label">
+                        <span class="x-red"></span>座机电话
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="password" id="tel" name="tel" required="" lay-verify="number"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>营业时间
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="start" class="layui-input" id="LAY_demorange_s" placeholder=" - ">
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" name="end" class="layui-input" id="LAY_demorange_e" placeholder=" - ">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="notice" class="layui-form-label">
+                        <span class="x-red"></span>店铺公告
+                    </label>
+                    <div class="layui-input-inline">
+                        <textarea name="notice" id="notice" class="layui-input SpanHeight"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                    </label>
+                    <button class="layui-btn" id="add-btn" lay-filter="add" lay-submit="">
+                        增加
+                    </button>
+                </div>
+            </form>
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<script>
+    $("#add-btn").click(function () {
+        var data = [];
+        layui.use('form', function () {
+            var form = layui.form();
+            //监听提交
+            form.on('submit(add)', function (data) {
+                console.log(data.field);
+
+                return false;
+            });
+        });
+    });
+
+</script>
+{/block}
