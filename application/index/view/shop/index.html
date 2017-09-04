@@ -77,13 +77,13 @@
             {if condition="$vo.status == 1"}
             <td class="td-status">
                 <a href="" >
-                    <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span>
+                    <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status(0,{$vo.id})">已启用</span>
                 </a>
             </td>
             {else}
             <td class="td-status">
                 <a href="">
-                    <span class="layui-btn layui-btn-disabled layui-btn-mini">已停用</span>
+                    <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status(1,{$vo.id})">已停用</span>
                 </a>
             </td>
             {/if}
@@ -92,7 +92,7 @@
                    style="text-decoration:none">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
-                <a title="删除" href="javascript:;" onclick="level_del(this,'1')"
+                <a title="删除" href="javascript:;" onclick="is_delete({$vo.id})"
                    style="text-decoration:none">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
@@ -125,8 +125,51 @@
             location.href = url;
     });
 
-    function jumb(title, url, w, h) {
-        x_admin_show(title, url, w, h);
+    //状态修改
+    function is_status(type,id){
+        $.ajax({
+            url:"{:url('common/is_status')}",
+            type:"post",
+            data:{name:'shop',id:id,status:'status',volue:type},
+            success:function (res) {
+                console.log(res);
+                if(res == true){
+                    layer.msg('修改成功',{icon:1,time:1000});
+                    setTimeout(function () {
+                        location.href = "{:url('shop/index')}"
+                    },1500)
+                }else {
+                    layer.msg('修改失败',{icon:2,time:1000});
+                    setTimeout(function () {
+                        location.href = "{:url('shop/index')}"
+                    },1500)
+                }
+            }
+        })
+    }
+
+    function is_delete(id){
+        layer.confirm('确认要删除吗？',function(index){
+            $.ajax({
+                url:"{:url('common/is_delete')}",
+                type:"post",
+                data:{name:'shop',id:id},
+                success:function (res) {
+                    console.log(res);
+                    if(res == true){
+                        layer.msg('删除成功',{icon:1,time:1000});
+                        setTimeout(function () {
+                            location.href = "{:url('shop/index')}"
+                        },1500)
+                    }else {
+                        layer.msg('删除失败',{icon:2,time:1000});
+                        setTimeout(function () {
+                            location.href = "{:url('shop/index')}"
+                        },1500)
+                    }
+                }
+            })
+        });
     }
 </script>
 {/block}

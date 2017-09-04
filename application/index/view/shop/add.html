@@ -70,17 +70,18 @@
                     type:"post",
                     data:data.field,
                     success:function (res) {
-                        console.log(res.data);
+                        console.log(res);
+                        res= JSON.parse(res)
                         if(res.code == 1){
                             layer.msg('添加成功',{icon:1,time:1000});
                             setTimeout(function () {
                                 location.href = "{:url('shop/index')}"
-                            },3000)
+                            },1500)
                         }else {
                             layer.msg('添加失败',{icon:2,time:1000});
                             setTimeout(function () {
                                 location.href = "{:url('shop/index')}"
-                            },3000)
+                            },1500)
                         }
                     }
                 })

@@ -115,7 +115,7 @@ a cite{font-style: normal; *cursor:pointer;}
 /* 百搭 */.layui-btn-normal{background-color: #1E9FFF;}
 /* 暖色 */.layui-btn-warm{background-color: #F7B824;}
 /* 警告 */.layui-btn-danger{background-color: #FF5722;}
-/* 禁用 */.layui-btn-disabled,.layui-btn-disabled:hover,.layui-btn-disabled:active{border: 1px solid #e6e6e6; background-color: #FBFBFB; color: #C9C9C9; cursor: not-allowed; opacity: 1;}
+/* 禁用 */.layui-btn-disabled,.layui-btn-disabled:hover,.layui-btn-disabled:active{border: 1px solid #e6e6e6; background-color: #FBFBFB; color: #C9C9C9; opacity: 1;}
 
 /* 大型 */.layui-btn-big{height: 44px; line-height: 44px; padding: 0 25px; font-size: 16px;}
 /* 小型 */.layui-btn-small{height: 30px; line-height: 30px; padding: 0 10px; font-size: 12px;}
@@ -494,8 +494,6 @@ body .layui-util-face  .layui-layer-content{padding:0; background-color:#fff; co
   .layui-form-item .layui-input-inline+.layui-form-mid{margin-left: 110px; top: -5px; padding: 0;}
   .layui-form-item .layui-form-checkbox{margin-right: 5px; margin-bottom: 5px;}
 }
-form{
-    padding-top: 100px;
-}
+
 
 
