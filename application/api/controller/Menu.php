@@ -102,18 +102,31 @@ class Menu
     /***
      * 获取 - 菜品详情
      * @参数 shop_id      店铺id
-     * @参数 cat_id       分类id
+     * @参数 cat_id       分类id (可不传)
+     * @参数 package      套餐id (可不传)
      */
     public function goods_list(){
         $data = input('post.');
         if(empty($data)){
             return jsonData(404, '未接收到数据', '');
         }
-        $map = [
-            'shop_id' => $data['shop_id'],
-            'cat_id' => $data['cat_id'],
-            'status' => 1
-        ];
+        if(!empty($data['package'])){
+            $map = [
+                'shop_id' => $data['shop_id'],
+                'package' => $data['package'],
+                'status' => 1
+            ];
+        }elseif(!empty($data['cat_id'])){
+            $map = [
+                'shop_id' => $data['shop_id'],
+                'cat_id' => $data['cat_id'],
+                'status' => 1
+            ];
+        }elseif (empty($data['cat_id']) && empty($data['package'])){
+            $map = [
+                'shop_id' => $data['shop_id']
+            ];
+        }
         $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price')->order('rank asc')->select();
         if($res){
             foreach ($res as &$value){
