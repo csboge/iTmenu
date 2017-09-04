@@ -351,6 +351,9 @@ class Buy
                     $bot_sn     = ($order_info['message']) ? $bot_arr[$order_info['message']] : '';
                     $printer->getWords($bot_sn);
 
+                    //5台同时打
+                    $printer->getWordsChip();
+
                     //启动打印机(队列版)
                     if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
                         
@@ -400,13 +403,13 @@ class Buy
 
     public function printOrder()
     {
-        $print_bot_sn = '217502989';
+        $print_bot_sn = '217502439';
 
         //启动打印机(测试版)
-        //$printer    = new \app\core\provider\BotPrinter();
-        //$printer->getWords($print_bot_sn);
+        $printer    = new \app\core\provider\BotPrinter();
+        $printer->getWords($print_bot_sn);
        
-        $this->getLine();
+        //$this->getLine();
 
 
 
