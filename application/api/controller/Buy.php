@@ -407,7 +407,7 @@ class Buy
 
         //启动打印机(测试版)
         $printer    = new \app\core\provider\BotPrinter();
-        $printer->getWords($print_bot_sn);
+        $printer->getWordsChip();
        
         //$this->getLine();
 
