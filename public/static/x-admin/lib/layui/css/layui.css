@@ -494,6 +494,8 @@ body .layui-util-face  .layui-layer-content{padding:0; background-color:#fff; co
   .layui-form-item .layui-input-inline+.layui-form-mid{margin-left: 110px; top: -5px; padding: 0;}
   .layui-form-item .layui-form-checkbox{margin-right: 5px; margin-bottom: 5px;}
 }
-
+form{
+    padding-top: 100px;
+}
 
 

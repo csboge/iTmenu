@@ -1,16 +1,22 @@
-{extend name="child" /}
-{block name="child"}
+{extend name="base" /}
+{block name="content"}
 <!-- 中部开始 -->
 
 <style type="text/css">
     .SpanHeight{line-height:1.5;width:190px;height:40px}
 </style>
+
 <div class="wrapper">
     <!-- 右侧主体开始 -->
     <div class="page-content">
+        <xblock>
+            <div style="margin-left: 20px">
+                添加商店
+            </div>
+        </xblock>
         <div class="content">
             <!-- 右侧内容框架，更改从这里开始 -->
-            <form class="layui-form">
+            <form class="layui-form" action="" method="post">
                 <div class="layui-form-item">
                     <label for="title" class="layui-form-label">
                         <span class="x-red"></span>商店名称
@@ -21,11 +27,11 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label for="logo" class="layui-form-label">
-                        <span class="x-red"></span>logo
+                    <label for="wechat" class="layui-form-label">
+                        <span class="x-red"></span>微信
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="logo" name="logo" required="" lay-verify="number"
+                        <input type="text" id="wechat" name="wechat" required="" lay-verify="number"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -36,34 +42,6 @@
                     <div class="layui-input-inline">
                         <input type="text" id="mobile" name="mobile" required="" lay-verify="number"
                                autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label for="tel" class="layui-form-label">
-                        <span class="x-red"></span>座机电话
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="password" id="tel" name="tel" required="" lay-verify="number"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <span class="x-red"></span>营业时间
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="start" class="layui-input" id="LAY_demorange_s" placeholder=" - ">
-                    </div>
-                    <div class="layui-input-inline">
-                        <input type="text" name="end" class="layui-input" id="LAY_demorange_e" placeholder=" - ">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label for="notice" class="layui-form-label">
-                        <span class="x-red"></span>店铺公告
-                    </label>
-                    <div class="layui-input-inline">
-                        <textarea name="notice" id="notice" class="layui-input SpanHeight"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -87,11 +65,30 @@
             //监听提交
             form.on('submit(add)', function (data) {
                 console.log(data.field);
-
+                $.ajax({
+                    url:"{:url('shop/add')}",
+                    type:"post",
+                    data:data.field,
+                    success:function (res) {
+                        console.log(res.data);
+                        if(res.code == 1){
+                            layer.msg('添加成功',{icon:1,time:1000});
+                            setTimeout(function () {
+                                location.href = "{:url('shop/index')}"
+                            },3000)
+                        }else {
+                            layer.msg('添加失败',{icon:2,time:1000});
+                            setTimeout(function () {
+                                location.href = "{:url('shop/index')}"
+                            },3000)
+                        }
+                    }
+                })
                 return false;
             });
         });
     });
+
 
 </script>
 {/block}

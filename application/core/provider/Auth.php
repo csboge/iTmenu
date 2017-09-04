@@ -19,6 +19,16 @@ class Auth
     }
 
 
+    /***
+     * 获得商店id
+     * 
+     * @return array
+     */
+    public function getShopId()
+    {
+        return input('param.shop_id/d');
+    }
+
 
     /***
      * 获得合法授权
