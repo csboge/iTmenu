@@ -23,6 +23,18 @@ class Shop extends Controller
 
     //新增商店
     public function add(){
+        if(input('post.')){
+            $data = input('post.');
+            $res = Db::name('shop')->insert($data);
+            if($res){
+                return json_encode(['code'=>1,'message'=>'成功']);
+            }else{
+                return json_encode(['code'=>0,'message'=>'失败']);
+            }
+        }else{
+            $list = Db::name('shop')->where('id>0')->select();
+            $this->assign('list',$list);
+        }
         return view();
     }
 

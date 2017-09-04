@@ -1,5 +1,4 @@
 {extend name="base" /}
-
 {block name="content"}
     <!-- 右侧主体开始 -->
     <xblock class="page-content">
@@ -57,8 +56,8 @@
         </tr>
         </thead>
         <tbody>
+        {volist name='list' id='vo'}
         <tr>
-            {volist name='list' id='vo'}
             <td>
                 <input type="checkbox" class="check" value="1" name="">
             </td>
@@ -98,8 +97,8 @@
                     <i class="layui-icon">&#xe640;</i>
                 </a>
             </td>
-            {/volist}
         </tr>
+        {/volist}
         </tbody>
     </table>
         <!-- 右侧内容框架，更改从这里结束 -->
@@ -123,7 +122,7 @@
 
     $("#member_add").click(function () {
             var url = "{:url('shop/add')}";
-            jumb("添加商家",url,"800","600")
+            location.href = url;
     });
 
     function jumb(title, url, w, h) {
