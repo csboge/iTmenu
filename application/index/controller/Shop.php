@@ -16,7 +16,7 @@ class Shop extends Controller
 {
     //商店列表
     public function index(){
-        $data = Db::name('shop')->order('id ASC')->paginate(10);
+        $data = Db::name('shop')->order('id ASC')->where('hd_status',1)->paginate(10);
         $this->assign('list',$data);
         return view();
     }
@@ -36,18 +36,6 @@ class Shop extends Controller
             $this->assign('list',$list);
         }
         return view();
-    }
-
-
-    //状态修改
-    public function is_status(){
-        $data = input('post.');
-        $info = Db::name($data['name'])->where('id',$data['id'])->setField($data['status'],$data['volue']);
-        if($info){
-            return true;
-        }else{
-            return false;
-        }
     }
 
 }
