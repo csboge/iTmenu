@@ -117,7 +117,7 @@ class Menu
         $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price')->order('rank asc')->select();
         if($res){
             foreach ($res as &$value){
-                $value['image'] = getImgUrl($value['image'])?getImgUrl($value['image']):'';
+                $value['image'] = ImgUrl($value['image'])?ImgUrl($value['image']):'';
             }
             return jsonData(200, 'OK', $res);
         }else{
