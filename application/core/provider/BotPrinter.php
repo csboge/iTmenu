@@ -85,6 +85,10 @@ class BotPrinter
     function getWordsChip($sn = ''){
 
         $sn1         = ($sn) ? $sn : '217502992';
+        $sn2         = ($sn) ? $sn : '217502989';
+        $sn3         = ($sn) ? $sn : '217502995';
+        $sn4         = ($sn) ? $sn : '217502996';
+        $sn5         = ($sn) ? $sn : '217502998';
         $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';
@@ -98,7 +102,6 @@ class BotPrinter
         $re = $this->wp_print($sn4, $orderInfo, 1);
         $this->getWords($sn1);
 
-        $sn2         = ($sn) ? $sn : '217502989';
         $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';
@@ -113,7 +116,6 @@ class BotPrinter
         $re = $this->wp_print($sn4, $orderInfo, 1);
         $this->getWords($sn2);
 
-        $sn3         = ($sn) ? $sn : '217502995';
         $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';
@@ -129,7 +131,6 @@ class BotPrinter
         $this->getWords($sn3);
 
 
-        $sn4         = ($sn) ? $sn : '217502997';
         $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';
@@ -144,7 +145,6 @@ class BotPrinter
         $this->getWords($sn4);
 
 
-        $sn5         = ($sn) ? $sn : '217502994';
         $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';
