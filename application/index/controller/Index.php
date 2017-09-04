@@ -13,8 +13,8 @@ class Index
      *
      */
     public function __construct(
-        Request                         $request, 
-        \app\core\provider\User         $p_user, 
+        Request                         $request,
+        \app\core\provider\User         $p_user,
         \app\core\provider\Auth         $p_auth
     )
     {
@@ -41,10 +41,8 @@ class Index
     public function login()
     {
 
-        $re = $this->p_user->getCode(15084852913);
+//        $re = $this->p_user->getCode(15084852913);
 
-        var_dump($re);
-        exit;
         return view();
 
     }

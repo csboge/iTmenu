@@ -6,8 +6,6 @@ use think\Request;
 /**
  * 购买订单 * 服务 * 操作方法
  *
- *
- *
  */
 class Buy
 {

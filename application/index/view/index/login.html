@@ -17,7 +17,7 @@
 <body>
 <div class="login-logo"><h1>X-ADMIN V1.1</h1></div>
 <div class="login-box">
-    <form class="layui-form layui-form-pane" action="{:url('index/Index/check')}">
+    <form class="layui-form layui-form-pane" action="{:url('Index/check')}">
 
         <h3></h3>
         <label class="login-title" for="username">帐号</label>
@@ -36,7 +36,7 @@
         </div>
         <div class="form-actions">
             <button class="btn btn-warning pull-right" lay-submit lay-filter="login"  type="submit">登录</button>
-            <div class="forgot"><a href="#" class="forgot">忘记帐号或者密码</a></div>
+            <!--<div class="forgot"><a href="#" class="forgot">忘记帐号或者密码</a></div>-->
         </div>
     </form>
 </div>
@@ -67,8 +67,6 @@
             jq = layui.jquery;
             //监听提交
 
-
-
             form.on('submit(login)', function(res){
                 loading = layer.load(2,{
                     shade: [0.2,'#000']
@@ -91,25 +89,10 @@
                 });
                 return false;
             });
-
-
-
-
-
         });
     })
 
 
-</script>
-<script>
-    //百度统计可去掉
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
 </script>
 </body>
 </html>
