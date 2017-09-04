@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>展示信息</title>
+</head>
+<body>
+		 {foreach name="str" item="vo" key="k"  }
+
+		商家名称：<p>{$vo.title}</p>
+	
+		
+		地址：<p>{$vo.adress}</p>
+
+
+	
+		电话：<p>{$vo.mobile}</p>
+	
+
+		
+		营业执照：<img src="{$vo.imgz}" alt="">
+	
+
+		身份证正面：<img src="{$vo.imgs}" alt="">
+
+		身份证反面：<img src="{$vo.imgf}" alt="">
+		{/foreach}
+	
+</body>
+</html>

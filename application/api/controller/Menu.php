@@ -2,6 +2,7 @@
 namespace app\api\controller;
 
 use think\Request;
+use think\Db;
 
 /**
  * 菜谱方面 * 服务 * 操作方法
@@ -36,7 +37,8 @@ class Menu
 
 
     /***
-     * 获得 - 菜谱分类
+     * 获得 - 菜谱分类    测试
+     * @参数 shop_id      店铺id
      */
     function category()
     {
@@ -58,9 +60,84 @@ class Menu
         $cate_list[] = ['id'=>10, 'name'=>'米饭', 'list'=>[]];
         $cate_list[] = ['id'=>11, 'name'=>'饮品', 'list'=>[]];
 
-        
+
         return jsonData(1, 'ok', ['cate_list'=>$cate_list]);
     }
+
+    /***
+     * 获得 - 菜谱分类
+     * @参数 shop_id      店铺id
+     */
+    public function category_list(){
+        $data = input('post.');
+        if(empty($data)){
+            return jsonData(404, '未接收到数据', '');
+        }
+        $map =[
+            'shop_id' => $data['shop_id'],
+            'parent_id'=>0,
+            'status' => 1,
+            'hd_status' => 1
+        ];
+        $res = Db::name('category')->where($map)->field('id,name')->order('rank asc')->select();
+        if($res){
+            foreach ($res as &$value){
+                $ma = [
+                    'parent_id' => $value['id'],
+                    'status' => 1,
+                    'hd_status' => 1
+                ];
+                $dp = Db::name('category')->where($ma)->field('id,name')->order('rank asc')->select();
+                if(empty($dp)){
+                    return jsonData(405, '未查到数据', '');
+                }
+                $value['list'] = $dp;
+            }
+            return jsonData(200, 'OK', $res);
+        }else{
+            return jsonData(405, '未查到数据', '');
+        }
+    }
+
+    /***
+     * 获取 - 菜品详情
+     * @参数 shop_id      店铺id
+     * @参数 cat_id       分类id (可不传)
+     * @参数 package      套餐id (可不传)
+     */
+    public function goods_list(){
+        $data = input('post.');
+        if(empty($data)){
+            return jsonData(404, '未接收到数据', '');
+        }
+        if(!empty($data['package'])){
+            $map = [
+                'shop_id' => $data['shop_id'],
+                'package' => $data['package'],
+                'status' => 1
+            ];
+        }elseif(!empty($data['cat_id'])){
+            $map = [
+                'shop_id' => $data['shop_id'],
+                'cat_id' => $data['cat_id'],
+                'status' => 1
+            ];
+        }elseif (empty($data['cat_id']) && empty($data['package'])){
+            $map = [
+                'shop_id' => $data['shop_id']
+            ];
+        }
+        $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price')->order('rank asc')->select();
+        if($res){
+            foreach ($res as &$value){
+                $value['image'] = ImgUrl($value['image'])?ImgUrl($value['image']):'';
+            }
+            return jsonData(200, 'OK', $res);
+        }else{
+            return jsonData(405, '未查到数据', '');
+        }
+    }
+
 
 
     /***
@@ -68,7 +145,7 @@ class Menu
      */
     function goods()
     {
-        
+
         $goods_list = [];
         $goods_list[] = ['id'=>1, 'name'=>'腐竹烧肉', 'img_url'=>'http://img.my-shop.cc/goods/new1.jpg', 'price'=>28.00, 'stars'=>5, 'cate_id'=>2];
         $goods_list[] = ['id'=>2, 'name'=>'台湾卤肉', 'img_url'=>'http://img.my-shop.cc/goods/new1.jpg', 'price'=>28.00, 'stars'=>5, 'cate_id'=>2];

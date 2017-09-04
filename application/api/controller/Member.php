@@ -23,10 +23,8 @@ class Member
         ]);
 
         //授权服务
-        $this->p_auth   = $p_auth;
-
+        $this->p_auth = $p_auth;
     }
-
 
     /***
      * 获得验证码
@@ -41,6 +39,8 @@ class Member
          */
         return jsonData(1, 'ok', null);
     }
+
+
 
 
     /***
