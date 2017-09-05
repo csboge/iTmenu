@@ -234,7 +234,7 @@ class Discount
                 'money' => $acc_money,
                 'updated' => time()
             ];
-            $ret4  = $this->m_user->data($data)->save();
+            $ret4  = $this->m_user->save($data, ['id' => $session['userid']]);
 
 
 
