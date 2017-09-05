@@ -227,7 +227,7 @@ class Buy
 
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
         if (!$result['order']) {
-            return jsonData(0, '订单 - 创建失败');
+            return jsonData(0, '订单 - 创建失败' . $this->m_order->);
         }
 
         $redis = $this->redisFactory();
@@ -350,10 +350,10 @@ class Buy
                     $printer    = new \app\core\provider\BotPrinter();
 
                     $bot_sn     = ($order_info['message']) ? $bot_arr[$order_info['message']] : '';
-                    $printer->getWords($bot_sn);
+                    $printer->getWords('217502439');
 
                     //5台同时打
-                    $printer->getWordsChip();
+                    //$printer->getWordsChip();
 
                     //启动打印机(队列版)
                     if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
