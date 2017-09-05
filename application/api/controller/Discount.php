@@ -2,9 +2,13 @@
 namespace app\api\controller;
 
 use think\Request;
+use think\db;
 
 class Discount
 {
+    use \app\core\traits\ProviderFactory;
+
+
     private     $p_auth;
 
     /***
@@ -14,7 +18,10 @@ class Discount
     public function __construct(
         Request                         $request,
         \app\core\provider\Auth         $p_auth,
-        \app\core\model\RedCash         $m_red
+        \app\core\model\RedCash         $m_red,
+        \app\core\model\RedCashLog      $m_red_log,
+        \app\core\model\UserAccount     $m_acc_log,
+        \app\core\model\Orders          $m_order
     )
     {
         //验证授权合法
@@ -28,6 +35,15 @@ class Discount
 
         //红包模型
         $this->m_red    = $m_red;
+
+        //红包模型(抢夺日志)
+        $this->m_red_log    = $m_red_log;
+
+        //财务日志模型(交易日志)
+        $this->m_acc_log    = $m_acc_log;
+
+        //订单模型
+        $this->m_order    = $m_order;
     }
 
 
@@ -61,14 +77,14 @@ class Discount
 
         //查询订单 - 是否已生成红包
         $red_info   = $this->m_red->getRedForOrderSN($ordersn);
-        if($order_info) {
+        if($red_info) {
             return jsonData(-3, '该订单 - 已生成红包。');
         }
 
         //查询订单
         $order_info            = $this->m_order->getOrderForSN($ordersn);
         if(!$order_info) { 
-            return jsonData(-4, '该订单 - 已不存在。');
+            return jsonData(-4, '该订单 - 已不存在。' . $this->m_order->getLastSql());
         }
 
 
@@ -78,6 +94,7 @@ class Discount
             'words'     => $words,
             'shop_id'   => $order_info['shop_id'],
             'menoy'     => $order_info['mode_money'],
+            'surplus'   => $order_info['mode_money'],
             'user_id'   => $session['userid'],
             'num'       => $num,
             'created'   => time(),
@@ -88,6 +105,15 @@ class Discount
         if (!$result) {
             return jsonData(0, '抱歉 - 生成失败。');
         }
+
+
+        //生成红包 - 内存变量 - 控制抢夺并发
+        $redis = $this->redisFactory();
+        $redis->set('discount:red:' . $this->m_red->id, $num);
+
+        //红包详细
+        $data['id'] = $this->m_red->id;
+        $redis->set('discount:redinfo:' . $this->m_red->id, json_encode($data));
 
 
         //一条红包信息                              红包总数      已抢数量
@@ -108,25 +134,127 @@ class Discount
 
 
         //语音口令(二进制)
-        $bagid      = input('param.audio');
+        $audio      = input('param.audio');
 
 
         //用户信息
         $session    = $this->p_auth->session();
 
+        $redis = $this->redisFactory();
+
+        //合法验证
+        $bagstr    = $redis->get('discount:redinfo:' . $bagid);
+        if (!$bagstr) {
+            return jsonData(-1, '红包已经过期了' . $bagid);
+        }
+
+        $baginfo    = json_decode($bagstr, true);
+
+        //是否还可以抢夺
+
+        //剩余红包数量
+        $nums  = $redis->DECR('discount:red:' . $bagid);
+        if ($nums <= -1) {
+            return jsonData(-2, '红包已经被抢完了');
+        }
+
+        //本次抢夺金额
+        $my_money = $this->m_red->getMoney($baginfo['surplus'], $nums, $baginfo['num']);
+
+        //更新缓存
+        $baginfo['surplus'] -= $my_money;
+        $baginfo['updated']  = time();
+        $redis->set('discount:redinfo:' . $bagid, json_encode($baginfo));
+
+
+        //红包完结 - 可能要做的清理工作。
+        if ($nums <= 0) { }
+
+
+        /**
+         * 上传 语音口令文件..
+         * 保存 文件地址
+         * 
+         *
+         */
+        $audio_url = '';  
 
 
 
+        // 开启 - 数据库事务
+        Db::startTrans();
+        try{
+
+            //生成一条红包 - 抢夺日志
+            $data = [
+                'red_cash_id'   => $bagid,
+                'user_id'       => $session['userid'],
+                'audio'         => $audio_url,
+                'menoy'         => $my_money,
+                'shop_id'       => $baginfo['shop_id'],
+                'remark'        => '抢夺了一个[语音红包]，金额：￥' . $my_money,
+                'created'       => time(),
+                'updated'       => time()
+            ];
+            $ret1  = $this->m_red_log->data($data)->save();
+
+
+            //母包 - 更新信息
+            $get_num = $baginfo['num'] - $nums;
+            $data  = [
+                'surplus' => $baginfo['surplus'],
+                'get_num' => $get_num,
+                'updated' => time()
+            ];
+            $ret2  = $this->m_red->save($data, ['id' => $bagid, 'order_sn'=>$baginfo['order_sn']]);
+
+
+            //增加 - 财务日志
+            $data  = [
+                'money'         => $my_money,
+                'user_id'       => $session['userid'],
+                'shop_id'       => $baginfo['shop_id'],
+                'order_sn'      => $baginfo['order_sn'],
+                'red_cash_id'   => $bagid,
+                'created'       => time()
+            ];
+            $ret3  = $this->m_acc_log->data($data)->save();
 
 
 
+            //统计 - 用户账户(红包余额)
+            $acc_money  = $this->m_user->where('id', $session['userid'])->value('money');
+            $acc_money += $my_money;
+
+            $data  = [
+                'money' => $acc_money,
+                'updated' => time()
+            ];
+            $ret4  = $this->m_user->data($data)->save();
 
 
 
+            // 提交事务
+            if ($ret1 && $ret2 && $ret3 && $ret4) {
+                Db::commit(); 
 
 
-        //抢到红包金额     已抢数量
-        return jsonData(1, 'ok', ['money'=>10, 'speed'=>6]);
+                
+                //抢到红包金额     已抢数量
+                return jsonData(1, 'ok', ['money'=>$my_money, 'speed'=>$get_num]);
+            }
+            
+
+            return jsonData(-3, '抱歉 - 红包抢夺失败了');
+
+
+
+        // 回滚事务
+        } catch (\Exception $e) {
+            Db::rollback();
+
+            return jsonData(-4, '发生故障 - 红包抢夺发生错误');
+        }
     }
 
 

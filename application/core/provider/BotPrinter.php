@@ -89,20 +89,20 @@ class BotPrinter
         $sn3         = ($sn) ? $sn : '217502995';
         $sn4         = ($sn) ? $sn : '217502996';
         $sn5         = ($sn) ? $sn : '217502998';
-        $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
+        $orderInfo = '<CB>单个菜品</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';
 		$orderInfo .= '辣椒宫保鸡丁   15.0   1   15.0    <BR>';
 		$orderInfo .= '                                <BR>';
 		$orderInfo .= '备注：加辣，多辣都行！<BR>';
 		$orderInfo .= '--------------------------------<BR>';
-        $re = $this->wp_print($sn, $orderInfo, 1);
-        $re = $this->wp_print($sn2, $orderInfo, 1);
-        $re = $this->wp_print($sn3, $orderInfo, 1);
-        $re = $this->wp_print($sn4, $orderInfo, 1);
+        $re = $this->wp_print($sn1, $orderInfo, 1);
+        //$re = $this->wp_print($sn2, $orderInfo, 1);
+        //$re = $this->wp_print($sn3, $orderInfo, 1);
+        //$re = $this->wp_print($sn4, $orderInfo, 1);
         $this->getWords($sn1);
 
-        $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
+        $orderInfo = '<CB>单个菜品</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';
 		$orderInfo .= '西红柿鸡蛋炒饭 15.0   1   15.0    <BR>';
@@ -110,13 +110,13 @@ class BotPrinter
 		$orderInfo .= '备注：加辣，多辣都行！<BR>';
 		$orderInfo .= '--------------------------------<BR>';
 
-        $re = $this->wp_print($sn, $orderInfo, 1);
-        $re = $this->wp_print($sn1, $orderInfo, 1);
-        $re = $this->wp_print($sn3, $orderInfo, 1);
-        $re = $this->wp_print($sn4, $orderInfo, 1);
+        $re = $this->wp_print($sn2, $orderInfo, 1);
+        //$re = $this->wp_print($sn1, $orderInfo, 1);
+        //$re = $this->wp_print($sn3, $orderInfo, 1);
+        //$re = $this->wp_print($sn4, $orderInfo, 1);
         $this->getWords($sn2);
 
-        $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
+        $orderInfo = '<CB>单个菜品</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';
 		$orderInfo .= '白辣椒炒花猪肉 15.0   1   15.0    <BR>';
@@ -124,39 +124,39 @@ class BotPrinter
 		$orderInfo .= '备注：加辣，多辣都行！<BR>';
 		$orderInfo .= '--------------------------------<BR>';
 
-        $re = $this->wp_print($sn, $orderInfo, 1);
-        $re = $this->wp_print($sn1, $orderInfo, 1);
-        $re = $this->wp_print($sn2, $orderInfo, 1);
-        $re = $this->wp_print($sn4, $orderInfo, 1);
+        //$re = $this->wp_print($sn, $orderInfo, 1);
+        //$re = $this->wp_print($sn1, $orderInfo, 1);
+        $re = $this->wp_print($sn3, $orderInfo, 1);
+        //$re = $this->wp_print($sn4, $orderInfo, 1);
         $this->getWords($sn3);
 
 
-        $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
+        $orderInfo = '<CB>单个菜品</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';
 		$orderInfo .= '酸辣鸡珍饭    15.0   1   15.0    <BR>';
 		$orderInfo .= '                                <BR>';
 		$orderInfo .= '备注：加辣，多辣都行！<BR>';
 		$orderInfo .= '--------------------------------<BR>';
-        $re = $this->wp_print($sn, $orderInfo, 1);
-        $re = $this->wp_print($sn1, $orderInfo, 1);
-        $re = $this->wp_print($sn2, $orderInfo, 1);
-        $re = $this->wp_print($sn3, $orderInfo, 1);
+        //$re = $this->wp_print($sn, $orderInfo, 1);
+        //$re = $this->wp_print($sn1, $orderInfo, 1);
+        //$re = $this->wp_print($sn2, $orderInfo, 1);
+        $re = $this->wp_print($sn4, $orderInfo, 1);
         $this->getWords($sn4);
 
 
-        $orderInfo = '<CB>单个菜品 - 电子菜谱</CB><BR>';
+        $orderInfo = '<CB>单个菜品</CB><BR>';
 		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
 		$orderInfo .= '--------------------------------<BR>';
 		$orderInfo .= '台湾经典卤肉饭 15.0   1   15.0    <BR>';
 		$orderInfo .= '                                <BR>';
 		$orderInfo .= '备注：加辣，多辣都行！<BR>';
 		$orderInfo .= '--------------------------------<BR>';
-        $re = $this->wp_print($sn, $orderInfo, 1);
-        $re = $this->wp_print($sn1, $orderInfo, 1);
-        $re = $this->wp_print($sn2, $orderInfo, 1);
-        $re = $this->wp_print($sn3, $orderInfo, 1);
-        $re = $this->wp_print($sn4, $orderInfo, 1);
+        //$re = $this->wp_print($sn, $orderInfo, 1);
+        //$re = $this->wp_print($sn1, $orderInfo, 1);
+        //$re = $this->wp_print($sn2, $orderInfo, 1);
+        //$re = $this->wp_print($sn3, $orderInfo, 1);
+        $re = $this->wp_print($sn5, $orderInfo, 1);
         $this->getWords($sn5);
 
 

@@ -226,6 +226,9 @@ class Buy
         );
 
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
+        if (!$result['order']) {
+            return jsonData(0, '订单 - 创建失败');
+        }
 
         $redis = $this->redisFactory();
         $redis->set($openid, json_encode($result));
@@ -347,10 +350,10 @@ class Buy
                     $printer    = new \app\core\provider\BotPrinter();
 
                     $bot_sn     = ($order_info['message']) ? $bot_arr[$order_info['message']] : '';
-                    $printer->getWords($bot_sn);
+                    $printer->getWords('217502439');
 
                     //5台同时打
-                    $printer->getWordsChip();
+                    //$printer->getWordsChip();
 
                     //启动打印机(队列版)
                     if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
@@ -401,11 +404,24 @@ class Buy
 
     public function printOrder()
     {
+        $redis = $this->redisFactory();
+        //$redis->set('global-nums', 22);
+
+        //echo $redis->DECR('global-nums');
+
+        $m_red = new \app\core\model\RedCash();
+
+        $surplus = 19.3;
+        $nums    = 10;
+        $count   = 10;
+        echo $m_red->getMoney($surplus, $nums, $count);
+
+
         $print_bot_sn = '217502439';
 
         //启动打印机(测试版)
         $printer    = new \app\core\provider\BotPrinter();
-        $printer->getWordsChip();
+        //$printer->getWordsChip();
        
         //$this->getLine();
 

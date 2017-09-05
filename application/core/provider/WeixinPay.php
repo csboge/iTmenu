@@ -51,7 +51,7 @@ class WeixinPay {
             'total_fee'     => $this->total_fee,
             'spbill_create_ip' => $_SERVER['REMOTE_ADDR'], //终端IP
             //'spbill_create_ip' => '192.168.0.161', //终端IP
-            'notify_url'    => 'https://api.ai-life.me/api/Buy/notify/', //通知地址  确保外网能正常访问
+            'notify_url'    => 'https://demo.ai-life.me/api/Buy/notify/', //通知地址  确保外网能正常访问
             'openid'        => $this->openid, //用户id
             'trade_type'    => 'JSAPI'//交易类型
         );
