@@ -51,13 +51,15 @@
                         <input type="text" id="title" name="title" value="{$vo.title}" required="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label for="image" class="layui-form-label">
+                <div class="img-item">
+                    <label for="img_url" class="layui-form-label">
                         <span class="x-red"></span>图片
                     </label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="image" name="image" value="{$vo.image}" required="" autocomplete="off" class="layui-input">
+                    <div class="layui-input-inline" id="tupian" style="display: none">
+                        <input type="file" class="img-upload" name="img_url" id="img_url" accept="image/jpeg,image/gif,image/png">
+                        <input type="hidden" name="image" id="image">
                     </div>
+                    <div id="dds" class="img-box" style="margin-top: 30px;"></div>
                 </div>
                 <div class="layui-form-item">
                     <label for="rank" class="layui-form-label">
@@ -115,6 +117,34 @@
     <!-- 右侧主体结束 -->
 </div>
 <script>
+    function img_url(){
+        var image ="{$vo.image}";
+        console.log(image);
+        document.getElementById("dds").innerHTML = "<a href='#'><img style='width: 200px;height: 150px;' src='"+image+"'></a>";
+    }
+    img_url();
+
+    $("#dds").click(function(){
+        $("#tupian").css('display','block');
+    });
+
+    //上传图片后预览
+    $(document).ready(function () {
+        $("#img_url").change(function () {
+            var fil = this.files;
+            for (var i = 0; i < fil.length; i++) {
+                reads(fil[i]);
+            }
+        });
+    });
+    function reads(fil){
+        var reader = new FileReader();
+        reader.readAsDataURL(fil);
+        reader.onload = function() {
+            $('#image').val(reader.result);
+            $("#dds").html("<img style='width: 200px;height: 150px;' src='"+reader.result+"'>");
+        };
+    }
     $("#add-btn").click(function () {
         var data = [];
         layui.use('form', function () {

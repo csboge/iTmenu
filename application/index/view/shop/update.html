@@ -22,16 +22,26 @@
                         <span class="x-red"></span>商店名称
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="title" name="title" value="{$vo.title}" required="" lay-verify=""
+                        <input type="text" id="title" name="title" value="{$vo.title}" required=""
                                autocomplete="off" class="layui-input">
                     </div>
+                </div>
+                <div class="img-item">
+                    <label for="img_url" class="layui-form-label">
+                        <span class="x-red"></span>logo
+                    </label>
+                    <div class="layui-input-inline" id="tupian" style="display: none">
+                        <input type="file" class="img-upload" name="img_url" id="img_url" accept="image/jpeg,image/gif,image/png">
+                        <input type="hidden" name="logo" id="image">
+                    </div>
+                    <div id="dds" class="img-box" style="margin-top: 30px;"></div>
                 </div>
                 <div class="layui-form-item">
                     <label for="wechat" class="layui-form-label">
                         <span class="x-red"></span>微信
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="wechat" name="wechat" value="{$vo.wechat}" required="" lay-verify="number"
+                        <input type="text" id="wechat" name="wechat" value="{$vo.wechat}" required=""
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -49,7 +59,7 @@
                         <span class="x-red"></span>返利模式
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="mode_id" name="mode_id" value="{$vo.mode_id}" required="" lay-verify="number"
+                        <input type="text" id="mode_id" name="mode_id" value="{$vo.mode_id}" required=""
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -73,7 +83,7 @@
                     <label class="layui-form-label">
                     </label>
                     <button class="layui-btn" id="add-btn" lay-filter="add" lay-submit="">
-                        增加
+                        修改
                     </button>
                 </div>
             </form>
@@ -83,6 +93,37 @@
     <!-- 右侧主体结束 -->
 </div>
 <script>
+
+    function img_url(){
+        var image ="{$vo.logo}";
+        console.log(image);
+        document.getElementById("dds").innerHTML = "<a href='#'><img style='width: 200px;height: 150px;' src='"+image+"'></a>";
+    }
+    img_url();
+
+    $("#dds").click(function(){
+        $("#tupian").css('display','block');
+    });
+
+    //上传图片后预览
+    $(document).ready(function () {
+        $("#img_url").change(function () {
+            var fil = this.files;
+            for (var i = 0; i < fil.length; i++) {
+                reads(fil[i]);
+            }
+        });
+    });
+    function reads(fil){
+        var reader = new FileReader();
+        reader.readAsDataURL(fil);
+        reader.onload = function() {
+            $('#image').val(reader.result);
+            $("#dds").html("<img style='width: 200px;height: 150px;' src='"+reader.result+"'>");
+        };
+    }
+
+
     $("#add-btn").click(function () {
         var data = [];
         layui.use('form', function () {

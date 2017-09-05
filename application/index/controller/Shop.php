@@ -28,6 +28,8 @@ class Shop extends Controller
         if(input('post.')){
             $data = input('post.');
             $data['created'] = time();
+            unset($data['img_url']);
+            $data['logo'] = base64_img($data['logo']);
             $res = Db::name('shop')->insert($data);
             if($res){
                 return true;
@@ -47,6 +49,7 @@ class Shop extends Controller
         $data = input('id');
         if(empty($data))return false;
         $db = Db::name('shop')->where('id',$data)->find();
+        $db['logo'] = ImgUrl($db['logo']);
         $this->assign('vo',$db);
         return view();
     }
@@ -57,6 +60,8 @@ class Shop extends Controller
         if(input('post.')){
             $data = input('post.');
             $data['updated'] = time();
+            unset($data['img_url']);
+            $data['logo'] = base64_img($data['logo']);
             $res = $db->where('id',$data['id'])->update($data);
             if($res){
                 return true;
