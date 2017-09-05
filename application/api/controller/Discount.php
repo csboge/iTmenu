@@ -20,7 +20,8 @@ class Discount
         \app\core\provider\Auth         $p_auth,
         \app\core\model\RedCash         $m_red,
         \app\core\model\RedCashLog      $m_red_log,
-        \app\core\model\UserAccount     $m_acc_log
+        \app\core\model\UserAccount     $m_acc_log,
+        \app\core\model\Orders          $m_order
     )
     {
         //验证授权合法
