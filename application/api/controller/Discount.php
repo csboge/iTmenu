@@ -74,7 +74,7 @@ class Discount
 
         //查询订单 - 是否已生成红包
         $red_info   = $this->m_red->getRedForOrderSN($ordersn);
-        if($order_info) {
+        if($red_info) {
             return jsonData(-3, '该订单 - 已生成红包。');
         }
 
