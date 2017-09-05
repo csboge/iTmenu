@@ -13,13 +13,13 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => '127.0.0.1',
+    'hostname'        => '192.168.1.175',
     // 数据库名
     'database'        => 'drill',
     // 用户名
     'username'        => 'root',
     // 密码
-    'password'        => 'aidblife1073',
+    'password'        => 'root',
     // 端口
     'hostport'        => '',
     // 连接dsn
