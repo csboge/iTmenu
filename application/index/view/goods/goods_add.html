@@ -1,0 +1,159 @@
+{extend name="base" /}
+{block name="content"}
+<!-- 中部开始 -->
+
+<style type="text/css">
+    .SpanHeight{line-height:1.5;width:190px;height:40px}
+</style>
+
+<div class="wrapper">
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <xblock>
+            <div style="margin-left: 20px">
+                添加菜品
+            </div>
+        </xblock>
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <form class="layui-form" action="" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>店铺名称
+                    </label>
+                    <div  class="layui-input-inline">
+                        <select class="layui-form-item" name="shop_id" id="shop_id">
+                            <option value ="">请选择店铺</option>
+                            {volist name='list' id='vo'}
+                            <option  value ="{$vo.id}">{$vo.title}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>分类名称
+                    </label>
+                    <div  class="layui-input-inline">
+                        <select class="layui-form-item" name="cat_id" id="table_id">
+                            <option value ="">请选择分类</option>
+                            {volist name='info' id='list'}
+                            <option  value ="{$list.id}">{$list.name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red"></span>菜名
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="title" name="title" required="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="image" class="layui-form-label">
+                        <span class="x-red"></span>图片
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="image" name="image" required="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="rank" class="layui-form-label">
+                        <span class="x-red"></span>排序
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="rank" name="rank" required="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="price" class="layui-form-label">
+                        <span class="x-red"></span>商品价格
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="price" name="price" required="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>规格
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="da" placeholder="请填写价格，大份价格" required="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="zhong" placeholder="请填写价格，中份价格" required="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="xiao" placeholder="请填写价格，小份价格" required="" autocomplete="off" class="layui-input">
+                    </div>
+
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                    </label>
+                    <button class="layui-btn" id="add-btn" lay-filter="add" lay-submit="">
+                        增加
+                    </button>
+                </div>
+            </form>
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<script>
+    $("#add-btn").click(function () {
+        var data = [];
+        layui.use('form', function () {
+            var form = layui.form();
+            //监听提交
+            form.on('submit(add)', function (data) {
+                console.log(data.field);
+                if(!data.field.shop_id){
+                    layer.msg('请选则店铺',{icon:7,time:1000});
+                    return false;
+                }
+                if(!data.field.cat_id){
+                    layer.msg('请选择分类',{icon:7,time:1000});
+                    return false;
+                }
+                $.ajax({
+                    url:"{:url('Goods/goods_add')}",
+                    type:"post",
+                    data:data.field,
+                    success:function (res) {
+                        console.log(res);
+                        if(res === true){
+                            layer.msg('添加成功',{icon:1,time:1000});
+                            setTimeout(function () {
+                                location.href = "{:url('Goods/goods_index')}"
+                            },1500)
+                        }else {
+                            layer.msg('添加失败',{icon:2,time:1000});
+                            setTimeout(function () {
+                                location.href = "{:url('Goods/goods_index')}"
+                            },1500)
+                        }
+                    }
+                })
+                return false;
+            });
+        });
+    });
+//    $(".wrapper").on("click",".layui-this",function () {
+//        alert(111)
+//    })
+</script>
+{/block}

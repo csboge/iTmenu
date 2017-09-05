@@ -1,0 +1,88 @@
+{extend name="base" /}
+{block name="content"}
+<!-- 中部开始 -->
+
+<style type="text/css">
+    .SpanHeight{line-height:1.5;width:190px;height:40px}
+</style>
+
+<div class="wrapper">
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <xblock>
+            <div style="margin-left: 20px">
+                添加桌子分类
+            </div>
+        </xblock>
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <form class="layui-form" action="" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>店铺名称
+                    </label>
+                    <div  class="layui-input-inline">
+                        <select class="layui-form-item" name="shop_id">
+                            <option value ="">请选择店铺</option>
+                            {volist name='list' id='vo'}
+                            <option  value ="{$vo.id}">{$vo.title}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="name" class="layui-form-label">
+                        <span class="x-red"></span>分类名
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="name" name="name" required="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                    </label>
+                    <button class="layui-btn" id="add-btn" lay-filter="add" lay-submit="">
+                        增加
+                    </button>
+                </div>
+            </form>
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<script>
+    $("#add-btn").click(function () {
+        var data = [];
+        layui.use('form', function () {
+            var form = layui.form();
+            //监听提交
+            form.on('submit(add)', function (data) {
+                console.log(data.field);
+                $.ajax({
+                    url:"{:url('Table/add')}",
+                    type:"post",
+                    data:data.field,
+                    success:function (res) {
+                        console.log(res);
+                        if(res === true){
+                            layer.msg('添加成功',{icon:1,time:1000});
+                            setTimeout(function () {
+                                location.href = "{:url('Table/index')}"
+                            },1500)
+                        }else {
+                            layer.msg('添加失败',{icon:2,time:1000});
+                            setTimeout(function () {
+                                location.href = "{:url('Table/index')}"
+                            },1500)
+                        }
+                    }
+                })
+                return false;
+            });
+        });
+    });
+
+
+</script>
+{/block}
