@@ -11,7 +11,7 @@
     <div class="page-content">
         <xblock>
             <div style="margin-left: 20px">
-                添加商店
+                修改商店
             </div>
         </xblock>
         <div class="content">
@@ -22,7 +22,7 @@
                         <span class="x-red"></span>商店名称
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="title" name="title" required="" lay-verify=""
+                        <input type="text" id="title" name="title" value="{$vo.title}" required="" lay-verify=""
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                         <span class="x-red"></span>微信
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="wechat" name="wechat" required="" lay-verify="number"
+                        <input type="text" id="wechat" name="wechat" value="{$vo.wechat}" required="" lay-verify="number"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                         <span class="x-red"></span>联系手机
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="mobile" name="mobile" required="" lay-verify="number"
+                        <input type="text" id="mobile" name="mobile" value="{$vo.mobile}" required="" lay-verify="number"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                         <span class="x-red"></span>返利模式
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="mode_id" name="mode_id" required="" lay-verify="number"
+                        <input type="text" id="mode_id" name="mode_id" value="{$vo.mode_id}" required="" lay-verify="number"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -58,16 +58,17 @@
                         <span class="x-red"></span>是否新客立减
                     </label>
                     <div class="layui-input-inline">
-                        <input type="radio" name="is_first" value="1" checked="" title="是">
+                        <input type="radio" name="is_first" value="1" {if condition="$vo.is_first == 1"}checked{/if} checked="" title="是">
                         <div class="layui-unselect layui-form-radio layui-form-radioed">
                             <i class="layui-anim layui-icon"></i><span>是</span>
                         </div>
-                        <input type="radio" name="is_first" value="0" title="否">
+                        <input type="radio" name="is_first" value="0" {if condition="$vo.is_first == 0"}checked{/if} title="否">
                         <div class="layui-unselect layui-form-radio"><
                             i class="layui-anim layui-icon"></i><span>否</span>
                         </div>
                     </div>
                 </div>
+                <input type="hidden"  name="id" value="{$vo.id}" >
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                     </label>
@@ -90,18 +91,18 @@
             form.on('submit(add)', function (data) {
                 console.log(data.field);
                 $.ajax({
-                    url:"{:url('shop/add')}",
+                    url:"{:url('shop/is_update')}",
                     type:"post",
                     data:data.field,
                     success:function (res) {
                         console.log(res);
                         if(res === true){
-                            layer.msg('添加成功',{icon:1,time:1000});
+                            layer.msg('修改成功',{icon:1,time:1000});
                             setTimeout(function () {
                                 location.href = "{:url('shop/index')}"
                             },1500)
                         }else {
-                            layer.msg('添加失败',{icon:2,time:1000});
+                            layer.msg('修改失败',{icon:2,time:1000});
                             setTimeout(function () {
                                 location.href = "{:url('shop/index')}"
                             },1500)

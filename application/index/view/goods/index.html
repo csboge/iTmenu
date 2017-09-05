@@ -4,7 +4,7 @@
     <xblock class="page-content">
         <xblock>
             <div style="margin-left: 20px">
-                店铺列表
+                菜品分类
             </div>
         </xblock>
         <!-- 右侧内容框架，更改从这里开始 -->
@@ -34,7 +34,7 @@
             <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
             </button>
             <button class="layui-btn" id="member_add"><i
-                    class="layui-icon">&#xe608;</i>添加商家
+                    class="layui-icon">&#xe608;</i>添加分类
             </button>
             <span class="x-right" style="line-height:40px">共有数据：{$count} 条</span>
         </xblock><table class="layui-table">
@@ -44,17 +44,9 @@
                 <input type="checkbox" id="checkAll" name="" value="">
             </th>
             <th>ID</th>
-            <th>店铺名称</th>
-            <th>店铺logo</th>
-            <th>联系手机</th>
-            <th>座机电话</th>
-            <th>营业时间</th>
-            <th>店铺公告</th>
-            <th>店铺地址</th>
-            <th>微信</th>
-            <th>是否新客立减</th>
-            <th>返利模式</th>
-            <th>浏览次数</th>
+            <th>店铺</th>
+            <th>上级分类</th>
+            <th>名称</th>
             <th>创建时间</th>
             <th>状态</th>
             <th>操作</th>
@@ -67,21 +59,13 @@
                 <input type="checkbox" class="check" value="1" name="">
             </td>
             <td>{$vo.id}</td>
-            <td>{$vo.title}</td>
-            <td><img style="width: 65px;height: 45px" src="{:ImgUrl($vo.logo)}"/></td>
-            <td>{$vo.mobile}</td>
-            <td>{$vo.tel}</td>
-            <td>{$vo.shop_hours}</td>
-            <td>{:cut_str($vo.notice,8)}</td>
-            <td>{:cut_str($vo.adress,8)}</td>
-            <td>{$vo.wechat}</td>
-            {if condition="$vo.is_first === 1"}
-            <td style="color: greenyellow">是</td>
+            <td>{:shop_name($vo.shop_id)}</td>
+            {if condition="$vo.parent_id eq 0"}
+            <td style="color: greenyellow">顶级分类</td>
             {else}
-            <td style="color: #eb7350">否</td>
+            <td>{:goods_name($vo.parent_id)}</td>
             {/if}
-            <td>{$vo.mode_id}</td>
-            <td>{$vo.views}</td>
+            <td>{$vo.name}</td>
             <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
             {if condition="$vo.status == 1"}
             <td class="td-status">
@@ -98,7 +82,7 @@
             {/if}
             <td class="td-manage">
                 <!--<a title="编辑" href="javascript:;" onclick="update({$vo.id})">-->
-                <a title="编辑" href="{:url('shop/update',['id'=>$vo['id']])}">
+                <a title="编辑" href="{:url('Goods/update',['id'=>$vo['id']])}">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
                 <a title="删除" href="javascript:;" onclick="is_delete({$vo.id})"
@@ -130,13 +114,13 @@
     });
     //新增按钮
     $("#member_add").click(function () {
-            var url = "{:url('shop/add')}";
+            var url = "{:url('Goods/add')}";
             location.href = url;
     });
 
     //编辑按钮
     function update(id) {
-        var url = "{:url('shop/update',['id'=>"+id+"])}";
+        var url = "{:url('table/update',['id'=>"+id+"])}";
         var curl = decodeURI(url);
         console.log(curl);
         location.href = url;
@@ -147,18 +131,18 @@
         $.ajax({
             url:"{:url('common/is_status')}",
             type:"post",
-            data:{name:'shop',id:id,status:'status',volue:type},
+            data:{name:'category',id:id,status:'status',volue:type},
             success:function (res) {
                 console.log(res);
                 if(res === true){
                     layer.msg('修改成功',{icon:1,time:3500});
                     setTimeout(function () {
-                        location.href = "{:url('shop/index')}"
+                        location.href = "{:url('Goods/index')}"
                     },1500)
                 }else {
                     layer.msg('修改失败',{icon:2,time:3500});
                     setTimeout(function () {
-                        location.href = "{:url('shop/index')}"
+                        location.href = "{:url('Goods/index')}"
                     },1500)
                 }
             }
@@ -170,18 +154,18 @@
             $.ajax({
                 url:"{:url('common/is_delete')}",
                 type:"post",
-                data:{name:'shop',id:id},
+                data:{name:'category',id:id},
                 success:function (res) {
                     console.log(res);
                     if(res === true){
                         layer.msg('删除成功',{icon:1,time:1000});
                         setTimeout(function () {
-                            location.href = "{:url('shop/index')}"
+                            location.href = "{:url('Goods/index')}"
                         },1500)
                     }else {
                         layer.msg('删除失败',{icon:2,time:1000});
                         setTimeout(function () {
-                            location.href = "{:url('shop/index')}"
+                            location.href = "{:url('Goods/index')}"
                         },1500)
                     }
                 }

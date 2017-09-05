@@ -60,3 +60,57 @@ function cut_str($str,$len,$suffix="..."){
     }
 }
 
+function ajaxError($msg = '', $url = ''){
+    $data = ['data'=>'','info'=>$msg,'status'=>0];
+    if(!empty($url)){
+        $data['url'] = $url;
+    }
+    return json($data);
+}
+
+function ajaxSuccess($msg = '',$url = '', $data = []){
+    $data = ['info'=>$msg,'status'=>1];
+    if(!empty($url)){
+        $data['url'] = $url;
+    }
+    if(!empty($data)){
+        $data['data'] = $data;
+    }
+    return json($data);
+}
+
+function shop_name($id){
+    $db = new \think\Db;
+    $name = $db::name('shop')->where('id',$id)->field('title')->find();
+    return $name['title'];
+}
+
+function table_name($id){
+    $db = new \think\Db;
+    $name = $db::name('table_list')->where('id',$id)->field('name')->find();
+    return $name['name'];
+}
+
+function goods_name($id){
+    $db = new \think\Db;
+    $name = $db::name('category')->where('id',$id)->field('name')->find();
+    return $name['name'];
+}
+
+
+//获取数量
+function count_list($name,$type='',$volue='',$status = '1'){
+    if(!empty($type) && !empty($volue)){
+        $map = [
+            $type => $volue,
+            'hd_status' => $status
+        ];
+    }else{
+        $map = [
+            'hd_status' => $status
+        ];
+    }
+    $db = new \think\Db;
+    $count = $db::name($name)->where($map)->count();
+    return $count;
+}
