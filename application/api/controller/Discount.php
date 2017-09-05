@@ -182,8 +182,8 @@ class Discount
 
 
         // 开启 - 数据库事务
-        Db::startTrans();
-        try{
+        //Db::startTrans();
+        //try{
 
             //生成一条红包 - 抢夺日志
             $data = [
@@ -236,7 +236,7 @@ class Discount
 
             // 提交事务
             if ($ret1 && $ret2 && $ret3 && $ret4) {
-                Db::commit(); 
+                //Db::commit(); 
 
 
                 
@@ -250,11 +250,11 @@ class Discount
 
 
         // 回滚事务
-        } catch (\Exception $e) {
-            Db::rollback();
+        //} catch (\Exception $e) {
+        //    Db::rollback();
 
-            return jsonData(-4, '发生故障 - 红包抢夺发生错误');
-        }
+        //    return jsonData(-4, '发生故障 - 红包抢夺发生错误');
+        //}
     }
 
 
