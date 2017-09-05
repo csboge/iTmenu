@@ -86,6 +86,8 @@ class Table extends Controller
         if(input('post.')){
             $data = input('post.');
             $data['created'] = time();
+            unset($data['img_url']);
+            $data['image'] = base64_img($data['image']);
             $res = Db::name('table')->insert($data);
             if($res){
                 return true;
@@ -107,6 +109,7 @@ class Table extends Controller
         $data = input('param.');
         if(empty($data))return false;
         $db = Db::name('table')->where('id',$data['id'])->find();
+        $db['image'] = ImgUrl($db['image']);
         $info = Db::name('table_list')->where(['hd_status'=>1,'status'=>1])->select();
         $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
         $this->assign('info',$info);
@@ -120,6 +123,8 @@ class Table extends Controller
         if(input('post.')){
             $data = input('post.');
             $data['updated'] = time();
+            unset($data['img_url']);
+            $data['image'] = base64_img($data['image']);
             $db = Db::name('table');
             $res = $db->where('id',$data['id'])->update($data);
             if($res){

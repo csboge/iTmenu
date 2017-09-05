@@ -26,12 +26,22 @@
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
+                <div class="img-item">
+                    <label for="img_url" class="layui-form-label">
+                        <span class="x-red"></span>logo
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="file" class="img-upload" name="img_url" id="img_url" accept="image/jpeg,image/gif,image/png">
+                        <input type="hidden" name="logo" id="image">
+                    </div>
+                    <div id="dds" class="img-box" style="margin-top: 30px;"></div>
+                </div>
                 <div class="layui-form-item">
                     <label for="wechat" class="layui-form-label">
                         <span class="x-red"></span>微信
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="wechat" name="wechat" required="" lay-verify="number"
+                        <input type="text" id="wechat" name="wechat" required=""
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -49,7 +59,7 @@
                         <span class="x-red"></span>返利模式
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="mode_id" name="mode_id" required="" lay-verify="number"
+                        <input type="text" id="mode_id" name="mode_id" required=""
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -82,6 +92,27 @@
     <!-- 右侧主体结束 -->
 </div>
 <script>
+
+    //上传图片后预览
+    $(document).ready(function () {
+        $("#img_url").change(function () {
+            var fil = this.files;
+            console.log(fil);
+            for (var i = 0; i < fil.length; i++) {
+                reads(fil[i]);
+            }
+        });
+    });
+    function reads(fil){
+        var reader = new FileReader();
+        console.log(reader);
+        reader.readAsDataURL(fil);
+        reader.onload = function()
+        {
+            $('#image').val(reader.result);
+            document.getElementById("dds").innerHTML = "<img style='width: 200px;height: 150px;' src='"+reader.result+"'>";
+        };
+    }
     $("#add-btn").click(function () {
         var data = [];
         layui.use('form', function () {
@@ -89,6 +120,10 @@
             //监听提交
             form.on('submit(add)', function (data) {
                 console.log(data.field);
+                if(!data.field.image){
+                    layer.msg('请选择图片',{icon:7,time:1000});
+                    return false;
+                }
                 $.ajax({
                     url:"{:url('shop/add')}",
                     type:"post",

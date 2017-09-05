@@ -51,13 +51,15 @@
                         <input type="text" id="title" name="title" required="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label for="image" class="layui-form-label">
+                <div class="img-item">
+                    <label for="img_url" class="layui-form-label">
                         <span class="x-red"></span>图片
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="image" name="image" required="" autocomplete="off" class="layui-input">
+                        <input type="file" class="img-upload" name="img_url" id="img_url" accept="image/jpeg,image/gif,image/png">
+                        <input type="hidden" name="image" id="image">
                     </div>
+                    <div id="dds" class="img-box" style="margin-top: 30px;"></div>
                 </div>
                 <div class="layui-form-item">
                     <label for="rank" class="layui-form-label">
@@ -114,6 +116,26 @@
     <!-- 右侧主体结束 -->
 </div>
 <script>
+    //上传图片后预览
+    $(document).ready(function () {
+        $("#img_url").change(function () {
+            var fil = this.files;
+            console.log(fil);
+            for (var i = 0; i < fil.length; i++) {
+                reads(fil[i]);
+            }
+        });
+    });
+    function reads(fil){
+        var reader = new FileReader();
+        console.log(reader);
+        reader.readAsDataURL(fil);
+        reader.onload = function()
+        {
+            $('#image').val(reader.result);
+            document.getElementById("dds").innerHTML = "<img style='width: 200px;height: 150px;' src='"+reader.result+"'>";
+        };
+    }
     $("#add-btn").click(function () {
         var data = [];
         layui.use('form', function () {
@@ -127,6 +149,10 @@
                 }
                 if(!data.field.cat_id){
                     layer.msg('请选择分类',{icon:7,time:1000});
+                    return false;
+                }
+                if(!data.field.image){
+                    layer.msg('请选择图片',{icon:7,time:1000});
                     return false;
                 }
                 $.ajax({
@@ -152,7 +178,10 @@
             });
         });
     });
-//    $(".wrapper").on("click",".layui-this",function () {
+
+
+
+    //    $(".wrapper").on("click",".layui-this",function () {
 //        alert(111)
 //    })
 </script>

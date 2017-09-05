@@ -98,7 +98,9 @@ class Goods extends Controller
             unset($data['da']);
             unset($data['zhong']);
             unset($data['xiao']);
+            unset($data['img_url']);
             $data ['attrs'] = serialize($data['attrs']);
+            $data['image'] = base64_img($data['image']);
             $res = Db::name('goods')->insert($data);
             if($res){
                 return true;
@@ -125,6 +127,7 @@ class Goods extends Controller
         $db['zhong'] = $db['attrs']['中份'];
         $db['xiao'] = $db['attrs']['小份'];
         unset($db['attrs']);
+        $db['image'] = ImgUrl($db['image']);
         $info = Db::name('table_list')->where(['hd_status'=>1,'status'=>1])->select();
         $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
         $this->assign('info',$info);
@@ -147,9 +150,10 @@ class Goods extends Controller
             unset($data['zhong']);
             unset($data['xiao']);
             $data ['attrs'] = serialize($data['attrs']);
+            unset($data['img_url']);
+            $data['image'] = base64_img($data['image']);
             $db = Db::name('goods');
             $res = $db->where('id',$data['id'])->update($data);
-            print_r($res);
             if($res){
                 return true;
             }else{
