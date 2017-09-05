@@ -21,7 +21,8 @@ class Discount
         \app\core\model\RedCash         $m_red,
         \app\core\model\RedCashLog      $m_red_log,
         \app\core\model\UserAccount     $m_acc_log,
-        \app\core\model\Orders          $m_order
+        \app\core\model\Orders          $m_order,
+        \app\core\model\User            $m_user
     )
     {
         //验证授权合法
@@ -44,6 +45,9 @@ class Discount
 
         //订单模型
         $this->m_order    = $m_order;
+
+        //用户模型
+        $this->m_user     = $m_user;
     }
 
 
@@ -230,7 +234,7 @@ class Discount
                 'money' => $acc_money,
                 'updated' => time()
             ];
-            $ret4  = $this->m_user->data($data)->save();
+            $ret4  = $this->m_user->save($data, ['id' => $session['userid']]);
 
 
 
