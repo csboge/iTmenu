@@ -84,7 +84,7 @@ class Discount
         //查询订单
         $order_info            = $this->m_order->getOrderForSN($ordersn);
         if(!$order_info) { 
-            return jsonData(-4, '该订单 - 已不存在。');
+            return jsonData(-4, '该订单 - 已不存在。' . $this->m_order->getLastSql());
         }
 
 
