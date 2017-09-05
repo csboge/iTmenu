@@ -134,7 +134,7 @@ class Discount
 
 
         //语音口令(二进制)
-        $bagid      = input('param.audio');
+        $audio      = input('param.audio');
 
 
         //用户信息
@@ -143,10 +143,9 @@ class Discount
         $redis = $this->redisFactory();
 
         //合法验证
-        $keystr = 'discount:redinfo:' . $bagid;
         $baginfo    = $redis->get('discount:redinfo:' . $bagid);
         if (!$baginfo) {
-            return jsonData(-1, $keystr . '红包已经过期了' . $bigid);
+            return jsonData(-1, '红包已经过期了' . $bagid);
         }
 
         //是否还可以抢夺
