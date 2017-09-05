@@ -18,7 +18,7 @@ define('APP_PATH', __DIR__ . '/../application/');
 define('CONF_PATH', __DIR__.'/../config/');
 
 // 配置图片域名
-define('GET_IMG_URL', 'http://img1.my-shop.cc');
+define('GET_IMG_URL', 'http://img1.my-shop.cc/');
 
 // 加载框架引导文件
 require __DIR__ . '/../thinkphp/start.php';
