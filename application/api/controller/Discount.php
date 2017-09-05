@@ -42,6 +42,8 @@ class Discount
         //财务日志模型(交易日志)
         $this->m_acc_log    = $m_acc_log;
 
+        //订单模型
+        $this->m_order    = $m_order;
     }
 
 
