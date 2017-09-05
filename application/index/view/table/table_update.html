@@ -11,68 +11,68 @@
     <div class="page-content">
         <xblock>
             <div style="margin-left: 20px">
-                添加商店
+                修改桌子
             </div>
         </xblock>
         <div class="content">
             <!-- 右侧内容框架，更改从这里开始 -->
             <form class="layui-form" action="" method="post">
                 <div class="layui-form-item">
-                    <label for="title" class="layui-form-label">
-                        <span class="x-red"></span>商店名称
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>店铺名称
                     </label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="title" name="title" required="" lay-verify=""
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label for="wechat" class="layui-form-label">
-                        <span class="x-red"></span>微信
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="wechat" name="wechat" required="" lay-verify="number"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label for="mobile" class="layui-form-label">
-                        <span class="x-red"></span>联系手机
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="mobile" name="mobile" required="" lay-verify="number"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label for="mode_id" class="layui-form-label">
-                        <span class="x-red"></span>返利模式
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="mode_id" name="mode_id" required="" lay-verify="number"
-                               autocomplete="off" class="layui-input">
+                    <div  class="layui-input-inline">
+                        <select class="layui-form-item" name="shop_id">
+                            <option value ="">请选择店铺</option>
+                            {volist name='list' id='list'}
+                            <option  value ="{$list.id}"{if condition="$vo.shop_id === $list.id"}selected{/if}>{$list.title}</option>
+                            {/volist}
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
-                        <span class="x-red"></span>是否新客立减
+                        <span class="x-red"></span>分类名称
                     </label>
-                    <div class="layui-input-inline">
-                        <input type="radio" name="is_first" value="1" checked="" title="是">
-                        <div class="layui-unselect layui-form-radio layui-form-radioed">
-                            <i class="layui-anim layui-icon"></i><span>是</span>
-                        </div>
-                        <input type="radio" name="is_first" value="0" title="否">
-                        <div class="layui-unselect layui-form-radio"><
-                            i class="layui-anim layui-icon"></i><span>否</span>
-                        </div>
+                    <div  class="layui-input-inline">
+                        <select class="layui-form-item" name="table_id" id="table_id">
+                            <option value ="">请选择分类</option>
+                            {volist name='info' id='list'}
+                            <option  value ="{$list.id}"{if condition="$vo.table_id === $list.id"}selected{/if}>{$list.name}</option>
+                            {/volist}
+                        </select>
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <label for="name" class="layui-form-label">
+                        <span class="x-red"></span>桌子名
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="name" name="name" value="{$vo.name}" required="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="image" class="layui-form-label">
+                        <span class="x-red"></span>图片
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="image" name="image" value="{$vo.image}" required="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="minimum" class="layui-form-label">
+                        <span class="x-red"></span>最低消费
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="minimum" name="minimum" value="{$vo.minimum}"  required="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <input type="hidden"  name="id" value="{$vo.id}" >
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                     </label>
                     <button class="layui-btn" id="add-btn" lay-filter="add" lay-submit="">
-                        增加
+                        修改
                     </button>
                 </div>
             </form>
@@ -90,21 +90,20 @@
             form.on('submit(add)', function (data) {
                 console.log(data.field);
                 $.ajax({
-                    url:"{:url('shop/add')}",
+                    url:"{:url('Table/as_update')}",
                     type:"post",
                     data:data.field,
                     success:function (res) {
                         console.log(res);
                         if(res === true){
-                            layer.msg('添加成功',{icon:1,time:1000});
+                            layer.msg('修改成功',{icon:1,time:1000});
                             setTimeout(function () {
-                                location.href = "{:url('shop/index')}"
-
+                                location.href = "{:url('Table/table_index')}"
                             },1500)
                         }else {
-                            layer.msg('添加失败',{icon:2,time:1000});
+                            layer.msg('修改失败',{icon:2,time:1000});
                             setTimeout(function () {
-                                location.href = "{:url('shop/index')}"
+                                location.href = "{:url('Table/table_index')}"
                             },1500)
                         }
                     }

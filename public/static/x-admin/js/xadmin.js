@@ -201,13 +201,5 @@ layui.use(['laydate'], function () {
         }
     };
 
-    // document.getElementById('LAY_demorange_s').onclick = function () {
-    //     start.elem = this;
-    //     laydate(start);
-    // };
-    // document.getElementById('LAY_demorange_e').onclick = function () {
-    //     end.elem = this;
-    //     laydate(end);
-    // }
 })
 

@@ -26,7 +26,7 @@ class Common extends Controller
     }
 
 
-    //状态修改
+    //删除
     public function is_delete(){
         $data = input('post.');
         $info = Db::name($data['name'])->where('id',$data['id'])->setField('hd_status',0);
