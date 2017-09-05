@@ -5,6 +5,9 @@ use think\Request;
 
 class Discount
 {
+    use \app\core\traits\ProviderFactory;
+
+
     private     $p_auth;
 
     /***
@@ -14,7 +17,9 @@ class Discount
     public function __construct(
         Request                         $request,
         \app\core\provider\Auth         $p_auth,
-        \app\core\model\RedCash         $m_red
+        \app\core\model\RedCash         $m_red,
+        \app\core\model\RedCashLog      $m_red_log,
+        \app\core\model\UserAccount     $m_acc_log
     )
     {
         //验证授权合法
@@ -28,6 +33,13 @@ class Discount
 
         //红包模型
         $this->m_red    = $m_red;
+
+        //红包模型(抢夺日志)
+        $this->m_red_log    = $m_red_log;
+
+        //财务日志模型(交易日志)
+        $this->m_acc_log    = $m_acc_log;
+
     }
 
 
@@ -78,6 +90,7 @@ class Discount
             'words'     => $words,
             'shop_id'   => $order_info['shop_id'],
             'menoy'     => $order_info['mode_money'],
+            'surplus'   => $order_info['mode_money'],
             'user_id'   => $session['userid'],
             'num'       => $num,
             'created'   => time(),
@@ -88,6 +101,15 @@ class Discount
         if (!$result) {
             return jsonData(0, '抱歉 - 生成失败。');
         }
+
+
+        //生成红包 - 内存变量 - 控制抢夺并发
+        $redis = $this->redisFactory();
+        $redis->set('discount:red:' . $this->m_red->id, $num);
+
+        //红包详细
+        $data['id'] = $this->m_red->id;
+        $redis->set('discount:redinfo:' . $this->m_red->id, json_encode($data));
 
 
         //一条红包信息                              红包总数      已抢数量
@@ -115,18 +137,85 @@ class Discount
         $session    = $this->p_auth->session();
 
 
+        //合法验证
+        $baginfo    = $redis->get('discount:redinfo:' . $bagid);
+        if (!$baginfo) {
+            return jsonData(-1, '红包已经过期了');
+        }
+
+        //是否还可以抢夺
+        $redis = $this->redisFactory();
+
+        //剩余红包数量
+        $nums  = $redis->DECR('discount:red:' . $bagid);
+        if ($nums <= -1) {
+            return jsonData(-1, '红包已经被抢完了');
+        }
+
+        //本次抢夺金额
+        $my_money = $this->m_red->getMoney($baginfo['surplus'], $nums, $baginfo['num']);
+
+        //更新缓存
+        $baginfo['surplus'] -= $my_money;
+        $baginfo['updated']  = time();
+        $redis->set('discount:redinfo:' . $bagid, json_encode($baginfo));
+
+
+        //红包完结 - 可能要做的清理工作。
+        if ($nums <= 0) { }
+
+
+        //生成一条红包 - 抢夺日志
+        $data = [
+            'red_cash_id'   => $bagid,
+            'user_id'       => $session['userid'],
+            'audio'         => '',
+            'menoy'         => $my_money,
+            'shop_id'       => $baginfo['shop_id'],
+            'remark'        => '抢夺了一个[语音红包]，金额：￥' . $my_money,
+            'created'       => time(),
+            'updated'       => time()
+        ];
+        $ret1  = $this->m_red_log->data($data)->save();
+
+
+        //母包 - 更新信息
+        $get_num = $baginfo['num'] - $nums;
+        $data  = [
+            'surplus' => $baginfo['surplus'],
+            'get_num' => $get_num,
+            'updated' => time()
+        ];
+        $ret2  = $this->m_red->save($data, ['id' => $bagid, 'order_sn'=>$baginfo['order_sn']]);
+
+
+        //增加 - 财务日志
+        $data  = [
+            'money'         => $my_money,
+            'user_id'       => $session['userid'],
+            'shop_id'       => $baginfo['shop_id'],
+            'order_sn'      => $baginfo['order_sn'],
+            'red_cash_id'   => $bagid,
+            'created'       => time()
+        ];
+        $ret3  = $this->m_acc_log->data($data)->save();
 
 
 
+        //统计 - 用户账户(红包余额)
+        $acc_money  = $this->m_user->where('id', $session['userid'])->value('money');
+        $acc_money += $my_money;
 
-
-
-
+        $data  = [
+            'money' => $acc_money,
+            'updated' => time()
+        ];
+        $ret4  = $this->m_user->data($data)->save();
 
 
 
         //抢到红包金额     已抢数量
-        return jsonData(1, 'ok', ['money'=>10, 'speed'=>6]);
+        return jsonData(1, 'ok', ['money'=>$my_money, 'speed'=>$get_num]);
     }
 
 

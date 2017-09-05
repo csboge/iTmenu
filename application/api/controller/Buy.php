@@ -401,11 +401,24 @@ class Buy
 
     public function printOrder()
     {
+        $redis = $this->redisFactory();
+        //$redis->set('global-nums', 22);
+
+        //echo $redis->DECR('global-nums');
+
+        $m_red = new \app\core\model\RedCash();
+
+        $surplus = 19.3;
+        $nums    = 10;
+        $count   = 10;
+        echo $m_red->getMoney($surplus, $nums, $count);
+
+
         $print_bot_sn = '217502439';
 
         //启动打印机(测试版)
         $printer    = new \app\core\provider\BotPrinter();
-        $printer->getWordsChip();
+        //$printer->getWordsChip();
        
         //$this->getLine();
 
