@@ -140,6 +140,7 @@ class Discount
         //用户信息
         $session    = $this->p_auth->session();
 
+        $redis = $this->redisFactory();
 
         //合法验证
         $baginfo    = $redis->get('discount:redinfo:' . $bagid);
@@ -148,7 +149,6 @@ class Discount
         }
 
         //是否还可以抢夺
-        $redis = $this->redisFactory();
 
         //剩余红包数量
         $nums  = $redis->DECR('discount:red:' . $bagid);
