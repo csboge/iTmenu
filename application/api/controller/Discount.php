@@ -143,10 +143,12 @@ class Discount
         $redis = $this->redisFactory();
 
         //合法验证
-        $baginfo    = $redis->get('discount:redinfo:' . $bagid);
-        if (!$baginfo) {
+        $bagstr    = $redis->get('discount:redinfo:' . $bagid);
+        if (!$bagstr) {
             return jsonData(-1, '红包已经过期了' . $bagid);
         }
+
+        $baginfo    = json_decode($bagstr, true);
 
         //是否还可以抢夺
 
