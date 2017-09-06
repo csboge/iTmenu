@@ -154,7 +154,14 @@ class Discount
 
         $baginfo    = json_decode($bagstr, true);
 
+
         //是否还可以抢夺
+        if (isset($baginfo['use_users'])){
+            if (in_array($session['userid'], explode(',', $baginfo['use_users']))) {
+                return jsonData(-6, '嗨，你已经抢过了');
+            }
+        }
+
 
         //剩余红包数量
         $nums  = $redis->DECR('discount:red:' . $bagid);
@@ -164,9 +171,18 @@ class Discount
 
         //本次抢夺金额
         $my_money = $this->m_red->getMoney($baginfo['surplus'], $nums, $baginfo['num']);
+        
+        if ($my_money <= 0) { 
+            return jsonData(-5, '红包已经被抢完了');
+        }
+
 
         //更新缓存
         $baginfo['surplus'] -= $my_money;
+
+        //记录已抢用户id
+        $baginfo['use_users'] .= ',' . $session['userid'];
+
         $baginfo['updated']  = time();
         $redis->set('discount:redinfo:' . $bagid, json_encode($baginfo));
 
