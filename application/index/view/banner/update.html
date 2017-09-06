@@ -11,7 +11,7 @@
     <div class="page-content">
         <xblock>
             <div style="margin-left: 20px">
-                添加轮播图
+                修改轮播图
             </div>
         </xblock>
         <div class="content">
@@ -25,7 +25,7 @@
                         <select class="layui-form-item" name="shop_id" id="shop_id">
                             <option value ="">请选择店铺</option>
                             {volist name='info' id='list'}
-                            <option  value ="{$list.id}">{$list.title}</option>
+                            <option  value ="{$list.id}" {if condition="$vo.shop_id === $list.id"}selected{/if}>{$list.title}</option>
                             {/volist}
                         </select>
                     </div>
@@ -34,7 +34,7 @@
                     <label for="img_url" class="layui-form-label">
                         <span class="x-red"></span>图片
                     </label>
-                    <div class="layui-input-inline">
+                    <div class="layui-input-inline" id="tupian" style="display: none">
                         <input type="file" class="img-upload" name="img_url" id="img_url" accept="image/jpeg,image/gif,image/png">
                         <input type="hidden" name="image" id="image">
                     </div>
@@ -45,15 +45,15 @@
                         <span class="x-red"></span>跳转链接
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="url" name="url" required="" autocomplete="off" class="layui-input">
+                        <input type="text" id="url" name="url" value="{$vo.url}" required="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <input type="hidden" name="cat_id" value="{$cat_id}">
+                <input type="hidden" name="id" value="{$vo.id}">
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                     </label>
                     <button class="layui-btn" id="add-btn" lay-filter="add" lay-submit="">
-                        增加
+                        修改
                     </button>
                 </div>
             </form>
@@ -63,11 +63,21 @@
     <!-- 右侧主体结束 -->
 </div>
 <script>
+    function img_url(){
+        var image ="{$vo.image}";
+        console.log(image);
+        document.getElementById("dds").innerHTML = "<a href='#'><img style='width: 200px;height: 150px;' src='"+image+"'></a>";
+    }
+    img_url();
+
+    $("#dds").click(function(){
+        $("#tupian").css('display','block');
+    });
+
     //上传图片后预览
     $(document).ready(function () {
         $("#img_url").change(function () {
             var fil = this.files;
-            console.log(fil);
             for (var i = 0; i < fil.length; i++) {
                 reads(fil[i]);
             }
@@ -75,12 +85,10 @@
     });
     function reads(fil){
         var reader = new FileReader();
-        console.log(reader);
         reader.readAsDataURL(fil);
-        reader.onload = function()
-        {
+        reader.onload = function() {
             $('#image').val(reader.result);
-            document.getElementById("dds").innerHTML = "<img style='width: 200px;height: 150px;' src='"+reader.result+"'>";
+            $("#dds").html("<img style='width: 200px;height: 150px;' src='"+reader.result+"'>");
         };
     }
     var urls = '';
@@ -99,17 +107,8 @@
             //监听提交
             form.on('submit(add)', function (data) {
                 console.log(data.field);
-                if(!data.field.shop_id){
-                    layer.msg('请选择店铺',{icon:7,time:1000});
-                    return false;
-                }
-                if(!data.field.image){
-                    layer.msg('请选择图片',{icon:7,time:1000});
-                    return false;
-                }
-
                 $.ajax({
-                    url:"{:url('Banner/is_add')}",
+                    url:"{:url('Banner/is_update')}",
                     type:"post",
                     data:data.field,
                     success:function (res) {

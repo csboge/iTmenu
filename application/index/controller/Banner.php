@@ -61,4 +61,40 @@ class Banner extends Controller
         return view();
     }
 
+    //修改轮播图显示页
+    public function update(){
+        $data = input('param.');
+        if(empty($data))return false;
+        $db = Db::name('banner')->where('id',$data['id'])->find();
+        $db['image'] = ImgUrl($db['image']);
+        $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
+        $this->assign('info',$list);
+        $this->assign('vo',$db);
+        $this->assign('cat_id',$data['cat_id']);
+        return view();
+    }
+
+    //修改轮播图操作
+    public function is_update(){
+        if(input('post.')){
+            $data = input('post.');
+            $data['updated'] = time();;
+            unset($data['img_url']);
+            if($data['image']){
+                $data['image'] = base64_img($data['image']);
+            }else{
+                unset($data['image']);
+            }
+            $db = Db::name('banner');
+            $res = $db->where('id',$data['id'])->update($data);
+            if($res){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
 }

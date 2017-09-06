@@ -84,7 +84,7 @@
             {/if}
             <td class="td-manage">
                 <!--<a title="编辑" href="javascript:;" onclick="update({$vo.id})">-->
-                <a title="编辑" href="{:url('banner/update',['id'=>$vo['id']])}">
+                <a title="编辑" href="{:url('banner/update',['id'=>$vo['id'],'cat_id'=>$cat_id])}">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
                 <a title="删除" href="javascript:;" onclick="is_delete({$vo.id},{$vo.shop_id})"
@@ -114,9 +114,11 @@
             $("input[type='checkbox']").attr("checked", "true");
         }
     });
+    var cat_id = {$cat_id};
+    var urls = '';
+
     //新增按钮
     $("#member_add").click(function () {
-        var cat_id = {$cat_id};
         if(cat_id === 1){
             location.href = "{:url('Banner/add',['cat_id'=>1])}";
         }else if(cat_id === 2){
@@ -127,6 +129,13 @@
 //            location.href = "{:url('Banner/add')}";
     });
 
+    if(cat_id === 1){
+        urls = "{:url('Banner/index',['cat_id'=>1])}";
+    }else if(cat_id === 2){
+        urls = "{:url('Banner/index',['cat_id'=>2])}";
+    } else if(cat_id === 3){
+        urls = "{:url('Banner/index',['cat_id'=>3])}";
+    }
     //状态修改
     function is_status(type,id){
         $.ajax({
@@ -138,12 +147,12 @@
                 if(res === true){
                     layer.msg('修改成功',{icon:1,time:3500});
                     setTimeout(function () {
-                        location.href = "{:url('Banner/index')}"
+                        location.href = urls
                     },1500)
                 }else {
                     layer.msg('修改失败',{icon:2,time:3500});
                     setTimeout(function () {
-                        location.href = "{:url('Banner/index')}"
+                        location.href = urls
                     },1500)
                 }
             }
@@ -158,16 +167,15 @@
                 data:{name:'banner',id:id},
                 success:function (res) {
                     console.log(res);
-                    var url = "{:url('Banner/index')}";
                     if(res === true){
                         layer.msg('删除成功',{icon:1,time:1000});
                         setTimeout(function () {
-                            location.href = url
+                            location.href = urls
                         },1500)
                     }else {
                         layer.msg('删除失败',{icon:2,time:1000});
                         setTimeout(function () {
-                            location.href = url
+                            location.href = urls
                         },1500)
                     }
                 }
