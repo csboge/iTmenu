@@ -44,7 +44,7 @@ class RedCash extends Model
     public function getMoney($surplus, $nums, $count)
     {
         //最后一个， 全部余额
-        if ($nums <= 1) return $surplus;
+        if ($nums <= 1 || $surplus <= 0) return $surplus;
 
         //剩余金额 一半
         $max  = $surplus / 2;
