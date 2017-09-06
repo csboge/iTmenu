@@ -3,7 +3,11 @@
 <!-- 中部开始 -->
 
 <style type="text/css">
-    .SpanHeight{line-height:1.5;width:190px;height:40px}
+    .SpanHeight {
+        line-height: 1.5;
+        width: 190px;
+        height: 40px
+    }
 </style>
 
 <div class="wrapper">
@@ -21,11 +25,11 @@
                     <label class="layui-form-label">
                         <span class="x-red"></span>店铺名称
                     </label>
-                    <div  class="layui-input-inline">
+                    <div class="layui-input-inline">
                         <select class="layui-form-item" name="shop_id">
-                            <option value ="">请选择店铺</option>
+                            <option value="">请选择店铺</option>
                             {volist name='list' id='list'}
-                            <option  value ="{$list.id}"{if condition="$vo.shop_id === $list.id"}selected{/if}>{$list.title}</option>
+                            <option value="{$list.id}" {if condition="$vo.shop_id === $list.id" }selected{/if}>{$list.title}</option>
                             {/volist}
                         </select>
                     </div>
@@ -34,11 +38,12 @@
                     <label class="layui-form-label">
                         <span class="x-red"></span>分类名称
                     </label>
-                    <div  class="layui-input-inline">
+                    <div class="layui-input-inline">
                         <select class="layui-form-item" name="cat_id" id="cat_id">
-                            <option value ="">请选择分类</option>
+                            <option value="">请选择分类</option>
                             {volist name='info' id='list'}
-                            <option  value ="{$list.id}"{if condition="$vo.cat_id === $list.id"}selected{/if}>{$list.name}</option>
+                            <option value="{$list.id}" {if condition="$vo.cat_id === $list.id" }selected{
+                            /if}>{$list.name}</option>
                             {/volist}
                         </select>
                     </div>
@@ -77,32 +82,16 @@
                         <input type="text" id="price" name="price" value="{$vo.price}" required="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item guige-box">
                     <label class="layui-form-label">
                         <span class="x-red"></span>规格
                     </label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="da" value="{$vo.da}" placeholder="请填写价格，大份价格" required="" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <span class="x-red"></span>
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="zhong" value="{$vo.zhong}" placeholder="请填写价格，中份价格" required="" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <span class="x-red"></span>
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="xiao" value="{$vo.xiao}" placeholder="请填写价格，小份价格" required="" autocomplete="off" class="layui-input">
-                    </div>
+                    <div class="guige-l">
 
+
+                    </div>
                 </div>
-                <input type="hidden"  name="id" value="{$vo.id}" >
+                <input type="hidden" name="id" value="{$vo.id}">
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                     </label>
@@ -117,15 +106,36 @@
     <!-- 右侧主体结束 -->
 </div>
 <script>
-    function img_url(){
-        var image ="{$vo.image}";
+    var attrs = {$vo.attrs};
+    var temp = "";
+    attrs.forEach(function (obj, j) {
+
+        temp += "<div class=\"attr-box-li\" style=\"display: block; width: 100%; clear: both;\">\n" +
+            "                            <div class=\"layui-input-inline guige-line\">\n" +
+            "                                <input type=\"text\" name=\"titles["+ j +"]\" data-key=\"titles\" value="+obj.titles+" placeholder=\"名称\" required=\"\" autocomplete=\"off\" class=\"layui-input\">\n" +
+            "                            </div>\n" +
+            "                            <div class=\"layui-input-inline guige-line\">\n" +
+            "                                <input type=\"text\" name=\"prices["+ j +"]\" data-key=\"prices\" value="+obj.prices+" placeholder=\"价格\" required=\"\" autocomplete=\"off\" class=\"layui-input\">\n" +
+            "                            </div>\n" +
+            "                            <div class=\"cut plus-cut-btn\"></div>\n" +
+            "                        </div>";
+
+    });
+
+    $(".guige-l").append(temp);
+    $(".guige-l>div").last().find(".cut").attr("class", "plus plus-cut-btn");
+
+
+    function img_url() {
+        var image = "{$vo.image}";
         console.log(image);
-        document.getElementById("dds").innerHTML = "<a href='#'><img style='width: 200px;height: 150px;' src='"+image+"'></a>";
+        document.getElementById("dds").innerHTML = "<a href='#'><img style='width: 200px;height: 150px;' src='" + image + "'></a>";
     }
+
     img_url();
 
-    $("#dds").click(function(){
-        $("#tupian").css('display','block');
+    $("#dds").click(function () {
+        $("#tupian").css('display', 'block');
     });
 
     //上传图片后预览
@@ -137,14 +147,16 @@
             }
         });
     });
-    function reads(fil){
+
+    function reads(fil) {
         var reader = new FileReader();
         reader.readAsDataURL(fil);
-        reader.onload = function() {
+        reader.onload = function () {
             $('#image').val(reader.result);
-            $("#dds").html("<img style='width: 200px;height: 150px;' src='"+reader.result+"'>");
+            $("#dds").html("<img style='width: 200px;height: 150px;' src='" + reader.result + "'>");
         };
     }
+
     $("#add-btn").click(function () {
         var data = [];
         layui.use('form', function () {
@@ -152,11 +164,19 @@
             //监听提交
             form.on('submit(add)', function (data) {
                 console.log(data.field);
+                var titles = [];
+                for(var key in data.field){
+                    if(key.indexOf("titles") != -1){
+                        titles.push(key);
+                    }
+                }
+                console.log(titles)
+
                 $.ajax({
-                    url:"{:url('Goods/as_update')}",
-                    type:"post",
-                    data:data.field,
-                    success:function (res) {
+                    url: "{:url('Goods/as_update')}",
+                    type: "post",
+                    data: data.field,
+                    success: function (res) {
                         console.log(res);
                         if(res === true){
                             layer.msg('修改成功',{icon:1,time:1000});
@@ -177,5 +197,40 @@
     });
 
 
+    var i = attrs.length;
+    $(".content").on("click", ".plus", function () {
+        var titles_val = $(this).parent().find("[data-key='titles']").val();
+        var prices_val = $(this).parent().find("[data-key='prices']").val();
+        var tpl = "<div class=\"attr-box-li\" style=\"display: block; width: 100%; clear: both;\">\n" +
+            "                            <div class=\"layui-input-inline guige-line\">\n" +
+            "                                <input type=\"text\" name=\"titles["+ i +"]\" data-key=\"titles\" value=\"\" placeholder=\"名称\" required=\"\" autocomplete=\"off\" class=\"layui-input\">\n" +
+            "                            </div>\n" +
+            "                            <div class=\"layui-input-inline guige-line\">\n" +
+            "                                <input type=\"text\" name=\"prices["+ i +"]\" data-key=\"prices\" value=\"\" placeholder=\"价格\" required=\"\" autocomplete=\"off\" class=\"layui-input\">\n" +
+            "                            </div>\n" +
+            "                            <div class=\"plus plus-cut-btn\"></div>\n" +
+            "                        </div>";
+
+        if (titles_val.trim() && prices_val.trim()) {
+            console.log($(this))
+            $(this).replaceWith("<div class=\"cut plus-cut-btn\"></div>");
+            $(".guige-l").append(tpl);
+            i++;
+        } else {
+            layer.msg("请输入规格", {icon: 5, time: 1000});
+        }
+    })
+
+    $(".content").on("click", ".cut", function () {
+
+        var titles_val = $(this).parent().find("[data-key='titles']").val();
+        var prices_val = $(this).parent().find("[data-key='prices']").val();
+
+        if (titles_val.trim() && prices_val.trim()) {
+            $(this).parent().remove();
+        } else {
+            return;
+        }
+    })
 </script>
 {/block}

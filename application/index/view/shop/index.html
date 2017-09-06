@@ -98,13 +98,15 @@
             {/if}
             <td class="td-manage">
                 <!--<a title="编辑" href="javascript:;" onclick="update({$vo.id})">-->
-                <a title="编辑" href="{:url('shop/update',['id'=>$vo['id']])}">
+                <a title="编辑" href="{:url('Shop/update',['id'=>$vo['id']])}">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
                 <a title="删除" href="javascript:;" onclick="is_delete({$vo.id})"
                    style="text-decoration:none">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
+
+
             </td>
         </tr>
         {/volist}

@@ -77,30 +77,23 @@
                         <input type="text" id="price" name="price" required="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item guige-box">
                     <label class="layui-form-label">
                         <span class="x-red"></span>规格
                     </label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="da" placeholder="请填写价格，大份价格" required="" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <span class="x-red"></span>
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="zhong" placeholder="请填写价格，中份价格" required="" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <span class="x-red"></span>
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="xiao" placeholder="请填写价格，小份价格" required="" autocomplete="off" class="layui-input">
-                    </div>
+                    <div class="guige-l">
 
+                        <div class="attr-box-li" style="display: block; width: 100%; clear: both;">
+                            <div class="layui-input-inline guige-line">
+                                <input type="text" name="titles[]" data-key="titles" value="" placeholder="名称" required="" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-input-inline guige-line">
+                                <input type="text" name="prices[]" data-key="prices" value="" placeholder="价格" required="" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="plus plus-cut-btn"></div>
+                        </div>
+
+                    </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
@@ -178,11 +171,41 @@
             });
         });
     });
+    var i = 1;
+    $(".content").on("click", ".plus", function () {
+        var titles_val = $(this).parent().find("[data-key='titles']").val();
+        var prices_val = $(this).parent().find("[data-key='prices']").val();
+        var tpl = "<div class=\"attr-box-li\" style=\"display: block; width: 100%; clear: both;\">\n" +
+            "                            <div class=\"layui-input-inline guige-line\">\n" +
+            "                                <input type=\"text\" name=\"titles["+i+"]\" data-key=\"titles\" value=\"\" placeholder=\"名称\" required=\"\" autocomplete=\"off\" class=\"layui-input\">\n" +
+            "                            </div>\n" +
+            "                            <div class=\"layui-input-inline guige-line\">\n" +
+            "                                <input type=\"text\" name=\"prices["+i+"]\" data-key=\"prices\" value=\"\" placeholder=\"价格\" required=\"\" autocomplete=\"off\" class=\"layui-input\">\n" +
+            "                            </div>\n" +
+            "                            <div class=\"plus plus-cut-btn\"></div>\n" +
+            "                        </div>";
 
+        if (titles_val.trim() && prices_val.trim()) {
+            console.log($(this))
+            $(this).replaceWith("<div class=\"cut plus-cut-btn\"></div>");
+            $(".guige-l").append(tpl);
+            i++
+        } else {
+            layer.msg("请输入规格", {icon: 5, time: 1000});
+        }
+    })
 
+    $(".content").on("click", ".cut", function () {
 
-    //    $(".wrapper").on("click",".layui-this",function () {
-//        alert(111)
-//    })
+        var titles_val = $(this).parent().find("[data-key='titles']").val();
+        var prices_val = $(this).parent().find("[data-key='prices']").val();
+
+        if (titles_val.trim() && prices_val.trim()) {
+            $(this).parent().remove();
+        } else {
+            return;
+        }
+    })
+
 </script>
 {/block}

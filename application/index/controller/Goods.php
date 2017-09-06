@@ -89,18 +89,18 @@ class Goods extends Controller
     public function goods_add(){
         if(input('post.')){
             $data = input('post.');
-            $data['created'] = time();
-            $data['attrs'] = [
-                '大份' => $data['da'],
-                '中份' => $data['zhong'],
-                '小份' => $data['xiao'],
-            ];
-            unset($data['da']);
-            unset($data['zhong']);
-            unset($data['xiao']);
-            unset($data['img_url']);
-            $data ['attrs'] = serialize($data['attrs']);
+            foreach ($data['titles'] as $key=>$volue){
+                if($volue){
+                    $data['attrs'][$key]['titles'] = $volue;
+                    $data['attrs'][$key]['prices'] = $data['prices'][$key];
+                }
+            }
+            $data['attrs'] = serialize($data['attrs']);
             $data['image'] = base64_img($data['image']);
+            $data['created'] = time();
+            unset($data['titles']);
+            unset($data['prices']);
+            unset($data['img_url']);
             $res = Db::name('goods')->insert($data);
             if($res){
                 return true;
@@ -123,10 +123,7 @@ class Goods extends Controller
         if(empty($data))return false;
         $db = Db::name('goods')->where('id',$data['id'])->find();
         $db['attrs'] = unserialize($db['attrs']);
-        $db['da'] = $db['attrs']['大份'];
-        $db['zhong'] = $db['attrs']['中份'];
-        $db['xiao'] = $db['attrs']['小份'];
-        unset($db['attrs']);
+        $db['attrs'] = json_encode($db['attrs'],true);
         $db['image'] = ImgUrl($db['image']);
         $info = Db::name('table_list')->where(['hd_status'=>1,'status'=>1])->select();
         $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
@@ -140,18 +137,23 @@ class Goods extends Controller
     public function as_update(){
         if(input('post.')){
             $data = input('post.');
-            $data['updated'] = time();
-            $data['attrs'] = [
-                '大份' => $data['da'],
-                '中份' => $data['zhong'],
-                '小份' => $data['xiao'],
-            ];
-            unset($data['da']);
-            unset($data['zhong']);
-            unset($data['xiao']);
-            $data ['attrs'] = serialize($data['attrs']);
+            foreach ($data['titles'] as $key=>$volue){
+                if($volue){
+                    $data['attrs'][$key]['titles'] = $volue;
+                    $data['attrs'][$key]['prices'] = $data['prices'][$key];
+                }
+            }
+            $data['attrs'] = array_merge($data['attrs']);
+            $data['attrs'] = serialize($data['attrs']);
+            $data['updated'] = time();;
+            unset($data['titles']);
+            unset($data['prices']);
             unset($data['img_url']);
-            $data['image'] = base64_img($data['image']);
+            if($data['image']){
+                $data['image'] = base64_img($data['image']);
+            }else{
+                unset($data['image']);
+            }
             $db = Db::name('goods');
             $res = $db->where('id',$data['id'])->update($data);
             if($res){

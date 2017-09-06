@@ -61,7 +61,11 @@ class Shop extends Controller
             $data = input('post.');
             $data['updated'] = time();
             unset($data['img_url']);
-            $data['logo'] = base64_img($data['logo']);
+            if($data['logo']){
+                $data['logo'] = base64_img($data['logo']);
+            }else{
+                unset($data['logo']);
+            }
             $res = $db->where('id',$data['id'])->update($data);
             if($res){
                 return true;
@@ -72,5 +76,4 @@ class Shop extends Controller
             return false;
         }
     }
-
 }
