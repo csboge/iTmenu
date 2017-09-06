@@ -72,30 +72,33 @@
             //监听提交
             form.on('submit(add)', function (data) {
                 console.log(data.field.shop_id);
-                if(data.field.shop_id){
-                    $.ajax({
-                        url:"{:url('Goods/add')}",
-                        type:"post",
-                        data:data.field,
-                        success:function (res) {
-                            console.log(res);
-                            if(res === true){
-                                layer.msg('添加成功',{icon:1,time:1000});
-                                setTimeout(function () {
-                                    location.href = "{:url('Goods/index')}"
-                                },1500)
-                            }else {
-                                layer.msg('添加失败',{icon:2,time:1000});
-                                setTimeout(function () {
-                                    location.href = "{:url('Goods/index')}"
-                                },1500)
-                            }
-                        }
-                    })
-                }else {
+                if(!data.field.shop_id){
                     layer.msg('请选则店铺',{icon:7,time:1000});
+                    return false;
                 }
-
+                if(!data.field.parent_id){
+                    layer.msg('请选择分类',{icon:7,time:1000});
+                    return false;
+                }
+                $.ajax({
+                    url:"{:url('Goods/add')}",
+                    type:"post",
+                    data:data.field,
+                    success:function (res) {
+                        console.log(res);
+                        if(res === true){
+                            layer.msg('添加成功',{icon:1,time:1000});
+                            setTimeout(function () {
+                                location.href = "{:url('Goods/index')}"
+                            },1500)
+                        }else {
+                            layer.msg('添加失败',{icon:2,time:1000});
+                            setTimeout(function () {
+                                location.href = "{:url('Goods/index')}"
+                            },1500)
+                        }
+                    }
+                })
                 return false;
             });
         });
