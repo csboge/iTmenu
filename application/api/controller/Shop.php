@@ -43,7 +43,7 @@ class Shop
             'status' => 1,
             'hd_status' => 1
         ];
-        $data = Db::name('shop')->where($map)->field('id,logo,notice,mobile')->find();
+        $data = Db::name('shop')->where($map)->field('id,title,logo,notice,mobile')->find();
         if($data){
             $data['logo'] = ImgUrl($data['logo']);
             return jsonData(1, 'OK', $data);
