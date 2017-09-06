@@ -120,7 +120,7 @@
             //监听提交
             form.on('submit(add)', function (data) {
                 console.log(data.field);
-                if(!data.field.image){
+                if(!data.field.logo){
                     layer.msg('请选择图片',{icon:7,time:1000});
                     return false;
                 }
