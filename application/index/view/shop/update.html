@@ -64,6 +64,16 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label for="notice" class="layui-form-label">
+                        <span class="x-red"></span>公告
+                    </label>
+                    <div class="layui-input-inline">
+                        <!--<input type="text" id="notice" name="notice" required=""-->
+                        <!--autocomplete="off" class="layui-input">-->
+                        <textarea name="notice" id="notice" class="layui-input" style="overflow:hidden;line-height:20px;"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label">
                         <span class="x-red"></span>是否新客立减
                     </label>
@@ -93,7 +103,11 @@
     <!-- 右侧主体结束 -->
 </div>
 <script>
-
+    function notice(){
+        var notice = "{$vo.notice}";
+        $('#notice').html(notice);
+    }
+    notice();
     function img_url(){
         var image ="{$vo.logo}";
         console.log(image);
