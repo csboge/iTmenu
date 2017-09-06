@@ -495,4 +495,61 @@ xblock {
 .img-box > img {
     position: relative;
 }
-
+.line{
+    position: relative;
+    display: block;
+}
+.plus{
+    position: relative;
+    float: left;
+    border: 1px solid #786566;
+    background: rgba(0,0,0,.25);
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+.plus:before{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    content: "";
+    display: block;
+    width: 1px;
+    height: 70%;
+    background: #DDDDDD;
+}
+.plus:after{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    content: "";
+    display: block;
+    width: 70%;
+    height: 1px;
+    background: #DDDDDD;
+}
+.cut{
+    position: relative;
+    float: left;
+    border: 1px solid #786566;
+    background: rgba(0,0,0,.25);
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+.cut:after{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    content: "";
+    display: block;
+    width: 70%;
+    height: 1px;
+    background: #DDDDDD;
+}
+.guige-l{
+    float: left;
+}

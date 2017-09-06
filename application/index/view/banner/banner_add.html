@@ -1,0 +1,128 @@
+{extend name="base" /}
+{block name="content"}
+<!-- 中部开始 -->
+
+<style type="text/css">
+    .SpanHeight{line-height:1.5;width:190px;height:40px}
+</style>
+
+<div class="wrapper">
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <xblock>
+            <div style="margin-left: 20px">
+                添加轮播图
+            </div>
+        </xblock>
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <form class="layui-form" action="" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>分类名称
+                    </label>
+                    <div  class="layui-input-inline">
+                        <select class="layui-form-item" name="cat_id" id="cat_id">
+                            <option value ="">请选择分类</option>
+                            {volist name='info' id='list'}
+                            <option  value ="{$list.id}">{$list.title}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="img-item">
+                    <label for="img_url" class="layui-form-label">
+                        <span class="x-red"></span>图片
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="file" class="img-upload" name="img_url" id="img_url" accept="image/jpeg,image/gif,image/png">
+                        <input type="hidden" name="image" id="image">
+                    </div>
+                    <div id="dds" class="img-box" style="margin-top: 30px;"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="url" class="layui-form-label">
+                        <span class="x-red"></span>跳转链接
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="url" name="url" required="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <input type="hidden" name="shop" value="" required="" autocomplete="off" class="layui-input">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                    </label>
+                    <button class="layui-btn" id="add-btn" lay-filter="add" lay-submit="">
+                        增加
+                    </button>
+                </div>
+            </form>
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<script>
+    //上传图片后预览
+    $(document).ready(function () {
+        $("#img_url").change(function () {
+            var fil = this.files;
+            console.log(fil);
+            for (var i = 0; i < fil.length; i++) {
+                reads(fil[i]);
+            }
+        });
+    });
+    function reads(fil){
+        var reader = new FileReader();
+        console.log(reader);
+        reader.readAsDataURL(fil);
+        reader.onload = function()
+        {
+            $('#image').val(reader.result);
+            document.getElementById("dds").innerHTML = "<img style='width: 200px;height: 150px;' src='"+reader.result+"'>";
+        };
+    }
+    $("#add-btn").click(function () {
+        var data = [];
+        layui.use('form', function () {
+            var form = layui.form();
+            //监听提交
+            form.on('submit(add)', function (data) {
+                console.log(data.field);
+                if(!data.field.cat_id){
+                    layer.msg('请选择分类',{icon:7,time:1000});
+                    return false;
+                }
+                if(!data.field.image){
+                    layer.msg('请选择图片',{icon:7,time:1000});
+                    return false;
+                }
+                $.ajax({
+                    url:"{:url('Shop/banner_add')}",
+                    type:"post",
+                    data:data.field,
+                    success:function (res) {
+                        console.log(res);
+                        if(res === true){
+                            layer.msg('添加成功',{icon:1,time:1000});
+                            setTimeout(function () {
+                                location.href = "{:url('Table/table_index')}"
+                            },1500)
+                        }else {
+                            layer.msg('添加失败',{icon:2,time:1000});
+                            setTimeout(function () {
+                                location.href = "{:url('Table/table_index')}"
+                            },1500)
+                        }
+                    }
+                })
+                return false;
+            });
+        });
+    });
+    //    $(".wrapper").on("click",".layui-this",function () {
+    //        alert(111)
+    //    })
+</script>
+{/block}
