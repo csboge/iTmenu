@@ -13,3 +13,12 @@ if (!function_exists('jsonData')) {
         return ['code'=>$code, 'message'=>$message, 'data'=>$data];
     }
 }
+/**
+ * 获取 - 优惠券
+ * @param $id - 优惠券id
+ */
+function coupon($id){
+    $db = new \think\Db();
+    $data = $db::name('coupon')->where(['id'=>$id])->find();
+    return $data;
+}

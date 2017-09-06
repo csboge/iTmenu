@@ -75,9 +75,9 @@ class Shopjoin
                 return jsonData(-1, '请输入正确的手机号码格式', null);
             }  
     //写入数据库
-    $data['imgz'] =  $img_url;
-     $data['imgs'] =  $img_url;
-      $data['imgf'] =  $img_url;
+        $data['imgz'] =  $img_url;
+        $data['imgs'] =  $img_url;
+        $data['imgf'] =  $img_url;
     
         $shop = new \app\core\model\Shopjoin();
         $shop->getShopJoin($data);

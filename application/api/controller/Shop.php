@@ -46,7 +46,7 @@ class Shop
         $data = Db::name('shop')->where($map)->field('id,logo,notice,mobile')->find();
         if($data){
             $data['logo'] = ImgUrl($data['logo']);
-            return jsonData(1, '未接收到数据', $data);
+            return jsonData(1, 'OK', $data);
         }else{
             return jsonData(405, '未查到到数据', null);
         }

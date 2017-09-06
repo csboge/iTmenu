@@ -124,7 +124,8 @@ class Menu
             ];
         }elseif (empty($data['cat_id']) && empty($data['package'])){
             $map = [
-                'shop_id' => $data['shop_id']
+                'shop_id' => $data['shop_id'],
+                'status' => 1
             ];
         }
         $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price')->order('rank asc')->select();
