@@ -124,7 +124,11 @@ class Table extends Controller
             $data = input('post.');
             $data['updated'] = time();
             unset($data['img_url']);
-            $data['image'] = base64_img($data['image']);
+            if($data['image']){
+                $data['image'] = base64_img($data['image']);
+            }else{
+                unset($data['image']);
+            }
             $db = Db::name('table');
             $res = $db->where('id',$data['id'])->update($data);
             if($res){

@@ -4,7 +4,13 @@
     <xblock class="page-content">
         <xblock>
             <div style="margin-left: 20px">
-                轮播图管理
+                {if condition="$cat_id == 1"}
+                红包页
+                {elseif condition="$cat_id == 2"}
+                店铺环境
+                {else}
+                营销活动
+                {/if}
             </div>
         </xblock>
         <!-- 右侧内容框架，更改从这里开始 -->
@@ -44,7 +50,7 @@
                 <input type="checkbox" id="checkAll" name="" value="">
             </th>
             <th>ID</th>
-            <th>分类标题</th>
+            <th>店铺名称</th>
             <th>图片</th>
             <th>链接</th>
             <th>创建时间</th>
@@ -59,7 +65,7 @@
                 <input type="checkbox" class="check" value="1" name="">
             </td>
             <td>{$vo.id}</td>
-            <td>{$vo.cat_id}</td>
+            <td>{:shop_name($vo.shop_id)}</td>
             <td><img style="width: 65px;height: 45px" src="{:ImgUrl($vo.image)}" /></td>
             <td>{$vo.url}</td>
             <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
@@ -110,7 +116,15 @@
     });
     //新增按钮
     $("#member_add").click(function () {
-            location.href = "{:url('common/is_status')}";
+        var cat_id = {$cat_id};
+        if(cat_id === 1){
+            location.href = "{:url('Banner/add',['cat_id'=>1])}";
+        }else if(cat_id === 2){
+            location.href = "{:url('Banner/add',['cat_id'=>2])}";
+        }else if(cat_id === 3){
+            location.href = "{:url('Banner/add',['cat_id'=>3])}";
+        }
+//            location.href = "{:url('Banner/add')}";
     });
 
     //状态修改

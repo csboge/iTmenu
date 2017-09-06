@@ -19,11 +19,11 @@
             <form class="layui-form" action="" method="post">
                 <div class="layui-form-item">
                     <label class="layui-form-label">
-                        <span class="x-red"></span>分类名称
+                        <span class="x-red"></span>店铺
                     </label>
                     <div  class="layui-input-inline">
-                        <select class="layui-form-item" name="cat_id" id="cat_id">
-                            <option value ="">请选择分类</option>
+                        <select class="layui-form-item" name="shop_id" id="shop_id">
+                            <option value ="">请选择店铺</option>
                             {volist name='info' id='list'}
                             <option  value ="{$list.id}">{$list.title}</option>
                             {/volist}
@@ -48,7 +48,7 @@
                         <input type="text" id="url" name="url" required="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <input type="hidden" name="shop" value="" required="" autocomplete="off" class="layui-input">
+                <input type="hidden" name="cat_id" value="{$cat_id}">
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                     </label>
@@ -83,6 +83,7 @@
             document.getElementById("dds").innerHTML = "<img style='width: 200px;height: 150px;' src='"+reader.result+"'>";
         };
     }
+    var urls = '';
     $("#add-btn").click(function () {
         var data = [];
         layui.use('form', function () {
@@ -90,16 +91,23 @@
             //监听提交
             form.on('submit(add)', function (data) {
                 console.log(data.field);
-                if(!data.field.cat_id){
-                    layer.msg('请选择分类',{icon:7,time:1000});
+                if(!data.field.shop_id){
+                    layer.msg('请选择店铺',{icon:7,time:1000});
                     return false;
                 }
                 if(!data.field.image){
                     layer.msg('请选择图片',{icon:7,time:1000});
                     return false;
                 }
+                if(data.field.cat_id === 1){
+                    urls = "{:url('Banner/index',['cat_id'=>1])}";
+                }else if(data.field.cat_id === 2){
+                    urls = "{:url('Banner/index',['cat_id'=>1])}";
+                } else if(data.field.cat_id === 3){
+                    urls = "{:url('Banner/index',['cat_id'=>1])}";
+                }
                 $.ajax({
-                    url:"{:url('Shop/banner_add')}",
+                    url:"{:url('Banner/is_add')}",
                     type:"post",
                     data:data.field,
                     success:function (res) {
@@ -107,12 +115,14 @@
                         if(res === true){
                             layer.msg('添加成功',{icon:1,time:1000});
                             setTimeout(function () {
-                                location.href = "{:url('Table/table_index')}"
+                                alert(urls);
+//                                location.href = urls;
                             },1500)
                         }else {
                             layer.msg('添加失败',{icon:2,time:1000});
                             setTimeout(function () {
-                                location.href = "{:url('Table/table_index')}"
+                                alert(urls);
+//                                location.href = urls;
                             },1500)
                         }
                     }
