@@ -2,6 +2,7 @@
 namespace app\api\controller;
 
 use think\Request;
+use think\Db;
 
 class Shop
 {
@@ -31,29 +32,24 @@ class Shop
 
     /***
      * 商户 - 信息设置
+     * @参数 title    商户id
      */
     function config()
     {
-        
         $title     = input('param.title/s');
-
-
-        
-
-        $info = array(
-
-            'title' => $title,
-
-        );
-
-
-
-
-
-
-
-
-        return jsonData(1, 'ok1111', null);
+        if(empty($title))return jsonData(404, '未接收到数据', null);
+        $map = [
+            'id' => $title,
+            'status' => 1,
+            'hd_status' => 1
+        ];
+        $data = Db::name('shop')->where($map)->field('id,logo,notice,mobile')->find();
+        if($data){
+            $data['logo'] = ImgUrl($data['logo']);
+            return jsonData(1, '未接收到数据', $data);
+        }else{
+            return jsonData(405, '未查到到数据', null);
+        }
     }
 
 
