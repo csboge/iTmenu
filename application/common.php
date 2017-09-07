@@ -129,3 +129,4 @@ function grt_category($name,$type,$volue,$status = '1'){
     $count = $db::name($name)->field('id,parent_id,name')->where($map)->select();
     return $count;
 }
+

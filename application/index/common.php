@@ -77,6 +77,7 @@ function getIDbyurl($url){
     $url = str_replace(\think\Request::instance()->root(true) . '/','',$url);
     return get_table_value($url,'path','id','picture');
 }
+
 function base64_img($base_64)
 {
     preg_match('/^(data:\s*image\/(\w+);base64,)/', $base_64, $result);
@@ -91,8 +92,8 @@ function base64_img($base_64)
     if ($re) {
         return $re['id'];
     } else {
-        $url = date('Ymd', time()) . '/';
-        $PATH = ROOT_PATH . 'Uploads/' . date('Ymd', time()) . '/';
+        $url = 'picture/' . date('Ymd', time()) . '/';
+        $PATH = ROOT_PATH . 'Uploads/picture/' . date('Ymd', time()) . '/';
         if (!is_dir($PATH)) {
             mkdir($PATH, 0777, true);
         }//判断目录是否存在，不存在则创建

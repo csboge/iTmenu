@@ -29,7 +29,7 @@ class Banner
     }
 
     /***
-     * 用户 - 红包余额
+     * 查看 - 轮播图
      * @参数 shop    商户id
      * @参数 cat     类型
      */
@@ -53,5 +53,4 @@ class Banner
         }
 
     }
-
 }
