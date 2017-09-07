@@ -1,0 +1,177 @@
+{extend name="base" /}
+{block name="content"}
+    <!-- 右侧主体开始 -->
+    <xblock class="page-content">
+        <xblock>
+            <div style="margin-left: 20px">
+                店铺列表
+            </div>
+        </xblock>
+        <!-- 右侧内容框架，更改从这里开始 -->
+        <form class="layui-form xbs" action="">
+            <div class="layui-form-pane" style="text-align: center;">
+                <div class="layui-form-item" style="display: inline-block;">
+                    <label class="layui-form-label xbs768">日期范围</label>
+
+                    <div class="layui-input-inline xbs768">
+                        <input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
+                    </div>
+                    <div class="layui-input-inline xbs768">
+                        <input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" name="username" placeholder="请输入用户名" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                    <div class="layui-input-inline" style="width:80px">
+                        <button class="layui-btn" lay-submit="" lay-filter="sreach"><i
+                                class="layui-icon">&#xe615;</i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <xblock id="table-block">
+            <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
+            </button>
+            <button class="layui-btn" id="member_add"><i
+                    class="layui-icon">&#xe608;</i>添加优惠券
+            </button>
+            <span class="x-right" style="line-height:40px">共有数据：{$count} 条</span>
+        </xblock><table class="layui-table">
+        <thead>
+        <tr>
+            <th>
+                <input type="checkbox" id="checkAll" name="" value="">
+            </th>
+            <th>ID</th>
+            <th>店铺名称</th>
+            <th>优惠类型</th>
+            <th>名称</th>
+            <th>优惠金额</th>
+            <th>可领数量</th>
+            <th>已领数量</th>
+            <th>开始日期</th>
+            <th>结束日期</th>
+            <th>使用条件</th>
+            <th>状态</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='list' id='vo'}
+        <tr>
+            <td>
+                <input type="checkbox" class="check" value="1" name="">
+            </td>
+            <td>{$vo.id}</td>
+            <td>{:shop_name($vo.shop_id)}</td>
+            {if condition="$vo.type === 0"}
+            <td style="color: #e2b709">折扣卷</td>
+            {else}
+            <td style="color: greenyellow">抵扣卷</td>
+            {/if}
+            <td>{$vo.title}</td>
+            <td>{$vo.dis_price}</td>
+            <td>{$vo.num}</td>
+            <td>{$vo.get_num}</td>
+            <td>{$vo.start_time|date="Y-m-d",###}</td>
+            <td>{$vo.end_time|date="Y-m-d",###}</td>
+            <td>大于 > {$vo.conditon}</td>
+            {if condition="$vo.is_time === 0"}
+            <td style="color: greenyellow">正常</td>
+            {else}
+            <td style="color: #eb7350">到期</td>
+            {/if}
+            <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
+            <td class="td-manage">
+                <!--<a title="编辑" href="javascript:;" onclick="update({$vo.id})">-->
+                <a title="编辑" href="{:url('Coupon/update',['id'=>$vo['id']])}">
+                    <i class="layui-icon">&#xe642;</i>
+                </a>
+                <a title="删除" href="javascript:;" onclick="is_delete({$vo.id})"
+                   style="text-decoration:none">
+                    <i class="layui-icon">&#xe640;</i>
+                </a>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+        <!-- 右侧内容框架，更改从这里结束 -->
+        <!-- 右侧内容框架，更改从这里结束 -->
+    </xblock>
+<script>
+    /*
+    * @des         全选/取消全选
+    *
+    */
+    $("#checkAll").click(function () {
+
+        var is_check_all = $("#checkAll").attr("checked");
+
+        if(is_check_all){
+            $("input[type='checkbox']").removeAttr("checked");
+        }else{
+            $("input[type='checkbox']").attr("checked", "true");
+        }
+    });
+    //新增按钮
+    $("#member_add").click(function () {
+            var url = "{:url('Coupon/add')}";
+            location.href = url;
+    });
+
+//    //状态修改
+//    function is_status(type,id){
+//        $.ajax({
+//            url:"{:url('common/is_status')}",
+//            type:"post",
+//            data:{name:'coupon',id:id,status:'status',volue:type},
+//            success:function (res) {
+//                console.log(res);
+//                if(res === true){
+//                    layer.msg('修改成功',{icon:1,time:3500});
+//                    setTimeout(function () {
+//                        location.href = "{:url('shop/index')}"
+//                    },1500)
+//                }else {
+//                    layer.msg('修改失败',{icon:2,time:3500});
+//                    setTimeout(function () {
+//                        location.href = "{:url('shop/index')}"
+//                    },1500)
+//                }
+//            }
+//        })
+//    }
+
+    function is_delete(id){
+        layer.confirm('确认要删除吗？',function(index){
+            $.ajax({
+                url:"{:url('common/is_delete')}",
+                type:"post",
+                data:{name:'coupon',id:id},
+                success:function (res) {
+                    console.log(res);
+                    if(res === true){
+                        layer.msg('删除成功',{icon:1,time:1000});
+                        setTimeout(function () {
+                            location.href = "{:url('Coupon/index')}"
+                        },1500)
+                    }else {
+                        layer.msg('删除失败',{icon:2,time:1000});
+                        setTimeout(function () {
+                            location.href = "{:url('Coupon/index')}"
+                        },1500)
+                    }
+                }
+            })
+        });
+    }
+</script>
+{/block}
+{block name="footer"}
+{/block}
+{block name="background"}
+{/block}
+
