@@ -22,7 +22,7 @@ class Banner extends Controller
             'hd_status' => 1,
             'cat_id' => $type['cat_id']
         ];
-        $res = Db::name('banner')->where($map)->select();
+        $res = Db::name('banner')->where($map)->order('id desc')->select();
         $count = count_list('banner');
         $this->assign('count',$count);
         $this->assign('cat_id',$type['cat_id']);

@@ -16,7 +16,7 @@ class Shop extends Controller
 {
     //商店列表
     public function index(){
-        $data = Db::name('shop')->order('id ASC')->where('hd_status',1)->paginate(100);
+        $data = Db::name('shop')->order('id desc')->where('hd_status',1)->paginate(100);
         $count = count_list('shop');
         $this->assign('count',$count);
         $this->assign('list',$data);

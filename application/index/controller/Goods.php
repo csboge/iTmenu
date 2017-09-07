@@ -17,7 +17,7 @@ class Goods extends Controller
 {
     //菜品分类列表
     public function index(){
-        $data = Db::name('category')->order('id ASC')->where('hd_status',1)->paginate(100);
+        $data = Db::name('category')->order('id desc')->where('hd_status',1)->paginate(100);
         $count = count_list('category');
         $this->assign('count',$count);
         $this->assign('list',$data);
@@ -78,7 +78,7 @@ class Goods extends Controller
 
     //菜品列表
     public function goods_index(){
-        $data = Db::name('goods')->order('id ASC')->where('hd_status',1)->paginate(10);
+        $data = Db::name('goods')->order('id desc')->where('hd_status',1)->paginate(10);
         $count = count_list('goods');
         $this->assign('count',$count);
         $this->assign('list',$data);
@@ -95,7 +95,7 @@ class Goods extends Controller
                     $data['attrs'][$key]['prices'] = $data['prices'][$key];
                 }
             }
-            $data['attrs'] = serialize($data['attrs']);
+            $data['attrs'] = json_encode($data['attrs'],true);
             $data['image'] = base64_img($data['image']);
             $data['created'] = time();
             unset($data['titles']);
@@ -122,8 +122,6 @@ class Goods extends Controller
         $data = input('param.');
         if(empty($data))return false;
         $db = Db::name('goods')->where('id',$data['id'])->find();
-        $db['attrs'] = unserialize($db['attrs']);
-        $db['attrs'] = json_encode($db['attrs'],true);
         $db['image'] = ImgUrl($db['image']);
         $info = Db::name('table_list')->where(['hd_status'=>1,'status'=>1])->select();
         $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
@@ -144,7 +142,7 @@ class Goods extends Controller
                 }
             }
             $data['attrs'] = array_merge($data['attrs']);
-            $data['attrs'] = serialize($data['attrs']);
+            $data['attrs'] = json_encode($data['attrs'],true);
             $data['updated'] = time();;
             unset($data['titles']);
             unset($data['prices']);

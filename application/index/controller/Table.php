@@ -17,7 +17,7 @@ class Table extends Controller
 {
     //桌子分类列表
     public function index(){
-        $data = Db::name('table_list')->order('id ASC')->where('hd_status',1)->paginate(10);
+        $data = Db::name('table_list')->order('id desc')->where('hd_status',1)->paginate(10);
         $count = count_list('table_list');
         $this->assign('count',$count);
         $this->assign('list',$data);
@@ -74,7 +74,7 @@ class Table extends Controller
 
     //桌子列表
     public function table_index(){
-        $data = Db::name('table')->order('id ASC')->where('hd_status',1)->paginate(10);
+        $data = Db::name('table')->order('id desc')->where('hd_status',1)->paginate(10);
         $count = count_list('table');
         $this->assign('count',$count);
         $this->assign('list',$data);
