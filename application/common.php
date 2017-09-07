@@ -23,6 +23,7 @@ if (!function_exists('getable')) {
     }
 }
 
+
 //获取图片
 function getImgUrl($id,$field = 'path'){
     $db = new \think\Db;
@@ -113,5 +114,18 @@ function count_list($name,$type='',$volue='',$status = '1'){
     }
     $db = new \think\Db;
     $count = $db::name($name)->where($map)->count();
+    return $count;
+}
+
+//获取二级分类
+function grt_category($name,$type,$volue,$status = '1'){
+    $map = [
+        $type => $volue,
+        'hd_status' => $status,
+        'status' =>$status
+    ];
+
+    $db = new \think\Db;
+    $count = $db::name($name)->field('id,parent_id,name')->where($map)->select();
     return $count;
 }

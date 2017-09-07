@@ -48,7 +48,7 @@ class Goods
      * @参数 status        1：启用 0：禁用
      */
     public function add(){
-        $data = input('post.');
+        $data = input('param.');
         if(empty($data)){
             return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }
@@ -74,7 +74,7 @@ class Goods
      * @参数 price         商品价格
      */
     public function update(){
-        $data = input('post.');
+        $data = input('param.');
         if(empty($data)){
             return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }
@@ -88,4 +88,31 @@ class Goods
     }
 
 
+    /***
+     * 查看 -- 菜品
+     * @参数 shop_id      店铺id
+     * @参数 cat_id       分类id
+     */
+    public function goods(){
+        $data = input('param.');
+        if(empty($data)){
+            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+        }
+        $map = [
+            'shop_id' => $data['shop_id'],
+            'cat_id' => $data['cat_id'],
+            'status' => 1,
+            'hd_status' => 1
+        ];
+        $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price')->order('id desc')->select();
+        if($res){
+            foreach ($res as &$volue){
+                $volue['image'] = ImgUrl($volue['image']);
+                $volue['attrs'] = unserialize($volue['attrs']);
+            }
+            return json_encode(['code'=>1,'message'=>'OK','data'=>$res,'status'=>200]);
+        }else{
+            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'','status'=>202]);
+        }
+    }
 }

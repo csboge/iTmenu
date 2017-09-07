@@ -41,7 +41,7 @@ class User
      * @参数 openid         微信openid
      */
     public function isAdmin(){
-        $data = input('post.');
+        $data = input('param.');
         if(empty($data)){
             return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }

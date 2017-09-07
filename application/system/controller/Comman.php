@@ -44,7 +44,7 @@ class Comman
      * @参数 value        修改的值
      */
     public function get_status(){
-        $data = input('post.');
+        $data = input('param.');
         if(empty($data)){
             return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }

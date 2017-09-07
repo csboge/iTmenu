@@ -43,12 +43,12 @@ class Category
      * @参数 parent_id    父级id 0为顶级
      * @参数 rank         排序 asc
      * @参数 shop_id      店铺id
-     * @参数 hd_status       是否隐藏
+     * @参数 hd_status    是否隐藏
      */
     public function add(){
-        $data = input('post.');
+        $data = input('param.');
         if(empty($data)){
-           return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }
         $data['created'] = time();
         $res = Db::name('category')->insert($data);
@@ -66,10 +66,10 @@ class Category
      * @参数 parent_id    父级id 0为顶级
      * @参数 rank         排序 asc
      * @参数 shop_id      店铺id
-     * @参数 hd_status       是否隐藏
+     * @参数 hd_status    是否隐藏
      */
     public function update(){
-        $data = input('post.');
+        $data = input('param.');
         if(empty($data)){
             return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }
@@ -81,5 +81,33 @@ class Category
             return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'','status'=>202]);
         }
     }
+
+    /***
+     * 查看 -- 菜品分类
+     * @参数 shop_id      店铺id
+     */
+    public function category(){
+        $where = input('param.');
+        if(empty($where)){
+            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+        }
+        $map = [
+            'shop_id' => $where['shop'],
+            'parent_id' => 0,
+            'status' => 1,
+            'hd_status' => 1
+        ];
+        $data = Db::name('category')->where($map)->field('id,parent_id,name')->order('id desc')->select();
+        if($data){
+            foreach ($data as &$volue){
+                $volue['list'] = grt_category('category','parent_id',$volue['id']);
+            }
+            return json_encode(['code'=>1,'message'=>'OK','data'=>$data,'status'=>200]);
+        }else{
+            return json_encode(['code'=>0,'message'=>'数据查看失败','data'=>'','status'=>202]);
+        }
+    }
+
+
 
 }

@@ -35,12 +35,20 @@
                         <span class="x-red"></span>分类名称
                     </label>
                     <div  class="layui-input-inline">
-                        <select class="layui-form-item" name="table_id" id="table_id">
+                        <select class="layui-form-item" name="cat_id" id="cat_id">
                             <option value ="">请选择分类</option>
                             {volist name='info' id='list'}
                             <option  value ="{$list.id}">{$list.name}</option>
                             {/volist}
                         </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="table_id" class="layui-form-label">
+                        <span class="x-red"></span>编号
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="table_id" name="table_id" required="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
