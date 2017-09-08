@@ -137,4 +137,59 @@ class User
         }
     }
 
+    /***
+     * 用户 - 红包收入
+     * @参数 id    用户id
+     */
+    public function cash_log(){
+        $where = input('param.');
+        if(empty($where))return jsonData(404, '未接收到数据', null);
+        $map = [
+            'user_id' => $where['id']
+        ];
+        $data = Db::name('red_cash_log')
+            ->where($map)
+            ->order('created desc')
+            ->field('red_cash_id,audio,words,menoy,created,shop_id')
+            ->select();
+        if($data){
+            foreach ($data as &$volue){
+                $res = shop_title($volue['shop_id']);
+                $volue['title'] = $res['title'];
+                $volue['logo'] = ImgUrl($res['logo']);
+            }
+            return jsonData(1, 'OK', $data);
+        }else{
+            return jsonData(405, '未查到到数据', null);
+        }
+    }
+
+    /***
+     * 用户 - 领取优惠券
+     * @参数 user_id    用户id
+     * @参数 coupon_id  优惠券id
+     * @参数 shop_id    店铺id
+     */
+    public function get_coupon(){
+        $where = input('param.');
+        if(empty($where))return jsonData(404, '未接收到数据', null);
+        //判断是否可以领取
+        $is = is_coupon($where['user_id'],$where['coupon_id'],$where['shop_id']);
+        if($is)return jsonData(506, '红包以领取', null);
+        $data = [
+            'shop_id' => $where['shop_id'],
+            'coupon_id' => $where['coupon_id'],
+            'user_id' => $where['user_id'],
+            'status' => 1,
+            'created' => time(),
+            'get_time' => time()
+        ];
+        $res = Db::name('coupon_list')->insert($data);
+        if($res){
+            return jsonData(1, 'OK', null);
+        }else{
+            return jsonData(405, '领取失败', null);
+        }
+    }
+
 }
