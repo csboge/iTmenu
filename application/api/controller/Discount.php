@@ -214,6 +214,7 @@ class Discount
                 'red_cash_id'   => $bagid,
                 'user_id'       => $session['userid'],
                 'audio'         => $audio_url,
+                'words'         => $baginfo['words'],
                 'menoy'         => $my_money,
                 'shop_id'       => $baginfo['shop_id'],
                 'remark'        => '抢夺了一个[语音红包]，金额：￥' . $my_money,
