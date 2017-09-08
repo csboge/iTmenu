@@ -22,3 +22,25 @@ function coupon($id){
     $data = $db::name('coupon')->where(['id'=>$id])->find();
     return $data;
 }
+
+/***
+ * 上传 -- ceshi
+ * @参数 file      文件
+ */
+function upload_video($file){
+    $info = $file
+        ->validate([
+            'size'=>145678,
+            'ext'=>'mp3,wav,wma,ogg,acc,ape,silk',
+        ])
+        ->move(ROOT_PATH . 'Uploads' . DS . 'video');
+    if($info){
+        // 成功上传后 获取上传信息
+        $post = [
+            'path' =>'/picture/'.$info->getSaveName(),
+        ];
+        return $post;
+    }else{
+        return false;
+    }
+}

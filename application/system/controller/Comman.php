@@ -3,6 +3,7 @@ namespace app\system\controller;
 
 use think\Request;
 use think\Db;
+use think\File;
 
 /**
  * 后台公共接口
@@ -59,21 +60,26 @@ class Comman
 
     /***
      * 上传 -- 单个图片
-     * @参数 image      图片
+     * @参数 file      图片
      */
 
     public function upload(){
         // 获取表单上传文件 例如上传了001.jpg
-        $file = request()->file('image');
+        $file = request()->file('file');
         if(empty($file)){
             return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }
         // 移动到框架应用根目录/public/uploads/ 目录下
-        $info = $file->move(ROOT_PATH . 'Uploads');
+        $info = $file
+            ->validate([
+                'size'=>145678,
+                'ext'=>'jpg,png,gif,jpeg',
+            ])
+            ->move(ROOT_PATH . 'Uploads' . DS . 'picture');
         if($info){
             // 成功上传后 获取上传信息
             $data = [
-                'path' => 'http://img.my-shop.cc/'.$info->getSaveName(),
+                'path' => 'picture/'.$info->getSaveName(),
                 'status' => 1,
                 'create_time' => time()
             ];
@@ -81,7 +87,7 @@ class Comman
             if($res){
                 $post = [
                     'id' => $res,
-                    'path' =>'http://img.my-shop.cc/'.$info->getSaveName(),
+                    'path' =>'http://img.my-shop.cc/picture/'.$info->getSaveName(),
                 ];
                 return json_encode(['code'=>1,'message'=>'OK','data'=>$post,'status'=>200]);
             }else{
@@ -92,6 +98,5 @@ class Comman
             return json_encode(['code'=>0,'message'=>'数据上传失败','data'=>'','status'=>2000]);
         }
     }
-
 
 }

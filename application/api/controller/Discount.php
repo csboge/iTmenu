@@ -201,7 +201,7 @@ class Discount
          * 
          *
          */
-        $audio_url = '';  
+        $audio_url = upload_video($audio);
 
 
 
