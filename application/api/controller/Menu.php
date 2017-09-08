@@ -88,14 +88,11 @@ class Menu
                     'hd_status' => 1
                 ];
                 $dp = Db::name('category')->where($ma)->field('id,name')->order('rank asc')->select();
-                if(empty($dp)){
-                    return jsonData(405, '未查到数据', '');
-                }
                 $value['list'] = $dp;
             }
             return jsonData(200, 'OK', $res);
         }else{
-            return jsonData(405, '未查到数据', '');
+            return jsonData(405, '1未查到数据', '');
         }
     }
 
