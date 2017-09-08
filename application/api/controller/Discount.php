@@ -22,6 +22,7 @@ class Discount
         \app\core\model\RedCashLog      $m_red_log,
         \app\core\model\UserAccount     $m_acc_log,
         \app\core\model\Orders          $m_order,
+        \app\core\provider\Orders       $p_order,
         \app\core\model\User            $m_user
     )
     {
@@ -45,6 +46,9 @@ class Discount
 
         //订单模型
         $this->m_order    = $m_order;
+
+        //订单服务
+        $this->p_order    = $p_order;
 
         //用户模型
         $this->m_user     = $m_user;
@@ -230,7 +234,10 @@ class Discount
 
 
             //增加 - 财务日志
+            $logsn = $this->p_order->getOrderSN();      //交易号
             $data  = [
+                'logsn'         => $logsn,
+                'type'          => 0,                   //0=收入，1=支出
                 'money'         => $my_money,
                 'user_id'       => $session['userid'],
                 'shop_id'       => $baginfo['shop_id'],
