@@ -106,18 +106,19 @@
 </div>
 <script>
     var attrs = {$vo.attrs};
+
     var temp = "";
     attrs.forEach(function (obj, j) {
 
-        temp += "<div class=\"attr-box-li\" style=\"display: block; width: 100%; clear: both;\">\n" +
-            "                            <div class=\"layui-input-inline guige-line\">\n" +
-            "                                <input type=\"text\" name=\"titles["+ j +"]\" data-key=\"titles\" value="+obj.titles+" placeholder=\"名称\" required=\"\" autocomplete=\"off\" class=\"layui-input\">\n" +
-            "                            </div>\n" +
-            "                            <div class=\"layui-input-inline guige-line\">\n" +
-            "                                <input type=\"text\" name=\"prices["+ j +"]\" data-key=\"prices\" value="+obj.prices+" placeholder=\"价格\" required=\"\" autocomplete=\"off\" class=\"layui-input\">\n" +
-            "                            </div>\n" +
-            "                            <div class=\"cut plus-cut-btn\"></div>\n" +
-            "                        </div>";
+temp += "<div class=\"attr-box-li\" style=\"display: block; width: 100%; clear: both;\">\n" +
+    "                            <div class=\"layui-input-inline guige-line\">\n" +
+    "                                <input type=\"text\" name=\"titles["+ j +"]\" data-key=\"titles\" value=\""+obj.titles+"\" placeholder=\"名称\" required=\"\" autocomplete=\"off\" class=\"layui-input\">\n" +
+    "                            </div>\n" +
+    "                            <div class=\"layui-input-inline guige-line\">\n" +
+    "                                <input type=\"text\" name=\"prices["+ j +"]\" data-key=\"prices\" value=\""+obj.prices+"\" placeholder=\"价格\" required=\"\" autocomplete=\"off\" class=\"layui-input\">\n" +
+    "                            </div>\n" +
+    "                            <div class=\"cut plus-cut-btn\"></div>\n" +
+    "                        </div>";
 
     });
 

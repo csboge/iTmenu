@@ -44,3 +44,32 @@ function upload_video($file){
         return false;
     }
 }
+
+/***
+ * 获取 -- 获取商铺名称和logo
+ * @参数 id      id
+ */
+function shop_title($id){
+    $db = new \think\Db();
+    $data = $db::name('shop')->where(['id'=>$id])->field('title,logo')->find();
+    return $data;
+}
+
+/***
+ * 判断 -- 是否已领取优惠券
+ * @参数 user_id    用户id
+ * @参数 coupon_id  优惠券id
+ * @参数 shop_id    店铺id
+ */
+function is_coupon($user_id,$coupon_id,$shop_id){
+    $db = new \think\Db();
+    $map = [
+        'user_id' => $user_id,
+        'coupon_id' => $coupon_id,
+        'shop_id' => $shop_id
+    ];
+    $data = $db::name('coupon_list')->where($map)->find();
+    return $data;
+
+}
+

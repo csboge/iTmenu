@@ -89,15 +89,13 @@ class Goods extends Controller
     public function goods_add(){
         if(input('post.')){
             $data = input('post.');
-            foreach ($data['titles'] as $key=>$volue){
-                if($volue){
-                    $data['attrs'][$key]['titles'] = $volue;
-                    $data['attrs'][$key]['prices'] = $data['prices'][$key];
-                }
-            }
-            $data['attrs'] = json_encode($data['attrs'],true);
             $data['image'] = base64_img($data['image']);
             $data['created'] = time();
+            foreach ($data['titles'] as $key=>$volue){
+                $data['attrs'][$key]['titles'] = $volue?$volue:'';
+                $data['attrs'][$key]['prices'] = $data['prices'][$key]?$data['prices'][$key]:'';
+            }
+            $data['attrs'] = json_encode($data['attrs'],true);
             unset($data['titles']);
             unset($data['prices']);
             unset($data['img_url']);
@@ -136,10 +134,8 @@ class Goods extends Controller
         if(input('post.')){
             $data = input('post.');
             foreach ($data['titles'] as $key=>$volue){
-                if($volue){
-                    $data['attrs'][$key]['titles'] = $volue;
-                    $data['attrs'][$key]['prices'] = $data['prices'][$key];
-                }
+                $data['attrs'][$key]['titles'] = $volue;
+                $data['attrs'][$key]['prices'] = $data['prices'][$key];
             }
             $data['attrs'] = array_merge($data['attrs']);
             $data['attrs'] = json_encode($data['attrs'],true);
