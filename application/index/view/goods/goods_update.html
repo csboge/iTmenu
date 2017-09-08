@@ -41,9 +41,8 @@
                     <div class="layui-input-inline">
                         <select class="layui-form-item" name="cat_id" id="cat_id">
                             <option value="">请选择分类</option>
-                            {volist name='info' id='list'}
-                            <option value="{$list.id}" {if condition="$vo.cat_id === $list.id" }selected{
-                            /if}>{$list.name}</option>
+                            {volist name='info' id='info'}
+                            <option value="{$info.id}" {if condition="$vo.cat_id === $info.id" }selected{/if}>{$info.name}</option>
                             {/volist}
                         </select>
                     </div>

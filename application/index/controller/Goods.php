@@ -123,7 +123,7 @@ class Goods extends Controller
         if(empty($data))return false;
         $db = Db::name('goods')->where('id',$data['id'])->find();
         $db['image'] = ImgUrl($db['image']);
-        $info = Db::name('table_list')->where(['hd_status'=>1,'status'=>1])->select();
+        $info = Db::name('category')->where(['hd_status'=>1,'status'=>1])->select();
         $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
         $this->assign('info',$info);
         $this->assign('list',$list);
