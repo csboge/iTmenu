@@ -125,7 +125,7 @@ class Menu
                 'status' => 1
             ];
         }
-        $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price,cat_id')->order('rank asc')->select();
+        $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price,cat_id as cate_id')->order('rank asc')->select();
         if($res){
             foreach ($res as &$value){
                 $value['image'] = ImgUrl($value['image'])?ImgUrl($value['image']):'';
