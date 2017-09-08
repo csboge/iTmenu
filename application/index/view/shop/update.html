@@ -73,21 +73,6 @@
                         <textarea name="notice" id="notice" class="layui-input" style="overflow:hidden;line-height:20px;"></textarea>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <span class="x-red"></span>是否新客立减
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="radio" name="is_first" value="1" {if condition="$vo.is_first == 1"}checked{/if} checked="" title="是">
-                        <div class="layui-unselect layui-form-radio layui-form-radioed">
-                            <i class="layui-anim layui-icon"></i><span>是</span>
-                        </div>
-                        <input type="radio" name="is_first" value="0" {if condition="$vo.is_first == 0"}checked{/if} title="否">
-                        <div class="layui-unselect layui-form-radio"><
-                            i class="layui-anim layui-icon"></i><span>否</span>
-                        </div>
-                    </div>
-                </div>
                 <input type="hidden"  name="id" value="{$vo.id}" >
                 <div class="layui-form-item">
                     <label class="layui-form-label">

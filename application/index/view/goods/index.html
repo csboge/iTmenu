@@ -48,6 +48,7 @@
             <th>上级分类</th>
             <th>名称</th>
             <th>创建时间</th>
+            <th>显示状态</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
@@ -67,17 +68,22 @@
             {/if}
             <td>{$vo.name}</td>
             <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
-            {if condition="$vo.status == 1"}
+            {if condition="$vo.sd_status == 1"}
             <td class="td-status">
-                <a href="" >
-                    <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status(0,{$vo.id})">已启用</span>
-                </a>
+                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status('sd_status',0,{$vo.id})">显示</span>
             </td>
             {else}
             <td class="td-status">
-                <a href="">
-                    <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status(1,{$vo.id})">已停用</span>
-                </a>
+                <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status('sd_status',1,{$vo.id})">隐藏</span>
+            </td>
+            {/if}
+            {if condition="$vo.status == 1"}
+            <td class="td-status">
+                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status('status',0,{$vo.id})">已启用</span>
+            </td>
+            {else}
+            <td class="td-status">
+                <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status('status',1,{$vo.id})">已停用</span>
             </td>
             {/if}
             <td class="td-manage">
@@ -127,23 +133,33 @@
     }
 
     //状态修改
-    function is_status(type,id){
+    function is_status(status,type,id){
+        if(status === 'status'){
+            $.ajax({
+                url:"{:url('common/is_status')}",
+                type:"post",
+                data:{name:'category',id:id,status:'sd_status',volue:type},
+                success:function (res) {
+                    console.log(res);
+                }
+            })
+        }
         $.ajax({
             url:"{:url('common/is_status')}",
             type:"post",
-            data:{name:'category',id:id,status:'status',volue:type},
+            data:{name:'category',id:id,status:status,volue:type},
             success:function (res) {
                 console.log(res);
                 if(res === true){
-                    layer.msg('修改成功',{icon:1,time:3500});
+                    layer.msg('修改成功',{icon:1,time:500});
                     setTimeout(function () {
                         location.href = "{:url('Goods/index')}"
-                    },1500)
+                    },1000)
                 }else {
-                    layer.msg('修改失败',{icon:2,time:3500});
+                    layer.msg('修改失败',{icon:2,time:500});
                     setTimeout(function () {
                         location.href = "{:url('Goods/index')}"
-                    },1500)
+                    },1000)
                 }
             }
         })
@@ -158,15 +174,15 @@
                 success:function (res) {
                     console.log(res);
                     if(res === true){
-                        layer.msg('删除成功',{icon:1,time:1000});
+                        layer.msg('删除成功',{icon:1,time:500});
                         setTimeout(function () {
                             location.href = "{:url('Goods/index')}"
-                        },1500)
+                        },1000)
                     }else {
-                        layer.msg('删除失败',{icon:2,time:1000});
+                        layer.msg('删除失败',{icon:2,time:500});
                         setTimeout(function () {
                             location.href = "{:url('Goods/index')}"
-                        },1500)
+                        },1000)
                     }
                 }
             })

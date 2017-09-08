@@ -145,15 +145,15 @@
             success:function (res) {
                 console.log(res);
                 if(res === true){
-                    layer.msg('修改成功',{icon:1,time:3500});
+                    layer.msg('修改成功',{icon:1,time:500});
                     setTimeout(function () {
                         location.href = urls
-                    },1500)
+                    },1000)
                 }else {
-                    layer.msg('修改失败',{icon:2,time:3500});
+                    layer.msg('修改失败',{icon:2,time:500});
                     setTimeout(function () {
                         location.href = urls
-                    },1500)
+                    },1000)
                 }
             }
         })
@@ -168,15 +168,15 @@
                 success:function (res) {
                     console.log(res);
                     if(res === true){
-                        layer.msg('删除成功',{icon:1,time:1000});
+                        layer.msg('删除成功',{icon:1,time:500});
                         setTimeout(function () {
                             location.href = urls
-                        },1500)
+                        },1000)
                     }else {
-                        layer.msg('删除失败',{icon:2,time:1000});
+                        layer.msg('删除失败',{icon:2,time:500});
                         setTimeout(function () {
                             location.href = urls
-                        },1500)
+                        },1000)
                     }
                 }
             })
