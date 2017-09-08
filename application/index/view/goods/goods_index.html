@@ -50,6 +50,7 @@
             <th>图片</th>
             <th>销量</th>
             <th>价格</th>
+            <th>排序</th>
             <th>创建时间</th>
             <th>显示状态</th>
             <th>状态</th>
@@ -69,6 +70,7 @@
             <td><img style="width: 65px;height: 45px" src="{:ImgUrl($vo.image)}"/></td>
             <td>{$vo.sale}</td>
             <td>{$vo.price}</td>
+            <td>{$vo.rank}</td>
             <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
             {if condition="$vo.sd_status == 1"}
             <td class="td-status">

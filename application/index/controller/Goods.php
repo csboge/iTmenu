@@ -17,7 +17,7 @@ class Goods extends Controller
 {
     //菜品分类列表
     public function index(){
-        $data = Db::name('category')->order('id desc')->where('hd_status',1)->paginate(100);
+        $data = Db::name('category')->order('rank asc')->where('hd_status',1)->paginate(100);
         $count = count_list('category');
         $this->assign('count',$count);
         $this->assign('list',$data);
@@ -78,7 +78,7 @@ class Goods extends Controller
 
     //菜品列表
     public function goods_index(){
-        $data = Db::name('goods')->order('id desc')->where('hd_status',1)->paginate(10);
+        $data = Db::name('goods')->order('rank asc')->where('hd_status',1)->paginate(10);
         $count = count_list('goods');
         $this->assign('count',$count);
         $this->assign('list',$data);

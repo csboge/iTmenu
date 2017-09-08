@@ -47,6 +47,7 @@
             <th>店铺</th>
             <th>上级分类</th>
             <th>名称</th>
+            <th>排序</th>
             <th>创建时间</th>
             <th>显示状态</th>
             <th>状态</th>
@@ -67,6 +68,7 @@
             <td>{:goods_name($vo.parent_id)}</td>
             {/if}
             <td>{$vo.name}</td>
+            <td>{$vo.rank}</td>
             <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
             {if condition="$vo.sd_status == 1"}
             <td class="td-status">
