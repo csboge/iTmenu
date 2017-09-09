@@ -57,24 +57,30 @@ class Shop
      * @参数 shop    商户id
      */
     function rec(){
-        $data = input('param.shop');
+        $where = input('param.shop');
+        if(empty($where))return jsonData(404, '未接收到数据', null);
         $map = [
-            'shop_id' => $data,
+            'shop_id' => $where,
             'rec' => 1,
             'status' => 1,
             'hd_status' => 1,
             'sd_status' => 1
         ];
-        $res = Db::name('goods')
+        $data = Db::name('goods')
             ->where($map)
             ->order('rank asc')
             ->field('id,title,image,price,intro')
             ->limit(3)
             ->select();
-        foreach ($res as &$volue){
-            $volue['image'] = ImgUrl($volue['image']);
+
+        if($data){
+            foreach ($data as &$volue){
+                $volue['image'] = ImgUrl($volue['image']);
+            }
+            return jsonData(1, 'OK', $data);
+        }else{
+            return jsonData(405, '未查到到数据', null);
         }
-        print_r($res);
     }
 
 
