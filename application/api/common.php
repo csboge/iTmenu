@@ -37,7 +37,7 @@ function upload_video($file){
     if($info){
         // 成功上传后 获取上传信息
         $path = [
-            'path' =>GET_IMG_URL.'/video/'.$info->getSaveName(),
+            'path' =>'/video/'.$info->getSaveName(),
         ];
         return $path;
     }else{
