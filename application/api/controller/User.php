@@ -197,7 +197,8 @@ class User
     public function test(){
         $file = request()->file('file');
         $path = upload_video($file);
-        return jsonData(1, 'OK', GET_IMG_URL.$path);
+        $data = GET_IMG_URL.$path['path'];
+        return jsonData(1, 'OK', $data);
     }
 
 }
