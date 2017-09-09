@@ -49,10 +49,12 @@
             <th>套餐</th>
             <th>名称</th>
             <th>图片</th>
+            <th>介绍</th>
             <th>销量</th>
             <th>价格</th>
             <th>排序</th>
             <th>创建时间</th>
+            <th>是否推荐</th>
             <th>显示状态</th>
             <th>状态</th>
             <th>操作</th>
@@ -76,10 +78,20 @@
             </td>
             <td>{$vo.title}</td>
             <td><img style="width: 65px;height: 45px" src="{:ImgUrl($vo.image)}"/></td>
+            <td>{:cut_str($vo.intro,8)}</td>
             <td>{$vo.sale}</td>
             <td>{$vo.price}</td>
             <td>{$vo.rank}</td>
             <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
+            {if condition="$vo.rec == 1"}
+            <td class="td-status">
+                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status('rec',0,{$vo.id})">是</span>
+            </td>
+            {else}
+            <td class="td-status">
+                <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status('rec',1,{$vo.id})">否</span>
+            </td>
+            {/if}
             {if condition="$vo.sd_status == 1"}
             <td class="td-status">
                 <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status('sd_status',0,{$vo.id})">显示</span>

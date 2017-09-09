@@ -52,6 +52,31 @@ class Shop
         }
     }
 
+    /***
+     * 商户 - 推荐菜品
+     * @参数 shop    商户id
+     */
+    function rec(){
+        $data = input('param.shop');
+        $map = [
+            'shop_id' => $data,
+            'rec' => 1,
+            'status' => 1,
+            'hd_status' => 1,
+            'sd_status' => 1
+        ];
+        $res = Db::name('goods')
+            ->where($map)
+            ->order('rank asc')
+            ->field('id,title,image,price,intro')
+            ->limit(3)
+            ->select();
+        foreach ($res as &$volue){
+            $volue['image'] = ImgUrl($volue['image']);
+        }
+        print_r($res);
+    }
+
 
 
 }
