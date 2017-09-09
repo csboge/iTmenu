@@ -36,10 +36,10 @@ function upload_video($file){
         ->move(ROOT_PATH . 'Uploads' . DS . 'video');
     if($info){
         // 成功上传后 获取上传信息
-        $post = [
+        $path = [
             'path' =>'/picture/'.$info->getSaveName(),
         ];
-        return $post;
+        return $path;
     }else{
         return false;
     }

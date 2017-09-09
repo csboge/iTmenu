@@ -192,4 +192,12 @@ class User
         }
     }
 
+
+    //测试
+    public function test(){
+        $file = request()->file('file');
+        $path = upload_video($file);
+        return $path;
+    }
+
 }
