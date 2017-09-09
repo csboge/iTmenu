@@ -77,10 +77,17 @@ class Menu
             'shop_id' => $data['shop_id'],
             'parent_id'=>0,
             'status' => 1,
+            'hd_status' => 1,
+            'sd_status' => 1
+        ];
+        $ma =[
+            'shop_id' => $data['shop_id'],
+            'sd_status' => 1,
             'hd_status' => 1
         ];
         $res = Db::name('category')->where($map)->field('id,name')->order('rank asc')->select();
-        if($res){
+        $rew = Db::name('package')->where($ma)->field('id,name')->order('rank asc')->select();
+        if($res || $rew){
             foreach ($res as &$value){
                 $ma = [
                     'parent_id' => $value['id'],
@@ -90,7 +97,9 @@ class Menu
                 $dp = Db::name('category')->where($ma)->field('id,name')->order('rank asc')->select();
                 $value['list'] = $dp;
             }
-            return jsonData(200, 'OK', $res);
+            $list['cate_list'] = $res;
+            $list['mob_list'] = $rew;
+            return jsonData(200, 'OK', $list);
         }else{
             return jsonData(405, '1未查到数据', '');
         }
@@ -99,7 +108,7 @@ class Menu
     /***
      * 获取 - 菜品详情
      * @参数 shop_id      店铺id
-     * @参数 cate_id       分类id (可不传)
+     * @参数 cat_id      分类id (可不传)
      * @参数 package      套餐id (可不传)
      */
     public function goods_list(){
@@ -117,7 +126,7 @@ class Menu
         }elseif(!empty($data['cat_id'])){
             $map = [
                 'shop_id' => $data['shop_id'],
-                'cat_id' => $data['cate_id'],
+                'cat_id' => $data['cat_id'],
                 'status' => 1,
                 'hd_status' => 1
             ];
@@ -128,7 +137,7 @@ class Menu
                 'hd_status' => 1
             ];
         }
-        $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price,cat_id as cate_id')->order('rank asc')->select();
+        $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price')->order('rank asc')->select();
         if($res){
             foreach ($res as &$value){
                 $value['image'] = ImgUrl($value['image'])?ImgUrl($value['image']):'';

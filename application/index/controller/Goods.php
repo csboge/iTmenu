@@ -177,7 +177,9 @@ class Goods extends Controller
             }
         }else{
             $info = Db::name('category')->where(['hd_status'=>1,'status'=>1,'shop_id'=>session('shop_id')])->select();
+            $list = Db::name('package')->where(['hd_status'=>1,'sd_status'=>1,'shop_id'=>session('shop_id')])->select();
             $this->assign('info',$info);
+            $this->assign('list',$list);
         }
         return view();
     }
@@ -190,7 +192,9 @@ class Goods extends Controller
         $db = Db::name('goods')->where('id',$data['id'])->find();
         $db['image'] = ImgUrl($db['image']);
         $info = Db::name('category')->where(['hd_status'=>1,'status'=>1,'shop_id'=>session('shop_id')])->select();
+        $list = Db::name('package')->where(['hd_status'=>1,'sd_status'=>1,'shop_id'=>session('shop_id')])->select();
         $this->assign('info',$info);
+        $this->assign('list',$list);
         $this->assign('vo',$db);
         return view();
     }

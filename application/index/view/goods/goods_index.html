@@ -46,6 +46,7 @@
             <th>ID</th>
             <th>店铺</th>
             <th>分类</th>
+            <th>套餐</th>
             <th>名称</th>
             <th>图片</th>
             <th>销量</th>
@@ -66,6 +67,13 @@
             <td>{$vo.id}</td>
             <td>{:shop_name($vo.shop_id)}</td>
             <td>{:goods_name($vo.cat_id)}</td>
+            <td>
+                {if condition="$vo.package === 0"}
+                不是套餐
+                {else}
+                {:package_name($vo.package)}
+                {/if}
+            </td>
             <td>{$vo.title}</td>
             <td><img style="width: 65px;height: 45px" src="{:ImgUrl($vo.image)}"/></td>
             <td>{$vo.sale}</td>

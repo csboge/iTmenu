@@ -99,6 +99,12 @@ function goods_name($id){
     return $name['name'];
 }
 
+function package_name($id){
+    $db = new \think\Db;
+    $name = $db::name('package')->where('id',$id)->field('name')->find();
+    return $name['name'];
+}
+
 
 //获取数量
 function count_list($name,$type='',$volue='',$status = '1'){

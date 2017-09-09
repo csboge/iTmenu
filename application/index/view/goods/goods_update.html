@@ -29,7 +29,20 @@
                         <select class="layui-form-item" name="cat_id" id="cat_id">
                             <option value="">请选择分类</option>
                             {volist name='info' id='info'}
-                            <option value="{$info.id}" {if condition="$vo.cat_id === $info.id" }selected{/if}>{$info.name}</option>
+                            <option value="{$info.id}" {if condition="$vo.cat_id == $info.id" }selected{/if}>{$info.name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>选择套餐（可不选）
+                    </label>
+                    <div class="layui-input-inline">
+                        <select class="layui-form-item" name="package" id="package">
+                            <option value="">请选择套餐</option>
+                            {volist name='list' id='list'}
+                            <option value="{$list.id}" {if condition="$vo.package == $list.id" }selected{/if}>{$list.name}</option>
                             {/volist}
                         </select>
                     </div>
