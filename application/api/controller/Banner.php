@@ -36,16 +36,37 @@ class Banner
     public function banner_hongbao(){
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
-        $map = [
-            'shop_id' => $where['shop'],
-            'cat_id' => $where['cat'],
-            'status' => 1,
-            'hd_status' => 1
-        ];
-        $data = Db::name('banner')->where($map)->field('id,image,url')->select();
+        if($where['cat'] == 1) {
+            $map = [
+                'shop_id' => $where['shop'],
+                'cat_id' => $where['cat'],
+                'status' => 1,
+                'hd_status' => 1
+            ];
+        }else{
+            $map = [
+                'shop_id' => $where['shop'],
+                'cat_id' => array(['=',2],['=',3],'or') ,
+                'status' => 1,
+                'hd_status' => 1
+            ];
+        }
+        $data = Db::name('banner')->where($map)->field('id,image,url,cat_id')->select();
         if($data){
-            foreach ($data as &$volue){
-                $volue['image'] = ImgUrl($volue['image']);
+            if($where['cat'] == 1) {
+                foreach ($data as &$volue) {
+                    $volue['image'] = ImgUrl($volue['image']);
+                }
+            }else{
+                foreach ($data as $volue){
+                    $volue['image'] = ImgUrl($volue['image']);
+                    if($volue['cat_id'] == 2){
+                        $res['shop'][] = $volue;
+                    }else{
+                        $res['discount'][] = $volue;
+                    }
+                }
+                $data = $res;
             }
             return jsonData(1, 'OK', $data);
         }else{
