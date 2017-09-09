@@ -4,84 +4,78 @@
     <xblock class="page-content">
         <xblock>
             <div style="margin-left: 20px">
-                {$title}——桌子分类
+                {$title}——商品管理
             </div>
         </xblock>
         <!-- 右侧内容框架，更改从这里开始 -->
         <form class="layui-form xbs" action="">
             <div class="layui-form-pane" style="text-align: center;">
                 <div class="layui-form-item" style="display: inline-block;">
-                    <label class="layui-form-label xbs768">日期范围</label>
+                    <!--<label class="layui-form-label xbs768"></label>-->
 
                     <div class="layui-input-inline xbs768">
-                        <input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
+                        <!--<input class="layui-input" placeholder="开始日" id="LAY_demorange_s">-->
                     </div>
                     <div class="layui-input-inline xbs768">
-                        <input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
+                        <!--<input class="layui-input" placeholder="截止日" id="LAY_demorange_e">-->
                     </div>
                     <div class="layui-input-inline">
-                        <input type="text" name="username" placeholder="请输入用户名" autocomplete="off"
-                               class="layui-input">
+                        <!--<input type="text" name="username" placeholder="请输入用户名" autocomplete="off"-->
+                               <!--class="layui-input">-->
                     </div>
                     <div class="layui-input-inline" style="width:80px">
-                        <button class="layui-btn" lay-submit="" lay-filter="sreach"><i
-                                class="layui-icon">&#xe615;</i></button>
+                        <!--<button class="layui-btn" lay-submit="" lay-filter="sreach"><i-->
+                                <!--class="layui-icon">&#xe615;</i></button>-->
                     </div>
                 </div>
             </div>
         </form>
-        <xblock id="table-block">
-            <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
-            </button>
-            <button class="layui-btn" id="member_add"><i
-                    class="layui-icon">&#xe608;</i>添加分类
-            </button>
-            <span class="x-right" style="line-height:40px">共有数据：{$count} 条</span>
-        </xblock><table class="layui-table">
+        <!--<xblock id="table-block">-->
+            <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除-->
+            <!--</button>-->
+            <!--<button class="layui-btn" id="member_add"><i-->
+                    <!--class="layui-icon">&#xe608;</i>添加管理-->
+            <!--</button>-->
+            <!--<span class="x-right" style="line-height:40px">共有数据：3 条</span>-->
+        <!--</xblock>-->
+        <table class="layui-table">
         <thead>
         <tr>
             <th>
                 <input type="checkbox" id="checkAll" name="" value="">
             </th>
-            <th>ID</th>
-            <th>店铺</th>
-            <th>分类</th>
-            <th>创建时间</th>
-            <th>状态</th>
-            <th>操作</th>
+            <th>名称</th>
+            <th>管理</th>
         </tr>
         </thead>
         <tbody>
-        {volist name='list' id='vo'}
         <tr>
             <td>
                 <input type="checkbox" class="check" value="1" name="">
             </td>
-            <td>{$vo.id}</td>
-            <td>{:shop_name($vo.shop_id)}</td>
-            <td>{$vo.name}</td>
-            <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
-            {if condition="$vo.status == 1"}
+            <td>分类</td>
             <td class="td-status">
-                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status(0,{$vo.id})">已启用</span>
-            </td>
-            {else}
-            <td class="td-status">
-                <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status(1,{$vo.id})">已停用</span>
-            </td>
-            {/if}
-            <td class="td-manage">
-                <!--<a title="编辑" href="javascript:;" onclick="update({$vo.id})">-->
-                <a title="编辑" href="{:url('Table/update',['id'=>$vo['id']])}">
-                    <i class="layui-icon">&#xe642;</i>
-                </a>
-                <a title="删除" href="javascript:;" onclick="is_delete({$vo.id})"
-                   style="text-decoration:none">
-                    <i class="layui-icon">&#xe640;</i>
-                </a>
+                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_admin(1)">管理</span>
             </td>
         </tr>
-        {/volist}
+        <tr>
+            <td>
+                <input type="checkbox" class="check" value="1" name="">
+            </td>
+            <td>套餐</td>
+            <td class="td-status">
+                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_admin(2)">管理</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" class="check" value="1" name="">
+            </td>
+            <td>列表</td>
+            <td class="td-status">
+                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_admin(3)">管理</span>
+            </td>
+        </tr>
         </tbody>
     </table>
         <!-- 右侧内容框架，更改从这里结束 -->
@@ -104,35 +98,40 @@
     });
     //新增按钮
     $("#member_add").click(function () {
-            var url = "{:url('table/add')}";
+            var url = "{:url('shop/add')}";
             location.href = url;
     });
 
     //编辑按钮
-    function update(id) {
-        var url = "{:url('table/update',['id'=>"+id+"])}";
-        var curl = decodeURI(url);
-        console.log(curl);
-        location.href = url;
+    function is_admin(type) {
+        var url = "http://" + window.location.host+"/index/goods/";
+        if(type === 1){
+            var urls = url + "index.html";
+        }else if(type === 2){
+            var urls = url + "package_index.html";
+        }else {
+            var urls = url + "goods_index.html";
+        }
+        location.href = urls;
     }
 
     //状态修改
-    function is_status(type,id){
+    function is_status(status,type,id){
         $.ajax({
             url:"{:url('common/is_status')}",
             type:"post",
-            data:{name:'table_list',id:id,status:'status',volue:type},
+            data:{name:'shop',id:id,status:status,volue:type},
             success:function (res) {
                 console.log(res);
                 if(res === true){
                     layer.msg('修改成功',{icon:1,time:500});
                     setTimeout(function () {
-                        location.href = "{:url('table/index')}"
+                        location.href = "{:url('shop/index')}"
                     },1000)
                 }else {
                     layer.msg('修改失败',{icon:2,time:500});
                     setTimeout(function () {
-                        location.href = "{:url('table/index')}"
+                        location.href = "{:url('shop/index')}"
                     },1000)
                 }
             }
@@ -144,18 +143,18 @@
             $.ajax({
                 url:"{:url('common/is_delete')}",
                 type:"post",
-                data:{name:'table_list',id:id},
+                data:{name:'shop',id:id},
                 success:function (res) {
                     console.log(res);
                     if(res === true){
                         layer.msg('删除成功',{icon:1,time:500});
                         setTimeout(function () {
-                            location.href = "{:url('table/index')}"
+                            location.href = "{:url('shop/index')}"
                         },1000)
                     }else {
                         layer.msg('删除失败',{icon:2,time:500});
                         setTimeout(function () {
-                            location.href = "{:url('table/index')}"
+                            location.href = "{:url('shop/index')}"
                         },1000)
                     }
                 }

@@ -55,6 +55,7 @@
             <th>是否新客立减</th>
             <th>返利模式</th>
             <th>浏览次数</th>
+            <th>管理店铺</th>
             <th>创建时间</th>
             <th>状态</th>
             <th>操作</th>
@@ -86,6 +87,9 @@
             {/if}
             <td>{$vo.mode_id}</td>
             <td>{$vo.views}</td>
+            <td>
+                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_shop({$vo.id})">管理</span>
+            </td>
             <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
             {if condition="$vo.status == 1"}
             <td class="td-status">
@@ -136,11 +140,9 @@
             location.href = url;
     });
 
-    //编辑按钮
-    function update(id) {
-        var url = "{:url('shop/update',['id'=>"+id+"])}";
-        var curl = decodeURI(url);
-        console.log(curl);
+    //管理按钮
+    function is_shop(id) {
+        var url = "admin/id/"+id+".html";
         location.href = url;
     }
 

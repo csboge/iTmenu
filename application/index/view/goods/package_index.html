@@ -4,7 +4,7 @@
     <xblock class="page-content">
         <xblock>
             <div style="margin-left: 20px">
-                {$title}——桌子分类
+                {$title}——套餐
             </div>
         </xblock>
         <!-- 右侧内容框架，更改从这里开始 -->
@@ -34,7 +34,7 @@
             <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
             </button>
             <button class="layui-btn" id="member_add"><i
-                    class="layui-icon">&#xe608;</i>添加分类
+                    class="layui-icon">&#xe608;</i>添加套餐
             </button>
             <span class="x-right" style="line-height:40px">共有数据：{$count} 条</span>
         </xblock><table class="layui-table">
@@ -45,9 +45,11 @@
             </th>
             <th>ID</th>
             <th>店铺</th>
-            <th>分类</th>
+            <th>名称</th>
+            <th>备注</th>
+            <th>排序</th>
             <th>创建时间</th>
-            <th>状态</th>
+            <th>显示状态</th>
             <th>操作</th>
         </tr>
         </thead>
@@ -60,19 +62,21 @@
             <td>{$vo.id}</td>
             <td>{:shop_name($vo.shop_id)}</td>
             <td>{$vo.name}</td>
+            <td>{$vo.remarks}</td>
+            <td>{$vo.rank}</td>
             <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
-            {if condition="$vo.status == 1"}
+            {if condition="$vo.sd_status == 1"}
             <td class="td-status">
-                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status(0,{$vo.id})">已启用</span>
+                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status('sd_status',0,{$vo.id})">显示</span>
             </td>
             {else}
             <td class="td-status">
-                <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status(1,{$vo.id})">已停用</span>
+                <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status('sd_status',1,{$vo.id})">隐藏</span>
             </td>
             {/if}
             <td class="td-manage">
                 <!--<a title="编辑" href="javascript:;" onclick="update({$vo.id})">-->
-                <a title="编辑" href="{:url('Table/update',['id'=>$vo['id']])}">
+                <a title="编辑" href="{:url('Goods/package_update',['id'=>$vo['id']])}">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
                 <a title="删除" href="javascript:;" onclick="is_delete({$vo.id})"
@@ -104,35 +108,28 @@
     });
     //新增按钮
     $("#member_add").click(function () {
-            var url = "{:url('table/add')}";
+            var url = "{:url('Goods/package_add')}";
             location.href = url;
     });
 
-    //编辑按钮
-    function update(id) {
-        var url = "{:url('table/update',['id'=>"+id+"])}";
-        var curl = decodeURI(url);
-        console.log(curl);
-        location.href = url;
-    }
 
     //状态修改
-    function is_status(type,id){
+    function is_status(status,type,id){
         $.ajax({
             url:"{:url('common/is_status')}",
             type:"post",
-            data:{name:'table_list',id:id,status:'status',volue:type},
+            data:{name:'package',id:id,status:status,volue:type},
             success:function (res) {
                 console.log(res);
                 if(res === true){
                     layer.msg('修改成功',{icon:1,time:500});
                     setTimeout(function () {
-                        location.href = "{:url('table/index')}"
+                        location.href = "{:url('Goods/package_index')}"
                     },1000)
                 }else {
                     layer.msg('修改失败',{icon:2,time:500});
                     setTimeout(function () {
-                        location.href = "{:url('table/index')}"
+                        location.href = "{:url('Goods/package_index')}"
                     },1000)
                 }
             }
@@ -144,18 +141,18 @@
             $.ajax({
                 url:"{:url('common/is_delete')}",
                 type:"post",
-                data:{name:'table_list',id:id},
+                data:{name:'package',id:id},
                 success:function (res) {
                     console.log(res);
                     if(res === true){
                         layer.msg('删除成功',{icon:1,time:500});
                         setTimeout(function () {
-                            location.href = "{:url('table/index')}"
+                            location.href = "{:url('Goods/package_index')}"
                         },1000)
                     }else {
                         layer.msg('删除失败',{icon:2,time:500});
                         setTimeout(function () {
-                            location.href = "{:url('table/index')}"
+                            location.href = "{:url('Goods/package_index')}"
                         },1000)
                     }
                 }

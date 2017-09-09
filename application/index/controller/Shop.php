@@ -23,6 +23,8 @@ class Shop extends Controller
         return view();
     }
 
+
+
     //新增商店
     public function add(){
         if(input('post.')){
@@ -66,6 +68,47 @@ class Shop extends Controller
             }else{
                 unset($data['logo']);
             }
+            $res = $db->where('id',$data['id'])->update($data);
+            if($res){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    //管理页面
+    public function admin(){
+        $shop_id = input('param.');
+        session('shop_id',$shop_id['id']);
+        $map = [
+            'hd_status' =>1
+        ];
+        $data = Db::name('admin')->where($map)->order('id asc')->select();
+        $title = shop_name($shop_id['id']);
+        session('shop_title',$title);
+        $this->assign('title',$title);
+        $this->assign('list',$data);
+        return view();
+    }
+
+    //管理修改
+    public function update_admin(){
+        $id = input('id');
+        $db = Db::name('admin');
+        $list = $db->where(['id'=>$id])->find();
+        $this->assign('vo',$list);
+        return view();
+    }
+
+    //管理修改操作页
+    public function is_admin_update(){
+        $db = Db::name('admin');
+        if(input('post.')){
+            $data = input('post.');
+            $data['updated'] = time();
             $res = $db->where('id',$data['id'])->update($data);
             if($res){
                 return true;

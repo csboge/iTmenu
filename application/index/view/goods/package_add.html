@@ -3,7 +3,11 @@
 <!-- 中部开始 -->
 
 <style type="text/css">
-    .SpanHeight{line-height:1.5;width:190px;height:40px}
+    .SpanHeight {
+        line-height: 1.5;
+        width: 190px;
+        height: 40px
+    }
 </style>
 
 <div class="wrapper">
@@ -11,31 +15,18 @@
     <div class="page-content">
         <xblock>
             <div style="margin-left: 20px">
-                修改菜品分类
+                添加套餐
             </div>
         </xblock>
         <div class="content">
             <!-- 右侧内容框架，更改从这里开始 -->
             <form class="layui-form" action="" method="post">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <span class="x-red"></span>上级分类
-                    </label>
-                    <div  class="layui-input-inline">
-                        <select class="layui-form-item" name="parent_id">
-                            <option value ="">顶级分类</option>
-                            {volist name='info' id='in'}
-                            <option  value ="{$in.id}"{if condition="$vo.parent_id === $in.id"}selected{/if}>{$in.name}</option>
-                            {/volist}
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-form-item">
                     <label for="name" class="layui-form-label">
-                        <span class="x-red"></span>分类名
+                        <span class="x-red"></span>套餐名
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="name" name="name" value="{$vo.name}" required="" autocomplete="off" class="layui-input">
+                        <input type="text" id="name" name="name" required="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -43,15 +34,22 @@
                         <span class="x-red"></span>排序
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="rank" name="rank" value="{$vo.rank}" required="" autocomplete="off" class="layui-input">
+                        <input type="text" id="rank" name="rank" required="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <input type="hidden"  name="id" value="{$vo.id}" >
+                <div class="layui-form-item">
+                    <label for="remarks" class="layui-form-label">
+                        <span class="x-red"></span>备注
+                    </label>
+                    <div class="layui-input-inline">
+                        <textarea name="remarks" id="remarks" class="layui-input" style="overflow:hidden;line-height:20px;"></textarea>
+                    </div>
+                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                     </label>
                     <button class="layui-btn" id="add-btn" lay-filter="add" lay-submit="">
-                        修改
+                        增加
                     </button>
                 </div>
             </form>
@@ -67,23 +65,23 @@
             var form = layui.form();
             //监听提交
             form.on('submit(add)', function (data) {
-                console.log(data.field);
+                console.log(data.field.shop_id);
                 $.ajax({
-                    url:"{:url('Goods/is_update')}",
-                    type:"post",
-                    data:data.field,
-                    success:function (res) {
+                    url: "{:url('Goods/package_add')}",
+                    type: "post",
+                    data: data.field,
+                    success: function (res) {
                         console.log(res);
-                        if(res === true){
-                            layer.msg('修改成功',{icon:1,time:1000});
+                        if (res === true) {
+                            layer.msg('添加成功', {icon: 1, time: 1000});
                             setTimeout(function () {
                                 location.href = "{:url('Goods/index')}"
-                            },1500)
-                        }else {
-                            layer.msg('修改失败',{icon:2,time:1000});
+                            }, 1500)
+                        } else {
+                            layer.msg('添加失败', {icon: 2, time: 1000});
                             setTimeout(function () {
                                 location.href = "{:url('Goods/index')}"
-                            },1500)
+                            }, 1500)
                         }
                     }
                 })

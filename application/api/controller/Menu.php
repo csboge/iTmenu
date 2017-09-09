@@ -99,7 +99,7 @@ class Menu
     /***
      * 获取 - 菜品详情
      * @参数 shop_id      店铺id
-     * @参数 cat_id       分类id (可不传)
+     * @参数 cate_id       分类id (可不传)
      * @参数 package      套餐id (可不传)
      */
     public function goods_list(){
@@ -117,7 +117,7 @@ class Menu
         }elseif(!empty($data['cat_id'])){
             $map = [
                 'shop_id' => $data['shop_id'],
-                'cat_id' => $data['cat_id'],
+                'cat_id' => $data['cate_id'],
                 'status' => 1,
                 'hd_status' => 1
             ];

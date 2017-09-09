@@ -20,10 +20,11 @@ class Banner extends Controller
         if(empty($type))return false;
         $map = [
             'hd_status' => 1,
-            'cat_id' => $type['cat_id']
+            'cat_id' => $type['cat_id'],
+            'shop_id' => session('shop_id')
         ];
         $res = Db::name('banner')->where($map)->order('id desc')->select();
-        $count = count_list('banner');
+        $count = count_list('banner','shop_id',session('shop_id'));
         $this->assign('count',$count);
         $this->assign('cat_id',$type['cat_id']);
         $this->assign('list',$res);
@@ -35,8 +36,6 @@ class Banner extends Controller
     public function add(){
         $data = input('param.');
         if(empty($data))return false;
-        $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
-        $this->assign('info',$list);
         $this->assign('cat_id',$data['cat_id']);
         return view();
     }
@@ -46,6 +45,7 @@ class Banner extends Controller
         if(input('post.')){
             $data = input('post.');
             $data['created'] = time();
+            $data['shop_id'] = session('shop_id');
             $data['image'] = base64_img($data['image']);
             unset($data['img_url']);
             $res = Db::name('banner')->insert($data);
@@ -97,4 +97,11 @@ class Banner extends Controller
         }
     }
 
+
+    //管理
+    public function admin(){
+        $title = session('shop_title');
+        $this->assign('title',$title);
+        return view();
+    }
 }

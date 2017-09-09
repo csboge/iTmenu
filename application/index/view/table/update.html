@@ -18,19 +18,6 @@
             <!-- 右侧内容框架，更改从这里开始 -->
             <form class="layui-form" action="" method="post">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <span class="x-red"></span>店铺名称
-                    </label>
-                    <div  class="layui-input-inline">
-                        <select class="layui-form-item" name="shop_id">
-                            <option value ="">请选择店铺</option>
-                            {volist name='list' id='list'}
-                            <option  value ="{$list.id}"{if condition="$vo.shop_id === $list.id"}selected{/if}>{$list.title}</option>
-                            {/volist}
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-form-item">
                     <label for="name" class="layui-form-label">
                         <span class="x-red"></span>分类名
                     </label>
@@ -60,6 +47,10 @@
             //监听提交
             form.on('submit(add)', function (data) {
                 console.log(data.field);
+                if(!data.field.name){
+                    layer.msg('请填写分类名',{icon:7,time:1000});
+                    return false;
+                }
                 $.ajax({
                     url:"{:url('Table/is_update')}",
                     type:"post",

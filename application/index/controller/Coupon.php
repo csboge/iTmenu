@@ -16,8 +16,14 @@ class Coupon extends Controller
 {
     //优惠券列表
     public function index(){
-        $data = Db::name('coupon')->order('id desc')->where('hd_status',1)->paginate(100);
-        $count = count_list('coupon');
+        $map = [
+            'hd_status' => 1,
+            'shop_id' => session('shop_id')
+        ];
+        $data = Db::name('coupon')->order('id desc')->where($map)->paginate(100);
+        $count = count_list('coupon','shop_id',session('shop_id'));
+        $title = session('shop_title');
+        $this->assign('title',$title);
         $this->assign('count',$count);
         $this->assign('list',$data);
         return view();
@@ -27,7 +33,10 @@ class Coupon extends Controller
     public function add(){
         if(input('post.')){
             $data = input('post.');
+            $data['start_time'] = strtotime($data['start_time']);
+            $data['end_time'] = strtotime($data['end_time']);
             $data['created'] = time();
+            $data['shop_id'] = session('shop_id');
             $res = Db::name('coupon')->insert($data);
             if($res){
                 return true;
@@ -35,10 +44,8 @@ class Coupon extends Controller
                 return false;
             }
         }else{
-            $info = Db::name('coupon')->where('id<0')->select();
-            $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
+            $info = date('Y-m-d',time());
             $this->assign('info',$info);
-            $this->assign('list',$list);
         }
         return view();
     }
@@ -49,8 +56,8 @@ class Coupon extends Controller
         $data = input('id');
         if(empty($data))return false;
         $db = Db::name('coupon')->where('id',$data)->find();
-        $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
-        $this->assign('list',$list);
+        $db['start_time'] = date('Y-m-d',$db['start_time']);
+        $db['end_time'] = date('Y-m-d',$db['end_time']);
         $this->assign('info',$db);
         return view();
     }
@@ -61,6 +68,8 @@ class Coupon extends Controller
         if(input('post.')){
             $data = input('post.');
             $data['updated'] = time();
+            $data['start_time'] = strtotime($data['start_time']);
+            $data['end_time'] = strtotime($data['end_time']);
             $res = $db->where('id',$data['id'])->update($data);
             if($res){
                 return true;

@@ -17,8 +17,14 @@ class Table extends Controller
 {
     //桌子分类列表
     public function index(){
-        $data = Db::name('table_list')->order('id desc')->where('hd_status',1)->paginate(10);
-        $count = count_list('table_list');
+        $map = [
+            'shop_id' => session('shop_id'),
+            'hd_status' => 1
+        ];
+        $data = Db::name('table_list')->order('id desc')->where($map)->paginate(100);
+        $count = count_list('table_list','shop_id',session('shop_id'));
+        $title = session('shop_title');
+        $this->assign('title',$title);
         $this->assign('count',$count);
         $this->assign('list',$data);
         return view();
@@ -28,6 +34,11 @@ class Table extends Controller
     public function add(){
         if(input('post.')){
             $data = input('post.');
+            if(session('shop_id')){
+                $data['shop_id'] = session('shop_id');
+            }else{
+                return true;
+            }
             $data['created'] = time();
             $res = Db::name('table_list')->insert($data);
             if($res){
@@ -35,9 +46,6 @@ class Table extends Controller
             }else{
                 return false;
             }
-        }else{
-            $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
-            $this->assign('list',$list);
         }
         return view();
     }
@@ -48,8 +56,6 @@ class Table extends Controller
         $data = input('param.');
         if(empty($data))return false;
         $db = Db::name('table_list')->where('id',$data['id'])->find();
-        $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
-        $this->assign('list',$list);
         $this->assign('vo',$db);
         return view();
     }
@@ -74,8 +80,14 @@ class Table extends Controller
 
     //桌子列表
     public function table_index(){
-        $data = Db::name('table')->order('id desc')->where('hd_status',1)->paginate(10);
-        $count = count_list('table');
+        $map = [
+            'shop_id' => session('shop_id'),
+            'hd_status' => 1
+        ];
+        $data = Db::name('table')->order('id desc')->where($map)->paginate(10);
+        $count = count_list('table','shop_id',session('shop_id'));
+        $title = session('shop_title');
+        $this->assign('title',$title);
         $this->assign('count',$count);
         $this->assign('list',$data);
         return view();
@@ -86,6 +98,11 @@ class Table extends Controller
         if(input('post.')){
             $data = input('post.');
             $data['created'] = time();
+            if(session('shop_id')){
+                $data['shop_id'] = session('shop_id');
+            }else{
+                return true;
+            }
             unset($data['img_url']);
             $data['image'] = base64_img($data['image']);
             $res = Db::name('table')->insert($data);
@@ -95,10 +112,13 @@ class Table extends Controller
                 return false;
             }
         }else{
-            $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
-            $info = Db::name('table_list')->where(['hd_status'=>1,'status'=>1])->select();
+            $map = [
+                'hd_status' => 1,
+                'status' => 1,
+                'shop_id' => session('shop_id')
+            ];
+            $info = Db::name('table_list')->where($map)->select();
             $this->assign('info',$info);
-            $this->assign('list',$list);
         }
         return view();
     }
@@ -110,7 +130,12 @@ class Table extends Controller
         if(empty($data))return false;
         $db = Db::name('table')->where('id',$data['id'])->find();
         $db['image'] = ImgUrl($db['image']);
-        $info = Db::name('table_list')->where(['hd_status'=>1,'status'=>1])->select();
+        $map = [
+            'hd_status' => 1,
+            'status' => 1,
+            'shop_id' => session('shop_id')
+        ];
+        $info = Db::name('table_list')->where($map)->select();
         $list = Db::name('shop')->where(['hd_status'=>1,'status'=>1])->select();
         $this->assign('info',$info);
         $this->assign('list',$list);
@@ -141,5 +166,11 @@ class Table extends Controller
         }
     }
 
+    //管理
+    public function admin(){
+        $title = session('shop_title');
+        $this->assign('title',$title);
+        return view();
+    }
 
 }
