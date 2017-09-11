@@ -137,10 +137,16 @@ class Menu
                 'hd_status' => 1
             ];
         }
-        $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price')->order('rank asc')->select();
+        $res = Db::name('goods')
+            ->where($map)
+            ->field('id,title,image,sale,attrs,price,cat_id,package')
+            ->order('rank asc')
+            ->select();
         if($res){
             foreach ($res as &$value){
                 $value['image'] = ImgUrl($value['image'])?ImgUrl($value['image']):'';
+                $value['name'] = $value['title'];
+                unset($value['title']);
             }
             return jsonData(200, 'OK', $res);
         }else{
