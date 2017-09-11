@@ -2,6 +2,7 @@
 namespace app\api\controller;
 
 use think\Request;
+use think\Db;
 
 /**
  * 购买订单 * 服务 * 操作方法
@@ -383,21 +384,47 @@ class Buy
 
 
 
-    //是否新顾客
+    /***
+     * 订单 - 确认支付
+     * @参数 user_id      用户id
+     * @参数 shop_id      商户id
+     */
     public function isFirst()
     {
-        $arr = ['offset_money'=>1, 'is_first'=>0, 'first_money'=>6, 'coupon'=>[
-            'coupon_list_id'=>0, 'status'=>1, 'get_time'=>0, 'use_time'=>0, 'u_status'=>0,'dis_price'=>0.00, 'start_time'=>0, 'end_time'=>0, 'conditon'=>''], 
-        'order_rate'=>0.02,'mode_rate'=>0.08, 
-        'pay_type'=>[
-            ['typeid'=>0, 'title'=>'在线支付', 'is_default'=>1], ['typeid'=>1, 'title'=>'现金支付', 'is_default'=>0]], 
-        'remark'=>[['txt'=>'', 'color'=>''], ['txt'=>'', 'color'=>'']], 'message'=>'：给买家留言,特殊要求。', 'user_list'=>[
-        ['avatar'=>'', 'userid'=>1, 'sex'=>0, 'nickname'=>'用户1'],['avatar'=>'', 'userid'=>2, 'sex'=>0, 'nickname'=>'用户2'],['avatar'=>'', 'userid'=>3, 'sex'=>1, 'nickname'=>'用户3']
-        ], 'use_base'=>[
-            ['id'=>1, 'name'=>'餐具', 'price'=>2.00, 'img_url'=>'', 'cate_id'=>2, 'num'=>0], ['id'=>2, 'name'=>'纸巾', 'price'=>1.00, 'img_url'=>'', 'cate_id'=>2, 'num'=>2]
-        ]];
+        $where = input('param.');
+        if(empty($where))return jsonData(404, '未接收到数据', null);
+        $map = [
+            'id' => $where['user_id']
+        ];
+        $res = Db::name('user')->where($map)->field('money')->find();//红包余额
+        if($res){
+            $coupon = get_coupon($where['user_id'],$where['shop_id']);//查询红包
+            if($coupon){
+                $first = is_first($where['user_id'],$where['shop_id']);
+                $data = [
+                    'money' => $res,
+                    'coupon' => $coupon,
+                    'first' => $first
+                ];
+                return jsonData(1, 'ok', $data);
+            }else{
+                return jsonData(1, '未查到数据', null);
+            }
+        }else{
+            return jsonData(1, '未查到数据', null);
+        }
 
-        return jsonData(1, 'ok', $arr);
+//        $arr = ['offset_money'=>1, 'is_first'=>0, 'first_money'=>6, 'coupon'=>[
+//            'coupon_list_id'=>0, 'status'=>1, 'get_time'=>0, 'use_time'=>0, 'u_status'=>0,'dis_price'=>0.00, 'start_time'=>0, 'end_time'=>0, 'conditon'=>''],
+//        'order_rate'=>0.02,'mode_rate'=>0.08,
+//        'pay_type'=>[
+//            ['typeid'=>0, 'title'=>'在线支付', 'is_default'=>1], ['typeid'=>1, 'title'=>'现金支付', 'is_default'=>0]],
+//        'remark'=>[['txt'=>'', 'color'=>''], ['txt'=>'', 'color'=>'']], 'message'=>'：给买家留言,特殊要求。', 'user_list'=>[
+//        ['avatar'=>'', 'userid'=>1, 'sex'=>0, 'nickname'=>'用户1'],['avatar'=>'', 'userid'=>2, 'sex'=>0, 'nickname'=>'用户2'],['avatar'=>'', 'userid'=>3, 'sex'=>1, 'nickname'=>'用户3']
+//        ], 'use_base'=>[
+//            ['id'=>1, 'name'=>'餐具', 'price'=>2.00, 'img_url'=>'', 'cate_id'=>2, 'num'=>0], ['id'=>2, 'name'=>'纸巾', 'price'=>1.00, 'img_url'=>'', 'cate_id'=>2, 'num'=>2]
+//        ]];
+
     }
 
 

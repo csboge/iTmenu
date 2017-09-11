@@ -71,3 +71,49 @@ function is_coupon($user_id,$coupon_id,$shop_id){
 
 }
 
+
+
+/***
+ * 获取 -- 用户优惠券
+ * @参数 userid      用户id
+ * @参数 shopid      商户id
+ */
+function get_coupon($userid,$shopid){
+    $db = new \think\Db();
+    $map = [
+        'user_id' => $userid,
+        'shop_id' => $shopid,
+        'status' => 1,
+        'u_status' => 0
+    ];
+    $data = $db::name('coupon_list')->where($map)->field('coupon_id')->select();
+    foreach ($data as &$volue){
+        $res = $db::name('coupon')->where('id',$volue['coupon_id'])->field('title,type,dis_price,conditon')->find();
+        $volue['title'] = $res['title'];
+        $volue['type'] = $res['type'];
+        $volue['dis_price'] = $res['dis_price'];
+        $volue['conditon'] = $res['conditon'];
+    }
+    return $data;
+}
+
+/***
+ * 获取 -- 是否为新用户
+ * @参数 userid      用户id
+ * @参数 shopid      商户id
+ */
+function is_first($userid,$shopid){
+    $db = new \think\Db();
+    $map = [
+        'user_id' => $userid,
+        'shop_id' => $shopid,
+        'status' => 1,
+    ];
+    $count = $db::name('orders')->where($map)->count();
+    if($count > 0 ){
+        return 0;
+    }else{
+        return 1;
+    }
+}
+
