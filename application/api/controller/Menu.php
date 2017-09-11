@@ -141,7 +141,6 @@ class Menu
             ];
         }
         $db = Db::name('goods');
-        $count = $db->where($map)->count();
         $page = ($data['page']-1)*$data['limit'];
         $res = $db
             ->where($map)

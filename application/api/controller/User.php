@@ -32,7 +32,7 @@ class User
 
     /***
      * 用户 - 红包余额
-     * @参数 id    用户id
+     * @参数 id           用户id
      */
     function money()
     {
@@ -49,8 +49,8 @@ class User
 
     /***
      * 用户 - 优惠券个数
-     * @参数 id    用户id
-     * @参数 shop  商户id
+     * @参数 id           用户id
+     * @参数 shop         商户id
      */
     function coupon_display()
     {
@@ -73,8 +73,10 @@ class User
 
     /***
      * 用户 - 订单记录
-     * @参数 id    用户id
-     * @参数 shop  商户id
+     * @参数 id           用户id
+     * @参数 shop         商户id
+     * @参数 page         页码
+     * @参数 limit        条数
      */
     function user_order()
     {
@@ -84,7 +86,14 @@ class User
             'user_id' => $where['id'],
             'shop_id' => $where['shop'],
         ];
-        $data = Db::name('orders')->where($map)->order('created desc')->field('order_sn,pay_price,status,goods_list')->select();
+        $db = Db::name('orders');
+        $page = ($where['page']-1)*$where['limit'];
+        $data = $db
+            ->where($map)
+            ->order('created desc')
+            ->field('order_sn,pay_price,status,goods_list')
+            ->limit($page,$where['limit'])
+            ->select();
         if($data){
             foreach ($data as &$volue){
                 if($volue['status'] == 0){
@@ -114,7 +123,12 @@ class User
             'user_id' => $where['id'],
             'shop_id' => $where['shop']
         ];
-        $data = Db::name('coupon_list')->where($map)->field('id,sn,coupon_id,u_status')->select();
+        $page = ($where['page']-1)*$where['limit'];
+        $data = Db::name('coupon_list')
+            ->where($map)
+            ->field('id,sn,coupon_id,u_status')
+            ->limit($page,$where['limit'])
+            ->select();
         if($data){
             $list_mit = [];
             foreach ($data as &$volue){
@@ -193,7 +207,7 @@ class User
     }
 
     /***
-     * 用户 - 红包详情页
+     * 用户 - 红包收入
      * @参数 user_id    用户id
      * @参数 page       页数
      * @参数 limit      条数
@@ -224,17 +238,65 @@ class User
             }
             return jsonData(1, 'OK', $res);
         }else{
-            return jsonData(405, '领取失败', null);
+            return jsonData(405, '未查到到数据', null);
+        }
+    }
+
+    /***
+     * 用户 - 红包支出
+     * @参数 user_id    用户id
+     * @参数 page       页数
+     * @参数 limit      条数
+     */
+    public function expenditure(){
+        $where = input('param.');
+        if(empty($where))return jsonData(404, '未接收到数据', null);
+        $map =[
+            'user_id' => $where['id'],
+            'status' => 1,
+            'pay_time' => ['>',0],
+            'offset_money' => ['>',0]
+        ];
+        $db = Db::name('orders');
+        $page = ($where['page']-1)*$where['limit'];
+        $res = $db
+            ->where($map)
+            ->order('pay_time desc')
+            ->field('order_sn,shop_id,pay_time,offset_money')
+            ->limit($page,$where['limit'])
+            ->select();
+        if($res){
+            foreach ($res as &$volue){
+                $shop = shop_title($volue['shop_id']);
+                $volue['logo'] = ImgUrl($shop['logo']);
+                $volue['title'] = $shop['title'];
+                $volue['pay_time'] = date('Y-m-d H:i:s',$volue['pay_time']);
+                unset($volue['shop_id']);
+            }
+            return jsonData(1, 'OK', $res);
+        }else{
+            return jsonData(405, '未查到到数据', null);
         }
     }
 
 
     //测试
     public function test(){
-        $file = request()->file('file');
-        $path = upload_video($file);
-        $data = GET_IMG_URL.$path;
-        return jsonData(1, 'OK', $data);
+        $file = input('param.');
+        $map = [
+            'order_sn' => 2017083057100544,
+        ];
+        $res = Db::name('orders')->where($map)->update($file);
+        if($res){
+            return jsonData(1, 'OK', null);
+        }else{
+            return jsonData(405, '更新失败', null);
+        }
+    }
+
+    public  function dbget($map,$file){
+        $res = Db::name('orders')->where($map)->update($file);
+        return $res;
     }
 
 }
