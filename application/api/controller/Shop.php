@@ -83,6 +83,31 @@ class Shop
         }
     }
 
+    /***
+     * 商户 - 优惠券
+     * @参数 shop    商户id
+     */
+    function coupon(){
+        $where = input('param.shop');
+        if(empty($where))return jsonData(404, '未接收到数据', null);
+        $map = [
+            'shop_id' => $where,
+            'is_time' => 1,
+            'hd_status' => 1
+        ];
+        $data = Db::name('coupon')
+            ->where($map)
+            ->field('id,title,type,dis_price,start_time,end_time,conditon,created')
+            ->select();
+        if($data){
+            foreach ($data as &$volue){
+                $volue['created'] = date('Y-m-d H:i:s',$volue['created']);
+            }
+            return jsonData(1, 'OK', $data);
+        }else{
+            return jsonData(405, '未查到到数据', null);
+        }
+    }
 
 
 }
