@@ -86,12 +86,14 @@ function get_coupon($userid,$shopid){
         'status' => 1,
         'u_status' => 0
     ];
-    $data = $db::name('coupon_list')->where($map)->field('coupon_id')->select();
+    $data = $db::name('coupon_list')->where($map)->field('coupon_id,status,get_time,use_time,u_status')->select();
     foreach ($data as &$volue){
-        $res = $db::name('coupon')->where('id',$volue['coupon_id'])->field('title,type,dis_price,conditon')->find();
+        $res = $db::name('coupon')->where('id',$volue['coupon_id'])->field('title,type,dis_price,end_time,start_time,conditon')->find();
         $volue['title'] = $res['title'];
         $volue['type'] = $res['type'];
         $volue['dis_price'] = $res['dis_price'];
+        $volue['start_time'] = $res['start_time'];
+        $volue['end_time'] = $res['end_time'];
         $volue['conditon'] = $res['conditon'];
     }
     return $data;
@@ -110,10 +112,11 @@ function is_first($userid,$shopid){
         'status' => 1,
     ];
     $count = $db::name('orders')->where($map)->count();
-    if($count > 0 ){
-        return 0;
+    if($count === 0 ){
+        $is_first = $db::name('shop')->where(['id'=>$shopid])->field('is_first')->find();
+        return $is_first['is_first'];
     }else{
-        return 1;
+        return 0;
     }
 }
 
