@@ -222,7 +222,6 @@ class User
                 $volue['created'] = date('Y-m-d H:i:s',$volue['created']);
                 unset($volue['shop_id']);
             }
-            $res['count'] = $count;
             return jsonData(1, 'OK', $res);
         }else{
             return jsonData(405, '领取失败', null);

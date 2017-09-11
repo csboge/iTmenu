@@ -155,7 +155,6 @@ class Menu
                 $value['name'] = $value['title'];
                 unset($value['title']);
             }
-            $res['count'] = $count;
             return jsonData(200, 'OK', $res);
         }else{
             return jsonData(405, '未查到数据', '');
