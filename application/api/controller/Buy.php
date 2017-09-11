@@ -397,54 +397,47 @@ class Buy
             'id' => $where['user_id']
         ];
         $res = Db::name('user')->where($map)->field('money')->find();//红包余额
-        if($res){
-            $coupon = get_coupon($where['user_id'],$where['shop_id']);//查询优惠券
-            if($coupon){
-                $first = is_first($where['user_id'],$where['shop_id']);//新用户立减
-                $data = [
-                    'money' => $res['money'],
-                    'first' => $first,
-                    'coupon' => $coupon,
-                    'order_rate' => 0.02,
-                    'mode_rate' => 0.08,
-                    "pay_type" => [
-                        [
-                        "typeid" => 0,
-                        "title" => "在线支付",
-                        "is_default" => 1
-                        ],
-                        [
-                        "typeid" => 1,
-                        "title" => "现金支付",
-                        "is_default" => 0
-                        ]
-                    ],
-                    "use_base" => [
-                        [
-                            "id" => 1,
-                            "name" => "餐具",
-                            "price" => 2,
-                            "img_url" => "",
-                            "cate_id" => 2,
-                            "num" => 0
-                        ],
-                        [
-                            "id" => 2,
-                            "name" => "纸巾",
-                            "price" => 1,
-                            "img_url" => "",
-                            "cate_id" => 2,
-                            "num" => 2
-                        ]
-                    ]
-                ];
-                return jsonData(1, 'ok', $data);
-            }else{
-                return jsonData(1, '未查到数据', null);
-            }
-        }else{
-            return jsonData(1, '未查到数据', null);
-        }
+        $coupon = get_coupon($where['user_id'],$where['shop_id']);//查询优惠券
+        $first = is_first($where['user_id'],$where['shop_id']);//新用户立减
+        $data = [
+            'money' => $res['money']?$res['money']:0,
+            'first' => $first,
+            'coupon' => $coupon,
+            'order_rate' => 0.02,
+            'mode_rate' => 0.08,
+            "pay_type" => [
+                [
+                "typeid" => 0,
+                "title" => "在线支付",
+                "is_default" => 1
+                ],
+                [
+                "typeid" => 1,
+                "title" => "现金支付",
+                "is_default" => 0
+                ]
+            ],
+            "use_base" => [
+                [
+                    "id" => 1,
+                    "name" => "餐具",
+                    "price" => 2,
+                    "img_url" => "",
+                    "cate_id" => 2,
+                    "num" => 0
+                ],
+                [
+                    "id" => 2,
+                    "name" => "纸巾",
+                    "price" => 1,
+                    "img_url" => "",
+                    "cate_id" => 2,
+                    "num" => 2
+                ]
+            ]
+        ];
+        return jsonData(1, 'ok', $data);
+
 
 //        $arr = ['offset_money'=>1, 'is_first'=>0, 'first_money'=>6, 'coupon'=>[
 //            'coupon_list_id'=>0, 'status'=>1, 'get_time'=>0, 'use_time'=>0, 'u_status'=>0,'dis_price'=>0.00, 'start_time'=>0, 'end_time'=>0, 'conditon'=>''],
