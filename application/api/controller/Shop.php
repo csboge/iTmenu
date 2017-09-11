@@ -88,10 +88,10 @@ class Shop
      * @参数 shop    商户id
      */
     function coupon(){
-        $where = input('param.shop');
+        $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
         $map = [
-            'shop_id' => $where,
+            'shop_id' => $where['shop'],
             'is_time' => 1,
             'hd_status' => 1
         ];
