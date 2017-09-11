@@ -68,6 +68,27 @@ function is_coupon($user_id,$coupon_id,$shop_id){
     ];
     $data = $db::name('coupon_list')->where($map)->find();
     return $data;
+}
+
+/***
+ * 判断 -- 是否已领完优惠券
+ * @参数 user_id    用户id
+ * @参数 coupon_id  优惠券id
+ * @参数 shop_id    店铺id
+ */
+function num_coupon($coupon_id,$shop_id){
+    $db = new \think\Db();
+    $map = [
+        'id' => $coupon_id,
+        'shop_id' => $shop_id
+    ];
+    $data = $db::name('coupon')->where($map)->field('num,get_num')->find();
+    if($data['num'] >= $data['get_num']){
+        return true;
+    }else{
+        return false;
+    }
+
 
 }
 

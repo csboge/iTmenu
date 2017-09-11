@@ -189,19 +189,29 @@ class User
         if(empty($where))return jsonData(404, '未接收到数据', null);
         //判断是否可以领取
         $is = is_coupon($where['user_id'],$where['coupon_id'],$where['shop_id']);
-        if($is)return jsonData(506, '红包以领取', null);
-        $data = [
-            'shop_id' => $where['shop_id'],
-            'coupon_id' => $where['coupon_id'],
-            'user_id' => $where['user_id'],
-            'status' => 1,
-            'created' => time(),
-            'get_time' => time()
-        ];
-        $res = Db::name('coupon_list')->insert($data);
-        if($res){
+        if($is)return jsonData(306, '已领过', null);
+        //判断优惠券是否已领完
+        $num = num_coupon($where['coupon_id'],$where['shop_id']);
+        if($num)return jsonData(307, '已领完', null);
+        // 启动事务
+        Db::startTrans();
+        try{
+            $data = [
+                'shop_id' => $where['shop_id'],
+                'coupon_id' => $where['coupon_id'],
+                'user_id' => $where['user_id'],
+                'status' => 1,
+                'created' => time(),
+                'get_time' => time()
+            ];
+            Db::name('coupon_list')->insert($data);
+            Db::name('coupon')->where(['id' => $where['coupon_id']])->setInc('get_num');
+            // 提交事务
+            Db::commit();
             return jsonData(1, 'OK', null);
-        }else{
+        }catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
             return jsonData(405, '领取失败', null);
         }
     }
@@ -219,7 +229,6 @@ class User
             'user_id' => $where['user_id']
         ];
         $db = Db::name('red_cash_log');
-        $count = $db->where($map)->count();
         $page = ($where['page']-1)*$where['limit'];
         $res = $db
             ->where($map)
@@ -278,25 +287,4 @@ class User
             return jsonData(405, '未查到到数据', null);
         }
     }
-
-
-    //测试
-    public function test(){
-        $file = input('param.');
-        $map = [
-            'order_sn' => 2017083057100544,
-        ];
-        $res = Db::name('orders')->where($map)->update($file);
-        if($res){
-            return jsonData(1, 'OK', null);
-        }else{
-            return jsonData(405, '更新失败', null);
-        }
-    }
-
-    public  function dbget($map,$file){
-        $res = Db::name('orders')->where($map)->update($file);
-        return $res;
-    }
-
 }
