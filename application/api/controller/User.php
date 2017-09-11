@@ -192,6 +192,43 @@ class User
         }
     }
 
+    /***
+     * 用户 - 红包详情页
+     * @参数 user_id    用户id
+     * @参数 page       页数
+     * @参数 limit      条数
+     */
+    public function income(){
+        $where = input('param.');
+        if(empty($where))return jsonData(404, '未接收到数据', null);
+        $map =[
+            'user_id' => $where['user_id']
+        ];
+        $db = Db::name('red_cash_log');
+        $count = $db->where($map)->count();
+        $page = ($where['page']-1)*$where['limit'];
+        $res = $db
+            ->where($map)
+            ->order('created desc')
+            ->field('id,audio,words,menoy,shop_id,created')
+            ->limit($page,$where['limit'])
+            ->select();
+        if($res){
+            foreach ($res as &$volue){
+                $shop = shop_title($volue['shop_id']);
+                $volue['audio'] = GET_IMG_URL.$volue['audio'];
+                $volue['logo'] = ImgUrl($shop['logo']);
+                $volue['title'] = $shop['title'];
+                $volue['created'] = date('Y-m-d H:i:s',$volue['created']);
+                unset($volue['shop_id']);
+            }
+            $res['count'] = $count;
+            return jsonData(1, 'OK', $res);
+        }else{
+            return jsonData(405, '领取失败', null);
+        }
+    }
+
 
     //测试
     public function test(){

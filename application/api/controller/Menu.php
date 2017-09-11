@@ -108,8 +108,11 @@ class Menu
     /***
      * 获取 - 菜品详情
      * @参数 shop_id      店铺id
-     * @参数 cat_id      分类id (可不传)
+     * @参数 page         页码
+     * @参数 limit        条数
+     * @参数 cat_id       分类id (可不传)
      * @参数 package      套餐id (可不传)
+
      */
     public function goods_list(){
         $data = input('post.');
@@ -137,10 +140,14 @@ class Menu
                 'hd_status' => 1
             ];
         }
-        $res = Db::name('goods')
+        $db = Db::name('goods');
+        $count = $db->where($map)->count();
+        $page = ($data['page']-1)*$data['limit'];
+        $res = $db
             ->where($map)
-            ->field('id,title,image,sale,attrs,price,cat_id,package')
+            ->field('id,title,image,sale,attrs,price,cat_id,package,rank')
             ->order('rank asc')
+            ->limit($page,$data['limit'])
             ->select();
         if($res){
             foreach ($res as &$value){
@@ -148,6 +155,7 @@ class Menu
                 $value['name'] = $value['title'];
                 unset($value['title']);
             }
+            $res['count'] = $count;
             return jsonData(200, 'OK', $res);
         }else{
             return jsonData(405, '未查到数据', '');
