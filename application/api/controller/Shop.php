@@ -92,7 +92,7 @@ class Shop
         if(empty($where))return jsonData(404, '未接收到数据', null);
         $map = [
             'shop_id' => $where['shop'],
-            'is_time' => 1,
+            'is_time' => 0,
             'hd_status' => 1
         ];
         $data = Db::name('coupon')
