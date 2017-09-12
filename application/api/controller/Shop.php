@@ -90,10 +90,10 @@ class Shop
 
 //        echo  22222;exit;
         //用户信息
-        $user    = 1;//$this->p_auth->session();
+        $user    = $this->p_auth->session();
 
         //获得商店id
-        $shop     =  1;//$this->p_auth->getShopId();
+        $shop     =  $this->p_auth->getShopId();
 
         $map = [
             'shop_id' => $shop,
