@@ -8,6 +8,8 @@ class User
 {
     private     $p_auth;
 
+
+
     /***
      * 公共 - 注入依赖
      *
@@ -32,13 +34,13 @@ class User
 
     /***
      * 用户 - 红包余额
-     * @参数 id           用户id
      */
     function money()
     {
-        $id = input('param.id');
-        if(empty($id))return jsonData(404, '未接收到数据', null);
-        $data = Db::name('user')->where('id',$id)->field('id,money')->find();
+        //用户信息
+        $userid    = $this->p_auth->session();
+        if(empty($userid))return jsonData(404, '未接收到数据', null);
+        $data = Db::name('user')->where('id',$userid)->field('id,money')->find();
         if($data){
             return jsonData(1, 'OK', $data);
         }else{
@@ -204,11 +206,16 @@ class User
                 'created' => time(),
                 'get_time' => time()
             ];
-            Db::name('coupon_list')->insert($data);
-            Db::name('coupon')->where(['id' => $where['coupon_id']])->setInc('get_num');
-            // 提交事务
-            Db::commit();
-            return jsonData(1, 'OK', null);
+            $res1 = Db::name('coupon_list')->insert($data);
+            $res2 = Db::name('coupon')->where(['id' => $where['coupon_id']])->setInc('get_num');
+            if($res1 && $res2){
+                // 提交事务
+                Db::commit();
+                return jsonData(1, 'OK', null);
+            }else{
+                // 回滚事务
+                Db::rollback();
+            }
         }catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
