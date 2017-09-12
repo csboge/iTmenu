@@ -110,7 +110,22 @@ class Auth
         /***
          * 通过验证，直接返回
          */
-         if ($this->session()) return true;
+        if ($this->session()) return true;
+
+
+
+         /***
+          * 检查商户，主键id
+          */
+        $shopid = intval($this->getShopId());
+        if ($shopid == 0) {
+            $code     = '-2011';
+            $message  = '商户编号 shop_id 已经失效';
+            
+            echo json_encode(['code'=>$code, 'message'=>$message]);
+            exit;
+        }
+
 
 
          /***
@@ -118,10 +133,10 @@ class Auth
           * 错误：抛出不同错误信息，错误代码，全局作用范围
           *
           */
-          $code     = '-2012';
-          $message  = '授权凭证 access_token 已经失效';
+        $code     = '-2012';
+        $message  = '授权凭证 access_token 已经失效';
             
-          echo json_encode(['code'=>$code, 'message'=>$message]);
-          exit;
+        echo json_encode(['code'=>$code, 'message'=>$message]);
+        exit;
     }
 }

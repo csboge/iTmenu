@@ -27,7 +27,7 @@ class Buy
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['*'],
+            'public' => ['notify'],
             'private'=> []
         ]);
 
@@ -93,8 +93,8 @@ class Buy
     }  
 
     function is_json($string) {
-    json_decode($string);
-    return (json_last_error() == JSON_ERROR_NONE);
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
     }
 
 
