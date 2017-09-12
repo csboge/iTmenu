@@ -38,9 +38,9 @@ class User
     function money()
     {
         //用户信息
-        $userid    = $this->p_auth->session();
-        if(empty($userid))return jsonData(404, '未接收到数据', null);
-        $data = Db::name('user')->where('id',$userid)->field('id,money')->find();
+        $user    = $this->p_auth->session();
+
+        $data = Db::name('user')->where('id',$user['userid'])->field('id,money')->find();
         if($data){
             return jsonData(1, 'OK', $data);
         }else{
@@ -51,16 +51,18 @@ class User
 
     /***
      * 用户 - 优惠券个数
-     * @参数 id           用户id
-     * @参数 shop         商户id
      */
     function coupon_display()
     {
-        $where = input('param.');
-        if(empty($where))return jsonData(404, '未接收到数据', null);
+        //用户信息
+        $user    = $this->p_auth->session();
+
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+
         $map = [
-            'user_id' => $where['id'],
-            'shop_id' => $where['shop'],
+            'user_id' => $user['userid'],
+            'shop_id' => $shop,
             'status' =>1,
             'u_status' => 0
         ];
@@ -75,18 +77,22 @@ class User
 
     /***
      * 用户 - 订单记录
-     * @参数 id           用户id
-     * @参数 shop         商户id
      * @参数 page         页码
      * @参数 limit        条数
      */
     function user_order()
     {
+        //用户信息
+        $user    = $this->p_auth->session();
+
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
         $map = [
-            'user_id' => $where['id'],
-            'shop_id' => $where['shop'],
+            'user_id' => $user['userid'],
+            'shop_id' => $shop,
         ];
         $db = Db::name('orders');
         $page = ($where['page']-1)*$where['limit'];
@@ -115,15 +121,21 @@ class User
 
     /***
      * 用户 - 优惠券列表
-     * @参数 id    用户id
-     * @参数 shop  商户id
+     * @参数 page    页码
+     * @参数 limit   条数
      */
     public function coupon_list(){
+        //用户信息
+        $user    = $this->p_auth->session();
+
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
         $map = [
-            'user_id' => $where['id'],
-            'shop_id' => $where['shop']
+            'user_id' => $user['userid'],
+            'shop_id' => $shop
         ];
         $page = ($where['page']-1)*$where['limit'];
         $data = Db::name('coupon_list')
@@ -158,10 +170,13 @@ class User
      * @参数 id    用户id
      */
     public function cash_log(){
+        //用户信息
+        $user    = $this->p_auth->session();
+
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
         $map = [
-            'user_id' => $where['id']
+            'user_id' => $user['userid']
         ];
         $data = Db::name('red_cash_log')
             ->where($map)
@@ -237,10 +252,13 @@ class User
      * @参数 limit      条数
      */
     public function income(){
+        //用户信息
+        $user    = $this->p_auth->session();
+
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
         $map =[
-            'user_id' => $where['user_id']
+            'user_id' => $user['userid']
         ];
         $db = Db::name('red_cash_log');
         $page = ($where['page']-1)*$where['limit'];
@@ -267,15 +285,17 @@ class User
 
     /***
      * 用户 - 红包支出
-     * @参数 user_id    用户id
      * @参数 page       页数
      * @参数 limit      条数
      */
     public function expenditure(){
+        //用户信息
+        $user    = $this->p_auth->session();
+
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
         $map =[
-            'user_id' => $where['id'],
+            'user_id' => $user['userid'],
             'status' => 1,
             'pay_time' => ['>',0],
             'offset_money' => ['>',0]

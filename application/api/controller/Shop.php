@@ -32,14 +32,14 @@ class Shop
 
     /***
      * 商户 - 信息设置
-     * @参数 title    商户id
      */
     function config()
     {
-        $title     = input('param.title/s');
-        if(empty($title))return jsonData(404, '未接收到数据', null);
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+
         $map = [
-            'id' => $title,
+            'id' => $shop,
             'status' => 1,
             'hd_status' => 1
         ];
@@ -54,13 +54,13 @@ class Shop
 
     /***
      * 商户 - 推荐菜品
-     * @参数 shop    商户id
      */
     function rec(){
-        $where = input('param.shop');
-        if(empty($where))return jsonData(404, '未接收到数据', null);
+        //获得商店id
+        $shop  = $this->p_auth->getShopId();
+
         $map = [
-            'shop_id' => $where,
+            'shop_id' => $shop,
             'rec' => 1,
             'status' => 1,
             'hd_status' => 1,
