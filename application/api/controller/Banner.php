@@ -34,18 +34,21 @@ class Banner
      * @参数 cat     类型
      */
     public function banner_hongbao(){
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
         if($where['cat'] == 1) {
             $map = [
-                'shop_id' => $where['shop'],
+                'shop_id' => $shop,
                 'cat_id' => $where['cat'],
                 'status' => 1,
                 'hd_status' => 1
             ];
         }else{
             $map = [
-                'shop_id' => $where['shop'],
+                'shop_id' => $shop,
                 'cat_id' => array(['=',2],['=',3],'or') ,
                 'status' => 1,
                 'hd_status' => 1
