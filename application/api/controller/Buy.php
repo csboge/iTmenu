@@ -393,14 +393,18 @@ class Buy
      */
     public function isFirst()
     {
-        $where = input('param.');
-        if(empty($where))return jsonData(404, '未接收到数据', null);
+        //用户信息
+        $user    = $this->p_auth->session();
+
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+
         $map = [
-            'id' => $where['user_id']
+            'id' => $user['userid']
         ];
         $res = Db::name('user')->where($map)->field('money')->find();//红包余额
-        $coupon = get_coupon($where['user_id'],$where['shop_id']);//查询优惠券
-        $first = is_first($where['user_id'],$where['shop_id']);//新用户立减
+        $coupon = get_coupon($user['userid'],$shop);//查询优惠券
+        $first = is_first($user['userid'],$shop);//新用户立减
         $data = [
             'money' => $res['money']?$res['money']:0,
             'first' => $first,
