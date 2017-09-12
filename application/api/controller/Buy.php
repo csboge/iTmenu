@@ -206,10 +206,16 @@ class Buy
             return jsonData(0, '首次立减金额不对',$first_money);
         }
 
-        //优惠券是否存在 or 优惠金额是否正确
-        $coupon_price   = $this->m_coupon->isCoupon($info['coupon_list_id']);
-        if($info['coupon_price'] !== $coupon_price){
-            return jsonData(0, '优惠金额不对',$coupon_price);
+        //优惠券是否存在
+        $coupon_price   = $this->m_coupon->isCouponPrice();
+        if(!$coupon_price){
+            return jsonData(0, '优惠券不存在',$coupon_price);
+        }
+
+        //优惠金额是否正确
+        $coupon_money   = $this->m_coupon->isCouponMoney($info['coupon_list_id']);
+        if($info['coupon_price'] !== $coupon_money){
+            return jsonData(0, '优惠金额不对',$coupon_money);
         }
 
         //红包余额
