@@ -198,14 +198,14 @@ class Buy
         $count          = $this->m_order->isFirstCons($shopid,$userid);
         if($info['is_first'] === 0 && $count > 0){
             return jsonData(0, '您不是首次消费哦');
+        }else{
+            //首次立减金额验证
+            $first_money    = $this->m_shop->isShopMoney($shopid);
+            if($info['first_money'] !== $first_money){
+                return jsonData(0, '首次立减金额不对');
+            }
         }
-
-        //首次立减金额验证
-        $first_money    = $this->m_shop->isShopMoney($shopid);
-        if($info['first_money'] !== $first_money){
-            return jsonData(0, '首次立减金额不对');
-        }
-
+        
         //优惠券是否存在 or 优惠金额是否正确
         $coupon_price   = $this->m_coupon->isCoupon($info['coupon_list_id']);
         if($info['coupon_price'] !== $coupon_price){
