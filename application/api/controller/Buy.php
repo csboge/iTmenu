@@ -207,7 +207,7 @@ class Buy
         }
 
         //优惠券是否存在
-        $coupon_price   = $this->m_coupon->isCouponPrice();
+        $coupon_price   = $this->m_coupon->isCouponPrice($info['coupon_list_id']);
         if(!$coupon_price){
             return jsonData(0, '优惠券不存在',$coupon_price);
         }
