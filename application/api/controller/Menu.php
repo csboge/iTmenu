@@ -66,7 +66,6 @@ class Menu
 
     /***
      * 获得 - 菜谱分类
-     * @参数 shop_id      店铺id
      */
     public function category_list(){
         //获得商店id
@@ -106,7 +105,6 @@ class Menu
 
     /***
      * 获取 - 菜品详情
-     * @参数 shop_id      店铺id
      * @参数 page         页码
      * @参数 limit        条数
      * @参数 cat_id       分类id (可不传)

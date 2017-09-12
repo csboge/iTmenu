@@ -30,7 +30,6 @@ class Banner
 
     /***
      * 查看 - 轮播图
-     * @参数 shop    商户id
      * @参数 cat     类型
      */
     public function banner_hongbao(){

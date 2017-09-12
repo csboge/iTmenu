@@ -19,7 +19,7 @@ class Orders extends Model
      *
      * @param   string   $ordersn    订单号
      *
-     * @return  result 
+     * @return   array    查到的订单
      *
      */
     public function getOrderForSN($ordersn)
@@ -47,4 +47,13 @@ class Orders extends Model
 
         return $row;
     }
+
+    /**
+     * 是否是新顾客
+     *
+     * @param   int     $shopid    商户id
+     * @param   int     $userid    顾客id
+     *
+     * @return  array   最后一次消费
+     */
 }

@@ -178,6 +178,8 @@ class Buy
 
         //$deskid         = 10;   //$desk_sn;
 
+        //订单信息验证
+
         
         //本地 - 订单信息
         $orderinfo      = array(
@@ -345,7 +347,7 @@ class Buy
 
 
                 //结束订单(事务处理)
-                $result = $this->p_order->endOrderStatus($order_info, $post_data);
+                $result = $this->p_order->endOrderStatus($order_info, $post_data);//******
                 if ($result) {
 
                     $printer    = new \app\core\provider\BotPrinter();

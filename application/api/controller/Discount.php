@@ -99,7 +99,6 @@ class Discount
         $num  = rand($order_info['user_count'], $order_info['user_count'] * 2);
         $data = [
             'order_sn'  => $ordersn,
-            'words'     => $words,
             'shop_id'   => $order_info['shop_id'],
             'menoy'     => $order_info['mode_money'],
             'surplus'   => $order_info['mode_money'],

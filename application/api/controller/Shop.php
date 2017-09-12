@@ -19,7 +19,7 @@ class Shop
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['*'],
+            'public' => ['config','rec','coupon'],
             'private'=> []
         ]);
 
@@ -31,7 +31,7 @@ class Shop
 
 
     /***
-     * 商户 - 信息设置
+     * 商户 - 信息
      */
     function config()
     {
@@ -87,11 +87,13 @@ class Shop
      * 商户 - 优惠券
      */
     function coupon(){
+
+//        echo  22222;exit;
         //用户信息
-        $user    = $this->p_auth->session();
+        $user    = 1;//$this->p_auth->session();
 
         //获得商店id
-        $shop     =  $this->p_auth->getShopId();
+        $shop     =  1;//$this->p_auth->getShopId();
 
         $map = [
             'shop_id' => $shop,
@@ -113,7 +115,7 @@ class Shop
                     $volue['over'] = 0;
                 }
                 $num = num_coupon($volue['id'],$shop);//是否已领完优惠券
-                if(!$num){
+                if($num){
                     $volue['biaoshi'] = 1;
                 }else {
                     $volue['biaoshi'] = 0;
