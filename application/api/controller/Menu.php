@@ -69,19 +69,18 @@ class Menu
      * @参数 shop_id      店铺id
      */
     public function category_list(){
-        $data = input('post.');
-        if(empty($data)){
-            return jsonData(404, '未接收到数据', '');
-        }
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+
         $map =[
-            'shop_id' => $data['shop_id'],
+            'shop_id' => $shop,
             'parent_id'=>0,
             'status' => 1,
             'hd_status' => 1,
             'sd_status' => 1
         ];
         $ma =[
-            'shop_id' => $data['shop_id'],
+            'shop_id' => $shop,
             'sd_status' => 1,
             'hd_status' => 1
         ];
@@ -115,27 +114,30 @@ class Menu
 
      */
     public function goods_list(){
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+
         $data = input('post.');
         if(empty($data)){
             return jsonData(404, '未接收到数据', '');
         }
         if(!empty($data['package'])){
             $map = [
-                'shop_id' => $data['shop_id'],
+                'shop_id' => $shop,
                 'package' => $data['package'],
                 'status' => 1,
                 'hd_status' => 1
             ];
         }elseif(!empty($data['cat_id'])){
             $map = [
-                'shop_id' => $data['shop_id'],
+                'shop_id' => $shop,
                 'cat_id' => $data['cat_id'],
                 'status' => 1,
                 'hd_status' => 1
             ];
         }elseif (empty($data['cat_id']) && empty($data['package'])){
             $map = [
-                'shop_id' => $data['shop_id'],
+                'shop_id' => $shop,
                 'status' => 1,
                 'hd_status' => 1
             ];
