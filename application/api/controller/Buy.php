@@ -209,13 +209,13 @@ class Buy
         //优惠券是否存在 or 优惠金额是否正确
         $coupon_price   = $this->m_coupon->isCoupon($info['coupon_list_id']);
         if($info['coupon_price'] !== $coupon_price){
-            return jsonData(0, '优惠金额不对');
+            return jsonData(0, '优惠金额不对',$coupon_price);
         }
 
         //红包余额
         $is_money       = $this->m_user->isMoney($userid);
         if($is_money < $info['offset_money']){
-            return jsonData(0, '红包余额不够');
+            return jsonData(0, '红包余额不够',$is_money);
         }
 
         //本地 - 订单信息
