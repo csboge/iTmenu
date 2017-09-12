@@ -66,7 +66,7 @@ function is_coupon($user_id,$coupon_id,$shop_id){
         'coupon_id' => $coupon_id,
         'shop_id' => $shop_id
     ];
-    $data = $db::name('coupon_list')->where($map)->find();
+    $data = $db::name('coupon_list')->where($map)->field('id,coupon_id')->find();
     return $data;
 }
 

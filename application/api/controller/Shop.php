@@ -86,6 +86,7 @@ class Shop
     /***
      * 商户 - 优惠券
      * @参数 shop    商户id
+     * @参数 user    用户id
      */
     function coupon(){
         $where = input('param.');
@@ -107,6 +108,12 @@ class Shop
                     $volue['biaoshi'] = 0;
                 }else {
                     $volue['biaoshi'] = 1;
+                }
+                $coupon = is_coupon($where['user'],$volue['id'],$where['shop']);
+                if(!$coupon){
+                    $volue['linqu'] = 0;
+                }else{
+                    $volue['linqu'] = 1;
                 }
             }
             return jsonData(1, 'OK', $data);
