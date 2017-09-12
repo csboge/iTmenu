@@ -183,7 +183,6 @@ class User
     /***
      * 用户 - 领取优惠券
      * @参数 coupon_id  优惠券id
-     * @参数 shop_id    店铺id
      */
     public function get_coupon(){
         $where = input('param.');
@@ -192,19 +191,22 @@ class User
         //用户信息
         $user    = $this->p_auth->session();
 
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+
         //判断是否可以领取
-        $is = is_coupon($user['userid'],$where['coupon_id'],$where['shop_id']);
+        $is = is_coupon($user['userid'],$where['coupon_id'],$shop);
         if($is)return jsonData(306, '已领过', null);
 
         //判断优惠券是否已领完
-        $num = num_coupon($where['coupon_id'],$where['shop_id']);
+        $num = num_coupon($where['coupon_id'],$shop);
         if(!$num)return jsonData(307, '已领完', null);
 
         // 启动事务
         Db::startTrans();
         try{
             $data = [
-                'shop_id' => $where['shop_id'],
+                'shop_id' => $shop,
                 'coupon_id' => $where['coupon_id'],
                 'user_id' => $user['userid'],
                 'status' => 1,

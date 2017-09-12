@@ -85,17 +85,16 @@ class Shop
 
     /***
      * 商户 - 优惠券
-     * @参数 shop    商户id
      */
     function coupon(){
-        $where = input('param.');
-        if(empty($where))return jsonData(404, '未接收到数据', null);
-
         //用户信息
         $user    = $this->p_auth->session();
 
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+
         $map = [
-            'shop_id' => $where['shop'],
+            'shop_id' => $shop,
             'is_time' => 0,
             'hd_status' => 1,
         ];
@@ -113,7 +112,7 @@ class Shop
                 }else {
                     $volue['biaoshi'] = 1;
                 }
-                $coupon = is_coupon($user['userid'],$volue['id'],$where['shop']);
+                $coupon = is_coupon($user['userid'],$volue['id'],$shop);
                 if(!$coupon){
                     $volue['linqu'] = 0;
                 }else{
