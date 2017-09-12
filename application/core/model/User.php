@@ -60,5 +60,19 @@ class User extends Model
 
         return $row;
     }
-    
+
+    /**
+     * 查询用户余额
+     *
+     * @param   string   $userid     用户开放唯一标识
+     *
+     * @return  result
+     *
+     */
+    public function isMoney($userid)
+    {
+        $row = $this->where('id',$userid)->field('money')->find()->toArray();
+
+        return $row;
+    }
 }

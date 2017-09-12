@@ -22,7 +22,10 @@ class Buy
         Request                         $request,
         \app\core\provider\Auth         $p_auth,
         \app\core\provider\Orders       $p_order,
-        \app\core\model\Orders          $m_order
+        \app\core\model\Orders          $m_order,
+        \app\core\model\Shop            $m_shop,
+        \app\core\model\Coupon          $m_coupon,
+        \app\core\model\User            $m_user
     )
     {
         //验证授权合法
@@ -40,6 +43,15 @@ class Buy
 
         //订单模型
         $this->m_order  = $m_order;
+
+        //商户信息模型
+        $this->m_shop   = $m_shop;
+
+        //优惠券模型
+        $this->m_coupon = $m_coupon;
+
+        //用户模型
+        $this->m_user   = $m_user;
 
     }
 
@@ -178,9 +190,34 @@ class Buy
 
         //$deskid         = 10;   //$desk_sn;
 
-        //订单信息验证
+        /**
+         * 订单信息验证
+         */
 
-        
+        //新用户验证
+        $count          = $this->m_order->isFirstCons($shopid,$userid);
+        if($info['is_first'] === 0 && $count > 0){
+            return jsonData(0, '您不是首次消费哦');
+        }
+
+        //首次立减金额验证
+        $first_money    = $this->m_shop->isShopMoney($shopid);
+        if($first_money = 0 || $info['first_money'] !== $first_money){
+            return jsonData(0, '首次立减金额不对');
+        }
+
+        //优惠券是否存在 or 优惠金额是否正确
+        $coupon_price   = $this->m_coupon->isCoupon($info['coupon_list_id']);
+        if($info['coupon_price'] !== $coupon_price){
+            return jsonData(0, '优惠金额不对');
+        }
+
+        //红包余额
+        $is_money       = $this->m_user->isMoney($userid);
+        if($is_money < $info['offset_money']){
+            return jsonData(0, '红包余额不够');
+        }
+
         //本地 - 订单信息
         $orderinfo      = array(
 

@@ -10,20 +10,21 @@ use think\db;
  *
  *
  */
-class Shop extends Model
+class Coupon extends Model
 {
 
 
     /**
      * 查询商户立减金额
      *
-     * @param   string   $shopid    商户id
+     * @param   string   $coupon_id    优惠券id
      *
      * @return   string    立减金额
      *
      */
-    public function isShopMoney($shopid){
-        $row = $this->where('id',$shopid)->field('is_first')->find()->toArray();
+    public function isCoupon($coupon_id){
+
+        $row = $this->where('id',$coupon_id)->field('dis_price')->find()->toArray();
 
         return $row;
     }

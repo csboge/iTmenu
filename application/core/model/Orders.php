@@ -56,4 +56,14 @@ class Orders extends Model
      *
      * @return  array   最后一次消费
      */
+    public function isFirstCons($shopid,$userid){
+        $map = [
+            'shop_id' => $shopid,
+            'user_id' => $userid,
+            'status' => 1
+        ];
+        $row = $this->where($map)->count();
+
+        return $row;
+    }
 }
