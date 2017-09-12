@@ -93,15 +93,21 @@ class Shop
         $map = [
             'shop_id' => $where['shop'],
             'is_time' => 0,
-            'hd_status' => 1
+            'hd_status' => 1,
         ];
         $data = Db::name('coupon')
             ->where($map)
-            ->field('id,title,type,dis_price,start_time,end_time,conditon,created')
+            ->field('id,shop_id,title,type,dis_price,start_time,end_time,conditon,created')
             ->select();
         if($data){
-            foreach ($data as &$volue){
+            foreach ($data as $key=>&$volue){
                 $volue['created'] = date('Y-m-d H:i:s',$volue['created']);
+                $num = num_coupon($volue['id'],$volue['shop_id']);
+                if(!$num){
+                    $volue['biaoshi'] = 0;
+                }else {
+                    $volue['biaoshi'] = 1;
+                }
             }
             return jsonData(1, 'OK', $data);
         }else{
