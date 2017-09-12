@@ -86,11 +86,14 @@ class Shop
     /***
      * 商户 - 优惠券
      * @参数 shop    商户id
-     * @参数 user    用户id
      */
     function coupon(){
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
+
+        //用户信息
+        $user    = $this->p_auth->session();
+
         $map = [
             'shop_id' => $where['shop'],
             'is_time' => 0,
@@ -100,6 +103,7 @@ class Shop
             ->where($map)
             ->field('id,shop_id,title,type,dis_price,start_time,end_time,conditon,created')
             ->select();
+
         if($data){
             foreach ($data as $key=>&$volue){
                 $volue['created'] = date('Y-m-d H:i:s',$volue['created']);
@@ -109,7 +113,7 @@ class Shop
                 }else {
                     $volue['biaoshi'] = 1;
                 }
-                $coupon = is_coupon($where['user'],$volue['id'],$where['shop']);
+                $coupon = is_coupon($user['userid'],$volue['id'],$where['shop']);
                 if(!$coupon){
                     $volue['linqu'] = 0;
                 }else{
