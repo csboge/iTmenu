@@ -192,7 +192,7 @@ class User
         if($is)return jsonData(306, '已领过', null);
         //判断优惠券是否已领完
         $num = num_coupon($where['coupon_id'],$where['shop_id']);
-        if($num)return jsonData(307, '已领完', null);
+        if(!$num)return jsonData(307, '已领完', null);
         // 启动事务
         Db::startTrans();
         try{
