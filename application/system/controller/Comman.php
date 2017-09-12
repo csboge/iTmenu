@@ -44,18 +44,18 @@ class Comman
      * @参数 status       字段名
      * @参数 value        修改的值
      */
-    public function get_status(){
-        $data = input('param.');
-        if(empty($data)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
-        }
-        $res = Db::name($data['name'])->where('id',$data['id'])->setField($data['status'],$data['value']);
-        if($res){
-            return json_encode(['code'=>1,'message'=>'OK','data'=>'','status'=>200]);
-        }else{
-            return json_encode(['code'=>0,'message'=>'数据修改失败','data'=>'','status'=>202]);
-        }
-    }
+//    public function get_status(){
+//        $data = input('param.');
+//        if(empty($data)){
+//            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+//        }
+//        $res = Db::name($data['name'])->where('id',$data['id'])->setField($data['status'],$data['value']);
+//        if($res){
+//            return json_encode(['code'=>1,'message'=>'OK','data'=>'','status'=>200]);
+//        }else{
+//            return json_encode(['code'=>0,'message'=>'数据修改失败','data'=>'','status'=>202]);
+//        }
+//    }
 
 
     /***

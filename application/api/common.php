@@ -88,8 +88,26 @@ function num_coupon($coupon_id,$shop_id){
     }else{
         return false;
     }
+}
 
-
+/***
+ * 判断 -- 优惠券是否已过期
+ * @参数 coupon_id  优惠券id
+ * @参数 shop_id    店铺id
+ */
+function over_coupon($coupon_id,$shop_id){
+    $db = new \think\Db();
+    $map = [
+        'id' => $coupon_id,
+        'shop_id' => $shop_id
+    ];
+    $data = $db::name('coupon')->where($map)->field('start_time,end_time')->find();
+    $time = time();
+    if($time < $data['end_time']){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 

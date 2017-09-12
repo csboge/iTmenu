@@ -91,7 +91,7 @@ class Shop
         $user    = $this->p_auth->session();
 
         //获得商店id
-        $shop     = $this->p_auth->getShopId();
+        $shop     =  $this->p_auth->getShopId();
 
         $map = [
             'shop_id' => $shop,
@@ -106,17 +106,23 @@ class Shop
         if($data){
             foreach ($data as $key=>&$volue){
                 $volue['created'] = date('Y-m-d H:i:s',$volue['created']);
-                $num = num_coupon($volue['id'],$volue['shop_id']);
-                if(!$num){
-                    $volue['biaoshi'] = 0;
-                }else {
-                    $volue['biaoshi'] = 1;
-                }
-                $coupon = is_coupon($user['userid'],$volue['id'],$shop);
-                if(!$coupon){
-                    $volue['linqu'] = 0;
+                $over = over_coupon($volue['id'],$shop);//是否已过期
+                if($over){
+                    $volue['over'] = 1;
                 }else{
+                    $volue['over'] = 0;
+                }
+                $num = num_coupon($volue['id'],$shop);//是否已领完优惠券
+                if(!$num){
+                    $volue['biaoshi'] = 1;
+                }else {
+                    $volue['biaoshi'] = 0;
+                }
+                $coupon = is_coupon($user['userid'],$volue['id'],$shop);//是否已领取优惠券
+                if(!$coupon){
                     $volue['linqu'] = 1;
+                }else{
+                    $volue['linqu'] = 0;
                 }
             }
             return jsonData(1, 'OK', $data);
