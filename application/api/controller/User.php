@@ -121,8 +121,6 @@ class User
 
     /***
      * 用户 - 优惠券列表
-     * @参数 page    页码
-     * @参数 limit   条数
      */
     public function coupon_list(){
         //用户信息
@@ -131,17 +129,13 @@ class User
         //获得商店id
         $shop     = $this->p_auth->getShopId();
 
-        $where = input('param.');
-        if(empty($where))return jsonData(404, '未接收到数据', null);
         $map = [
             'user_id' => $user['userid'],
             'shop_id' => $shop
         ];
-        $page = ($where['page']-1)*$where['limit'];
         $data = Db::name('coupon_list')
             ->where($map)
             ->field('id,sn,coupon_id,u_status')
-            ->limit($page,$where['limit'])
             ->select();
         if($data){
             $list_mit = [];
