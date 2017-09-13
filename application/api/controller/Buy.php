@@ -283,6 +283,32 @@ class Buy
             return jsonData(0, '订单 - 创建失败');
         }
 
+        $session  = $this->p_auth->session();
+
+        // 启动事务
+        Db::startTrans();
+        try{
+            //修改用户钱包余额
+            $user_money         = $this->m_user->userMoney($session['userid'],$order_info['offset_money']);
+
+            //修改用户优惠券使用记录
+            $user_coupon        = $this->m_couponlist->CouponStatus($session['userid'],$order_info['coupon_list_id']);
+
+            if($user_money && $user_coupon){
+                // 提交事务
+                Db::commit();
+                return jsonData(1, 'OK', null);
+            }else{
+                // 回滚事务
+                Db::rollback();
+            }
+        }catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return jsonData(405, '领取失败', null);
+        }
+
+
         $redis = $this->redisFactory();
         $redis->set($openid, json_encode($result));
         $redis->set('global-current-openid', $openid);
@@ -399,30 +425,6 @@ class Buy
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);//******
 
-                $session  = $this->p_auth->session();
-
-                // 启动事务
-                Db::startTrans();
-                try{
-                    //修改用户钱包余额
-                    $user_money         = $this->m_user->userMoney($session['userid'],$order_info['offset_money']);
-
-                    //修改用户优惠券使用记录
-                    $user_coupon        = $this->m_couponlist->CouponStatus($session['userid'],$order_info['coupon_list_id']);
-
-                    if($user_money && $user_coupon){
-                        // 提交事务
-                        Db::commit();
-                        return jsonData(1, 'OK', null);
-                    }else{
-                        // 回滚事务
-                        Db::rollback();
-                    }
-                }catch (\Exception $e) {
-                    // 回滚事务
-                    Db::rollback();
-                    return jsonData(405, '领取失败', null);
-                }
 
                 if ($result) {
 
