@@ -59,7 +59,7 @@ class Orders
         $pay_time   = time();
         $data       = ['status' => 1, 'pay_time' => $pay_time, 'updated' => $pay_time, 'transaction_id' => $post_data['transaction_id'], 'time_end' => $post_data['time_end']];
 
-
+        return $data;
         // 启动事务
         Db::startTrans();
 
