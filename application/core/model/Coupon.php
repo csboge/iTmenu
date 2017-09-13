@@ -41,7 +41,7 @@ class Coupon extends Model
 
         $row = $this->where('id',$coupon_id)->field('dis_price')->find()->toArray();
 
-        return $row;
+        return $row['dis_price'];
     }
 
 }
