@@ -136,6 +136,7 @@ class Buy
         //转换数组
         $info = json_decode($order_info, true);
 
+
         $info['is_first']       = !isset($info['is_first']) ? 1 : intval($info['is_first']);
         $info['first_money']    = !isset($info['first_money']) ? 0 : intval($info['first_money']);//5;
         $info['coupon_list_id'] = !isset($info['coupon_list_id']) ? 0 : intval($info['coupon_list_id']);
@@ -279,7 +280,6 @@ class Buy
             'updated'           => time()
         );
 
-        return jsonData(0, '订单 - 创建失败',$orderinfo);
 
 
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
