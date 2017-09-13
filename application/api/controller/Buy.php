@@ -395,9 +395,7 @@ class Buy
                     'b0'  => '217502439'
                 ];
 
-                $res = json_encode($post_data,true);
-                $aa['path'] = $res;
-                Db::name('picture')->update($aa);
+
 
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);//******

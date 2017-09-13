@@ -69,6 +69,9 @@ class Orders
             //更新订单
             $ret  = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id'=>$order_info['user_id']]);
 
+            $res = json_encode($post_data,true);
+            $aa['path'] = $res;
+            Db::name('picture')->insert($aa);
 //            if($order_info['offset_money'] !== 0){
 //                //修改用户钱包余额
 //                $user_money         = $this->m_user->userMoney($order_info['userid'],$order_info['offset_money']);
