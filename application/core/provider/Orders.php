@@ -69,18 +69,18 @@ class Orders
             //更新订单
             $ret  = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id'=>$order_info['user_id']]);
 
-            if($order_info['offset_money'] !== 0){
-                //修改用户钱包余额
-                $user_money         = $this->m_user->userMoney($order_info['userid'],$order_info['offset_money']);
-            }else{
-                $user_money         = 1;
-            }
+//            if($order_info['offset_money'] !== 0){
+//                //修改用户钱包余额
+//                $user_money         = $this->m_user->userMoney($order_info['userid'],$order_info['offset_money']);
+//            }else{
+//                $user_money         = 1;
+//            }
 
             //修改用户优惠券使用记录
 //            $user_coupon        = $this->m_couponlist->CouponStatus($order_info['userid'],$order_info['coupon_list_id']);
 
 //            if($ret && $user_money && $user_coupon){
-            if($ret && $user_money){
+            if($ret){
                 // 提交事务
                 Db::commit();
 
