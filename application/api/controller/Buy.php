@@ -399,9 +399,10 @@ class Buy
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);//******
 
-                return jsonData(1, 'ok', $result);
 
                 if ($result) {
+
+                    return jsonData(1, 'ok', $result);
 
                     $printer    = new \app\core\provider\BotPrinter();
 
