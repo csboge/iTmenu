@@ -25,7 +25,7 @@ class Shop extends Model
     public function isShopMoney($shopid){
         $row = $this->where('id',$shopid)->field('is_first')->find()->toArray();
 
-        return $row;
+        return $row['is_first'];
     }
 
 }

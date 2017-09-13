@@ -73,7 +73,7 @@ class User extends Model
     {
         $row = $this->where('id',$userid)->field('money')->find()->toArray();
 
-        return $row;
+        return $row['money'];
     }
 
     /**
