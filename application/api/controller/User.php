@@ -21,7 +21,7 @@ class User
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => [],
+            'public' => ['*'],
             'private'=> []
         ]);
 
@@ -126,10 +126,10 @@ class User
      */
     public function coupon_list(){
         //用户信息
-        $user    = $this->p_auth->session();
+        $user['userid']    = 1;//$this->p_auth->session();
 
         //获得商店id
-        $shop     = $this->p_auth->getShopId();
+        $shop     = 1;//$this->p_auth->getShopId();
 
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
@@ -147,15 +147,21 @@ class User
             $list_mit = [];
             foreach ($data as &$volue){
                 $res = coupon($volue['coupon_id']);
+                $volue['title'] = $res['title'];
                 $volue['effective'] = date('Y-m-d',$res['start_time']).'至'.date('Y-m-d',$res['end_time']);
-                if($volue['u_status'] == 0){
-                    $volue['u_status'] = '使用';
+                if($volue['u_status'] == 0)
+                {
+                    $volue['u_status'] = '0';
                     $list_mit['available'][] = $volue;
-                }elseif ($volue['u_status'] == 1){
-                    $volue['u_status'] = '已使用';
+                }
+                elseif ($volue['u_status'] == 1)
+                {
+                    $volue['u_status'] = '1';
                     $list_mit['short'][] = $volue;
-                }elseif ($volue['u_status'] == 2){
-                    $volue['u_status'] = '已过期';
+                }
+                elseif ($volue['u_status'] == 2)
+                {
+                    $volue['u_status'] = '2';
                     $list_mit['overdue'][] = $volue;
                 }
             }
