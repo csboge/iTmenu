@@ -227,7 +227,6 @@ class User
         //用户信息
         $user    = $this->p_auth->session();
 
-        return jsonData(404, '未接收到数据', $user['userid']);
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
         $map =[
