@@ -124,7 +124,7 @@ class User
      */
     public function coupon_list(){
         //用户信息
-        $user['userid']    = $this->p_auth->session();
+        $user     = $this->p_auth->session();
 
         //获得商店id
         $shop     = $this->p_auth->getShopId();
