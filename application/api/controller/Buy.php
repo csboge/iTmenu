@@ -279,9 +279,11 @@ class Buy
             'updated'           => time()
         );
 
+        return jsonData(0, '订单 - 创建失败',$orderinfo);
+
+
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
-        return jsonData(0, '订单 - 创建失败',$result['order']);
         if (!$result['order']) {
             return jsonData(0, '订单 - 创建失败',$result);
         }
