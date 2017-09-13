@@ -402,7 +402,7 @@ class Buy
 
                 if ($result) {
 
-                    return jsonData(1, 'ok', $result);
+                    echo $result;exit;
 
                     $printer    = new \app\core\provider\BotPrinter();
 
