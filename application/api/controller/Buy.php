@@ -281,7 +281,7 @@ class Buy
 
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
         if (!$result['order']) {
-            return jsonData(0, '订单 - 创建失败');
+            return jsonData(0, '订单 - 创建失败',$result);
         }
 
         $redis = $this->redisFactory();
