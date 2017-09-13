@@ -2,6 +2,7 @@
 namespace app\core\controller;
 
 use app\core\model\Coupon;
+use app\core\model\CouponList;
 use app\core\model\Orders;
 use app\core\model\Shop;
 use app\core\model\User;
@@ -20,9 +21,9 @@ class Test
     }
 
     public function ast(){
-        $orders = new User();
+        $orders = new CouponList();
         $map = input('param.');
-        $rew = $orders->isMoney($map['shopid']);
+        $rew = $orders->CouponStatus($map['shopid'],$map['userid']);
         print_r($rew);
     }
 }

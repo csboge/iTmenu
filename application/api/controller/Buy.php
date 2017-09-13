@@ -25,7 +25,8 @@ class Buy
         \app\core\model\Orders          $m_order,
         \app\core\model\Shop            $m_shop,
         \app\core\model\Coupon          $m_coupon,
-        \app\core\model\User            $m_user
+        \app\core\model\User            $m_user,
+        \app\core\model\CouponList      $m_couponlist
     )
     {
         //验证授权合法
@@ -52,6 +53,9 @@ class Buy
 
         //用户模型
         $this->m_user   = $m_user;
+
+        //用户优惠券模型
+        $this->m_couponlist = $m_couponlist;
 
     }
 
@@ -133,7 +137,7 @@ class Buy
         $info = json_decode($order_info, true);
 
         $info['is_first']       = !isset($info['is_first']) ? 1 : intval($info['is_first']);
-        $info['first_money']    = 5;
+        $info['first_money']    = !isset($info['first_money']) ? 0 : intval($info['first_money']);//5;
         $info['coupon_list_id'] = !isset($info['coupon_list_id']) ? 0 : intval($info['coupon_list_id']);
         $info['coupon_price']   = !is_numeric($info['coupon_price']) ? 0 : $info['coupon_price'];
 
@@ -394,6 +398,32 @@ class Buy
 
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);//******
+
+                $session  = $this->p_auth->session();
+
+                // 启动事务
+                Db::startTrans();
+                try{
+                    //修改用户钱包余额
+                    $user_money         = $this->m_user->userMoney($session['userid'],$order_info['offset_money']);
+
+                    //修改用户优惠券使用记录
+                    $user_coupon        = $this->m_couponlist->CouponStatus($session['userid'],$order_info['coupon_list_id']);
+
+                    if($user_money && $user_coupon){
+                        // 提交事务
+                        Db::commit();
+                        return jsonData(1, 'OK', null);
+                    }else{
+                        // 回滚事务
+                        Db::rollback();
+                    }
+                }catch (\Exception $e) {
+                    // 回滚事务
+                    Db::rollback();
+                    return jsonData(405, '领取失败', null);
+                }
+
                 if ($result) {
 
                     $printer    = new \app\core\provider\BotPrinter();
