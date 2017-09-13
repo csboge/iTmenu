@@ -110,6 +110,8 @@ class User
                     $volue['status'] = '支付成功';
                 }elseif ($volue['status'] == 2){
                     $volue['status'] = '交易关闭';
+                }elseif($volue['status'] < 0){
+                    $volue['status'] = '订单异常';
                 }
             }
             return jsonData(1, 'OK', $data);
