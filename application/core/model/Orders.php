@@ -75,9 +75,9 @@ class Orders extends Model
      *
      * @return  int     处理条数
      */
-    public function error_log($order_sn,$type){
+    public function error_log($order_sn,$log){
 
-        $data = $this->where('order_sn',$order_sn)->setField('status',$type);
+        $data = $this->where('order_sn',$order_sn)->Dec('status',1)->setField('message',$log);
 
         return $data;
     }

@@ -78,12 +78,8 @@ class Orders
             $count = $this->m_order->isFirstCons($order_info['shop_id'], $order_info['user_id']);
             if ($order_info['is_first'] > 0 && $count > 0)
             {
-                if (!empty($type))
-                {
-                    $orders = $this->m_order->error_log($order_info['order_sn'], -$type);
-                } else {
-                    $orders = $this->m_order->error_log($order_info['order_sn'], -1);
-                }
+                $orders = $this->m_order->error_log($order_info['order_sn'], '新用户验证不通过');
+
                 return false;
             }
 
@@ -91,12 +87,9 @@ class Orders
             $first_money = $this->m_shop->isShopMoney($order_info['shop_id']);
             if ($order_info['is_first'] > 0 && $order_info['first_money'] !== $first_money)
             {
-                if (!empty($type))
-                {
-                    $orders = $this->m_order->error_log($order_info['order_sn'], -$type);
-                } else {
-                    $orders = $this->m_order->error_log($order_info['order_sn'], -1);
-                }
+
+                $orders = $this->m_order->error_log($order_info['order_sn'], '首次立减金额不通过');
+
                 return false;
             }
 
@@ -105,12 +98,8 @@ class Orders
                 $coupon_price = $this->m_coupon->isCouponPrice($order_info['coupon_list_id']);
                 if (!$coupon_price)
                 {
-                    if (!empty($type))
-                    {
-                        $orders = $this->m_order->error_log($order_info['order_sn'], -$type);
-                    } else {
-                        $orders = $this->m_order->error_log($order_info['order_sn'], -1);
-                    }
+                    $orders = $this->m_order->error_log($order_info['order_sn'], '优惠券不存在');
+
                     return false;
                 }
 
@@ -118,12 +107,8 @@ class Orders
                 $coupon_money = $this->m_coupon->isCouponMoney($order_info['coupon_list_id']);
                 if ($order_info['coupon_price'] != $coupon_money)
                 {
-                    if (!empty($type))
-                    {
-                        $orders = $this->m_order->error_log($order_info['order_sn'], -$type);
-                    } else {
-                        $orders = $this->m_order->error_log($order_info['order_sn'], -1);
-                    }
+                    $orders = $this->m_order->error_log($order_info['order_sn'], '优惠金额不对');
+
                     return false;
                 }
             }
@@ -132,12 +117,8 @@ class Orders
             $is_money = $this->m_user->isMoney($order_info['user_id']);
             if ($is_money < $order_info['offset_money'])
             {
-                if (!empty($type))
-                {
-                    $orders = $this->m_order->error_log($order_info['order_sn'], -$type);
-                } else {
-                    $orders = $this->m_order->error_log($order_info['order_sn'], -1);
-                }
+                $orders = $this->m_order->error_log($order_info['order_sn'], '红包余额不对');
+
                 return false;
             }
 
@@ -172,11 +153,8 @@ class Orders
                 // 回滚事务
                 Db::rollback();
                 //订单错误
-                if (!empty($type)) {
-                    $orders = $this->m_order->error_log($order_info['order_sn'], -$type);
-                } else {
-                    $orders = $this->m_order->error_log($order_info['order_sn'], -1);
-                }
+
+                $orders = $this->m_order->error_log($order_info['order_sn'], '执行出错~~事务回滚');
 
                 return false;
             }
@@ -184,11 +162,8 @@ class Orders
             // 回滚事务
             Db::rollback();
             //订单错误
-            if (!empty($type)) {
-                $orders = $this->m_order->error_log($order_info['order_sn'], -$type);
-            } else {
-                $orders = $this->m_order->error_log($order_info['order_sn'], -1);
-            }
+            
+            $orders = $this->m_order->error_log($order_info['order_sn'], '执行出错~~事务回滚');
 
             return false;
         }
