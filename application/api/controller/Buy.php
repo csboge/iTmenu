@@ -175,7 +175,6 @@ class Buy
             return jsonData(0, '请填写就餐人数');
         }
 
-        return jsonData(0, '测试',$info);
 
         //测试支付
         $info['pay_price']      = 0.01;
