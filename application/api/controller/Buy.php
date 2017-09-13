@@ -159,7 +159,7 @@ class Buy
         $info['remark']         = !isset($info['remark']) ? '' : trim($info['remark']);
 
         $info['total_price']    = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
-        $info['ordersn']        = !isset($info['ordersn']) ? '' : trim($info['ordersn']);
+        $info['order_sn']        = !isset($info['order_sn']) ? '' : trim($info['order_sn']);
 
         //桌位
         $info['desk_sn']        = !isset($info['desk_sn']) ? '' : trim($info['desk_sn']);
@@ -234,7 +234,7 @@ class Buy
         //本地 - 订单信息
         $orderinfo      = array(
 
-            'order_sn'           => $info['ordersn'],                    //是否老订单
+            'order_sn'           => $info['order_sn'],                    //是否老订单
             'shop_id'           => $shopid,                             //商户id
             'user_id'           => $userid,                             //顾客id
 
