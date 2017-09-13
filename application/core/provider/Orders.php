@@ -15,6 +15,8 @@ class Orders
     private $m_order;
     private $m_user;
     private $m_couponlist;
+    private $m_shop;
+    private $m_coupon;
 
     public function __construct()
     {
@@ -24,8 +26,14 @@ class Orders
         //用户模型
         $this->m_user = new \app\core\model\User();
 
-        //优惠券优惠券模型
+        //用户优惠券模型
         $this->m_couponlist = new \app\core\model\CouponList();
+
+        //优惠券模型
+        $this->m_coupon = new \app\core\model\Coupon();
+
+        //商户模型
+        $this->m_shop = new \app\core\model\Shop();
     }
 
 
@@ -52,16 +60,55 @@ class Orders
      * @return  result
      *
      */
-    public function endOrderStatus($order_info, $post_data)
+    public function endOrderStatus($order_info, $post_data,$type = '')
     {
         if (!$order_info || !$post_data) { return false; }
 
         $pay_time   = time();
         $data       = ['status' => 1, 'pay_time' => $pay_time, 'updated' => $pay_time, 'transaction_id' => $post_data['transaction_id'], 'time_end' => $post_data['time_end']];
 
+
+        if(!empty($type)){
+            /**
+             * 订单信息验证
+             */
+            //新用户验证
+            $count          = $this->m_order->isFirstCons($order_info['shop_id'],$order_info['user_id']);
+            if($order_info['is_first'] > 0 && $count > 0){
+                return  false;
+            }
+
+            //首次立减金额验证
+            $first_money    = $this->m_shop->isShopMoney($order_info['shop_id']);
+            if($order_info['is_first'] > 0 && $order_info['first_money'] !== $first_money){
+                return  false;
+            }
+
+            if($order_info['coupon_list_id'] !== 0 && $order_info['coupon_price'] !== 0){
+                //优惠券是否存在
+                $coupon_price   = $this->m_coupon->isCouponPrice($order_info['coupon_list_id']);
+                if(!$coupon_price){
+                    return  false;
+                }
+
+                //优惠金额是否正确
+                $coupon_money   = $this->m_coupon->isCouponMoney($order_info['coupon_list_id']);
+                if($order_info['coupon_price'] != $coupon_money){
+                    return  false;
+                }
+            }
+
+            //红包余额
+            $is_money       = $this->m_user->isMoney($order_info['user_id']);
+            if($is_money < $order_info['offset_money']){
+                return  false;
+            }
+
+        }
         Db::startTrans();
 
         try{
+
             //更新订单
             $ret  = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id'=>$order_info['user_id']]);
 
@@ -71,7 +118,7 @@ class Orders
             }else{
                 $user_money         = 'a';
             }
-
+            echo $order_info['user_id']."<br>";
             if($order_info['coupon_list_id'] !== 0){
                 //修改用户优惠券使用记录
                 $user_coupon        = $this->m_couponlist->CouponStatus($order_info['user_id'],$order_info['coupon_list_id']);
@@ -79,6 +126,7 @@ class Orders
                 $user_coupon        = 'a';
             }
 
+            echo  $ret."<br>".$user_money."<br>".$user_coupon."<br>";
             if($ret && $user_money !== 0 && $user_coupon !== 0){
                 // 提交事务
                 Db::commit();
@@ -87,12 +135,24 @@ class Orders
             }else{
                 // 回滚事务
                 Db::rollback();
+                //订单错误
+                if(!empty($type)) {
+                    $orders = $this->m_order->error_log($order_info['order_sn'],-$type);
+                }else{
+                    $orders = $this->m_order->error_log($order_info['order_sn'],-1);
+                }
 
                 return false;
             }
         }catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
+            //订单错误
+            if(!empty($type)) {
+                $orders = $this->m_order->error_log($order_info['order_sn'],-$type);
+            }else{
+                $orders = $this->m_order->error_log($order_info['order_sn'],-1);
+            }
 
             return false;
         }

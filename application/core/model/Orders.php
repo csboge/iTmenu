@@ -66,4 +66,19 @@ class Orders extends Model
 
         return $row;
     }
+
+
+    /**
+     * 错误处理
+     *
+     * @param   int     $order_sn     订单id
+     *
+     * @return  int     处理条数
+     */
+    public function error_log($order_sn,$type){
+
+        $data = $this->where('order_sn',$order_sn)->setField('status',$type);
+
+        return $data;
+    }
 }

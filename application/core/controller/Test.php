@@ -65,8 +65,8 @@ class Test
 //        $session        = $this->p_auth->session();
 //        $openid         = $session['openid'];
         $userid         = 1;//$session['userid'];
-        $shopid         = input('param.shop_id');
-        $ordersn        = '2017091198995610';//$this->p_order->getOrderSN();
+        $ase         = input('param.');
+        $ordersn        = $ase['orders'];//$this->p_order->getOrderSN();
         $post_data = [
             "appid" => "wx3fcef4db43bcfaed",
             "bank_type" => "CFT",
@@ -88,12 +88,11 @@ class Test
 
         $order_info = [
             "order_sn" => $ordersn,
-            "user_id" => 1,
             "total_price" => 77,
-            "is_first" => 0,
+            "is_first" => 1,
             "first_money" => 1,
             "coupon_list_id" => 1,
-            "coupon_price" => 25,
+            "coupon_price" => 5,
             "must_price" => 0,
             "pay_price" => 0,
             "order_money"=> 0,
@@ -112,9 +111,9 @@ class Test
 
         $info = [
 
-            'ordersn'           => $ordersn,                    //是否老订单
-            'shop_id'           => 1,                             //商户id
-            'user_id'           => 1,                             //顾客id
+            'order_sn'           => $ordersn,                    //是否老订单
+            'shop_id'           => $ase['shop'],                             //商户id
+            'user_id'           => $ase['user'],                             //顾客id
 
             'desk_sn'           => $order_info['desk_sn'],                    //桌位编号
             'user_count'        => $order_info['user_count'],                 //就餐人数
@@ -158,15 +157,15 @@ class Test
 
 
         //结束订单(事务处理)
-        $result = $this->p_order->initOrderData($ordersn, $shopid, $userid, '1', $info);
+        $result = $this->p_order->endOrderStatus($info, $post_data,2);
 
         print_r($result);
     }
 
     public function ast(){
-        $orders = new CouponList();
+        $orders = new Orders();
         $map = input('param.');
-        $rew = $orders->CouponStatus($map['shop'],$map['hd_status']);
+        $rew = $orders->error_log($map['orders'],$map['status']);
         print_r($rew);
     }
 

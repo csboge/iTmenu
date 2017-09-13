@@ -201,13 +201,13 @@ class Buy
 
         //新用户验证
         $count          = $this->m_order->isFirstCons($shopid,$userid);
-        if($info['is_first'] == 0 && $count > 0){
+        if($info['is_first'] > 0 && $count > 0){
             return jsonData(0, '您不是首次消费哦',$count);
         }
 
         //首次立减金额验证
         $first_money    = $this->m_shop->isShopMoney($shopid);
-        if($info['is_first'] == 0 && $info['first_money'] !== $first_money){
+        if($info['is_first'] > 0 && $info['first_money'] !== $first_money){
             return jsonData(0, '首次立减金额不对',$first_money);
         }
 
@@ -224,7 +224,6 @@ class Buy
                 return jsonData(0, '优惠金额不对',$coupon_money);
             }
         }
-
 
         //红包余额
         $is_money       = $this->m_user->isMoney($userid);
