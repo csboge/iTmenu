@@ -251,7 +251,7 @@ class User
             }
             return jsonData(1, 'OK', $res);
         }else{
-            return jsonData(405, '未查到到数据', null);
+            return jsonData(0, '未查到到数据', null);
         }
     }
 
