@@ -137,8 +137,8 @@ class Orders
     public function initOrderData($ordersn, $shopid, $userid, $desk_sn, $info)
     {
         //如果有订单号 - 说明是老订单
-        if (isset($info['ordersn']) && $info['ordersn']) {
-            $result  = $this->m_order->getOrderForSN($info['ordersn']);
+        if (isset($info['order_sn']) && $info['order_sn']) {
+            $result  = $this->m_order->getOrderForSN($info['order_sn']);
             if ($result) { return $result; }
         }
 

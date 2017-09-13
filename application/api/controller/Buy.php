@@ -161,6 +161,7 @@ class Buy
         $info['total_price']    = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
         $info['order_sn']        = !isset($info['order_sn']) ? '' : trim($info['order_sn']);
 
+
         //桌位
         $info['desk_sn']        = !isset($info['desk_sn']) ? '' : trim($info['desk_sn']);
 
@@ -277,7 +278,6 @@ class Buy
             'created'           => time(),
             'updated'           => time()
         );
-
 
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
