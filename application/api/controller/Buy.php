@@ -135,6 +135,7 @@ class Buy
 
         //转换数组
         $info = json_decode($order_info, true);
+        return jsonData(0, 'order 数据不合法',$info);
 
         $info['is_first']       = !isset($info['is_first']) ? 1 : intval($info['is_first']);
         $info['first_money']    = !isset($info['first_money']) ? 0 : intval($info['first_money']);//5;
