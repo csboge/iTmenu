@@ -300,12 +300,6 @@ class Discount
         $session    = $this->p_auth->session();
 
 
-
-
-
-
-
-
      
         return jsonData(1, 'ok', ['imgurl'=>'']);
     }   
