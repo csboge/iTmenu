@@ -234,7 +234,7 @@ class Buy
         //本地 - 订单信息
         $orderinfo      = array(
 
-            'ordersn'           => $info['ordersn'],                    //是否老订单
+            'order_sn'           => $info['ordersn'],                    //是否老订单
             'shop_id'           => $shopid,                             //商户id
             'user_id'           => $userid,                             //顾客id
 
@@ -279,7 +279,6 @@ class Buy
         );
 
 
-        return jsonData(0, '测试订单号',$info);
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
         if (!$result['order']) {

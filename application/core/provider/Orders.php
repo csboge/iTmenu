@@ -197,7 +197,8 @@ class Orders
         $result = $this->m_order->data($data)->save();
         if (!$result) { return false; }
 
-
+        $data['ordersn'] = $data['order_sn'];
+        unset($data['order_sn']);
         //返回完整的订单信息
         return $data;
     }
