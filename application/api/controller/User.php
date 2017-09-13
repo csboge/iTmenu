@@ -21,7 +21,7 @@ class User
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['*'],
+            'public' => [],
             'private'=> []
         ]);
 
@@ -126,10 +126,10 @@ class User
      */
     public function coupon_list(){
         //用户信息
-        $user['userid']    = 1;//$this->p_auth->session();
+        $user['userid']    = $this->p_auth->session();
 
         //获得商店id
-        $shop     = 1;//$this->p_auth->getShopId();
+        $shop     = $this->p_auth->getShopId();
 
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
