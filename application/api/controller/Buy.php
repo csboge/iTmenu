@@ -230,7 +230,6 @@ class Buy
         if($is_money < $info['offset_money']){
             return jsonData(0, '红包余额不够',$is_money);
         }
-        return jsonData(0, '测试订单号',$info);
 
         //本地 - 订单信息
         $orderinfo      = array(
