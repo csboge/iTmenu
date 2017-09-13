@@ -44,7 +44,7 @@ class User
         if($data){
             return jsonData(1, 'OK', $data);
         }else{
-            return jsonData(405, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', null);
         }
     }
 
@@ -70,7 +70,7 @@ class User
         if($data){
             return jsonData(1, 'OK', $data);
         }else{
-            return jsonData(405, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', null);
         }
     }
 
@@ -116,7 +116,7 @@ class User
             }
             return jsonData(1, 'OK', $data);
         }else{
-            return jsonData(405, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', null);
         }
     }
 
@@ -163,7 +163,7 @@ class User
             }
             return jsonData(1, 'OK', $list_mit);
         }else{
-            return jsonData(405, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', null);
         }
     }
 
@@ -251,7 +251,7 @@ class User
             }
             return jsonData(1, 'OK', $res);
         }else{
-            return jsonData(0, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', null);
         }
     }
 
@@ -290,7 +290,7 @@ class User
             }
             return jsonData(1, 'OK', $res);
         }else{
-            return jsonData(405, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', null);
         }
     }
 }
