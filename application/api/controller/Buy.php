@@ -278,43 +278,41 @@ class Buy
             'updated'           => time()
         );
 
-        $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
-        if (!$result['order']) {
-            return jsonData(0, '订单 - 创建失败');
-        }
-
-        $session  = $this->p_auth->session();
 
         // 启动事务
         Db::startTrans();
         try{
+            //提交订单
+            $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
+
             //修改用户钱包余额
-            $user_money         = $this->m_user->userMoney($session['userid'],$order_info['offset_money']);
+            $user_money         = $this->m_user->userMoney($userid,$order_info['offset_money']);
 
             //修改用户优惠券使用记录
-            $user_coupon        = $this->m_couponlist->CouponStatus($session['userid'],$order_info['coupon_list_id']);
+            $user_coupon        = $this->m_couponlist->CouponStatus($userid,$order_info['coupon_list_id']);
 
-            if($user_money && $user_coupon){
+            if($result['order'] && $user_money && $user_coupon){
                 // 提交事务
                 Db::commit();
-                return jsonData(1, 'OK', null);
+
+                $redis = $this->redisFactory();
+                $redis->set($openid, json_encode($result));
+                $redis->set('global-current-openid', $openid);
+
+                return jsonData(1, 'ok', $result);
             }else{
                 // 回滚事务
                 Db::rollback();
+                return jsonData(0, '订单 - 创建失败');
             }
         }catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
-            return jsonData(405, '领取失败', null);
+            return jsonData(0, '订单 - 创建失败');
         }
 
 
-        $redis = $this->redisFactory();
-        $redis->set($openid, json_encode($result));
-        $redis->set('global-current-openid', $openid);
 
-
-        return jsonData(1, 'ok', $result);
 
     }
 
