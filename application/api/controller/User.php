@@ -167,35 +167,6 @@ class User
         }
     }
 
-    /***
-     * 用户 - 红包收入
-     * @参数 id    用户id
-     */
-    public function cash_log(){
-        //用户信息
-        $user    = $this->p_auth->session();
-
-        $where = input('param.');
-        if(empty($where))return jsonData(404, '未接收到数据', null);
-        $map = [
-            'user_id' => $user['userid']
-        ];
-        $data = Db::name('red_cash_log')
-            ->where($map)
-            ->order('created desc')
-            ->field('red_cash_id,audio,words,menoy,created,shop_id')
-            ->select();
-        if($data){
-            foreach ($data as &$volue){
-                $res = shop_title($volue['shop_id']);
-                $volue['title'] = $res['title'];
-                $volue['logo'] = ImgUrl($res['logo']);
-            }
-            return jsonData(1, 'OK', $data);
-        }else{
-            return jsonData(405, '未查到到数据', null);
-        }
-    }
 
     /***
      * 用户 - 领取优惠券
@@ -249,7 +220,6 @@ class User
 
     /***
      * 用户 - 红包收入
-     * @参数 user_id    用户id
      * @参数 page       页数
      * @参数 limit      条数
      */
@@ -257,6 +227,7 @@ class User
         //用户信息
         $user    = $this->p_auth->session();
 
+        return jsonData(404, '未接收到数据', $user['userid']);
         $where = input('param.');
         if(empty($where))return jsonData(404, '未接收到数据', null);
         $map =[
