@@ -136,13 +136,12 @@ class Orders
      */
     public function initOrderData($ordersn, $shopid, $userid, $desk_sn, $info)
     {
-        return $info['ordersn'];
+        echo $info['ordersn'];
         //如果有订单号 - 说明是老订单
         if (isset($info['ordersn']) && $info['ordersn']) {
             $result  = $this->m_order->getOrderForSN($info['ordersn']);
             if ($result) { return $result; }
         }
-        
 
 
         $data    = array(
