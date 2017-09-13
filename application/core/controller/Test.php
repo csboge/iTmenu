@@ -171,7 +171,8 @@ class Test
 
     public function ada(){
 
-        $rew = 111111111111;
+        $data = input('param.');
+        $rew = my_log($data['name'],$data['id'],$data['url'],$data['status'],$data['explain']);
         print_r($rew);
     }
 }

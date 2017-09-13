@@ -65,7 +65,7 @@ function cut_str($str,$len,$suffix="..."){
 function ajaxError($msg = '', $url = ''){
     $data = ['data'=>'','info'=>$msg,'status'=>0];
     if(!empty($url)){
-        $data['url'] = $url;
+        $data['url']    = $url;
     }
     return json($data);
 }
@@ -73,10 +73,10 @@ function ajaxError($msg = '', $url = ''){
 function ajaxSuccess($msg = '',$url = '', $data = []){
     $data = ['info'=>$msg,'status'=>1];
     if(!empty($url)){
-        $data['url'] = $url;
+        $data['url']    = $url;
     }
     if(!empty($data)){
-        $data['data'] = $data;
+        $data['data']   = $data;
     }
     return json($data);
 }
@@ -126,13 +126,28 @@ function count_list($name,$type='',$volue='',$status = '1'){
 //获取二级分类
 function grt_category($name,$type,$volue,$status = '1'){
     $map = [
-        $type => $volue,
-        'hd_status' => $status,
-        'status' =>$status
+        $type           => $volue,
+        'hd_status'     => $status,
+        'status'        =>$status
     ];
 
     $db = new \think\Db;
     $count = $db::name($name)->field('id,parent_id,name')->where($map)->select();
     return $count;
+}
+
+//错误日志存储
+function my_log($name,$id,$url,$status,$explain){
+    $map = [
+        'table_name'    => $name,
+        'table_id'      => $id,
+        'url'           => $url,
+        'table_status'  => $status,
+        'explain'       => $explain,
+        'created'       => date('Y-m-d H:i:s',time())
+    ];
+    $db = new \think\Db();
+    $data = $db::name('log')->insertGetId($map);
+    return  $data;
 }
 
