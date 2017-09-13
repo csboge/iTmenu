@@ -136,7 +136,7 @@ class Buy
         //转换数组
         $info = json_decode($order_info, true);
 
-
+        return jsonData(0, '测试订单号',$info);
         $info['is_first']       = !isset($info['is_first']) ? 1 : intval($info['is_first']);
         $info['first_money']    = !isset($info['first_money']) ? 0 : intval($info['first_money']);//5;
         $info['coupon_list_id'] = !isset($info['coupon_list_id']) ? 0 : intval($info['coupon_list_id']);
@@ -176,7 +176,7 @@ class Buy
             return jsonData(0, '请填写就餐人数');
         }
 
-
+        return jsonData(0, '测试订单号',$info);
         //测试支付
         $info['pay_price']      = 0.01;
 
@@ -232,6 +232,7 @@ class Buy
         if($is_money < $info['offset_money']){
             return jsonData(0, '红包余额不够',$is_money);
         }
+        return jsonData(0, '测试订单号',$info);
 
         //本地 - 订单信息
         $orderinfo      = array(
@@ -281,7 +282,7 @@ class Buy
         );
 
 
-
+        return jsonData(0, '测试订单号',$info);
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
         if (!$result['order']) {
