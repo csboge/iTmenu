@@ -58,8 +58,11 @@ class Orders
 
         $pay_time   = time();
         $data       = ['status' => 1, 'pay_time' => $pay_time, 'updated' => $pay_time, 'transaction_id' => $post_data['transaction_id'], 'time_end' => $post_data['time_end']];
+        
+        //更新订单
+        $ret  = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id'=>$order_info['user_id']]);
 
-        return $data;
+        return $ret;
         // 启动事务
         Db::startTrans();
 
@@ -76,15 +79,18 @@ class Orders
             if($ret && $user_money && $user_coupon){
                 // 提交事务
                 Db::commit();
+
                 return $ret;
             }else{
                 // 回滚事务
                 Db::rollback();
+
                 return false;
             }
         }catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
+
             return false;
         }
         

@@ -402,8 +402,6 @@ class Buy
 
                 if ($result) {
 
-                    echo jsonData(1, 'ok', $result);exit;
-
                     $printer    = new \app\core\provider\BotPrinter();
 
                     $bot_sn     = ($order_info['message']) ? $bot_arr[$order_info['message']] : '';
