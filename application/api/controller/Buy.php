@@ -221,7 +221,11 @@ class Buy
             //优惠金额是否正确
             $coupon_money   = $this->m_coupon->isCouponMoney($info['coupon_list_id']);
             if($info['coupon_price'] !== $coupon_money){
-                return jsonData(0, '优惠金额不对',$info['coupon_price']);
+                $aas = [
+                    0 => $coupon_money,
+                    1 => $info['coupon_price']
+                ];
+                return jsonData(0, '优惠金额不对',$aas);
             }
         }
 
