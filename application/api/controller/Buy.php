@@ -407,7 +407,8 @@ class Buy
                     $printer    = new \app\core\provider\BotPrinter();
 
                     $bot_sn     = ($order_info['message']) ? $bot_arr[$order_info['message']] : '';
-                    $printer->getWords('217502439');
+//                    $printer->getWords('217502439');
+                    $printer->printOrderInfo($order_info,$post_data);
 
                     //5台同时打
                     //$printer->getWordsChip();

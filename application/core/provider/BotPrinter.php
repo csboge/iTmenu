@@ -172,11 +172,11 @@ class BotPrinter
     function printOrderInfo($order_info, $post_data){
         header("Content-type: text/html; charset=utf-8");
         //$printer    = new \app\core\provider\BotPrinter();
-        $sn         = '217502993';
+        $sn         = '217502439';
 
-        $str       = '[{"id":1,"name":"腐竹烧肉萨卡的方式","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":3,"name":"梅菜扣肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":15,"name":"绿豆粥","img_url":"http://img.my-shop.cc/goods/tang5.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":16,"name":"红枣银耳羹","img_url":"http://img.my-shop.cc/goods/tang6.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":2,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":2},{"id":19,"name":"腐竹烧肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1},{"id":20,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1}]';
+//        $str       = '[{"id":1,"name":"腐竹烧肉萨卡的方式","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":3,"name":"梅菜扣肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":15,"name":"绿豆粥","img_url":"http://img.my-shop.cc/goods/tang5.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":16,"name":"红枣银耳羹","img_url":"http://img.my-shop.cc/goods/tang6.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":2,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":2},{"id":19,"name":"腐竹烧肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1},{"id":20,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1}]';
 
-        $arr = json_decode($str, true);
+        $arr = json_decode($order_info['goods_list'], true);
         $total = '';
         foreach ($arr as &$value){
             $total += $value['price']*$value['num'];
@@ -212,6 +212,7 @@ class BotPrinter
 		$orderInfo .= '联系电话：0731-85056818<BR>';
 		$orderInfo .= '订餐时间：'.date('Y-m-d H:i:s', time()).'<BR>';
 		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
+
         $re = $this->wp_print($sn, $orderInfo, 1);
         //echo $re;
         //exit;
