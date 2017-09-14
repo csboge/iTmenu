@@ -199,18 +199,19 @@ class Buy
          * 订单信息验证
          */
 
-        //新用户验证
-        $count          = $this->m_order->isFirstCons($shopid,$userid);
-        if($info['is_first'] > 0 && $count > 0){
-            return jsonData(0, '您不是首次消费哦',$count);
-        }
+        if($info['is_first']) {
+            //新用户验证
+            $count = $this->m_order->isFirstCons($shopid, $userid);
+            if ($info['is_first'] > 0 && $count > 0) {
+                return jsonData(0, '您不是首次消费哦', $count);
+            }
 
-        //首次立减金额验证
-        $first_money    = $this->m_shop->isShopMoney($shopid);
-        if($info['is_first'] > 0 && $info['first_money'] !== $first_money){
-            return jsonData(0, '首次立减金额不对',$first_money);
+            //首次立减金额验证
+            $first_money = $this->m_shop->isShopMoney($shopid);
+            if ($info['is_first'] > 0 && $info['first_money'] !== $first_money) {
+                return jsonData(0, '首次立减金额不对', $first_money);
+            }
         }
-
         if($info['coupon_list_id'] !== 0 && $info['coupon_price'] !== 0){
             //优惠券是否存在
             $coupon_price   = $this->m_coupon->isCouponPrice($info['coupon_list_id']);
