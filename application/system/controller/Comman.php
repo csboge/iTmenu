@@ -87,7 +87,7 @@ class Comman
             if($res){
                 $post = [
                     'id' => $res,
-                    'path' =>'http://img.my-shop.cc/picture/'.$info->getSaveName(),
+                    'path' =>GET_IMG_URL.'/picture/'.$info->getSaveName(),
                 ];
                 return json_encode(['code'=>1,'message'=>'OK','data'=>$post,'status'=>200]);
             }else{
