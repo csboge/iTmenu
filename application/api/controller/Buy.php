@@ -447,9 +447,9 @@ class Buy
      */
     public function submitOffs(){
         //用户信息
-//        $session        = $this->p_auth->session();
+        $session        = $this->p_auth->session();
 //        $openid         = $session['openid'];
-        $userid         = input('param.user_id/d');//$session['userid'];
+        $userid         = $session['userid'];
         $shopid         = input('param.shop_id/d');
 
         //接收 - 订单数据包
