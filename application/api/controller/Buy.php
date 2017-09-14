@@ -163,7 +163,7 @@ class Buy
 
 
         //桌位
-        $info['desk_sn']        = !isset($info['desk_sn']) ? '' : trim($info['desk_sn']);
+        $info['desk_sn']        = !isset($info['desk_sn']) ? 0 : trim($info['desk_sn']);
 
         //就餐人数
         $info['user_count']     = !isset($info['user_count']) ? 0 : intval($info['user_count']);
