@@ -28,4 +28,18 @@ class Shop extends Model
         return $row['is_first'];
     }
 
+    /**
+     * 查询商户信息
+     *
+     * @param   string   $shopid    商户id
+     *
+     * @return   array    商户信息
+     *
+     */
+    public function getShop($shopid){
+        $data = $this->where('id',$shopid)->field('title,mobile,tel,adress')->find()->toArray();
+        return $data;
+    }
+
+
 }

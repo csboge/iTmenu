@@ -24,10 +24,15 @@ class BotPrinter
     //客户端 **打印机
     private $client;
 
+    private $m_shop;
+
     public function __construct()
     {
         //初始化 **请求工具
         $this->client = new \app\core\provider\HttpClient(IP, PORT);
+
+        //商户模型
+        $this->m_shop = new \app\core\model\Shop();
     }
     
 
@@ -174,12 +179,12 @@ class BotPrinter
         //$printer    = new \app\core\provider\BotPrinter();
         $sn         = '217502439';
 
-//        $str       = '[{"id":1,"name":"腐竹烧肉萨卡的方式","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":3,"name":"梅菜扣肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":1},{"id":15,"name":"绿豆粥","img_url":"http://img.my-shop.cc/goods/tang5.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":16,"name":"红枣银耳羹","img_url":"http://img.my-shop.cc/goods/tang6.jpg","price":28,"stars":5,"cate_id":8,"num":1},{"id":2,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":2,"num":2},{"id":19,"name":"腐竹烧肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1},{"id":20,"name":"台湾卤肉","img_url":"http://img.my-shop.cc/goods/new1.jpg","price":28,"stars":5,"cate_id":101,"num":1}]';
-
         $arr = json_decode($order_info['goods_list'], true);
-        $total = '';
+
+        $youhui = $order_info['coupon_price']+$order_info['first_money']+$order_info['offset_money'];
+
+        $shop = $this->m_shop->getShop($order_info['shop_id']);
         foreach ($arr as &$value){
-            $total += $value['price']*$value['num'];
             $value['extras'] = $value['price']*$value['num'];
         }
         $orderInfo = '<CB>电子菜谱</CB><BR>';
@@ -187,13 +192,17 @@ class BotPrinter
 		$orderInfo .= '--------------------------------<BR>';
         foreach($arr as $item){
             $length = strlen($item['name']);
+//            $length_price = strlen($item['price']);
+//            print_r($length_price);exit;
             if($length <= 18){
-                $length = strlen($item['name']);
-                $len = mb_strlen($item['name'],'utf-8');
-                $a = (8-$len)*2;
-                $b = $length+$a;
+                $length_cai = strlen($item['name']);
+                $len_cai = mb_strlen($item['name'],'utf-8');
+//                print_r($length_cai); echo  "<br>";
+//                print_r($len_cai);exit;
+                $a = (8-$len_cai)*2;
+                $b = $length_cai+$a;
                 $item['name'] = str_pad($item['name'],$b);
-                $orderInfo .= $item['name'].$item['price']."   ".$item['num']."  ".$item['extras']."<BR>";
+                $orderInfo .= $item['name'].str_pad($item['price'],6).str_pad($item['num'],6).$item['extras']."<BR>";
             }else{
                 $name_a = mb_substr($item['name'],0,6,'utf-8');
                 $length = strlen($name_a);
@@ -202,14 +211,17 @@ class BotPrinter
                 $b = $length+$a;
                 $name_a = str_pad($name_a,$b);
                 $name_b = mb_substr($item['name'],6,100,'utf-8');
-                $orderInfo .= $name_a.$item['price']."   ".$item['num']."  ".$item['extras']."<BR>";
+                $orderInfo .= $name_a.str_pad($item['price'],6).str_pad($item['num'],6).$item['extras']."<BR>";
                 $orderInfo .= $name_b."<BR>";
             }
         }
 		$orderInfo .= '--------------------------------<BR>';
-		$orderInfo .= '合计：'.$total.'元<BR>';
-		$orderInfo .= '送货地点：长沙市万达广场C2-3508<BR>';
-		$orderInfo .= '联系电话：0731-85056818<BR>';
+		$orderInfo .= '实际：'.$order_info['goods_price'].'元<BR>';
+		$orderInfo .= '优惠：'.$youhui.'元<BR>';
+		$orderInfo .= '合计：'.$order_info['pay_price'].'元<BR>';
+		$orderInfo .= '地址：'.$shop['adress'].'<BR>';
+		$orderInfo .= '联系电话：'.$shop['mobile'].'<BR>';
+		$orderInfo .= '座机电话：'.$shop['tel'].'<BR>';
 		$orderInfo .= '订餐时间：'.date('Y-m-d H:i:s', time()).'<BR>';
 		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
 
