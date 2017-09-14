@@ -502,13 +502,8 @@ class Buy
         }
 
 
-        $offset_money           =  $info['offset_money'];
-
-
-
         //生成 - 订单号
-        $ordersn        = $this->p_order->getOrderSN();
-
+        $ordersn        = 11111111111111;//$this->p_order->getOrderSN();
 
 
         //$deskid         = 10;   //$desk_sn;
@@ -616,8 +611,8 @@ class Buy
             'time_end' => ''
         ];
 
-        //结束订单(事务处理)
-        $result = $this->p_order->endOrderStatus($order_info, $post_data);//******
+        //新增订单
+        $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
 
         if ($result) {
@@ -645,8 +640,11 @@ class Buy
                 //$printer->printOrderInfo($order_info, $post_data);
             }
 
-            //返回微信通知
-            $wechat->return_success();
+            //成功返回
+            if($printer){
+                return jsonData(1, 'OK',$result);
+            }
+
 
         }else{
             echo  '结束订单事务失败';
