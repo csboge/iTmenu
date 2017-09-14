@@ -65,6 +65,7 @@ class Orders
             return false;
         }
 
+
         $pay_time = time();
         $data = ['status' => 1, 'pay_time' => $pay_time, 'updated' => $pay_time, 'transaction_id' => $post_data['transaction_id'], 'time_end' => $post_data['time_end']];
 
@@ -74,12 +75,13 @@ class Orders
             /**
              * 订单信息验证
              */
+
             //新用户验证
             $count = $this->m_order->isFirstCons($order_info['shop_id'], $order_info['user_id']);
             if ($order_info['is_first'] > 0 && $count > 0)
             {
-                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-1,'新用户验证不通过');
-                $orders = $this->m_order->error_log($order_info['order_sn']);
+                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-$type,'新用户验证不通过');
+                $this->m_order->error_log($order_info['order_sn']);
 
                 return false;
             }
@@ -88,7 +90,7 @@ class Orders
             $first_money = $this->m_shop->isShopMoney($order_info['shop_id']);
             if ($order_info['is_first'] > 0 && $order_info['first_money'] !== $first_money)
             {
-                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-1,'首次立减金额不通过');
+                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-$type,'首次立减金额不通过');
 
                 $this->m_order->error_log($order_info['order_sn']);
 
@@ -100,7 +102,7 @@ class Orders
                 $coupon_price = $this->m_coupon->isCouponPrice($order_info['coupon_list_id']);
                 if (!$coupon_price)
                 {
-                    my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-1,'优惠券不存在');
+                    my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-$type,'优惠券不存在');
 
                     $this->m_order->error_log($order_info['order_sn']);
 
@@ -111,7 +113,7 @@ class Orders
                 $coupon_money = $this->m_coupon->isCouponMoney($order_info['coupon_list_id']);
                 if ($order_info['coupon_price'] != $coupon_money)
                 {
-                    my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-1,'优惠金额不对');
+                    my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-$type,'优惠金额不对');
 
                     $this->m_order->error_log($order_info['order_sn']);
 
@@ -123,7 +125,7 @@ class Orders
             $is_money = $this->m_user->isMoney($order_info['user_id']);
             if ($is_money < $order_info['offset_money'])
             {
-                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-1,'红包余额不对');
+                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-$type,'红包余额不对');
 
                 $this->m_order->error_log($order_info['order_sn']);
 
@@ -151,6 +153,7 @@ class Orders
             } else {
                 $user_coupon = 'a';
             }
+
 
             if ($ret && $user_money !== 0 && $user_coupon !== 0) {
                 // 提交事务
