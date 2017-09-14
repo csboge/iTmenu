@@ -37,7 +37,8 @@ class Shop extends Model
      *
      */
     public function getShop($shopid){
-        $data = $this->where('id',$shopid)->field('title,mobile,tel,adress,printer')->find();
+        $data = $this->where('id',$shopid)->field('title,mobile,tel,adress,printer')->find()->toArray();
+
         return $data;
     }
 

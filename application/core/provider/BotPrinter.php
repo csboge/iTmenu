@@ -181,9 +181,9 @@ class BotPrinter
         $arr = json_decode($order_info['goods_list'], true);
 
 
-        $youhui = $order_info['coupon_price']+$order_info['first_money']+$order_info['offset_money'];
+        $youhui     = $order_info['coupon_price']+$order_info['first_money']+$order_info['offset_money'];
 
-        $shop = $this->m_shop->getShop($order_info['shop_id']);
+        $shop       = $this->m_shop->getShop($order_info['shop_id']);
 
         $sn         = $shop['printer'];
 

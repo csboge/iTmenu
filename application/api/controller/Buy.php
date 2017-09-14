@@ -416,6 +416,8 @@ class Buy
 
                     $bot_sn     = ($order_info['message']) ? $bot_arr[$order_info['message']] : '';
 //                    $printer->getWords('217502439');
+
+
                     $printer->printOrderInfo($order_info,$post_data);
 
                     //5台同时打
@@ -457,6 +459,7 @@ class Buy
         //用户信息
         $session        = $this->p_auth->session();
         $userid         = $session['userid'];
+//        $userid         = input('param.user_id/d');
         $shopid         = input('param.shop_id/d');
 
         //接收 - 订单数据包
