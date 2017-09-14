@@ -526,6 +526,7 @@ class Buy
             }
         }
         if($info['coupon_list_id'] !== 0 && $info['coupon_price'] !== 0){
+
             //优惠券是否存在
             $coupon_price   = $this->m_coupon->isCouponPrice($info['coupon_list_id']);
             if(!$coupon_price){
@@ -534,10 +535,10 @@ class Buy
 
             //优惠金额是否正确
             $coupon_money   = $this->m_coupon->isCouponMoney($info['coupon_list_id']);
+
             if($info['coupon_price'] != $coupon_money){
                 return jsonData(0, '优惠金额不对',$coupon_money);
             }
-
 
         }
 

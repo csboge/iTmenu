@@ -39,7 +39,9 @@ class Coupon extends Model
      */
     public function isCouponMoney($coupon_id){
 
+
         $row = $this->where('id',$coupon_id)->field('dis_price')->find();
+
         return $row;
     }
 
