@@ -611,7 +611,10 @@ class Buy
             'b0'  => '217502439'
         ];
 
-
+        $post_data = [
+            'transaction_id' => '',
+            'time_end' => ''
+        ];
 
         //结束订单(事务处理)
         $result = $this->p_order->endOrderStatus($order_info, $post_data);//******
