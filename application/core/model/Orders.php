@@ -24,7 +24,7 @@ class Orders extends Model
      */
     public function getOrderForSN($ordersn)
     {
-        $row = $this->where('order_sn', trim($ordersn))->find()->toArray();
+        $row = $this->where('order_sn', trim($ordersn))->find();
 
         return $row;
     }
