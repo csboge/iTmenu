@@ -504,17 +504,12 @@ class Buy
 
         $offset_money           =  $info['offset_money'];
 
-        //向微信发送预订单
-        $wechat         = new \app\core\provider\WeChat();
+
 
         //生成 - 订单号
         $ordersn        = $this->p_order->getOrderSN();
 
 
-        //付款 - 单位转换
-        $pay_price      = floatval($info['pay_price'] * 100);
-        $body           = "点餐订单, 总价:{$pay_price},红包抵扣:{$offset_money}";
-        $result         = $wechat->payment($ordersn, $openid, $body, $pay_price);
 
         //$deskid         = 10;   //$desk_sn;
 
@@ -558,7 +553,7 @@ class Buy
         //本地 - 订单信息
         $orderinfo      = array(
 
-            'order_sn'           => $info['order_sn'],                    //是否老订单
+            'order_sn'          => $ordersn,                           //订单号
             'shop_id'           => $shopid,                             //商户id
             'user_id'           => $userid,                             //顾客id
 
