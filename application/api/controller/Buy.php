@@ -537,6 +537,8 @@ class Buy
             if($info['coupon_price'] != $coupon_money){
                 return jsonData(0, '优惠金额不对',$coupon_money);
             }
+
+
         }
 
         //红包余额
