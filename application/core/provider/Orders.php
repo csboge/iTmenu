@@ -236,8 +236,6 @@ class Orders
             'desk_sn' => $desk_sn,                            //桌位编号
             'user_count' => $info['user_count'],                 //就餐人数
 
-            'status' => 0,
-
             'is_first' => $info['is_first'],                   //首次消费      0 等于首次消费
             'first_money' => $info['first_money'],                //首次立减金额
 
@@ -271,8 +269,9 @@ class Orders
 
 
             'pay_way' => $info['pay_way'],                    //支付方式
-            'pay_time' => 0,                                   //支付完成时间
+            'pay_time' => $info['pay_time'],                  //支付完成时间
 
+            'status' => $info['status'],
             'created' => time(),
             'updated' => time()
         );

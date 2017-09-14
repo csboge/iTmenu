@@ -177,13 +177,17 @@ class BotPrinter
     function printOrderInfo($order_info, $post_data){
         header("Content-type: text/html; charset=utf-8");
         //$printer    = new \app\core\provider\BotPrinter();
-        $sn         = '217502439';
 
         $arr = json_decode($order_info['goods_list'], true);
+
 
         $youhui = $order_info['coupon_price']+$order_info['first_money']+$order_info['offset_money'];
 
         $shop = $this->m_shop->getShop($order_info['shop_id']);
+
+        $sn         = $shop['printer'];
+
+
         foreach ($arr as &$value){
             $value['extras'] = $value['price']*$value['num'];
         }

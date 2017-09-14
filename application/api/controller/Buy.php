@@ -31,7 +31,7 @@ class Buy
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['notify'],
+            'public' => ['*'],
             'private'=> []
         ]);
 
@@ -272,9 +272,9 @@ class Buy
             'remark'            => $info['remark'],                     //口味备注
 
             'pay_way'           => $info['pay_way'],                    //支付方式
-            'pay_time'          => 0,                                   //支付完成时间
 
-
+            'status'            => 0,
+            'pay_time'          => 0,
             'created'           => time(),
             'updated'           => time()
         );
@@ -447,19 +447,21 @@ class Buy
      */
     public function submitOffs(){
         //用户信息
-        $session        = $this->p_auth->session();
-        $openid         = $session['openid'];
-        $userid         = $session['userid'];
+//        $session        = $this->p_auth->session();
+//        $openid         = $session['openid'];
+        $userid         = input('param.user_id/d');//$session['userid'];
         $shopid         = input('param.shop_id/d');
 
         //接收 - 订单数据包
         $order_info     = input('param.order/s');
+
         if (!$this->is_json($order_info)){
             return jsonData(0, 'order 数据不合法');
         }
 
         //转换数组
         $info = json_decode($order_info, true);
+
 
         $info['is_first']       = !isset($info['is_first']) ? 1 : intval($info['is_first']);
         $info['first_money']    = !isset($info['first_money']) ? 0 : intval($info['first_money']);//5;
@@ -503,10 +505,8 @@ class Buy
 
 
         //生成 - 订单号
-        $ordersn        = 11111111111111;//$this->p_order->getOrderSN();
+        $ordersn        = $this->p_order->getOrderSN();
 
-
-        //$deskid         = 10;   //$desk_sn;
 
         /**
          * 订单信息验证
@@ -585,12 +585,13 @@ class Buy
             'remark'            => $info['remark'],                     //口味备注
 
             'pay_way'           => $info['pay_way'],                    //支付方式
-            'pay_time'          => 0,                                   //支付完成时间
 
-
+            'status'            => 1,
+            'pay_time'          => time(),
             'created'           => time(),
             'updated'           => time()
         );
+
 
         $bot_arr = [
             'b1' => '217502992',
@@ -611,6 +612,7 @@ class Buy
             'time_end' => ''
         ];
 
+
         //新增订单
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
@@ -620,24 +622,24 @@ class Buy
             $printer    = new \app\core\provider\BotPrinter();
 
 //                    $printer->getWords('217502439');
-            $printer->printOrderInfo($order_info,$post_data);
+            $printer->printOrderInfo($result['order'],$post_data);
 
-            //5台同时打
-//            $printer->getWordsChip();
-
-            //启动打印机(队列版)
-            if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
-
-            }
-
-            //2号  -- 殷宏华
-            if ($openid == 'opkjx0L3kMBBrU413UHLyTyE_4is') {
-                //$printer->getWords('217502989');
-
-
-            }else{
-                //$printer->printOrderInfo($order_info, $post_data);
-            }
+//            //5台同时打
+////            $printer->getWordsChip();
+//
+//            //启动打印机(队列版)
+//            if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
+//
+//            }
+//
+//            //2号  -- 殷宏华
+//            if ($openid == 'opkjx0L3kMBBrU413UHLyTyE_4is') {
+//                //$printer->getWords('217502989');
+//
+//
+//            }else{
+//                //$printer->printOrderInfo($order_info, $post_data);
+//            }
 
             //成功返回
             if($printer){

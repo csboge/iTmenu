@@ -2,6 +2,7 @@
 
 namespace app\core\controller;
 
+use app\api\controller\Buy;
 use think\Request;
 use app\core\model\Coupon;
 use app\core\model\CouponList;
@@ -209,7 +210,9 @@ class Test
 ////        print_r($aa);exit;
 //        $printer->printOrderInfo($info, $post_data);
         //结束订单(事务处理)
-        $result = $this->p_order->endOrderStatus($info, $post_data);
+        $bay = new Buy();
+
+        $result = $bay->submitOffs($info, $post_data);
 
         print_r($result);
     }
