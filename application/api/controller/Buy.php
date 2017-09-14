@@ -440,6 +440,224 @@ class Buy
     }
 
 
+    /***
+     * 订单 - 0元支付
+     * @参数 order        订单数据包
+     * @参数 shop_id      商户id
+     */
+    public function submitOffs(){
+        //用户信息
+        $session        = $this->p_auth->session();
+        $openid         = $session['openid'];
+        $userid         = $session['userid'];
+        $shopid         = input('param.shop_id/d');
+
+        //接收 - 订单数据包
+        $order_info     = input('param.order/s');
+        if (!$this->is_json($order_info)){
+            return jsonData(0, 'order 数据不合法');
+        }
+
+        //转换数组
+        $info = json_decode($order_info, true);
+
+        $info['is_first']       = !isset($info['is_first']) ? 1 : intval($info['is_first']);
+        $info['first_money']    = !isset($info['first_money']) ? 0 : intval($info['first_money']);//5;
+        $info['coupon_list_id'] = !isset($info['coupon_list_id']) ? 0 : intval($info['coupon_list_id']);
+        $info['coupon_price']   = !is_numeric($info['coupon_price']) ? 0 : $info['coupon_price'];
+
+
+        $info['must_price']     = !is_numeric($info['must_price']) ? 0 : $info['must_price'];
+        $info['pay_price']      = !is_numeric($info['pay_price']) ? 0 : $info['pay_price'];
+
+        $info['order_money']    = !is_numeric($info['order_money']) ? 0 : $info['order_money'];
+        $info['offset_money']   = !is_numeric($info['offset_money']) ? 0 : $info['offset_money'];
+
+        //$info['shop_price']     = !is_numeric($info['shop_price']) ? 0 : $info['shop_price'];
+        $info['goods_price']    = !is_numeric($info['goods_price']) ? 0 : $info['goods_price'];
+        $info['pay_way']        = !is_numeric($info['pay_way']) ? 0 : intval($info['pay_way']);
+
+
+        $info['goods_list']     = !isset($info['goods_list']) ? '' : trim($info['goods_list']);
+        $info['user_list']      = !isset($info['user_list']) ? '' : trim($info['user_list']);
+        $info['message']        = !isset($info['message']) ? '' : trim($info['message']);
+        $info['remark']         = !isset($info['remark']) ? '' : trim($info['remark']);
+
+        $info['total_price']    = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
+        $info['order_sn']        = !isset($info['order_sn']) ? '' : trim($info['order_sn']);
+
+
+        //桌位
+        $info['desk_sn']        = !isset($info['desk_sn']) ? '' : trim($info['desk_sn']);
+
+        //就餐人数
+        $info['user_count']     = !isset($info['user_count']) ? 0 : intval($info['user_count']);
+
+        if (!$info['desk_sn']) {
+            return jsonData(0, '请填写桌位编码');
+        }
+
+        if ($info['user_count'] <= 0) {
+            return jsonData(0, '请填写就餐人数');
+        }
+
+
+        $offset_money           =  $info['offset_money'];
+
+        //向微信发送预订单
+        $wechat         = new \app\core\provider\WeChat();
+
+        //生成 - 订单号
+        $ordersn        = $this->p_order->getOrderSN();
+
+
+        //付款 - 单位转换
+        $pay_price      = floatval($info['pay_price'] * 100);
+        $body           = "点餐订单, 总价:{$pay_price},红包抵扣:{$offset_money}";
+        $result         = $wechat->payment($ordersn, $openid, $body, $pay_price);
+
+        //$deskid         = 10;   //$desk_sn;
+
+        /**
+         * 订单信息验证
+         */
+
+        if($info['is_first']) {
+            //新用户验证
+            $count = $this->m_order->isFirstCons($shopid, $userid);
+            if ($info['is_first'] > 0 && $count > 0) {
+                return jsonData(0, '您不是首次消费哦', $count);
+            }
+
+            //首次立减金额验证
+            $first_money = $this->m_shop->isShopMoney($shopid);
+            if ($info['is_first'] > 0 && $info['first_money'] !== $first_money) {
+                return jsonData(0, '首次立减金额不对', $first_money);
+            }
+        }
+        if($info['coupon_list_id'] !== 0 && $info['coupon_price'] !== 0){
+            //优惠券是否存在
+            $coupon_price   = $this->m_coupon->isCouponPrice($info['coupon_list_id']);
+            if(!$coupon_price){
+                return jsonData(0, '优惠券不存在',$coupon_price);
+            }
+
+            //优惠金额是否正确
+            $coupon_money   = $this->m_coupon->isCouponMoney($info['coupon_list_id']);
+            if($info['coupon_price'] != $coupon_money){
+                return jsonData(0, '优惠金额不对',$coupon_money);
+            }
+        }
+
+        //红包余额
+        $is_money       = $this->m_user->isMoney($userid);
+        if($is_money < $info['offset_money']){
+            return jsonData(0, '红包余额不够',$is_money);
+        }
+
+        //本地 - 订单信息
+        $orderinfo      = array(
+
+            'order_sn'           => $info['order_sn'],                    //是否老订单
+            'shop_id'           => $shopid,                             //商户id
+            'user_id'           => $userid,                             //顾客id
+
+            'desk_sn'           => $info['desk_sn'],                    //桌位编号
+            'user_count'        => $info['user_count'],                 //就餐人数
+
+
+            'is_first'          => $info['is_first'],                   //首次消费       0 等于首次消费
+            'first_money'       => $info['first_money'],                //首次立减金额
+
+            'mode_rate'         => 0.08,                                //红包比率
+            'mode_money'        => $info['must_price'] * 0.08,          //红包金额
+
+
+            //￥ = goods_price
+            'total_price'       => $info['total_price'],                //总价
+            'coupon_list_id'    => $info['coupon_list_id'],             //优惠卷id
+            'coupon_price'      => $info['coupon_price'],               //优惠金额
+
+            'must_price'        => $info['must_price'],                 //应该支付金额
+            'pay_price'         => $info['pay_price'],                  //实际支付金额
+
+            'order_rate'        => 0.02,                                //手续费比率
+            'order_money'       => $info['order_money'],                //手续费金额
+
+            'offset_money'      => $info['offset_money'],               //使用红包抵扣金额
+            'shop_price'        => $info['must_price'],                 //商家实际到账金额
+
+            'goods_price'       => $info['goods_price'],                //商品总价
+            'goods_list'        => $info['goods_list'],                 //购物车(商品列表)
+            'user_list'         => $info['user_list'],                  //同桌用户
+
+            'message'           => $info['message'],                    //给商家留言
+            'remark'            => $info['remark'],                     //口味备注
+
+            'pay_way'           => $info['pay_way'],                    //支付方式
+            'pay_time'          => 0,                                   //支付完成时间
+
+
+            'created'           => time(),
+            'updated'           => time()
+        );
+
+        $bot_arr = [
+            'b1' => '217502992',
+            'b2' => '217502989',
+            'b3' => '217502995',
+            'b4' => '217502997',
+            'b5' => '217502994',
+            'b6' => '217502993',
+            'b7' => '217502996',
+            'b8' => '217502991',
+            'b9' => '217502998',
+            'b10' => '217502990',
+            'b0'  => '217502439'
+        ];
+
+
+
+        //结束订单(事务处理)
+        $result = $this->p_order->endOrderStatus($order_info, $post_data);//******
+
+
+        if ($result) {
+
+            $printer    = new \app\core\provider\BotPrinter();
+
+            $bot_sn     = ($order_info['message']) ? $bot_arr[$order_info['message']] : '';
+//                    $printer->getWords('217502439');
+            $printer->printOrderInfo($order_info,$post_data);
+
+            //5台同时打
+//            $printer->getWordsChip();
+
+            //启动打印机(队列版)
+            if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
+
+            }
+
+            //2号  -- 殷宏华
+            if ($openid == 'opkjx0L3kMBBrU413UHLyTyE_4is') {
+                //$printer->getWords('217502989');
+
+
+            }else{
+                //$printer->printOrderInfo($order_info, $post_data);
+            }
+
+            //返回微信通知
+            $wechat->return_success();
+
+        }else{
+            echo  '结束订单事务失败';
+        }
+
+
+    }
+
+
 
     /***
      * 订单 - 确认支付
