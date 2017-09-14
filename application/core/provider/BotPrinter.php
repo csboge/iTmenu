@@ -216,6 +216,7 @@ class BotPrinter
             }
         }
 		$orderInfo .= '--------------------------------<BR>';
+		$orderInfo .= '桌位：'.$order_info['desk_sn'].'桌<BR>';
 		$orderInfo .= '实际：'.$order_info['goods_price'].'元<BR>';
 		$orderInfo .= '优惠：'.$youhui.'元<BR>';
 		$orderInfo .= '合计：'.$order_info['pay_price'].'元<BR>';
