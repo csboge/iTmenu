@@ -123,8 +123,8 @@ class Buy
     {
         //用户信息
         $session        = $this->p_auth->session();
-        $openid         = $session['openid']; 
-        $userid         = $session['userid']; 
+        $openid         = $session['openid'];
+        $userid         = $session['userid'];
         $shopid         = input('param.shop_id/d');
 
         //接收 - 订单数据包
@@ -208,9 +208,11 @@ class Buy
 
             //首次立减金额验证
             $first_money = $this->m_shop->isShopMoney($shopid);
+
             if ($info['is_first'] > 0 && $info['first_money'] !== $first_money) {
                 return jsonData(0, '首次立减金额不对', $first_money);
             }
+
         }
         if($info['coupon_list_id'] !== 0 && $info['coupon_price'] !== 0){
             //优惠券是否存在
@@ -224,13 +226,17 @@ class Buy
             if($info['coupon_price'] != $coupon_money){
                 return jsonData(0, '优惠金额不对',$coupon_money);
             }
+
         }
 
         //红包余额
         $is_money       = $this->m_user->isMoney($userid);
+
+
         if($is_money < $info['offset_money']){
             return jsonData(0, '红包余额不够',$is_money);
         }
+
 
         //本地 - 订单信息
         $orderinfo      = array(
@@ -279,7 +285,9 @@ class Buy
             'updated'           => time()
         );
 
+
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
+
 
         if (!$result['order']) {
             return jsonData(0, '订单 - 创建失败',$result);
@@ -448,7 +456,6 @@ class Buy
     public function submitOffs(){
         //用户信息
         $session        = $this->p_auth->session();
-//        $openid         = $session['openid'];
         $userid         = $session['userid'];
         $shopid         = input('param.shop_id/d');
 
@@ -647,6 +654,8 @@ class Buy
             //成功返回
             if($printer){
                 return jsonData(1, 'OK',$result['order']);
+            }else{
+                return jsonData(0, '结束订单事务失败',$result['order']);
             }
 
 
