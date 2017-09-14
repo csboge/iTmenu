@@ -227,7 +227,7 @@ class BotPrinter
 		$orderInfo .= '地址：'.$shop['adress'].'<BR>';
 		$orderInfo .= '联系电话：'.$shop['mobile'].'<BR>';
 		$orderInfo .= '座机电话：'.$shop['tel'].'<BR>';
-		$orderInfo .= '订餐时间：'.date('Y-m-d H:i:s', time()).'<BR>';
+		$orderInfo .= '下单时间：'.date('Y-m-d H:i:s', time()).'<BR>';
 		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
 
         $re = $this->wp_print($sn, $orderInfo, 1);
