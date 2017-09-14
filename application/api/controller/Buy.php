@@ -481,7 +481,7 @@ class Buy
                     "id" => 1,
                     "name" => "餐具",
                     "price" => 2,
-                    "img_url" => "",
+                    "img_url" => "http://img1.my-shop.cc/picture/20170914/a8e584365bbdc096a41f00f412b4005e.png",
                     "cate_id" => 2,
                     "num" => 0
                 ],
