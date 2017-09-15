@@ -375,6 +375,7 @@ class Buy
 
             //查询订单
             $order_info            = $this->m_order->getOrderForSN($ordersn);
+            my_log('orders',$ordersn,'api/buy/notify',0,'查询订单');
             if(!$order_info) { return 0; }
 
 
@@ -382,7 +383,7 @@ class Buy
             $order_pay_price        = floatval($order_info['pay_price'] * 100); 
             $is_pay_price           = ($order_pay_price == $pay_price) ? true : false;
 
-
+            my_log('orders',$order_info['status'],'api/buy/notify',0,'订单状态');
             //订单状态
             if ($order_info['status'] == 1) {
                 $wechat->return_success();
