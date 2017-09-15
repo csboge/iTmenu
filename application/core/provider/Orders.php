@@ -167,7 +167,7 @@ class Orders
 
 
 
-            if (!$ret && !$user_money && !$user_coupon) {
+            if (!$ret || !$user_money || !$user_coupon) {
 //
                 // 回滚事务
                 Db::rollback();
