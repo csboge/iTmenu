@@ -18,6 +18,7 @@ class Orders
     private $m_couponlist;
     private $m_shop;
     private $m_coupon;
+    private $request;
 
     public function __construct()
     {
@@ -35,6 +36,10 @@ class Orders
 
         //商户模型
         $this->m_shop = new \app\core\model\Shop();
+
+        //获取当前控制器名
+        $this->request = \think\Request::instance();
+
     }
 
 
@@ -65,6 +70,8 @@ class Orders
             return false;
         }
 
+        $action_name= $this->request->action();
+
 
         $pay_time = time();
         $data = ['status' => 1, 'pay_time' => $pay_time, 'updated' => $pay_time, 'transaction_id' => $post_data['transaction_id'], 'time_end' => $post_data['time_end']];
@@ -81,7 +88,7 @@ class Orders
 
             if ($order_info['is_first'] > 0 && $count > 0)
             {
-                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-$type,'新用户验证不通过');
+                my_log('orders',$order_info['order_sn'],$action_name,-$type,'新用户验证不通过');
                 $this->m_order->error_log($order_info['order_sn']);
 
                 return false;
@@ -91,7 +98,7 @@ class Orders
             $first_money = $this->m_shop->isShopMoney($order_info['shop_id']);
             if ($order_info['is_first'] > 0 && $order_info['first_money'] !== $first_money)
             {
-                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-$type,'首次立减金额不通过');
+                my_log('orders',$order_info['order_sn'],$action_name,-$type,'首次立减金额不通过');
 
                 $this->m_order->error_log($order_info['order_sn']);
 
@@ -103,7 +110,7 @@ class Orders
                 $coupon_price = $this->m_coupon->isCouponPrice($order_info['coupon_list_id']);
                 if (!$coupon_price)
                 {
-                    my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-$type,'优惠券不存在');
+                    my_log('orders',$order_info['order_sn'],$action_name,-$type,'优惠券不存在');
 
                     $this->m_order->error_log($order_info['order_sn']);
 
@@ -114,7 +121,7 @@ class Orders
                 $coupon_money = $this->m_coupon->isCouponMoney($order_info['coupon_list_id']);
                 if ($order_info['coupon_price'] != $coupon_money)
                 {
-                    my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-$type,'优惠金额不对');
+                    my_log('orders',$order_info['order_sn'],$action_name,-$type,'优惠金额不对');
 
                     $this->m_order->error_log($order_info['order_sn']);
 
@@ -126,7 +133,7 @@ class Orders
             $is_money = $this->m_user->isMoney($order_info['user_id']);
             if ($is_money < $order_info['offset_money'])
             {
-                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-$type,'红包余额不对');
+                my_log('orders',$order_info['order_sn'],$action_name,-$type,'红包余额不对');
 
                 $this->m_order->error_log($order_info['order_sn']);
 
@@ -134,6 +141,7 @@ class Orders
             }
 
         }
+
         Db::startTrans();
 
         try {
@@ -145,7 +153,7 @@ class Orders
                 //修改用户钱包余额
                 $user_money = $this->m_user->userMoney($order_info['user_id'], $order_info['offset_money']);
 
-                my_log('orders',$user_money,'core/provider/orders/endOrderStatus',0,'用户钱包余额');
+                my_log('orders',$user_money,$action_name,0,'用户钱包余额');
             } else {
                 $user_money = 'a';
             }
@@ -154,12 +162,12 @@ class Orders
                 //修改用户优惠券使用记录
                 $user_coupon = $this->m_couponlist->CouponStatus($order_info['user_id'], $order_info['coupon_list_id']);
 
-                my_log('orders',$user_coupon,'core/provider/orders/endOrderStatus',0,'用户优惠券使用记录');
+                my_log('orders',$user_coupon,$action_name,0,'用户优惠券使用记录');
             } else {
                 $user_coupon = 'a';
             }
 
-            my_log('orders',$ret,'core/provider/orders/endOrderStatus',0,'ret:'.$ret.';user_money:'.$ret.';user_coupon:'.$ret);
+            my_log('orders',$ret,$action_name,0,'ret:'.$ret.';user_money:'.$ret.';user_coupon:'.$ret);
 
             if ($ret && $user_money !== 0 && $user_coupon !== 0) {
 
@@ -173,7 +181,7 @@ class Orders
                 Db::rollback();
                 //订单错误
 
-                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-1,'执行出错~~事务回滚1');
+                my_log('orders',$order_info['order_sn'],$action_name,-1,'执行出错~~事务回滚1');
 
                 $this->m_order->error_log($order_info['order_sn']);
 
@@ -184,7 +192,7 @@ class Orders
             Db::rollback();
             //订单错误
 
-            my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-1,'执行出错~~事务回滚2');
+            my_log('orders',$order_info['order_sn'],$action_name,-1,'执行出错~~事务回滚2');
 
             $this->m_order->error_log($order_info['order_sn']);
 

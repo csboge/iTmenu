@@ -13,6 +13,7 @@ class Buy
     use \app\core\traits\ProviderFactory;
 
     private     $p_auth;
+    private     $request;
 
     /***
      * 注入依赖
@@ -56,6 +57,9 @@ class Buy
 
         //用户优惠券模型
         $this->m_couponlist = $m_couponlist;
+
+        //获取当前控制器名
+        $this->request = \think\Request::instance();
 
     }
 
@@ -127,14 +131,18 @@ class Buy
         $userid         = $session['userid'];
         $shopid         = input('param.shop_id/d');
 
-        //生成 - 订单号
-        $ordersn        = $this->p_order->getOrderSN();
+
 
         //接收 - 订单数据包
         $order_info     = input('param.order/s');
         if (!$this->is_json($order_info)){
             return jsonData(0, 'order 数据不合法');
         }
+
+        $action_name= $this->request->action();
+
+        //生成 - 订单号
+        $ordersn        = $this->p_order->getOrderSN();
 
         //转换数组
         $info = json_decode($order_info, true);
@@ -237,7 +245,7 @@ class Buy
             return jsonData(0, '红包余额不够',$is_money);
         }
 
-
+        my_log('orders',$info['order_sn'],$action_name,0,'生成或接收的订单号');
         //本地 - 订单信息
         $orderinfo      = array(
 
@@ -288,7 +296,7 @@ class Buy
 
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
-
+        my_log('orders',$result['order']['order_sn'],$action_name,0,'新增后的订单号');
         if (!$result['order']) {
             return jsonData(0, '订单 - 创建失败',$result);
         }
@@ -357,8 +365,12 @@ class Buy
         $redis->set('notify_post_data', $xmlstring);
 
 
-        $post_data = $this->xmlToArray($xmlstring);  
-  
+        $post_data = $this->xmlToArray($xmlstring);
+
+        $action_name= $this->request->action();
+
+        my_log('orders',$post_data['out_trade_no'],$action_name,0,'微信回调过来的订单号');
+
         //实际支付金额
         $pay_price      = $post_data['total_fee'];  
         $openid         = $post_data['openid'];
@@ -375,7 +387,6 @@ class Buy
 
             //查询订单
             $order_info            = $this->m_order->getOrderForSN($ordersn);
-            my_log('orders',$ordersn,'api/buy/notify',0,'查询订单');
             if(!$order_info) { return 0; }
 
 
@@ -383,7 +394,6 @@ class Buy
             $order_pay_price        = floatval($order_info['pay_price'] * 100); 
             $is_pay_price           = ($order_pay_price == $pay_price) ? true : false;
 
-            my_log('orders',$order_info['status'],'api/buy/notify',0,'订单状态');
             //订单状态
             if ($order_info['status'] == 1) {
                 $wechat->return_success();
