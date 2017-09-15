@@ -170,19 +170,18 @@ class Orders
 
             my_log('orders',$ret,$action_name,0,'ret:'.$ret.';user_money:'.$ret.';user_coupon:'.$ret);
 
-//            if ($ret == 0 || $user_money == 0 || $user_coupon == 0) {
+            if ($ret == 0 || $user_money == 0 || $user_coupon == 0) {
 //
 //                // 回滚事务
-//                Db::rollback();
-//                //订单错误
-//
-//                my_log('orders',$order_info['order_sn'],$action_name,-1,'执行出错~~事务回滚1');
-//
-//                $this->m_order->error_log($order_info['order_sn']);
-//
-//                return false;
-//
-//            } else {
+                Db::rollback();
+                //订单错误
+
+                my_log('orders',$order_info['order_sn'],$action_name,-1,'执行出错~~事务回滚1');
+
+                $this->m_order->error_log($order_info['order_sn']);
+
+                return false;
+            }
 
                 // 提交事务
                 Db::commit();
@@ -190,7 +189,6 @@ class Orders
                 my_log('orders',$ret,$action_name,0,'事务提交');
 
                 return $ret;
-//            }
         } catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
