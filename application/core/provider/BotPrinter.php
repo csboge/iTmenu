@@ -221,14 +221,14 @@ class BotPrinter
         }
 		$orderInfo .= '--------------------------------<BR>';
 		$orderInfo .= '桌位：'.$order_info['desk_sn'].'号桌<BR>';
-		$orderInfo .= '实际：'.$order_info['goods_price'].'元<BR>';
-		$orderInfo .= '优惠：'.$youhui.'元<BR>';
-		$orderInfo .= '合计：'.$order_info['pay_price'].'元<BR>';
-		$orderInfo .= '地址：'.$shop['adress'].'<BR>';
-		$orderInfo .= '联系电话：'.$shop['mobile'].'<BR>';
-		$orderInfo .= '座机电话：'.$shop['tel'].'<BR>';
-		$orderInfo .= '下单时间：'.date('Y-m-d H:i:s', time()).'<BR>';
-		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
+		$orderInfo .= '支付：'.$order_info['pay_price'].'元<BR>';
+		$orderInfo .= '红包：'.$order_info['mode_money'].'元<BR>';
+
+//		$orderInfo .= '地址：'.$shop['adress'].'<BR>';
+//		$orderInfo .= '联系电话：'.$shop['mobile'].'<BR>';
+//		$orderInfo .= '座机电话：'.$shop['tel'].'<BR>';
+//		$orderInfo .= '下单时间：'.date('Y-m-d H:i:s', time()).'<BR>';
+//		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
 
         $re = $this->wp_print($sn, $orderInfo, 1);
         //echo $re;
