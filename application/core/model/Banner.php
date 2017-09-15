@@ -10,7 +10,7 @@ use think\db;
  *
  *
  */
-class RedCashLog extends Model
+class Banner extends Model
 {
 
 
@@ -18,19 +18,20 @@ class RedCashLog extends Model
      * 查询抢红包列表
      *
      * @param   string   $shop     商户id
-     * @param   string   $bagid    红包id
      *
      * @return   string
      *
      */
-    public function isRedList($shop,$bagid){
+    public function isBanner($shop){
 
         $map = [
-            'red_cash_id' => $bagid,
-            'shop_id' => $shop
+            'cat_id' => 1,
+            'shop_id' => $shop,
+            'hd_status' => 1,
+            'status' => 1
         ];
 
-        $row = $this->where($map)->order('id desc')->field('user_id,audio,menoy,created')->select();
+        $row = $this->where($map)->field('image')->select();
         $data = [];
         foreach ($row as $volue){
             $data[] = $volue->toArray();

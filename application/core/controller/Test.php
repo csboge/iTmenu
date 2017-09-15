@@ -3,6 +3,7 @@
 namespace app\core\controller;
 
 use app\api\controller\Buy;
+use app\core\model\RedCashLog;
 use think\Request;
 use app\core\model\Coupon;
 use app\core\model\CouponList;
@@ -23,13 +24,14 @@ class Test
      */
     public function __construct(
         Request $request,
-        \app\core\provider\Auth $p_auth,
-        \app\core\provider\Orders $p_order,
-        \app\core\model\Orders $m_order,
-        \app\core\model\Shop $m_shop,
-        \app\core\model\Coupon $m_coupon,
-        \app\core\model\User $m_user,
-        \app\core\model\CouponList $m_couponlist
+        \app\core\provider\Auth         $p_auth,
+        \app\core\provider\Orders       $p_order,
+        \app\core\model\Orders          $m_order,
+        \app\core\model\Shop            $m_shop,
+        \app\core\model\Coupon          $m_coupon,
+        \app\core\model\User            $m_user,
+        \app\core\model\CouponList      $m_couponlist,
+        \app\core\model\RedCashLog      $m_redcashlog
     )
     {
         //验证授权合法
@@ -59,6 +61,9 @@ class Test
 
         //用户优惠券模型
         $this->m_couponlist = $m_couponlist;
+
+        //抢红包模型
+        $this->m_redcashlog     = $m_redcashlog;
 
     }
 
@@ -219,7 +224,7 @@ class Test
 
     public function ast()
     {
-        $orders = new Orders();
+        $orders = new RedCashLog();
         $map = input('param.');
         $rew = $orders->error_log($map['orders'], $map['status']);
         print_r($rew);
@@ -227,9 +232,17 @@ class Test
 
     public function ada()
     {
+        $res = input('param.');
 
-        $data = input('param.');
-        $rew = my_log($data['name'], $data['id'], $data['url'], $data['status'], $data['explain']);
-        print_r($rew);
+
+        $data = $this->m_redcashlog->isRedList($res['shop'],$res['bagid']);
+        foreach ($data as &$itme){
+            $vcr = $this->m_user->getUserForId($itme['user_id']);
+            $itme['nickname'] = $vcr['nickname'];
+            $itme['avatar'] = $vcr['avatar'];
+            $itme['sex'] = $vcr['sex'];
+        }
+
+        print_r($data);
     }
 }

@@ -45,6 +45,21 @@ class User extends Model
         return $row;
     }
 
+    /**
+     * 查询用户（unionid）
+     *
+     * @param   string   $user_id    用户唯一标识
+     *
+     * @return  result
+     *
+     */
+    public function getUserForId($user_id)
+    {
+        $row = $this->where('id', trim($user_id))->field('nickname,avatar,sex')->find()->toArray();
+
+        return $row;
+    }
+
 
      /**
      * 查询用户（openid）

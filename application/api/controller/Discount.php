@@ -23,35 +23,43 @@ class Discount
         \app\core\model\UserAccount     $m_acc_log,
         \app\core\model\Orders          $m_order,
         \app\core\provider\Orders       $p_order,
-        \app\core\model\User            $m_user
+        \app\core\model\User            $m_user,
+        \app\core\provider\RedCashLog   $p_redcashlog,
+        \app\core\model\Banner          $m_banner
     )
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => [],
+            'public' => ['*'],
             'private'=> []
         ]);
 
         //授权服务
-        $this->p_auth   = $p_auth;
+        $this->p_auth           = $p_auth;
 
         //红包模型
-        $this->m_red    = $m_red;
+        $this->m_red            = $m_red;
 
         //红包模型(抢夺日志)
-        $this->m_red_log    = $m_red_log;
+        $this->m_red_log        = $m_red_log;
 
         //财务日志模型(交易日志)
-        $this->m_acc_log    = $m_acc_log;
+        $this->m_acc_log        = $m_acc_log;
 
         //订单模型
-        $this->m_order    = $m_order;
+        $this->m_order          = $m_order;
 
         //订单服务
-        $this->p_order    = $p_order;
+        $this->p_order          = $p_order;
 
         //用户模型
-        $this->m_user     = $m_user;
+        $this->m_user           = $m_user;
+
+        //抢红包服务
+        $this->p_redcashlog     = $p_redcashlog;
+
+        //抢红包模型
+        $this->m_banner         = $m_banner;
     }
 
 
@@ -91,7 +99,7 @@ class Discount
 
         //查询订单
         $order_info            = $this->m_order->getOrderForSN($ordersn);
-        if(!$order_info) { 
+        if(!$order_info) {
             return jsonData(-4, '该订单 - 已不存在。' . $this->m_order->getLastSql());
         }
 
@@ -103,6 +111,7 @@ class Discount
             'menoy'     => $order_info['mode_money'],
             'surplus'   => $order_info['mode_money'],
             'user_id'   => $session['userid'],
+            'words'     => $words,
             'num'       => $num,
             'created'   => time(),
             'updated'   => time(),
@@ -257,18 +266,24 @@ class Discount
                 'money' => $acc_money,
                 'updated' => time()
             ];
+            
             $ret4  = $this->m_user->save($data, ['id' => $session['userid']]);
 
 
 
             // 提交事务
             if ($ret1 && $ret2 && $ret3 && $ret4) {
-                Db::commit(); 
+                Db::commit();
 
+                //获得商店id
+                $shop           = $this->p_auth->getShopId();
+
+                //获得抢红包记录
+                $list_red       = $this->p_redcashlog->getRedList($shop,$bagid);
 
                 
                 //抢到红包金额     已抢数量
-                return jsonData(1, 'ok', ['money'=>$my_money, 'speed'=>$get_num]);
+                return jsonData(1, 'ok', $list_red);
             }
             
 
@@ -302,7 +317,23 @@ class Discount
 
      
         return jsonData(1, 'ok', ['imgurl'=>'']);
-    }   
+    }
+
+    /***
+     * 红包 - 领取人信息
+     */
+    public function redList(){
+        //红包id
+        $bagid      = input('param.bagid/d');
+
+        //商店id
+        $shop       = $this->p_auth->getShopId();
+
+        //抢红包记录
+        $list_red   = $this->p_redcashlog->getRedList($shop,$bagid);
+
+        return jsonData(1, 'ok', $list_red);
+    }
 
 
     /***
@@ -310,36 +341,35 @@ class Discount
      */
     function robInfo()
     {
-
         //红包id
         $bagid      = input('param.bagid/d');
 
-        //用户信息
-        $session    = $this->p_auth->session();
+        //商店id
+        $shop       = $this->p_auth->getShopId();
+
+        //红包信息
+        $redlist        = $this->m_red->getRedList($bagid);
+
+        //抢红包记录
+        $list_red   = $this->p_redcashlog->getRedList($shop,$bagid);
+
+        //轮播图
+        $banner     = $this->m_banner->isBanner($shop);
+        foreach ($banner as &$base){
+            $base['image'] = ImgUrl($base['image']);
+        }
 
         //一条红包信息
-        $baginfo    = ['bagid'=>1, 'count'=>10, 'speed'=>6, 'words'=>'语音口令', 'total_money'=>5, 
-            'user_list'=>[
-                [
-                    'nickname'  => '',
-                    'avatar'    => '',
-                    'sex'       => 0,
-                    'money'     => '',      //抢到金额
-                    'time'      => time(),
-                    'audio'     => ''       //音频文件
-                ]
-            ],
-            'banners' => [
-                [
-                    'url' => ''
-                ],
-                [
-                    'url' => ''
-                ]
-            ]
+        $baginfo    = [
+            'bagid'=>$bagid,
+            'menoy'=> $redlist['menoy'],
+            'surplus'=> $redlist['surplus'],
+            'num'=> $redlist['num'],
+            'get_num'=> $redlist['get_num'],
+            'words'=> $redlist['words'],
+            'user_list'=>$list_red,
+            'banners' => $banner
         ];
-
-
 
         return jsonData(1, 'ok', $baginfo);
     }

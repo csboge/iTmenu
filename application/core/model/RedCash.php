@@ -67,4 +67,19 @@ class RedCash extends Model
         return round($money + $ret, 2);
     }
 
+
+    /**
+     * 查询订单 - 是否已生成红包
+     *
+     * @param   string   $bagid    红包id
+     *
+     * @return  result
+     *
+     */
+    public function getRedList($bagid){
+        $data = $this->where('id',$bagid)->field('menoy,surplus,num,get_num,words')->find()->toArray();
+
+        return $data;
+    }
+
 }
