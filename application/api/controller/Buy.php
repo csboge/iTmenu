@@ -252,8 +252,8 @@ class Buy
             'is_first'          => $info['is_first'],                   //首次消费       0 等于首次消费
             'first_money'       => $info['first_money'],                //首次立减金额
 
-            'mode_rate'         => 0.08,                                //红包比率
-            'mode_money'        => $info['must_price'] * 0.08,          //红包金额
+            'mode_rate'         => $info['mode_rate'],                  //红包比率
+            'mode_money'        => $info['mode_money'],                 //红包金额
 
             
             //￥ = goods_price
@@ -264,7 +264,7 @@ class Buy
             'must_price'        => $info['must_price'],                 //应该支付金额
             'pay_price'         => $info['pay_price'],                  //实际支付金额
             
-            'order_rate'        => 0.02,                                //手续费比率
+            'order_rate'        => $info['order_rate'],                 //手续费比率
             'order_money'       => $info['order_money'],                //手续费金额
 
             'offset_money'      => $info['offset_money'],               //使用红包抵扣金额
@@ -571,8 +571,8 @@ class Buy
             'is_first'          => $info['is_first'],                   //首次消费       0 等于首次消费
             'first_money'       => $info['first_money'],                //首次立减金额
 
-            'mode_rate'         => 0.08,                                //红包比率
-            'mode_money'        => $info['must_price'] * 0.08,          //红包金额
+            'mode_rate'         => $info['mode_rate'],                  //红包比率
+            'mode_money'        => $info['mode_money'],                 //红包金额
 
 
             //￥ = goods_price
@@ -583,7 +583,7 @@ class Buy
             'must_price'        => $info['must_price'],                 //应该支付金额
             'pay_price'         => $info['pay_price'],                  //实际支付金额
 
-            'order_rate'        => 0.02,                                //手续费比率
+            'order_rate'        => $info['order_rate'],                 //手续费比率
             'order_money'       => $info['order_money'],                //手续费金额
 
             'offset_money'      => $info['offset_money'],               //使用红包抵扣金额
