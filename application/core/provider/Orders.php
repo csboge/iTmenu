@@ -154,7 +154,6 @@ class Orders
                 //修改用户钱包余额
                 $user_money = $this->m_user->userMoney($order_info['user_id'], $order_info['offset_money']);
 
-                my_log('orders',$user_money,$action_name,0,'用户钱包余额');
             } else {
                 $user_money = 1;
             }
@@ -162,15 +161,20 @@ class Orders
                 //修改用户优惠券使用记录
                 $user_coupon = $this->m_couponlist->CouponStatus($order_info['user_id'], $order_info['coupon_list_id']);
 
-                my_log('orders',$user_coupon,$action_name,0,'用户优惠券使用记录');
             } else {
                 $user_coupon = 1;
             }
 
-            my_log('orders',$ret,$action_name,0,'ret:'.gettype($ret).';user_money:'.gettype($user_money).';user_coupon:'.gettype($user_coupon));
 
-            if ((int)$ret === 0 && (int)$user_money === 0 && (int)$user_coupon === 0) {
+
+            if ($ret && $user_money !== 0 && $user_coupon !== 0) {
 //
+                // 提交事务
+                Db::commit();
+
+
+                return $ret;
+            }else{
 //                // 回滚事务
                 Db::rollback();
                 //订单错误
@@ -182,12 +186,6 @@ class Orders
                 return false;
             }
 
-                // 提交事务
-                Db::commit();
-
-                my_log('orders',$ret,$action_name,0,'事务提交');
-
-                return $ret;
         } catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
