@@ -156,7 +156,7 @@ class Orders
 
                 my_log('orders',$user_money,$action_name,0,'用户钱包余额');
             } else {
-                $user_money = 'a';
+                $user_money = 1;
             }
 
             if ($order_info['coupon_list_id'] !== 0) {
@@ -165,12 +165,12 @@ class Orders
 
                 my_log('orders',$user_coupon,$action_name,0,'用户优惠券使用记录');
             } else {
-                $user_coupon = 'a';
+                $user_coupon = 1;
             }
 
             my_log('orders',$ret,$action_name,0,'ret:'.$ret.';user_money:'.$ret.';user_coupon:'.$ret);
 
-            if ($ret == 0 || $user_money == 0 || $user_coupon == 0) {
+            if ((int)$ret == 0 || (int)$user_money == 0 || (int)$user_coupon == 0) {
 //
 //                // 回滚事务
                 Db::rollback();
