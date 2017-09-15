@@ -54,6 +54,8 @@ class Banner
             ];
         }
         $data = Db::name('banner')->where($map)->field('id,image,url,cat_id')->select();
+        $res['shop'] = [];
+        $res['discount'] = [];
         if($data){
             if($where['cat'] == 1) {
                 foreach ($data as &$volue) {

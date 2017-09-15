@@ -98,7 +98,7 @@ class Test
             "total_price" => 77,
             "is_first" => 1,
             "first_money" => 1,
-            "coupon_list_id" => 1,
+            "coupon_list_id" => 0,
             "coupon_price" => 5,
             "must_price" => 0,
             "pay_price" => 19,
@@ -111,6 +111,8 @@ class Test
             "message" => '',
             "remark" => '',
             "pay_way" => 0,
+            "mode_money" => 10,
+            "order_rate" => 0.02,
             "goods_list" => '[
                 {
                     "id": 1,
@@ -176,8 +178,8 @@ class Test
             'is_first' => $order_info['is_first'],                   //首次消费       0 等于首次消费
             'first_money' => $order_info['first_money'],                //首次立减金额
 
-            'mode_rate' => 0.08,                                //红包比率
-            'mode_money' => $order_info['must_price'] * 0.08,          //红包金额
+            'mode_rate' => $order_info['must_price'],                                //红包比率
+            'mode_money' => $order_info['mode_money'],          //红包金额
 
 
             //￥ = goods_price
@@ -188,7 +190,7 @@ class Test
             'must_price' => $order_info['must_price'],                 //应该支付金额
             'pay_price' => $order_info['pay_price'],                  //实际支付金额
 
-            'order_rate' => 0.02,                                //手续费比率
+            'order_rate' => $order_info['order_rate'],                                //手续费比率
             'order_money' => $order_info['order_money'],                //手续费金额
 
             'offset_money' => $order_info['offset_money'],               //使用红包抵扣金额
@@ -215,9 +217,9 @@ class Test
 ////        print_r($aa);exit;
 //        $printer->printOrderInfo($info, $post_data);
         //结束订单(事务处理)
-        $bay = new Buy();
+        $bay = new \app\core\provider\Orders();
 
-        $result = $bay->submitOffs($info, $post_data);
+        $result = $bay->endOrderStatus($info, $post_data);
 
         print_r($result);
     }

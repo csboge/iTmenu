@@ -25,6 +25,8 @@ class Banner extends Controller
         ];
         $res = Db::name('banner')->where($map)->order('id desc')->select();
         $count = count_list('banner','shop_id',session('shop_id'));
+        $title = session('shop_title');
+        $this->assign('title',$title);
         $this->assign('count',$count);
         $this->assign('cat_id',$type['cat_id']);
         $this->assign('list',$res);

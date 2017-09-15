@@ -5,11 +5,11 @@
         <xblock>
             <div style="margin-left: 20px">
                 {if condition="$cat_id == 1"}
-                红包页
+                {$title}——红包页
                 {elseif condition="$cat_id == 2"}
-                店铺环境
+                {$title}——店铺环境
                 {else}
-                营销活动
+                {$title}——营销活动
                 {/if}
             </div>
         </xblock>
@@ -73,15 +73,11 @@
             <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
             {if condition="$vo.status == 1"}
             <td class="td-status">
-                <a href="" >
-                    <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status(0,{$vo.id})">已启用</span>
-                </a>
+                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status(0,{$vo.id})">已启用</span>
             </td>
             {else}
             <td class="td-status">
-                <a href="">
-                    <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status(1,{$vo.id})">已停用</span>
-                </a>
+                <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status(1,{$vo.id})">已停用</span>
             </td>
             {/if}
             <td class="td-manage">
