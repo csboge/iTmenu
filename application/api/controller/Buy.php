@@ -144,10 +144,12 @@ class Buy
         //生成 - 订单号
         $ordersn        = $this->p_order->getOrderSN();
 
-        return jsonData(0, 'order 数据不合法',$ordersn);
+        my_log('orders',$ordersn,$action_name,0,'生成 - 订单号');
 
         //转换数组
         $info = json_decode($order_info, true);
+
+        my_log('orders',$info['order_sn'],$action_name,0,'传过来的订单号');
 
         $info['is_first']       = !isset($info['is_first']) ? 1 : intval($info['is_first']);
         $info['first_money']    = !isset($info['first_money']) ? 0 : intval($info['first_money']);//5;
@@ -174,7 +176,7 @@ class Buy
         $info['total_price']    = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
         $info['order_sn']        = !isset($info['order_sn']) ? $ordersn : trim($info['order_sn']);
 
-
+        my_log('orders',$info['order_sn'],$action_name,0,'判断后的订单号');
         //桌位
         $info['desk_sn']        = !isset($info['desk_sn']) ? '' : trim($info['desk_sn']);
 
