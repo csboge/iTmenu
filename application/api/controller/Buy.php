@@ -657,7 +657,7 @@ class Buy
 //                    $printer->getWords('217502439');
                 $printer->printOrderInfo($result['order'],$post_data);
 
-                return jsonData(1, 'OK',$result['order']);
+                return jsonData(1, 'OK',$result);
             } else {
                 // 回滚事务
                 Db::rollback();

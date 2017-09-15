@@ -45,7 +45,7 @@ class Shop
         ];
         $data = Db::name('shop')
             ->where($map)
-            ->field('title,logo,mobile,tel,video,shop_hours,notice,adress,lng,Lat')
+            ->field('title,logo,mobile,tel,video,shop_hours,notice,adress,lng,Lat,stations')
             ->find();
         if($data){
             $data['logo'] = ImgUrl($data['logo']);
