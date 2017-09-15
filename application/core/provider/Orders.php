@@ -165,7 +165,7 @@ class Orders
                 Db::rollback();
                 //订单错误
 
-                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-1,'执行出错~~事务回滚');
+                my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-1,'执行出错~~事务回滚1');
 
                 $this->m_order->error_log($order_info['order_sn']);
 
@@ -176,7 +176,7 @@ class Orders
             Db::rollback();
             //订单错误
 
-            my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-1,'执行出错~~事务回滚');
+            my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',-1,'执行出错~~事务回滚2');
 
             $this->m_order->error_log($order_info['order_sn']);
 
