@@ -457,9 +457,9 @@ class Buy
      */
     public function submitOffs(){
         //用户信息
-        $session        = $this->p_auth->session();
-        $userid         = $session['userid'];
-//        $userid         = input('param.user_id/d');
+//        $session        = $this->p_auth->session();
+//        $userid         = $session['userid'];
+        $userid         = input('param.user_id/d');
         $shopid         = input('param.shop_id/d');
 
         //接收 - 订单数据包
@@ -626,46 +626,61 @@ class Buy
         ];
 
 
-        //新增订单
-        $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
+        Db::startTrans();
 
-        if ($result) {
+        try {
 
-            $printer    = new \app\core\provider\BotPrinter();
+            //新增订单
+            $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
-//                    $printer->getWords('217502439');
-            $printer->printOrderInfo($result['order'],$post_data);
+            if ($orderinfo['offset_money'] !== 0) {
+                //修改用户钱包余额
+                $user_money = $this->m_user->userMoney($orderinfo['user_id'], $orderinfo['offset_money']);
+            } else {
+                $user_money = 'a';
+            }
 
-//            //5台同时打
-////            $printer->getWordsChip();
-//
-//            //启动打印机(队列版)
-//            if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
-//
-//            }
-//
-//            //2号  -- 殷宏华
-//            if ($openid == 'opkjx0L3kMBBrU413UHLyTyE_4is') {
-//                //$printer->getWords('217502989');
-//
-//
-//            }else{
-//                //$printer->printOrderInfo($order_info, $post_data);
-//            }
-
-            //成功返回
-            if($printer){
-                return jsonData(1, 'OK',$result['order']);
-            }else{
-                return jsonData(0, '结束订单事务失败',$result['order']);
+            if ($orderinfo['coupon_list_id'] !== 0) {
+                //修改用户优惠券使用记录
+                $user_coupon = $this->m_couponlist->CouponStatus($orderinfo['user_id'], $orderinfo['coupon_list_id']);
+            } else {
+                $user_coupon = 'a';
             }
 
 
-        }else{
-            echo  '结束订单事务失败';
-        }
+            if ($result['order'] && $user_money !== 0 && $user_coupon !== 0) {
+                // 提交事务
+                Db::commit();
 
+                $printer    = new \app\core\provider\BotPrinter();
+
+//                    $printer->getWords('217502439');
+                $printer->printOrderInfo($result['order'],$post_data);
+
+                return jsonData(1, 'OK',$result['order']);
+            } else {
+                // 回滚事务
+                Db::rollback();
+                //订单错误
+
+                my_log('orders',$orderinfo['order_sn'],'core/provider/orders/endOrderStatus',-1,'执行出错~~事务回滚');
+
+                $this->m_order->error_log($orderinfo['order_sn']);
+
+                return jsonData(0, '出现错误~~事务回滚1',null);
+            }
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            //订单错误
+
+            my_log('orders',$orderinfo['order_sn'],'core/provider/orders/endOrderStatus',-1,'执行出错~~事务回滚');
+
+            $this->m_order->error_log($orderinfo['order_sn']);
+
+            return jsonData(0, '出现错误~~事务回滚2',null);
+        }
 
     }
 
