@@ -144,7 +144,6 @@ class Buy
         //生成 - 订单号
         $ordersn        = $this->p_order->getOrderSN();
 
-        my_log('orders',$ordersn,$action_name,0,'生成 - 订单号');
 
         //转换数组
         $info = json_decode($order_info, true);
@@ -176,7 +175,6 @@ class Buy
         $info['total_price']    = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
         $info['order_sn']        = !isset($info['order_sn']) ? $ordersn : trim($info['order_sn']);
 
-        my_log('orders',$info['order_sn'],$action_name,0,'判断后的订单号');
         //桌位
         $info['desk_sn']        = !isset($info['desk_sn']) ? '' : trim($info['desk_sn']);
 
@@ -249,7 +247,6 @@ class Buy
             return jsonData(0, '红包余额不够',$is_money);
         }
 
-        my_log('orders',$info['order_sn'],$action_name,0,'生成或接收的订单号');
         //本地 - 订单信息
         $orderinfo      = array(
 
@@ -300,7 +297,6 @@ class Buy
 
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
-        my_log('orders',$result['order']['order_sn'],$action_name,0,'新增后的订单号');
         if (!$result['order']) {
             return jsonData(0, '订单 - 创建失败',$result);
         }
@@ -394,7 +390,7 @@ class Buy
             $order_info            = $this->m_order->getOrderForSN($ordersn);
             if(!$order_info) { return 0; }
 
-
+            my_log('orders',$order_info['status'],$action_name,0,'微信回调后查询的订单状态');
             //验证： 订单支付金额 -- 订单状态
             $order_pay_price        = floatval($order_info['pay_price'] * 100); 
             $is_pay_price           = ($order_pay_price == $pay_price) ? true : false;
