@@ -147,7 +147,6 @@ function my_log($name,$id,$url,$status,$explain){
         'created'       => date('Y-m-d H:i:s',time())
     ];
     $db = new \think\Db();
-    $data = $db::name('log')->insertGetId($map);
-    return  $data;
+    $db::name('log')->insertGetId($map);
 }
 

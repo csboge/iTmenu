@@ -69,7 +69,7 @@ class Orders
         $pay_time = time();
         $data = ['status' => 1, 'pay_time' => $pay_time, 'updated' => $pay_time, 'transaction_id' => $post_data['transaction_id'], 'time_end' => $post_data['time_end']];
 
-        my_log('orders',$order_info['order_sn'],'core/provider/orders/endOrderStatus',0,'测试步骤');
+
         if (!empty($type))
         {
             /**

@@ -457,9 +457,9 @@ class Buy
      */
     public function submitOffs(){
         //用户信息
-//        $session        = $this->p_auth->session();
-//        $userid         = $session['userid'];
-        $userid         = input('param.user_id/d');
+        $session        = $this->p_auth->session();
+        $userid         = $session['userid'];
+//        $userid         = input('param.user_id/d');
         $shopid         = input('param.shop_id/d');
 
         //接收 - 订单数据包
@@ -516,7 +516,6 @@ class Buy
 
         //生成 - 订单号
         $ordersn        = $this->p_order->getOrderSN();
-
 
         /**
          * 订单信息验证
@@ -633,7 +632,7 @@ class Buy
 
             //新增订单
             $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
-
+            my_log('orders',$ordersn,'api/controller/buy/submitOffs',-1,'执行出错~~事务回滚');
             if ($orderinfo['offset_money'] !== 0) {
                 //修改用户钱包余额
                 $user_money = $this->m_user->userMoney($orderinfo['user_id'], $orderinfo['offset_money']);
@@ -664,22 +663,22 @@ class Buy
                 Db::rollback();
                 //订单错误
 
-                my_log('orders',$orderinfo['order_sn'],'core/provider/orders/endOrderStatus',-1,'执行出错~~事务回滚');
+                my_log('orders',$ordersn,'api/controller/buy/submitOffs',-1,'执行出错~~事务回滚');
 
                 $this->m_order->error_log($orderinfo['order_sn']);
 
-                return jsonData(0, '出现错误~~事务回滚1',null);
+                return jsonData(0, '出现错误~~事务回滚1',$ordersn);
             }
         } catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
             //订单错误
 
-            my_log('orders',$orderinfo['order_sn'],'core/provider/orders/endOrderStatus',-1,'执行出错~~事务回滚');
+            my_log('orders',$ordersn,'api/controller/buy/submitOffs',-1,'执行出错~~事务回滚');
 
-            $this->m_order->error_log($orderinfo['order_sn']);
+            $this->m_order->error_log($ordersn);
 
-            return jsonData(0, '出现错误~~事务回滚2',null);
+            return jsonData(0, '出现错误~~事务回滚2',$ordersn);
         }
 
     }
