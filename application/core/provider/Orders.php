@@ -154,13 +154,14 @@ class Orders
                 $user_coupon = 'a';
             }
 
-
             if ($ret && $user_money !== 0 && $user_coupon !== 0) {
+
                 // 提交事务
                 Db::commit();
 
                 return $ret;
             } else {
+
                 // 回滚事务
                 Db::rollback();
                 //订单错误
