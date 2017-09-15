@@ -10,6 +10,7 @@ class Discount
 
 
     private     $p_auth;
+    private     $request;
 
     /***
      * 公共 - 注入依赖
@@ -60,6 +61,9 @@ class Discount
 
         //抢红包模型
         $this->m_banner         = $m_banner;
+
+        //获取当前控制器名
+        $this->request = \think\Request::instance();
     }
 
 

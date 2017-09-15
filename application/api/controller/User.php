@@ -21,7 +21,7 @@ class User
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => [],
+            'public' => ['assss'],
             'private'=> []
         ]);
 
@@ -289,6 +289,17 @@ class User
                 unset($volue['shop_id']);
             }
             return jsonData(1, 'OK', $res);
+        }else{
+            return jsonData(1, '未查到到数据', null);
+        }
+    }
+
+
+    public function assss(){
+        $file = request()->file('file');
+        $data = upload_video($file);
+        if($data){
+            return jsonData(1, 'OK', $data);
         }else{
             return jsonData(1, '未查到到数据', null);
         }
