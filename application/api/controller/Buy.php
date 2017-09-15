@@ -144,6 +144,8 @@ class Buy
         //生成 - 订单号
         $ordersn        = $this->p_order->getOrderSN();
 
+        return jsonData(0, 'order 数据不合法',$ordersn);
+
         //转换数组
         $info = json_decode($order_info, true);
 
@@ -361,13 +363,14 @@ class Buy
             return -1;  
         }
 
+        $action_name= $this->request->action();
+
         $redis = $this->redisFactory();
         $redis->set('notify_post_data', $xmlstring);
 
 
         $post_data = $this->xmlToArray($xmlstring);
 
-        $action_name= $this->request->action();
 
         my_log('orders',$post_data['out_trade_no'],$action_name,0,'微信回调过来的订单号');
 
