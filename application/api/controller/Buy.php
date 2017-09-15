@@ -632,7 +632,6 @@ class Buy
 
             //新增订单
             $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
-            my_log('orders',$ordersn,'api/controller/buy/submitOffs',-1,'执行出错~~事务回滚');
             if ($orderinfo['offset_money'] !== 0) {
                 //修改用户钱包余额
                 $user_money = $this->m_user->userMoney($orderinfo['user_id'], $orderinfo['offset_money']);
@@ -667,7 +666,7 @@ class Buy
 
                 $this->m_order->error_log($orderinfo['order_sn']);
 
-                return jsonData(0, '出现错误~~事务回滚1',$ordersn);
+                return jsonData(0, '出现错误~~事务回滚1',$orderinfo);
             }
         } catch (\Exception $e) {
             // 回滚事务
@@ -678,7 +677,7 @@ class Buy
 
             $this->m_order->error_log($ordersn);
 
-            return jsonData(0, '出现错误~~事务回滚2',$ordersn);
+            return jsonData(0, '出现错误~~事务回滚2',$orderinfo);
         }
 
     }
