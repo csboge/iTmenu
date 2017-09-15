@@ -127,6 +127,9 @@ class Buy
         $userid         = $session['userid'];
         $shopid         = input('param.shop_id/d');
 
+        //生成 - 订单号
+        $ordersn        = $this->p_order->getOrderSN();
+
         //接收 - 订单数据包
         $order_info     = input('param.order/s');
         if (!$this->is_json($order_info)){
@@ -159,7 +162,7 @@ class Buy
         $info['remark']         = !isset($info['remark']) ? '' : trim($info['remark']);
 
         $info['total_price']    = !is_numeric($info['total_price']) ? 0 : $info['total_price'];
-        $info['order_sn']        = !isset($info['order_sn']) ? '' : trim($info['order_sn']);
+        $info['order_sn']        = !isset($info['order_sn']) ? $ordersn : trim($info['order_sn']);
 
 
         //桌位
@@ -183,9 +186,6 @@ class Buy
 
         //向微信发送预订单
         $wechat         = new \app\core\provider\WeChat();
-
-        //生成 - 订单号
-        $ordersn        = $this->p_order->getOrderSN();
 
 
         //付款 - 单位转换
@@ -241,7 +241,7 @@ class Buy
         //本地 - 订单信息
         $orderinfo      = array(
 
-            'order_sn'           => $info['order_sn'],                    //是否老订单
+            'order_sn'          => $info['order_sn'],                    //是否老订单
             'shop_id'           => $shopid,                             //商户id
             'user_id'           => $userid,                             //顾客id
 
