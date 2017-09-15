@@ -211,6 +211,7 @@ class Test
             'updated' => time()
         ];
 
+
 //        $printer = new \app\core\provider\BotPrinter();
 //
 //        $aa = json_encode($info['goods_list'], true);
@@ -246,5 +247,19 @@ class Test
         }
 
         print_r($data);
+    }
+
+
+    public function adsast()
+    {
+        $ret = 1;
+        $user_money = 1;
+        $user_coupon = 1;
+
+        if ($ret && $user_money !== 0 && $user_coupon !== 0) {
+            echo 333333333333;
+        }else{
+            echo  22222222222222;
+        }
     }
 }

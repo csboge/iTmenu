@@ -70,7 +70,8 @@ class Orders
             return false;
         }
 
-        $action_name= $this->request->action();
+        //当前模块控制器方法
+        $action_name= $this->request->module().DS.$this->request->controller().DS.$this->request->action();
 
 
         $pay_time = time();
@@ -170,12 +171,15 @@ class Orders
             my_log('orders',$ret,$action_name,0,'ret:'.$ret.';user_money:'.$ret.';user_coupon:'.$ret);
 
             if ($ret && $user_money !== 0 && $user_coupon !== 0) {
-
+                
                 // 提交事务
                 Db::commit();
 
+                my_log('orders',$ret,$action_name,0,'事务提交');
+
                 return $ret;
             } else {
+
 
                 // 回滚事务
                 Db::rollback();

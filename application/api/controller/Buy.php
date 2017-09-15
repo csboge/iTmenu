@@ -139,7 +139,8 @@ class Buy
             return jsonData(0, 'order 数据不合法');
         }
 
-        $action_name= $this->request->action();
+        //当前模块控制器方法
+        $action_name= $this->request->module().DS.$this->request->controller().DS.$this->request->action();
 
         //生成 - 订单号
         $ordersn        = $this->p_order->getOrderSN();
@@ -361,7 +362,8 @@ class Buy
             return -1;  
         }
 
-        $action_name= $this->request->action();
+        //当前模块控制器方法
+        $action_name= $this->request->module().DS.$this->request->controller().DS.$this->request->action();
 
         $redis = $this->redisFactory();
         $redis->set('notify_post_data', $xmlstring);
