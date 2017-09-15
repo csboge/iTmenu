@@ -19,7 +19,7 @@ class Shop
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['config','rec','coupon'],
+            'public' => ['config','rec','coupon','recruit'],
             'private'=> []
         ]);
 
@@ -136,6 +136,39 @@ class Shop
             return jsonData(405, '未查到到数据', null);
         }
     }
+
+    /***
+     * 商户 - 招聘信息
+     */
+    public function recruit(){
+        //获得商店id
+//        $shop     =  $this->p_auth->getShopId();
+
+        $arr = [
+            0   => [
+                'stations'  => '前台收银员',
+                'sequest'   => '长得好看的就行'
+            ],
+            1   => [
+                'stations'  => '前台收银员',
+                'sequest'   => '长得好看的就行'
+            ],
+            2   => [
+                'stations'  => '前台收银员',
+                'sequest'   => '长得好看的就行'
+            ],
+            3   => [
+                'stations'  => '前台收银员',
+                'sequest'   => '长得好看的就行'
+            ],
+            4   => [
+                'stations'  => '前台收银员',
+                'sequest'   => '长得好看的就行'
+            ]
+        ];
+        return jsonData(1, 'OK', $arr);
+    }
+
 
 
 }
