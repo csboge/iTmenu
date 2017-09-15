@@ -158,7 +158,6 @@ class Orders
             } else {
                 $user_money = 1;
             }
-
             if ($order_info['coupon_list_id'] !== 0) {
                 //修改用户优惠券使用记录
                 $user_coupon = $this->m_couponlist->CouponStatus($order_info['user_id'], $order_info['coupon_list_id']);
@@ -168,7 +167,7 @@ class Orders
                 $user_coupon = 1;
             }
 
-            my_log('orders',$ret,$action_name,0,'ret:'.$ret.';user_money:'.$ret.';user_coupon:'.$ret);
+            my_log('orders',$ret,$action_name,0,'ret:'.gettype($ret).';user_money:'.gettype($user_money).';user_coupon:'.gettype($user_coupon));
 
             if ((int)$ret == 0 || (int)$user_money == 0 || (int)$user_coupon == 0) {
 //
@@ -176,7 +175,7 @@ class Orders
                 Db::rollback();
                 //订单错误
 
-                my_log('orders',$order_info['order_sn'],$action_name,-1,'执行出错~~事务回滚1ret:'.$ret.';user_money:'.$ret.';user_coupon:'.$ret);
+                my_log('orders',$order_info['order_sn'],$action_name,-1,'执行出错~~事务回滚1ret:'.$ret.';user_money:'.$user_money.';user_coupon:'.$user_coupon);
 
                 $this->m_order->error_log($order_info['order_sn']);
 
