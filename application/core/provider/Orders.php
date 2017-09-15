@@ -169,7 +169,7 @@ class Orders
 
             my_log('orders',$ret,$action_name,0,'ret:'.gettype($ret).';user_money:'.gettype($user_money).';user_coupon:'.gettype($user_coupon));
 
-            if ((int)$ret == 0 || (int)$user_money == 0 || (int)$user_coupon == 0) {
+            if ((int)$ret === 0 || (int)$user_money === 0 || (int)$user_coupon === 0) {
 //
 //                // 回滚事务
                 Db::rollback();
