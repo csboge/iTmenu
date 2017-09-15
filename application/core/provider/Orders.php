@@ -139,7 +139,8 @@ class Orders
 
             //更新订单
             $ret = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id' => $order_info['user_id']]);
-            my_log('orders',$ret,'core/provider/orders/endOrderStatus',-1,'更新订单');
+
+
             if ($order_info['offset_money'] !== 0) {
                 //修改用户钱包余额
                 $user_money = $this->m_user->userMoney($order_info['user_id'], $order_info['offset_money']);
@@ -157,6 +158,7 @@ class Orders
                 $user_coupon = 'a';
             }
 
+            my_log('orders',$ret,'core/provider/orders/endOrderStatus',-1,'ret:'.$ret.';user_money:'.$ret.';user_coupon:'.$ret);
             if ($ret && $user_money !== 0 && $user_coupon !== 0) {
 
                 // 提交事务
