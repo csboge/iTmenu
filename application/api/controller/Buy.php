@@ -148,8 +148,11 @@ class Buy
 
         //转换数组
         $info = json_decode($order_info, true);
+        
+        if($info['order_sn']){
+            my_log('orders',$info['order_sn'],$action_name,0,'传过来的订单号');
+        }
 
-        my_log('orders',$info['order_sn'],$action_name,0,'传过来的订单号');
 
         $info['is_first']       = !isset($info['is_first']) ? 1 : intval($info['is_first']);
         $info['first_money']    = !isset($info['first_money']) ? 0 : intval($info['first_money']);//5;
