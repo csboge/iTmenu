@@ -30,7 +30,7 @@ class Discount
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['*'],
+            'public' => [],
             'private'=> []
         ]);
 
