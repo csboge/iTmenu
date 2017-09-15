@@ -252,11 +252,11 @@ class Test
 
     public function adsast()
     {
-        $ret = 1;
-        $user_money = 1;
-        $user_coupon = 1;
+        $ret = 0;
+        $user_money = 0;
+        $user_coupon = 0;
 
-        if ($ret && $user_money !== 0 && $user_coupon !== 0) {
+        if (!$ret && !$user_money && !$user_coupon) {
             echo 333333333333;
         }else{
             echo  22222222222222;

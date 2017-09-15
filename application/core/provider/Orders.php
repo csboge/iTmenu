@@ -167,15 +167,9 @@ class Orders
 
 
 
-            if ($ret && $user_money !== 0 && $user_coupon !== 0) {
+            if (!$ret && !$user_money && !$user_coupon) {
 //
-                // 提交事务
-                Db::commit();
-
-
-                return $ret;
-            }else{
-//                // 回滚事务
+                // 回滚事务
                 Db::rollback();
                 //订单错误
 
@@ -184,7 +178,12 @@ class Orders
                 $this->m_order->error_log($order_info['order_sn']);
 
                 return false;
+
             }
+            // 提交事务
+            Db::commit();
+
+            return $ret;
 
         } catch (\Exception $e) {
             // 回滚事务
