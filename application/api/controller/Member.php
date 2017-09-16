@@ -70,9 +70,12 @@ class Member
         $jscode     = input('post.jscode/s');
         $userinfo   = input('post.userinfo/s');
 
+        $shopid = intval($this->p_auth->getShopId());
+
+
         //微信 **用户授权
         $wechat     = new \app\core\provider\WeChat();
-        $session    = $wechat->getSessionKey($jscode);
+        $session    = $wechat->getSessionKey($jscode, $shopid);
         if (!$session) {
             return jsonData(0, '请求失败,请重新发起');
         }

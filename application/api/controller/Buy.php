@@ -129,7 +129,7 @@ class Buy
         $session        = $this->p_auth->session();
         $openid         = $session['openid'];
         $userid         = $session['userid'];
-        $shopid         = input('param.shop_id/d');
+        //$shopid         = input('param.shop_id/d');
 
 
 
@@ -198,11 +198,12 @@ class Buy
         //向微信发送预订单
         $wechat         = new \app\core\provider\WeChat();
 
+        $shopid = intval($this->p_auth->getShopId());
 
         //付款 - 单位转换
         $pay_price      = floatval($info['pay_price'] * 100);  
         $body           = "点餐订单, 总价:{$pay_price},红包抵扣:{$offset_money}";
-        $result         = $wechat->payment($ordersn, $openid, $body, $pay_price);
+        $result         = $wechat->payment($ordersn, $openid, $body, $pay_price, $shopid);
 
         //$deskid         = 10;   //$desk_sn;
 
@@ -385,7 +386,7 @@ class Buy
 
         //签名合法
         $post_sign          = $post_data['sign'];
-        $checkSign          = $wechat->checkSign($post_sign, $post_data);
+        $checkSign          = $wechat->checkSign($post_sign, $post_data, 1);
         if($post_data['return_code'] =='SUCCESS' && $checkSign){
 
             //查询订单
