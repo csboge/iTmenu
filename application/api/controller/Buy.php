@@ -207,7 +207,7 @@ class Buy
         //付款 - 单位转换
         $pay_price      = floatval($info['pay_price'] * 100);  
         $body           = "点餐订单, 总价:{$pay_price},红包抵扣:{$offset_money}";
-        $result         = $wechat->payment($ordersn, $openid, $body, $pay_price, $shopid);
+        $result         = $wechat->payment($ordersn, $openid, $body, $pay_price);
 
         //$deskid         = 10;   //$desk_sn;
 
