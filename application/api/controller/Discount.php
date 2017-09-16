@@ -181,7 +181,7 @@ class Discount
 
         $baginfo    = json_decode($bagstr, true);
 
-
+        $baginfo['use_users'] = '';
         //是否还可以抢夺
         if (isset($baginfo['use_users'])){
             if (in_array($session['userid'], explode(',', $baginfo['use_users']))) {
