@@ -93,6 +93,7 @@ class User
         $map = [
             'user_id' => $user['userid'],
             'shop_id' => $shop,
+            'status' => array('>', '-1')
         ];
         $db = Db::name('orders');
         $page = ($where['page']-1)*$where['limit'];
