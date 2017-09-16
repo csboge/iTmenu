@@ -202,12 +202,11 @@ class Buy
         //向微信发送预订单
         $wechat         = new \app\core\provider\WeChat();
 
-        $shopid = intval($this->p_auth->getShopId());
 
         //付款 - 单位转换
         $pay_price      = floatval($info['pay_price'] * 100);  
         $body           = "点餐订单, 总价:{$pay_price},红包抵扣:{$offset_money}";
-        $result         = $wechat->payment($ordersn, $openid, $body, $pay_price, $shopid);
+        $result         = $wechat->payment($ordersn, $openid, $body, $pay_price);
 
         //$deskid         = 10;   //$desk_sn;
 
@@ -390,7 +389,7 @@ class Buy
 
         //签名合法
         $post_sign          = $post_data['sign'];
-        $checkSign          = $wechat->checkSign($post_sign, $post_data, 1);
+        $checkSign          = $wechat->checkSign($post_sign, $post_data);
         if($post_data['return_code'] =='SUCCESS' && $checkSign){
 
             //查询订单

@@ -36,7 +36,7 @@ class WeChat
      * @param   string   $jscode    客户端登录code
      *
      */
-    function getSessionKey($jscode, $shopid = 0)
+    function getSessionKey($jscode)
     {
 
         /**
@@ -47,13 +47,11 @@ class WeChat
         $port    = 443;
         $client  = new \app\core\provider\HttpClient($host, $port);
 
-        $app_id  = ($shopid > 0) ? 'wx22447b890ae00ce7' : APPID;
-        $secret  = ($shopid > 0) ? '91da1d17cc8a05bf563712f49b7447ea' : SECRET;
-
+      
         //业务参数
         $content = array(			
-            'appid'     => $app_id,
-            'secret'    => $secret,
+            'appid'     => APPID,
+            'secret'    => SECRET,
             'js_code'   => $jscode,
             'grant_type'=> 'authorization_code'
         );
@@ -79,10 +77,9 @@ class WeChat
      * 预支付请求
      *
      */
-    function payment($ordersn, $openid, $body, $total_fee, $shopid = 0)
+    function payment($ordersn, $openid, $body, $total_fee)
     {
-        $app_id  = ($shopid > 0) ? 'wx22447b890ae00ce7' : APPID;
-        $weixinpay      = new \app\core\provider\WeixinPay($app_id, $openid, MCHID, SIGNKEY, $ordersn, $body, $total_fee);  
+        $weixinpay      = new \app\core\provider\WeixinPay(APPID, $openid, MCHID, SIGNKEY, $ordersn, $body, $total_fee);  
         $result         = $weixinpay->pay(); 
 
         return $result;
@@ -96,10 +93,9 @@ class WeChat
      * @param   string   $post_data    表单数据
      *
      */
-    public function checkSign($post_sign, $post_data, $shopid = 0)
+    public function checkSign($post_sign, $post_data)
     {
-        $app_id  = ($shopid > 0) ? $post_data['appid'] : APPID;
-        $weixinpay      = new \app\core\provider\WeixinPay($app_id, NULL, MCHID, SIGNKEY, NULL, NULL, NULL);  
+        $weixinpay      = new \app\core\provider\WeixinPay(APPID, NULL, MCHID, SIGNKEY, NULL, NULL, NULL);  
 
         unset($post_data['sign']);
         $my_sign = $weixinpay->getSign($post_data);

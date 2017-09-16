@@ -75,7 +75,7 @@ class Member
 
         //微信 **用户授权
         $wechat     = new \app\core\provider\WeChat();
-        $session    = $wechat->getSessionKey($jscode, $shopid);
+        $session    = $wechat->getSessionKey($jscode);
         if (!$session) {
             return jsonData(0, '请求失败,请重新发起');
         }
