@@ -39,4 +39,22 @@ class RedCashLog extends Model
         return $data;
     }
 
+    /**
+     * 查询用户是否已抢过红包
+     *
+     * @param   string   $user     用户id
+     * @param   string   $bagid    红包id
+     *
+     * @return   string
+     *
+     */
+    public function isUserRed($user,$bagid){
+        $map = [
+            'user_id' => $user,
+            'red_cash_id' => $bagid
+        ];
+        $row = $this->where($map)->count();
+        return $row;
+    }
+
 }

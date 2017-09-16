@@ -164,6 +164,8 @@ class Discount
         //语音口令(二进制)
         $audio      = request()->file('audio');//input('param.audio');
 
+        //商店id
+        $shop       = $this->p_auth->getShopId();
 
         //用户信息
         $session    = $this->p_auth->session();
@@ -190,11 +192,16 @@ class Discount
 
         $baginfo['use_users'] = '';
         //是否还可以抢夺
-        if (isset($baginfo['use_users'])){
-            if (in_array($session['userid'], explode(',', $baginfo['use_users']))) {
-                return jsonData(-6, '嗨，你已经抢过了');
-            }
+        $is_user = $this->m_red_log->isUserRed($session['userid'],$bagid);
+        if($is_user){
+            return jsonData(-6, '嗨，你已经抢过了');
         }
+
+//        if (isset($baginfo['use_users'])){
+//            if (in_array($session['userid'], explode(',', $baginfo['use_users']))) {
+//                return jsonData(-6, '嗨，你已经抢过了');
+//            }
+//        }
 
 
         //剩余红包数量
