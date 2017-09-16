@@ -19,7 +19,7 @@ class Shop
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['config','rec','coupon','recruit'],
+            'public' => ['config','rec','recruit'],
             'private'=> []
         ]);
 

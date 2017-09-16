@@ -16,7 +16,11 @@ class Shop extends Controller
 {
     //商店列表
     public function index(){
-        $data = Db::name('shop')->order('id desc')->where('hd_status',1)->paginate(100);
+        $data = Db::name('shop')->order('id desc')->where('hd_status',1)->select();
+        foreach ($data as &$volue){
+            $volue['shop_hours'] = json_decode($volue['shop_hours'],true);
+        }
+//        echo "<pre>";print_r($data);exit;
         $count = count_list('shop');
         $this->assign('count',$count);
         $this->assign('list',$data);

@@ -72,7 +72,7 @@
             <td><img style="width: 65px;height: 45px" src="{:ImgUrl($vo.logo)}"/></td>
             <td>{$vo.mobile}</td>
             <td>{$vo.tel}</td>
-            <td>{$vo.shop_hours}</td>
+            <td>{$vo.shop_hours.start}至{$vo.shop_hours.end}</td>
             <td>{:cut_str($vo.notice,8)}</td>
             <td>{:cut_str($vo.adress,8)}</td>
             <td>{$vo.wechat}</td>
