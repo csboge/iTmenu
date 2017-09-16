@@ -197,7 +197,7 @@ class Discount
         }
 
         //本次抢夺金额
-        $my_money = $this->m_red->getMoney($baginfo['surplus'], $nums, $baginfo['num']);
+        $my_money = $this->m_red->getMoney($baginfo['surplus'], $nums+1, $baginfo['num']);
         
         if ($my_money <= 0) { 
             return jsonData(-5, '红包已经被抢完了');
