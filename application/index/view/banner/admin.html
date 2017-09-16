@@ -30,14 +30,17 @@
                 </div>
             </div>
         </form>
-        <!--<xblock id="table-block">-->
+        <xblock id="table-block">
+            <button class="layui-btn layui-btn-normal" id="member_return"><i
+                    class="layui-icon"><-</i>返回上页
+            </button>
             <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除-->
             <!--</button>-->
             <!--<button class="layui-btn" id="member_add"><i-->
                     <!--class="layui-icon">&#xe608;</i>添加管理-->
             <!--</button>-->
             <!--<span class="x-right" style="line-height:40px">共有数据：3 条</span>-->
-        <!--</xblock>-->
+        </xblock>
         <table class="layui-table">
         <thead>
         <tr>
@@ -100,6 +103,14 @@
     $("#member_add").click(function () {
             var url = "{:url('shop/add')}";
             location.href = url;
+    });
+    //返回上页
+    $("#member_return").click(function () {
+        var shop = {$shop};
+        var url = "/index/shop/admin/id/"+shop+".html";
+//        var url = "{:url('shop/admin')}";
+        location.href = url;
+//        history.go(-1);
     });
 
     //编辑按钮

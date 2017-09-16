@@ -16,14 +16,16 @@ class Coupon extends Controller
 {
     //优惠券列表
     public function index(){
+        $shop = session('shop_id');
         $map = [
             'hd_status' => 1,
-            'shop_id' => session('shop_id')
+            'shop_id' => $shop
         ];
         $data = Db::name('coupon')->order('id desc')->where($map)->paginate(100);
         $count = count_list('coupon','shop_id',session('shop_id'));
         $title = session('shop_title');
         $this->assign('title',$title);
+        $this->assign('shop',$shop);
         $this->assign('count',$count);
         $this->assign('list',$data);
         return view();

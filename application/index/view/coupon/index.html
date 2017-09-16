@@ -127,7 +127,9 @@
 
     //返回上页
     $("#member_return").click(function () {
-        var url = "{:url('shop/admin')}";
+        var shop = {$shop};
+        var url = "/index/shop/admin/id/"+shop+".html";
+//        var url = "{:url('shop/admin')}";
         location.href = url;
 //        history.go(-1);
     });

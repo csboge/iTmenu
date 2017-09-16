@@ -18,10 +18,11 @@ class Banner extends Controller
     public function index(){
         $type = input('param.');
         if(empty($type))return false;
+        $shop = session('shop_id');
         $map = [
             'hd_status' => 1,
             'cat_id' => $type['cat_id'],
-            'shop_id' => session('shop_id')
+            'shop_id' => $shop
         ];
         $res = Db::name('banner')->where($map)->order('id desc')->select();
         $count = count_list('banner','shop_id',session('shop_id'));
@@ -103,6 +104,8 @@ class Banner extends Controller
     //管理
     public function admin(){
         $title = session('shop_title');
+        $shop = session('shop_id');
+        $this->assign('shop',$shop);
         $this->assign('title',$title);
         return view();
     }
