@@ -27,7 +27,8 @@ class Buy
         \app\core\model\Shop            $m_shop,
         \app\core\model\Coupon          $m_coupon,
         \app\core\model\User            $m_user,
-        \app\core\model\CouponList      $m_couponlist
+        \app\core\model\CouponList      $m_couponlist,
+        \app\core\model\Goods           $m_goods
     )
     {
         //验证授权合法
@@ -57,6 +58,9 @@ class Buy
 
         //用户优惠券模型
         $this->m_couponlist = $m_couponlist;
+
+        //商品模型
+        $this->m_goods = $m_goods;
 
         //获取当前控制器名
         $this->request = \think\Request::instance();
@@ -714,9 +718,22 @@ class Buy
         $map = [
             'id' => $user['userid']
         ];
-        $res = Db::name('user')->where($map)->field('money')->find();//红包余额
-        $coupon = get_coupon($user['userid'],$shop);//查询优惠券
-        $first = is_first($user['userid'],$shop);//新用户立减
+        $res = Db::name('user')->where($map)->field('money')->find();       //红包余额
+        $coupon = get_coupon($user['userid'],$shop);                        //查询优惠券
+        $first = is_first($user['userid'],$shop);                           //新用户立减
+        $use_base = $this->m_goods->getBowl($shop);                         //查询餐具
+        foreach ($use_base as &$volue){
+            $volue['name'] = $volue['title'];
+            $volue['cate_id'] = $volue['cat_id'];
+            $volue['image'] = ImgUrl($volue['image']);
+            if($volue['bowl'] == 1){
+                $volue['num'] = 2;
+            }else{
+                $volue['num'] = 0;
+            }
+            unset($volue['title']);
+            unset($volue['cat_id']);
+        }
         $data = [
             'money' => $res['money']?$res['money']:0,
             'first' => $first,
@@ -735,24 +752,7 @@ class Buy
                 "is_default" => 0
                 ]
             ],
-            "use_base" => [
-                [
-                    "id" => 1,
-                    "name" => "餐具",
-                    "price" => 2,
-                    "img_url" => "http://img1.my-shop.cc/picture/20170914/a8e584365bbdc096a41f00f412b4005e.png",
-                    "cate_id" => 2,
-                    "num" => 0
-                ],
-                [
-                    "id" => 2,
-                    "name" => "纸巾",
-                    "price" => 1,
-                    "img_url" => "",
-                    "cate_id" => 2,
-                    "num" => 2
-                ]
-            ]
+            "use_base" => $use_base
         ];
         return jsonData(1, 'ok', $data);
 

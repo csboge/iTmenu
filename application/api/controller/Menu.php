@@ -114,7 +114,7 @@ class Menu
         $page = ($data['page']-1)*$data['limit'];
         $res = $db
             ->where($map)
-            ->field('id,title,image,sale,attrs,price,cat_id,package,rank')
+            ->field('id,title,image,sale,attrs,price,cat_id,package,rank,bowl')
             ->order('rank asc')
             ->limit($page,$data['limit'])
             ->select();
