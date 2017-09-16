@@ -83,4 +83,18 @@ class RedCash extends Model
         return $data;
     }
 
+    /**
+     * 查询红包 - 时间是否过期
+     *
+     * @param   string   $bagid    红包id
+     *
+     * @return  result
+     *
+     */
+    public function endTime($bagid){
+        $res = $this->where('id',$bagid)->field('created')->find()->toArray();
+
+        return $res;
+    }
+
 }

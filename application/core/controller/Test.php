@@ -262,4 +262,16 @@ class Test
             echo  22222222222222;
         }
     }
+
+    public function asde(){
+        $stat = 1505275346;
+        $time = time();
+        $data = $time-$stat;
+        $res = $data/(60*60);
+        $rev = date('Y-m-d H:i:s',$stat);
+        $red = date('Y-m-d H:i:s',$time);
+        print_r($res);echo "<br>";
+        print_r($rev);echo "<br>";
+        print_r($red);
+    }
 }

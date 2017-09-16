@@ -178,6 +178,13 @@ class Discount
             return jsonData(-1, '红包已经过期了' . $bagid);
         }
 
+        //红包时间超过24小时
+        $redTime = $this->m_red->endTime($bagid);       //红包创建时间
+        $time = time();                                 //当前时间
+        $data = ($time-$redTime)/(60*60);               //距离当前时间
+        if($data >= 24){
+            return jsonData(-1, '红包已经过期了' . $bagid);
+        }
 
         $baginfo    = json_decode($bagstr, true);
 
