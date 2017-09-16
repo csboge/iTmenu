@@ -733,6 +733,7 @@ class Buy
             }
             unset($volue['title']);
             unset($volue['cat_id']);
+            unset($volue['image']);
         }
         $data = [
             'money' => $res['money']?$res['money']:0,
