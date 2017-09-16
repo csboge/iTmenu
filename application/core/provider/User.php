@@ -107,11 +107,12 @@ class User
      * 初始化 用户信息
      *
      * @param   int     $openid    用户唯一标识
+     * @param   int     $shopid    商户id
      * @param   array   $session   登录信息
      *
      * @return  int
      */
-    public function initUserData($openid, $session)
+    public function initUserData($openid, $session,$shopid)
     {
 
         $unionid = (isset($session['unionid'])) ? $session['unionid'] : '';
@@ -119,6 +120,7 @@ class User
             'nickname'  => $session['userinfo']['nickName'],
             'avatar'    => $session['userinfo']['avatarUrl'],
             'sex'       => $session['userinfo']['gender'],
+            'shop_id'   => $shopid,
             'openid'    => $session['openid'],
             'unionid'   => $unionid,
             'created'   => time(),

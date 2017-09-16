@@ -86,7 +86,7 @@ class Member
         //数据库 userid
         $user                   = new \app\core\provider\User();
         $openid                 = $session['openid'];
-        $session['userid']      = $user->initUserData($openid, $session);
+        $session['userid']      = $user->initUserData($openid, $session,$shopid);
         if ($session['userid'] == 0) {
             return jsonData(0, '用户初始化失败');
         }
