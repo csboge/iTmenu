@@ -725,7 +725,7 @@ class Buy
         foreach ($use_base as &$volue){
             $volue['name'] = $volue['title'];
             $volue['cate_id'] = $volue['cat_id'];
-            $volue['image'] = ImgUrl($volue['image']);
+            $volue['img_url'] = ImgUrl($volue['image']);
             if($volue['bowl'] == 1){
                 $volue['num'] = 2;
             }else{
