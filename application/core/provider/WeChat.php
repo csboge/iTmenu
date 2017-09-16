@@ -48,11 +48,12 @@ class WeChat
         $client  = new \app\core\provider\HttpClient($host, $port);
 
         $app_id  = ($shopid > 0) ? 'wx22447b890ae00ce7' : APPID;
+        $secret  = ($shopid > 0) ? '91da1d17cc8a05bf563712f49b7447ea' : SECRET;
 
         //业务参数
         $content = array(			
             'appid'     => $app_id,
-            'secret'    => SECRET,
+            'secret'    => $secret,
             'js_code'   => $jscode,
             'grant_type'=> 'authorization_code'
         );
