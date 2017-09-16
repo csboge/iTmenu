@@ -142,8 +142,13 @@ class Discount
         return jsonData(1, 'ok', $baginfo);
     }
 
-    public function abc(){
-        echo 11111;
+
+    public function asd(){
+        if(isset($baginfo['use_users'])){
+            echo 1111111;
+        }else{
+            echo 22222222;
+        }
     }
 
     /***
@@ -157,7 +162,7 @@ class Discount
 
 
         //语音口令(二进制)
-        $audio      = input('param.audio');
+        $audio      = request()->file('audio');//input('param.audio');
 
 
         //用户信息
@@ -177,7 +182,6 @@ class Discount
         $baginfo    = json_decode($bagstr, true);
 
 
-        return jsonData(-1, '测试数据' . $baginfo);
         //是否还可以抢夺
         if (isset($baginfo['use_users'])){
             if (in_array($session['userid'], explode(',', $baginfo['use_users']))) {
