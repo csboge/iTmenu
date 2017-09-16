@@ -21,7 +21,7 @@ class User
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['assss'],
+            'public' => [],
             'private'=> []
         ]);
 
@@ -93,11 +93,13 @@ class User
         $map = [
             'user_id' => $user['userid'],
             'shop_id' => $shop,
+            'status' => array('>', '-1')
         ];
         $db = Db::name('orders');
         $page = ($where['page']-1)*$where['limit'];
         $data = $db
             ->where($map)
+            ->order('status asc')
             ->order('created desc')
             ->field('order_sn,pay_price,status,goods_list')
             ->limit($page,$where['limit'])
@@ -289,17 +291,6 @@ class User
                 unset($volue['shop_id']);
             }
             return jsonData(1, 'OK', $res);
-        }else{
-            return jsonData(1, '未查到到数据', null);
-        }
-    }
-
-
-    public function assss(){
-        $file = request()->file('file');
-        $data = upload_video($file);
-        if($data){
-            return jsonData(1, 'OK', $data);
         }else{
             return jsonData(1, '未查到到数据', null);
         }

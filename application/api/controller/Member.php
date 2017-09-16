@@ -18,7 +18,7 @@ class Member
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['getcode', 'register', 'login', 'getUserInfo'],
+            'public' => ['getcode', 'register', 'login'],
             'private'=> []
         ]);
 
@@ -115,21 +115,6 @@ class Member
         return jsonData(1, 'ok', null);
     }
 
-
-
-    function getUserInfo()
-    {
-
-        $order = new \app\core\provider\Orders();
-        $order->endOrderStatus('', null);
-        exit;
-
-        
-        $session = $this->p_auth->session();
-        print_r($session);
-
-        return jsonData(1, 'userinfo', $session);
-    }
 
 
     /***

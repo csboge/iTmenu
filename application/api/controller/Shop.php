@@ -19,7 +19,7 @@ class Shop
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['config','rec','coupon','recruit'],
+            'public' => ['config','rec','recruit'],
             'private'=> []
         ]);
 
@@ -45,7 +45,7 @@ class Shop
         ];
         $data = Db::name('shop')
             ->where($map)
-            ->field('title,logo,mobile,tel,video,shop_hours,notice,adress,lng,Lat,stations')
+            ->field('title,logo,mobile,tel,video,shop_hours,notice,adress,lng,Lat,stations,package')
             ->find();
         if($data){
             $data['logo'] = ImgUrl($data['logo']);

@@ -31,7 +31,8 @@ class Test
         \app\core\model\Coupon          $m_coupon,
         \app\core\model\User            $m_user,
         \app\core\model\CouponList      $m_couponlist,
-        \app\core\model\RedCashLog      $m_redcashlog
+        \app\core\model\RedCashLog      $m_redcashlog,
+        \app\core\model\RedCash         $m_red
     )
     {
         //验证授权合法
@@ -43,6 +44,8 @@ class Test
         //授权服务
         $this->p_auth = $p_auth;
 
+        //红包模型
+        $this->m_red            = $m_red;
 
         //订单服务
         $this->p_order = $p_order;
@@ -261,5 +264,18 @@ class Test
         }else{
             echo  22222222222222;
         }
+    }
+
+    public function asde(){
+        $stat = $this->m_red->endTime(1);
+        print_r($stat);exit;
+        $time = time();
+        $data = $time-$stat;
+        $res = $data/(60*60);
+        $rev = date('Y-m-d H:i:s',$stat);
+        $red = date('Y-m-d H:i:s',$time);
+        print_r($res);echo "<br>";
+        print_r($rev);echo "<br>";
+
     }
 }

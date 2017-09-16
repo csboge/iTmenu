@@ -81,7 +81,13 @@ class Goods extends Controller
 
     //套餐列表
     public function package_index(){
-        $data = Db::name('package')->order('rank asc')->where('hd_status',1)->paginate(100);
+        $shop = session('shop_id');
+        $map = [
+            'shop_id' => $shop,
+            'hd_status' => 1,
+            'sd_status' => 1
+        ];
+        $data = Db::name('package')->where($map)->order('rank asc')->paginate(100);
         $count = count_list('package','shop_id',session('shop_id'));
         $title = session('shop_title');
         $this->assign('title',$title);
@@ -145,7 +151,7 @@ class Goods extends Controller
             'hd_status' => 1,
             'shop_id' => session('shop_id')
         ];
-        $data = Db::name('goods')->order('rank asc')->where($map)->paginate(100);
+        $data = Db::name('goods')->order('rec desc')->order('rank asc')->where($map)->paginate(100);
         $count = count_list('goods','shop_id',session('shop_id'));
         $title = session('shop_title');
         $this->assign('title',$title);

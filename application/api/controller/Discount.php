@@ -143,6 +143,14 @@ class Discount
     }
 
 
+    public function asd(){
+        if(isset($baginfo['use_users'])){
+            echo 1111111;
+        }else{
+            echo 22222222;
+        }
+    }
+
     /***
      * 红包 - 抢夺
      */
@@ -154,29 +162,46 @@ class Discount
 
 
         //语音口令(二进制)
-        $audio      = input('param.audio');
+        $audio      = request()->file('audio');//input('param.audio');
 
+        //商店id
+        $shop       = $this->p_auth->getShopId();
 
         //用户信息
         $session    = $this->p_auth->session();
 
         $redis = $this->redisFactory();
 
+
         //合法验证
         $bagstr    = $redis->get('discount:redinfo:' . $bagid);
+
         if (!$bagstr) {
+            return jsonData(-1, '红包已经过期了' . $bagid);
+        }
+
+        //红包时间超过24小时
+        $redTime = $this->m_red->endTime($bagid);       //红包创建时间
+        $time = time();                                 //当前时间
+        $data = ($time-$redTime)/(60*60);               //距离当前时间
+        if($data >= 24){
             return jsonData(-1, '红包已经过期了' . $bagid);
         }
 
         $baginfo    = json_decode($bagstr, true);
 
-
+        $baginfo['use_users'] = '';
         //是否还可以抢夺
-        if (isset($baginfo['use_users'])){
-            if (in_array($session['userid'], explode(',', $baginfo['use_users']))) {
-                return jsonData(-6, '嗨，你已经抢过了');
-            }
+        $is_user = $this->m_red_log->isUserRed($session['userid'],$bagid);
+        if($is_user){
+            return jsonData(-6, '嗨，你已经抢过了');
         }
+
+//        if (isset($baginfo['use_users'])){
+//            if (in_array($session['userid'], explode(',', $baginfo['use_users']))) {
+//                return jsonData(-6, '嗨，你已经抢过了');
+//            }
+//        }
 
 
         //剩余红包数量
@@ -186,7 +211,7 @@ class Discount
         }
 
         //本次抢夺金额
-        $my_money = $this->m_red->getMoney($baginfo['surplus'], $nums, $baginfo['num']);
+        $my_money = $this->m_red->getMoney($baginfo['surplus'], $nums+1, $baginfo['num']);
         
         if ($my_money <= 0) { 
             return jsonData(-5, '红包已经被抢完了');
