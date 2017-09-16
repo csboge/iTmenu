@@ -202,6 +202,8 @@ class Buy
         //向微信发送预订单
         $wechat         = new \app\core\provider\WeChat();
 
+        $shopid = intval($this->p_auth->getShopId());
+
 
         //付款 - 单位转换
         $pay_price      = floatval($info['pay_price'] * 100);  
