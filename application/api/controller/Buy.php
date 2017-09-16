@@ -727,9 +727,9 @@ class Buy
             $volue['cate_id'] = $volue['cat_id'];
             $volue['img_url'] = ImgUrl($volue['image']);
             if($volue['bowl'] == 1){
-                $volue['num'] = 2;
-            }else{
                 $volue['num'] = 0;
+            }else{
+                $volue['num'] = 2;
             }
             unset($volue['title']);
             unset($volue['cat_id']);
