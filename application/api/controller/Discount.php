@@ -31,7 +31,7 @@ class Discount
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => [],
+            'public' => ['*'],
             'private'=> []
         ]);
 
@@ -142,6 +142,9 @@ class Discount
         return jsonData(1, 'ok', $baginfo);
     }
 
+    public function abc(){
+        echo 11111;
+    }
 
     /***
      * 红包 - 抢夺
@@ -162,18 +165,21 @@ class Discount
 
         $redis = $this->redisFactory();
 
+
         //合法验证
         $bagstr    = $redis->get('discount:redinfo:' . $bagid);
+
         if (!$bagstr) {
             return jsonData(-1, '红包已经过期了' . $bagid);
         }
+
 
         $baginfo    = json_decode($bagstr, true);
 
 
         //是否还可以抢夺
-        if (isset($baginfo['use_users'])){
-            if (in_array($session['userid'], explode(',', $baginfo['use_users']))) {
+        if (isset($baginfo['user_id'])){
+            if (in_array($session['userid'], explode(',', $baginfo['user_id']))) {
                 return jsonData(-6, '嗨，你已经抢过了');
             }
         }
@@ -197,7 +203,7 @@ class Discount
         $baginfo['surplus'] -= $my_money;
 
         //记录已抢用户id
-        $baginfo['use_users'] .= ',' . $session['userid'];
+        $baginfo['user_id'] .= ',' . $session['userid'];
 
         $baginfo['updated']  = time();
         $redis->set('discount:redinfo:' . $bagid, json_encode($baginfo));
