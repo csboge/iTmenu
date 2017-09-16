@@ -169,6 +169,8 @@ class Table extends Controller
     //管理
     public function admin(){
         $title = session('shop_title');
+        $shop = session('shop_id');
+        $this->assign('shop',$shop);
         $this->assign('title',$title);
         return view();
     }

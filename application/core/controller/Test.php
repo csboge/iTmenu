@@ -32,7 +32,8 @@ class Test
         \app\core\model\User            $m_user,
         \app\core\model\CouponList      $m_couponlist,
         \app\core\model\RedCashLog      $m_redcashlog,
-        \app\core\model\RedCash         $m_red
+        \app\core\model\RedCash         $m_red,
+        \app\core\model\Goods           $m_goods
     )
     {
         //验证授权合法
@@ -67,6 +68,9 @@ class Test
 
         //抢红包模型
         $this->m_redcashlog     = $m_redcashlog;
+
+        //商品模型
+        $this->m_goods     = $m_goods;
 
     }
 
@@ -240,8 +244,20 @@ class Test
     {
         $res = input('param.');
 
-
-        $data = $this->m_redcashlog->isRedList($res['shop'],$res['bagid']);
+        $data = $this->m_goods->getBowl($res['shop']);
+        foreach ($data as &$volue){
+            $volue['name'] = $volue['title'];
+            $volue['cate_id'] = $volue['cat_id'];
+            $volue['image'] = ImgUrl($volue['image']);
+            if($volue['bowl'] == 1){
+                $volue['num'] = 2;
+            }else{
+                $volue['num'] = 0;
+            }
+            unset($volue['title']);
+            unset($volue['cat_id']);
+        }
+        print_r($data);exit;
         foreach ($data as &$itme){
             $vcr = $this->m_user->getUserForId($itme['user_id']);
             $itme['nickname'] = $vcr['nickname'];

@@ -31,11 +31,15 @@
             </div>
         </form>
         <xblock id="table-block">
-            <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
+            <button class="layui-btn layui-btn-normal" id="member_return"><i
+                    class="layui-icon"><-</i>返回上页
             </button>
             <button class="layui-btn" id="member_add"><i
                     class="layui-icon">&#xe608;</i>添加桌子
             </button>
+            <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
+            </button>
+
             <span class="x-right" style="line-height:40px">共有数据：{$count} 条</span>
         </xblock><table class="layui-table">
         <thead>
@@ -135,6 +139,13 @@
         console.log(curl);
         location.href = url;
     }
+
+    //返回上页
+    $("#member_return").click(function () {
+        var url = "{:url('table/admin')}";
+        location.href = url;
+//        history.go(-1);
+    });
 
     //状态修改
     function is_status(status,type,id){
