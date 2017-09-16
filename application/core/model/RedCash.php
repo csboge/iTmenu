@@ -77,6 +77,7 @@ class RedCash extends Model
      *
      */
     public function getRedList($bagid){
+
         $data = $this->where('id',$bagid)->field('menoy,surplus,num,get_num,words')->find()->toArray();
 
         return $data;

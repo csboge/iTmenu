@@ -37,6 +37,7 @@ class RedCashLog
     {
         $list_red = $this->m_redcashlog->isRedList($shop,$bagid);
         foreach ($list_red as &$itme){
+            $itme['audio'] = GET_VIDEO_URL.$itme['audio'];
             $vcr = $this->m_user->getUserForId($itme['user_id']);
             $itme['nickname'] = $vcr['nickname'];
             $itme['avatar'] = $vcr['avatar'];
