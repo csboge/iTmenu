@@ -111,12 +111,13 @@ class Menu
             ];
         }
         $db = Db::name('goods');
-        $page = ($data['page']-1)*$data['limit'];
+        $limit = $data['limit']?$data['limit']:10;
+        $page = ($data['page']-1)*$limit;
         $res = $db
             ->where($map)
             ->field('id,title,image,sale,attrs,price,cat_id,package,rank,bowl')
             ->order('rank asc')
-            ->limit($page,$data['limit'])
+            ->limit($page,$limit)
             ->select();
         if($res){
             foreach ($res as &$value){

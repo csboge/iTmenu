@@ -96,13 +96,14 @@ class User
             'status' => array('>', '-1')
         ];
         $db = Db::name('orders');
-        $page = ($where['page']-1)*$where['limit'];
+        $limit = $where['limit']?$where['limit']:10;
+        $page = ($where['page']-1)*$limit;
         $data = $db
             ->where($map)
             ->order('status asc')
             ->order('created desc')
             ->field('order_sn,pay_price,status,goods_list')
-            ->limit($page,$where['limit'])
+            ->limit($page,$limit)
             ->select();
         if($data){
             foreach ($data as &$volue){
@@ -235,12 +236,13 @@ class User
             'user_id' => $user['userid']
         ];
         $db = Db::name('red_cash_log');
-        $page = ($where['page']-1)*$where['limit'];
+        $limit = $where['limit']?$where['limit']:10;
+        $page = ($where['page']-1)*$limit;
         $res = $db
             ->where($map)
             ->order('created desc')
             ->field('id,audio,words,menoy,shop_id,created')
-            ->limit($page,$where['limit'])
+            ->limit($page,$limit)
             ->select();
         if($res){
             foreach ($res as &$volue){
@@ -275,12 +277,13 @@ class User
             'offset_money' => ['>',0]
         ];
         $db = Db::name('orders');
-        $page = ($where['page']-1)*$where['limit'];
+        $limit = $where['limit']?$where['limit']:10;
+        $page = ($where['page']-1)*$limit;
         $res = $db
             ->where($map)
             ->order('pay_time desc')
             ->field('order_sn,shop_id,pay_time,offset_money')
-            ->limit($page,$where['limit'])
+            ->limit($page,$limit)
             ->select();
         if($res){
             foreach ($res as &$volue){
