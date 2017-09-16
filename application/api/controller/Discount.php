@@ -177,9 +177,10 @@ class Discount
         $baginfo    = json_decode($bagstr, true);
 
 
+        return jsonData(-1, '测试数据' . $baginfo);
         //是否还可以抢夺
-        if (isset($baginfo['user_id'])){
-            if (in_array($session['userid'], explode(',', $baginfo['user_id']))) {
+        if (isset($baginfo['use_users'])){
+            if (in_array($session['userid'], explode(',', $baginfo['use_users']))) {
                 return jsonData(-6, '嗨，你已经抢过了');
             }
         }
@@ -203,7 +204,7 @@ class Discount
         $baginfo['surplus'] -= $my_money;
 
         //记录已抢用户id
-        $baginfo['user_id'] .= ',' . $session['userid'];
+        $baginfo['use_users'] .= ',' . $session['userid'];
 
         $baginfo['updated']  = time();
         $redis->set('discount:redinfo:' . $bagid, json_encode($baginfo));
