@@ -94,7 +94,7 @@ class RedCash extends Model
     public function endTime($bagid){
         $res = $this->where('id',$bagid)->field('created')->find()->toArray();
 
-        return $res;
+        return $res['created'];
     }
 
 }
