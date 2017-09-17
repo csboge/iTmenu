@@ -127,9 +127,10 @@
             layer.close(index);
             layer.prompt({title: '输入电话号码，并确认', formType: 3}, function(mobile, index){
                 layer.close(index);
-//                layer.msg('演示完毕！您的商户id：'+pass+'！您的电话号码：'+ mobile);
+                var url = "{:url('User/admin_index')}";
+                layer.msg(url);
                 $.ajax({
-                    url:"{:url('User/admin_index')}",
+                    url:url,
                     type:"post",
                     data:{shop:pass,id:id,mobile:mobile},
                     success:function (res) {

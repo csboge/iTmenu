@@ -71,10 +71,10 @@ class User extends Controller
                 $user_admin = Db::name('user_admin')->insert($ma);
                 $user_list  = $user->userAdmin($where['id']);
 
-                if(!$user_admin || !$user_list){
-                    Db::rollback();
-                    return false;
-                }
+//                if(!$user_admin || !$user_list){
+//                    Db::rollback();
+//                    return false;
+//                }
                 Db::commit();
                 return true;
             }catch(\Exception $e){
