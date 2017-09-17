@@ -79,12 +79,13 @@ class User extends Controller
 //                    return false;
 //                }
 
-                my_log('user_admin',$user_admin,'user/admin_index','0',$a);
-                my_log('user_admin',$user_list,'user/admin_index','0',$where['id']);
+                my_log('user_admin',$user_admin,'user/admin_index','-1',$a);
+                my_log('user_admin',$user_list,'user/admin_index','-2',$where['id']);
                 Db::commit();
                 return true;
             }catch(\Exception $e){
                 Db::rollback();
+                my_log('user_admin',$user_admin,'user/admin_index','-3',$a);
                 return false;
             }
         }
