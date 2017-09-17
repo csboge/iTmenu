@@ -85,7 +85,7 @@ class User extends Controller
                 return true;
             }catch(\Exception $e){
                 Db::rollback();
-                my_log('user_admin',$user_admin,'user/admin_index','-3',$a);
+                my_log('user_admin',$where['id'],'user/admin_index','-3',$a);
                 return false;
             }
         }
