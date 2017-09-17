@@ -33,7 +33,7 @@ class User extends Controller
                 $map['nickname'] = ['like', '%' . $username . '%'];
             }
         }
-        $map['is_admin'] = 0;
+//        $map['is_admin'] = 0;
         $data = Db::name('user')->where($map)->order('id desc')->limit(1, 100)->select();
         $count = count_user('user','is_admin',0);
         $this->assign('count', $count);
@@ -70,6 +70,8 @@ class User extends Controller
             try {
                 $user_admin = Db::name('user_admin')->insert($ma);
                 $user_list  = $user->userAdmin($where['id']);
+                print_r($user_admin);
+                print_r($user_list);exit;
                 if($user_admin && $user_list){
                     Db::commit();
                     return true;
