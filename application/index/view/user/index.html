@@ -128,7 +128,6 @@
             layer.prompt({title: '输入电话号码，并确认', formType: 3}, function(mobile, index){
                 layer.close(index);
                 var url = "{:url('User/admin_index')}";
-                layer.msg(url);
                 $.ajax({
                     url:url,
                     type:"post",
