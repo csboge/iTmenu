@@ -66,7 +66,8 @@ class User extends Controller
                 'status'        => 1,
                 'created'       => time()
             ];
-            $a = json_decode($ma,true);
+
+            $a = json_encode($ma,true);
             my_log('user_admin',$where['id'],'user/admin_index','0',$a);
             Db::startTrans();
             try {
