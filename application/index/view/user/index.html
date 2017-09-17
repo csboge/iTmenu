@@ -1,0 +1,161 @@
+{extend name="base" /}
+{block name="content"}
+    <!-- 右侧主体开始 -->
+    <xblock class="page-content">
+        <xblock>
+            <div style="margin-left: 20px">
+                用户列表
+            </div>
+        </xblock>
+        <!-- 右侧内容框架，更改从这里开始 -->
+        <form class="layui-form xbs" action="{:url('index')}">
+            <div class="layui-form-pane" style="text-align: center;">
+                <div class="layui-form-item" style="display: inline-block;">
+                    <label class="layui-form-label xbs768">日期范围</label>
+
+                    <div class="layui-input-inline xbs768">
+                        <input class="layui-input" name="start" placeholder="开始日" id="LAY_demorange_s">
+                    </div>
+                    <div class="layui-input-inline xbs768">
+                        <input class="layui-input" name="end" placeholder="截止日" id="LAY_demorange_e">
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" name="username" placeholder="请输入用户名" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                    <div class="layui-input-inline" style="width:80px">
+                        <button class="layui-btn" lay-submit="" lay-filter="sreach"><i
+                                class="layui-icon">&#xe615;</i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <xblock id="table-block">
+            <button class="layui-btn layui-btn-normal" id="member_return"><i
+                    class="layui-icon"><-</i>返回上页
+            </button>
+            <!--<button class="layui-btn" id="member_add"><i-->
+                    <!--class="layui-icon">&#xe608;</i>添加商家-->
+            <!--</button>-->
+            <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除-->
+            <!--</button>-->
+            <span class="x-right" style="line-height:40px">共有数据：{$count} 条</span>
+        </xblock><table class="layui-table">
+        <thead>
+        <tr>
+            <th>
+                <input type="checkbox" id="checkAll" name="" value="">
+            </th>
+            <th>ID</th>
+            <th>昵称</th>
+            <th>用户头像</th>
+            <th>性别</th>
+            <th>店铺</th>
+            <th>手机</th>
+            <th>钱包</th>
+            <th>城市</th>
+            <th>省份</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='list' id='vo'}
+        <tr>
+            <td>
+                <input type="checkbox" class="check" value="1" name="">
+            </td>
+            <td>{$vo.id}</td>
+            <td>{$vo.nickname}</td>
+            <td><img style="width: 65px;height: 45px" src="{$vo.avatar}"/></td>
+            <td>
+                {if condition="$vo.sex === 1"}
+                男
+                {elseif condition="$vo.sex === 2"}
+                女
+                {else}
+                保密
+                {/if}
+            </td>
+            <td>{:shop_name($vo.shop_id)}</td>
+            <td>{$vo.mobile}</td>
+            <td>{$vo.money}</td>
+            <td>{$vo.city}</td>
+            <td>{$vo.province}</td>
+            <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
+            <td class="td-manage">
+                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_admin({$vo.id})">设为管理员</span>
+                <!--&lt;!&ndash;<a title="编辑" href="javascript:;" onclick="update({$vo.id})">&ndash;&gt;-->
+                <!--<a title="设为管理员" href="{:url('Shop/update',['id'=>$vo['id']])}">-->
+                    <!--<i class="layui-icon">&#xe642;</i>-->
+                <!--</a>-->
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+        <!-- 右侧内容框架，更改从这里结束 -->
+        <!-- 右侧内容框架，更改从这里结束 -->
+    </xblock>
+<script>
+    /*
+    * @des         全选/取消全选
+    *
+    */
+    $("#checkAll").click(function () {
+
+        var is_check_all = $("#checkAll").attr("checked");
+
+        if(is_check_all){
+            $("input[type='checkbox']").removeAttr("checked");
+        }else{
+            $("input[type='checkbox']").attr("checked", "true");
+        }
+    });
+
+    //返回上页
+    $("#member_return").click(function () {
+        var url = "{:url('index/index')}";
+        location.href = url;
+    });
+
+
+    
+    function is_admin(id) {
+        //prompt层
+        layer.prompt({title: '输入商户id，并确认', formType: 3}, function(pass, index){
+            layer.close(index);
+            layer.prompt({title: '输入电话号码，并确认', formType: 3}, function(mobile, index){
+                layer.close(index);
+//                layer.msg('演示完毕！您的商户id：'+pass+'！您的电话号码：'+ mobile);
+                $.ajax({
+                    url:"{:url('User/admin_index')}",
+                    type:"post",
+                    data:{shop:pass,id:id,mobile:mobile},
+                    success:function (res) {
+                        console.log(res);
+                        if(res === true){
+                            layer.msg('设置成功',{icon:1,time:500});
+                            setTimeout(function () {
+                                location.href = "{:url('user/admin_index')}"
+                            },1000)
+                        }else {
+                            layer.msg('设置失败',{icon:2,time:500});
+                            setTimeout(function () {
+                                location.href = "{:url('user/admin_index')}"
+                            },1000)
+                        }
+                    }
+                })
+            })
+        });
+    }
+
+
+</script>
+{/block}
+{block name="footer"}
+{/block}
+{block name="background"}
+{/block}
+

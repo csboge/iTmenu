@@ -14,4 +14,10 @@ class Shop extends Model
         $name = $this->where('id',$id)->find('name');
         return $name;
     }
+
+    //验证商品是否存在
+    public function isShop($id){
+        $name = $this->where('id',$id)->count();
+        return $name;
+    }
 }

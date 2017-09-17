@@ -123,6 +123,19 @@ function count_list($name,$type='',$volue='',$status = '1'){
     return $count;
 }
 
+//获取数量
+function count_user($name,$type='',$volue=''){
+    $map = [];
+    if(!empty($type) && !empty($volue)){
+        $map = [
+            $type => $volue,
+        ];
+    }
+    $db = new \think\Db;
+    $count = $db::name($name)->where($map)->count();
+    return $count;
+}
+
 //获取二级分类
 function grt_category($name,$type,$volue,$status = '1'){
     $map = [
