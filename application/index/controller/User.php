@@ -66,6 +66,7 @@ class User extends Controller
                 'status'        => 1,
                 'created'       => time()
             ];
+            my_log('user_admin',$where['id'],'user/admin_index','0',json_decode($ma,true));
             Db::startTrans();
             try {
                 $user_admin = Db::name('user_admin')->insert($ma);
@@ -75,6 +76,8 @@ class User extends Controller
 //                    Db::rollback();
 //                    return false;
 //                }
+                my_log('user_admin',$user_admin,'user/admin_index','0',json_decode($ma,true));
+                my_log('user_admin',$user_list,'user/admin_index','0',$where['id']);
                 Db::commit();
                 return true;
             }catch(\Exception $e){
