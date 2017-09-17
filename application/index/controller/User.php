@@ -71,6 +71,7 @@ class User extends Controller
             my_log('user_admin',$where['id'],'user/admin_index','0',$a);
             Db::startTrans();
             try {
+                my_log('user_admin',$where['id'],'user/admin_index','-1',$a);
                 $user_admin = Db::name('user_admin')->insert($ma);
                 $user_list  = $user->userAdmin($where['id']);
 
