@@ -33,7 +33,7 @@ class User extends Controller
                 $map['nickname'] = ['like', '%' . $username . '%'];
             }
         }
-//        $map['is_admin'] = 0;
+        $map['is_admin'] = 0;
         $data = Db::name('user')->where($map)->order('id desc')->limit(1, 100)->select();
         $count = count_user('user','is_admin',0);
         $this->assign('count', $count);
@@ -68,26 +68,23 @@ class User extends Controller
             ];
 
             $a = json_encode($ma,true);
-            my_log('user_admin',$where['id'],'user/admin_index','0',$a);
             Db::startTrans();
             try {
-                my_log('user_admin',$where['id'],'user/admin_index','-1',$a);
                 $user_admin = Db::name('user_admin')->insert($ma);
-                my_log('user_admin',$where['id'],'user/admin_index','-2',$a);
                 $user_list  = $user->userAdmin($where['id']);
 
-//                if(!$user_admin || !$user_list){
-//                    Db::rollback();
-//                    return false;
-//                }
+                if(!$user_admin || !$user_list){
+                    Db::rollback();
 
-                my_log('user_admin',$user_admin,'user/admin_index','-5',$a);
-                my_log('user_admin',$user_list,'user/admin_index','-4',$where['id']);
+                    my_log('user_admin',$user_list,'user/admin_index','-1',$a);
+                    return false;
+                }
+
                 Db::commit();
                 return true;
             }catch(\Exception $e){
                 Db::rollback();
-                my_log('user_admin',$where['id'],'user/admin_index','-3',$a);
+                my_log('user_admin',$where['id'],'user/admin_index','-1',$a);
                 return false;
             }
         }
