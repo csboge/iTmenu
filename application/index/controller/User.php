@@ -73,6 +73,7 @@ class User extends Controller
             try {
                 my_log('user_admin',$where['id'],'user/admin_index','-1',$a);
                 $user_admin = Db::name('user_admin')->insert($ma);
+                my_log('user_admin',$where['id'],'user/admin_index','-2',$a);
                 $user_list  = $user->userAdmin($where['id']);
 
 //                if(!$user_admin || !$user_list){
@@ -80,8 +81,8 @@ class User extends Controller
 //                    return false;
 //                }
 
-                my_log('user_admin',$user_admin,'user/admin_index','-1',$a);
-                my_log('user_admin',$user_list,'user/admin_index','-2',$where['id']);
+                my_log('user_admin',$user_admin,'user/admin_index','-5',$a);
+                my_log('user_admin',$user_list,'user/admin_index','-4',$where['id']);
                 Db::commit();
                 return true;
             }catch(\Exception $e){
