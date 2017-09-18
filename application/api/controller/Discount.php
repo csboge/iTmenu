@@ -391,7 +391,7 @@ class Discount
         //一条红包信息
         $baginfo    = [
             'bagid'=>$bagid,
-            'user_is'=>$redlist['user_id'],
+            'user_id'=>$redlist['user_id'],
             'menoy'=> $redlist['menoy'],
             'surplus'=> $redlist['surplus'],
             'num'=> $redlist['num'],

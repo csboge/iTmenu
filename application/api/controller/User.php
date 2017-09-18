@@ -21,7 +21,7 @@ class User
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => [],
+            'public' => ['*'],
             'private'=> []
         ]);
 
@@ -29,8 +29,6 @@ class User
         $this->p_auth   = $p_auth;
 
     }
-
-
 
     /***
      * 用户 - 红包余额

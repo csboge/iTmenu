@@ -43,7 +43,6 @@ class RedCashLog
             $itme['nickname'] = $vcr['nickname'];
             $itme['avatar'] = $vcr['avatar'];
             $itme['sex'] = $vcr['sex'];
-            unset($itme['user_id']);
         }
 
         return $list_red;
