@@ -23,7 +23,8 @@ class User
      */
     public function __construct(
         Request                         $request,
-        \app\core\provider\Auth         $p_auth
+        \app\core\provider\Auth         $p_auth,
+        \app\core\model\UserAdmin       $m_useradmin
     )
     {
         //验证授权合法
@@ -33,7 +34,10 @@ class User
         ]);
 
         //授权服务
-        $this->p_auth   = $p_auth;
+        $this->p_auth           = $p_auth;
+
+        //用户模型
+        $this->m_useradmin      = $m_useradmin;
     }
 
     /***
@@ -43,17 +47,14 @@ class User
     public function isAdmin(){
         $data = input('param.');
         if(empty($data)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>null],true);
         }
         $res = Db::name('user')->where(['openid'=>$data['openid']])->find();
-        if($res){
-            if($res['is_admin'] == 1){
-                return json_encode(['code'=>1,'message'=>'OK','data'=>$res['shop_id'],'status'=>200]);
-            }else{
-                return json_encode(['code'=>0,'message'=>'不是管理员','data'=>'','status'=>203]);
-            }
+        $is_admin = $this->m_useradmin->isUserAdmin($res['openid']);
+        if($is_admin){
+            return json_encode(['code'=>1,'message'=>'OK','data'=>$is_admin],true);
         }else{
-            return json_encode(['code'=>0,'message'=>'未查到到数据','data'=>'','status'=>405]);
+            return json_encode(['code'=>0,'message'=>'未查到数据','data'=>null],true);
         }
     }
 }

@@ -185,9 +185,6 @@ class Member
             $res = $client->getContent();
             print $res;
         }
-
-       
-
     }
 
 }
