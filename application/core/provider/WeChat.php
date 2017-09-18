@@ -26,9 +26,7 @@ define('SIGNKEY', 'csboge1073payKEY2913epoqiwpemans');	//*必填*: 密钥
 class WeChat
 {
 
-    public function __construct(){
-        my_log('orders',1,'wechat/__construct',-1,'构造函数');
-    }
+    public function __construct(){}
     
 
 
@@ -40,7 +38,6 @@ class WeChat
      */
     function getSessionKey($jscode)
     {
-        my_log('orders',1,'wechat/getSessionKey',-1,'获得用户授权');
         /**
          * 初始请求
          *
@@ -81,8 +78,7 @@ class WeChat
      */
     function payment($ordersn, $openid, $body, $total_fee)
     {
-        my_log('orders',1,'wechat/payment',-1,'预支付请求');
-        $weixinpay      = new \app\core\provider\WeixinPay(APPID, $openid, MCHID, SIGNKEY, $ordersn, $body, $total_fee);  
+        $weixinpay      = new \app\core\provider\WeixinPay(APPID, $openid, MCHID, SIGNKEY, $ordersn, $body, $total_fee);
         $result         = $weixinpay->pay(); 
 
         return $result;
@@ -99,7 +95,7 @@ class WeChat
     public function checkSign($post_sign, $post_data)
     {
         my_log('orders',1,'wechat/checkSign',-1,'支付回调');
-        $weixinpay      = new \app\core\provider\WeixinPay(APPID, NULL, MCHID, SIGNKEY, NULL, NULL, NULL);  
+        $weixinpay      = new \app\core\provider\WeixinPay(APPID, NULL, MCHID, SIGNKEY, NULL, NULL, NULL);
 
         unset($post_data['sign']);
         $my_sign = $weixinpay->getSign($post_data);
