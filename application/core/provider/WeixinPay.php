@@ -30,6 +30,7 @@ class WeixinPay {
 
 
     public function pay() {
+        my_log('weixin',1,'weixinpay/pay',0,'统一下单接口1');
         //统一下单接口
         $return = $this->weixinapp();
         return $return;
@@ -38,20 +39,25 @@ class WeixinPay {
 
     //统一下单接口
     private function unifiedorder() {
-        my_log('weixin',1,'weixinpay/unifiedorder',0,'统一下单接口');
+        my_log('weixin',1,'weixinpay/unifiedorder',0,'统一下单接口2');
         $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
         $parameters = array(
             'appid'         => $this->appid, //小程序ID
             'mch_id'        => $this->mch_id, //商户号
             'nonce_str'     => $this->createNoncestr(), //随机字符串
+
 //            'body' => 'test', //商品描述
             'body'          => $this->body,
+
 //            'out_trade_no' => '2015450806125348', //商户订单号
             'out_trade_no'  => $this->out_trade_no,
+
 //            'total_fee' => floatval(0.01 * 100), //总金额 单位 分
             'total_fee'     => $this->total_fee,
+
             'spbill_create_ip' => $_SERVER['REMOTE_ADDR'], //终端IP
             //'spbill_create_ip' => '192.168.0.161', //终端IP
+
             'notify_url'    => 'https://demo.ai-life.me/api/Buy/notify/', //通知地址  确保外网能正常访问
             'openid'        => $this->openid, //用户id
             'trade_type'    => 'JSAPI'//交易类型
@@ -67,6 +73,7 @@ class WeixinPay {
 
     private static function postXmlCurl($xml, $url, $second = 30) 
     {
+        my_log('weixin',1,'weixinpay/postXmlCurl',0,'设置超时');
         $ch = curl_init();
         //设置超时
         curl_setopt($ch, CURLOPT_TIMEOUT, $second);
@@ -139,7 +146,7 @@ class WeixinPay {
 
     //微信小程序接口
     private function weixinapp() {
-        my_log('weixin',1,'weixinpay/weixinapp',0,'微信小程序接口');
+        my_log('weixin',1,'weixinpay/weixinapp',0,'微信小程序接口1');
         //统一下单接口
         $unifiedorder = $this->unifiedorder();
 //        print_r($unifiedorder);
@@ -150,7 +157,7 @@ class WeixinPay {
             'package' => 'prepay_id=' . $unifiedorder['prepay_id'], //数据包
             'signType' => 'MD5'//签名方式
         );
-        my_log($this->appid,1,'weixinpay/weixinapp',0,'微信小程序接口');
+        my_log($this->appid,1,'weixinpay/weixinapp',0,'微信小程序接口2');
         //签名
         $parameters['paySign'] = $this->getSign($parameters);
         return $parameters;
