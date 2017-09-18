@@ -75,8 +75,6 @@ class Menu
 
     /***
      * 获取 - 菜品详情
-     * @参数 page         页码
-     * @参数 limit        条数
      * @参数 cat_id       分类id (可不传)
      * @参数 package      套餐id (可不传)
 
@@ -111,13 +109,10 @@ class Menu
             ];
         }
         $db = Db::name('goods');
-        $limit = $data['limit']?$data['limit']:10;
-        $page = ($data['page']-1)*$limit;
         $res = $db
             ->where($map)
             ->field('id,title,image,sale,attrs,price,cat_id,package,rank,bowl')
             ->order('rank asc')
-            ->limit($page,$limit)
             ->select();
         if($res){
             foreach ($res as &$value){
