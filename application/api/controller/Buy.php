@@ -339,6 +339,7 @@ class Buy
     //微信支付 回调
     public function notify()
     {
+        my_log('orders',1,'buy/notify',0,'微信回调第一行');
 
         /*  微信官方提醒：
          *  商户系统对于支付结果通知的内容一定要做【签名验证】,
@@ -398,6 +399,7 @@ class Buy
 
             //查询订单
             $order_info            = $this->m_order->getOrderForSN($ordersn);
+
             if(!$order_info) { return 0; }
 
             my_log('orders',$order_info['status'],$action_name,0,'微信回调后查询的订单状态');
