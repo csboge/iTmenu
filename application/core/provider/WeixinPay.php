@@ -38,6 +38,7 @@ class WeixinPay {
 
     //统一下单接口
     private function unifiedorder() {
+        my_log('weixin',1,'weixinpay/unifiedorder',0,'统一下单接口');
         $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
         $parameters = array(
             'appid'         => $this->appid, //小程序ID
@@ -138,6 +139,7 @@ class WeixinPay {
 
     //微信小程序接口
     private function weixinapp() {
+        my_log('weixin',1,'weixinpay/weixinapp',0,'微信小程序接口');
         //统一下单接口
         $unifiedorder = $this->unifiedorder();
 //        print_r($unifiedorder);
@@ -148,6 +150,7 @@ class WeixinPay {
             'package' => 'prepay_id=' . $unifiedorder['prepay_id'], //数据包
             'signType' => 'MD5'//签名方式
         );
+        my_log($this->appid,1,'weixinpay/weixinapp',0,'微信小程序接口');
         //签名
         $parameters['paySign'] = $this->getSign($parameters);
         return $parameters;
