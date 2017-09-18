@@ -17,6 +17,25 @@ class Goods extends Controller
 {
     //菜品分类列表
     public function index(){
+        $where = input('param.');
+        $map = [];
+        if ($where) {
+            $start = strtotime($where['start']);
+            $end = strtotime($where['end']);
+            $username = $where['username'];
+            if ($start && $end) {
+                $map['created'] = array(['>',$start],['<',$end],'and');
+
+            }elseif ($start){
+                $map['created'] = array('>', $start);
+
+            }elseif ($end){
+                $map['created'] = array('<', $end);
+            }
+            if ($username) {
+                $map['name'] = array('like', "%{$username}%");
+            }
+        }
         $map = [
             'hd_status' => 1,
             'shop_id' => session('shop_id')

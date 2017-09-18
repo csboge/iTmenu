@@ -16,7 +16,27 @@ class Shop extends Controller
 {
     //商店列表
     public function index(){
-        $data = Db::name('shop')->order('id desc')->where('hd_status',1)->select();
+        $where = input('param.');
+        $map = [];
+        if ($where) {
+            $start = strtotime($where['start']);
+            $end = strtotime($where['end']);
+            $username = $where['username'];
+            if ($start && $end) {
+                $map['created'] = array(['>',$start],['<',$end],'and');
+
+            }elseif ($start){
+                $map['created'] = array('>', $start);
+
+            }elseif ($end){
+                $map['created'] = array('<', $end);
+            }
+            if ($username) {
+                $map['title'] = array('like', "%{$username}%");
+            }
+        }
+        $map['hd_status'] = 1;
+        $data = Db::name('shop')->order('id desc')->where($map)->select();
         foreach ($data as &$volue){
             $volue['shop_hours'] = json_decode($volue['shop_hours'],true);
         }

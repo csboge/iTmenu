@@ -14,6 +14,8 @@ use think\Db;
 
 class User extends Controller
 {
+
+
     //用户列表
     public function index()
     {
@@ -23,18 +25,21 @@ class User extends Controller
             $start = strtotime($where['start']);
             $end = strtotime($where['end']);
             $username = $where['username'];
-            if ($start) {
-                $map['created'] = ['>', $start];
-            }
-            if ($end) {
-                $map['created'] = ['<', $end];
+            if ($start && $end) {
+                $map['created'] = array(['>',$start],['<',$end],'and');
+
+            }elseif ($start){
+                $map['created'] = array('>', $start);
+
+            }elseif ($end){
+                $map['created'] = array('<', $end);
             }
             if ($username) {
-                $map['nickname'] = ['like', '%' . $username . '%'];
+                $map['nickname'] = array('like', "%{$username}%");
             }
         }
         $map['is_admin'] = 0;
-        $data = Db::name('user')->where($map)->order('id desc')->limit(1, 100)->select();
+        $data = Db::name('user')->where($map)->order('id desc')->select();
         $count = count_user('user','is_admin',0);
         $this->assign('count', $count);
         $this->assign('list', $data);
@@ -45,6 +50,34 @@ class User extends Controller
     //管理员列表
     public function admin_index()
     {
+        $where = input('param.');
+        $map = [];
+        if ($where) {
+            $start = strtotime($where['start']);
+            $end = strtotime($where['end']);
+            $username = $where['username'];
+            if ($start && $end) {
+                $map['created'] = array(['>',$start],['<',$end],'and');
+
+            }elseif ($start){
+                $map['created'] = array('>', $start);
+
+            }elseif ($end){
+                $map['created'] = array('<', $end);
+            }
+            if ($username) {
+                $map['nickname'] = array('like', "%{$username}%");
+            }
+        }
+        $data = Db::name('user_admin')->where($map)->order('status desc')->order('id desc')->select();
+        $count = count_user('user_admin');
+        $this->assign('count', $count);
+        $this->assign('list', $data);
+        return view();
+    }
+
+    //设置管理员
+    public function is_admin(){
         if (input('param.')) {
             $where = input('param.');
             $shop = new \app\index\model\Shop();
@@ -87,15 +120,8 @@ class User extends Controller
                 my_log('user_admin',$where['id'],'user/admin_index','-1',$a);
                 return false;
             }
+        }else{
+            return false;
         }
-//        $map = [
-//            'hd_status'        => 1,
-//        ];
-        $data = Db::name('user_admin')->order('status desc')->order('id desc')->select();
-        $count = count_user('user_admin');
-        $this->assign('count', $count);
-        $this->assign('list', $data);
-        return view();
     }
-
 }

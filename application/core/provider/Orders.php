@@ -77,7 +77,7 @@ class Orders
         $pay_time = time();
         $data = ['status' => 1, 'pay_time' => $pay_time, 'updated' => $pay_time, 'transaction_id' => $post_data['transaction_id'], 'time_end' => $post_data['time_end']];
 
-
+        my_log('orders',$order_info['order_sn'],$action_name,-$type,'新用户验证不通过');
         if (!empty($type))
         {
             /**
@@ -149,37 +149,37 @@ class Orders
 
             //更新订单
             $ret = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id' => $order_info['user_id']]);
-
+            my_log('orders',$ret,$action_name,-1,'更新订单');
             if ($order_info['offset_money'] !== 0) {
                 //修改用户钱包余额
                 $user_money = $this->m_user->userMoney($order_info['user_id'], $order_info['offset_money']);
-
+                my_log('orders',$user_money,$action_name,-1,'修改用户钱包余额');
             } else {
                 $user_money = 1;
             }
             if ($order_info['coupon_list_id'] !== 0) {
                 //修改用户优惠券使用记录
                 $user_coupon = $this->m_couponlist->CouponStatus($order_info['user_id'], $order_info['coupon_list_id']);
-
+                my_log('orders',$user_coupon,$action_name,-1,'修改用户优惠券使用记录');
             } else {
                 $user_coupon = 1;
             }
 
 
 
-//            if (!$ret || !$user_money || !$user_coupon) {
-////
-//                // 回滚事务
-//                Db::rollback();
-//                //订单错误
+            if (!$ret || !$user_money || !$user_coupon) {
 //
-//                my_log('orders',$order_info['order_sn'],$action_name,-1,'执行出错~~事务回滚1ret:'.$ret.';user_money:'.$user_money.';user_coupon:'.$user_coupon);
-//
-//                $this->m_order->error_log($order_info['order_sn']);
-//
-//                return false;
-//
-//            }
+                // 回滚事务
+                Db::rollback();
+                //订单错误
+
+                my_log('orders',$order_info['order_sn'],$action_name,-1,'执行出错~~事务回滚1ret:'.$ret.';user_money:'.$user_money.';user_coupon:'.$user_coupon);
+
+                $this->m_order->error_log($order_info['order_sn']);
+
+                return false;
+
+            }
             // 提交事务
             Db::commit();
 
