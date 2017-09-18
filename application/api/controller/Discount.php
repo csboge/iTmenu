@@ -366,7 +366,7 @@ class Discount
 
 
     /***
-     * 红包 - 详细
+     * 红包 - 初始红包页
      */
     function robInfo()
     {
@@ -391,6 +391,7 @@ class Discount
         //一条红包信息
         $baginfo    = [
             'bagid'=>$bagid,
+            'user_is'=>$redlist['user_id'],
             'menoy'=> $redlist['menoy'],
             'surplus'=> $redlist['surplus'],
             'num'=> $redlist['num'],
