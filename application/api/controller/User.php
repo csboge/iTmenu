@@ -109,9 +109,12 @@ class User
             ->select();
         if($data){
             foreach ($data as &$volue){
-                $bagid = $this->m_red->isOrder($volue['order_sn'],$shop);
-                $aa = $bagid->toArray();
-                $volue['bagid'] = $aa['id'];
+                $ma = [
+                    'order_sn' => $volue['order_sn'],
+                    'shop_id' => $shop
+                ];
+                $bagid = Db::name('red_cash')->where($ma)->field('id')->find();
+                $volue['bagid'] = $bagid['id'];
                 if($volue['status'] == 0){
                     $volue['status'] = '待支付';
                 }elseif ($volue['status'] == 1){
