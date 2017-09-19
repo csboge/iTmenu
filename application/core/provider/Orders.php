@@ -149,18 +149,20 @@ class Orders
         try {
             //判断统计表是否有当天的数据
             $ististics = $this->m_tistics->isTistics($order_info['shop_id']);
-
+            my_log('orders',$ististics,$action_name,-1,'判断统计表是否有当天的数据');
             $money = $order_info['shop_price'] - $order_info['mode_money'];
 
             if(!$ististics){
                 //写入数据统计
                 $tistics = $this->m_tistics->insertTistics($order_info['shop_id'],$money);
+                my_log('orders',$tistics,$action_name,-1,'写入数据统计');
             }else{
                 //更新数据统计
                 $non = $ististics->toArray();
                 $tistics = $this->m_tistics->updateTistics($non['id'],$money);
+                my_log('orders',$tistics,$action_name,-1,'更新数据统计');
             }
-            
+
             //更新订单
             $ret = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id' => $order_info['user_id'], 'tistics_id' => $tistics]);
 
