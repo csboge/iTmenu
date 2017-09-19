@@ -111,9 +111,9 @@ class RedCash extends Model
             'order_sn' => $order,
             'shop_id' => $shop
         ];
-        $res = $this->where($map)->field('id')->find()->toArray();
+        $res = $this->where($map)->field('id')->find();
 
-        return $res['id'];
+        return $res;
     }
 
 }
