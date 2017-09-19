@@ -78,8 +78,8 @@ class Test
 
     public function ta(){
         $a = input('param.');
-        $data = $this->m_tistics->isTistics($a['shop']);
-        print_r($data->toArray());exit;
+        $data = $this->m_order->upTistics($a['orders'],$a['userid'],$a['tistics']);
+        print_r($data);exit;
 
     }
 

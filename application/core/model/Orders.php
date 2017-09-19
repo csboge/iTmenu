@@ -185,4 +185,25 @@ class Orders extends Model
         return json_decode(json_encode($data), true);
     }
 
+    /**
+     * 更新入账记录
+     *
+     * @param   string   $orders        订单号
+     * @param   string   $userid        用户id
+     * @param   string   $tistics       入账id
+     *
+     * @return  array    用户数据
+     *
+     */
+    public function upTistics($orders,$userid,$tistics){
+        $map = [
+            'order_sn'      => $orders,
+            'user_id'       => $userid
+        ];
+
+        $row = $this->where($map)->setField('tistics_id', $tistics);
+
+        return $row;
+    }
+
 }
