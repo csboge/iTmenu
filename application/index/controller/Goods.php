@@ -170,7 +170,7 @@ class Goods extends Controller
             'hd_status' => 1,
             'shop_id' => session('shop_id')
         ];
-        $data = Db::name('goods')->order('rec desc')->order('rank asc')->where($map)->paginate(100);
+        $data = Db::name('goods')->order('rec desc')->order('rank asc')->where($map)->paginate(1000);
         $count = count_list('goods','shop_id',session('shop_id'));
         $title = session('shop_title');
         $this->assign('title',$title);
