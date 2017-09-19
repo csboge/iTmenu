@@ -254,7 +254,7 @@ class Buy
             return jsonData(0, '红包余额不够',$is_money);
         }
 
-        $mode_money = $info['mode_rate']*($info['total_price']-$info['coupon_price']);
+        $mode_money = ceil($info['mode_rate']*($info['total_price']-$info['coupon_price']));
         if($mode_money !== $info['mode_money']){
             return jsonData(0, '红包发出金额不对',$mode_money);
         }
