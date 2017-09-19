@@ -255,7 +255,7 @@ class User
         if($res){
             foreach ($res as &$volue){
                 $shop = shop_title($volue['shop_id']);
-                $volue['audio'] = GET_IMG_URL.$volue['audio'];
+                $volue['audio'] = GET_VIDEO_URL.$volue['audio'];
                 $volue['logo'] = ImgUrl($shop['logo']);
                 $volue['title'] = $shop['title'];
                 $volue['created'] = date('Y-m-d H:i:s',$volue['created']);
