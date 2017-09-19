@@ -206,4 +206,23 @@ class Orders extends Model
         return $row;
     }
 
+    /**
+     * 查询商户入账下的订单
+     *
+     * @param   string   $tistics        订单号
+     * @param   string   $shopid         商户id
+     *
+     * @return  array    订单数据
+     *
+     */
+    public function liseOrder($tistics,$shopid){
+        $map = [
+            'tistics_id'    => $tistics,
+            'shop_id'       => $shopid
+        ];
+        $row = $this->where($map)->field('order_sn,shop_id,user_id,shop_price,mode_money,pay_time')->select();
+
+        return json_decode(json_encode($row), true);
+    }
+
 }

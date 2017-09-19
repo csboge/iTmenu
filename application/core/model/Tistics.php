@@ -68,4 +68,18 @@ class Tistics extends Model
         }
     }
 
+    /**
+     * 查询商户下的所有数据
+     *
+     * @param   string   $shopid      商户id
+     *
+     * @return   int       id
+     *
+     */
+    public function listTistics($shopid){
+        $row = $this->where('shop_id',$shopid)->field('id,money,statistics')->select();
+
+        return json_decode(json_encode($row), true);
+    }
+
 }

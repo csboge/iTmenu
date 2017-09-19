@@ -55,9 +55,9 @@ class User extends Model
      */
     public function getUserForId($user_id)
     {
-        $row = $this->where('id', trim($user_id))->field('nickname,avatar,sex')->find()->toArray();
+        $row = $this->where('id', trim($user_id))->field('nickname,avatar,sex')->find();
 
-        return $row;
+        return json_decode(json_encode($row), true);
     }
 
 
