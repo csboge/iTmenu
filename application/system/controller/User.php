@@ -70,4 +70,6 @@ class User
         ];
         return ajaxSuccess(1,'登录成功',$res);
     }
+
+
 }
