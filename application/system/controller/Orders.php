@@ -25,7 +25,7 @@ class Orders
         Request                         $request,
         \app\core\provider\Auth         $p_auth,
         \app\core\model\User            $m_user,
-        \app\core\model\UserAdmin       $m_useradmin
+        \app\core\model\Orders          $m_orders
     )
     {
         //验证授权合法
@@ -40,8 +40,8 @@ class Orders
         //用户模型
         $this->m_user           = $m_user;
 
-        //管理员模型
-        $this->m_useradmin      = $m_useradmin;
+        //订单模型
+        $this->m_orders      = $m_orders;
     }
 
     /***
@@ -51,13 +51,19 @@ class Orders
     public function orderList(){
         //获得商店id
         $shop     = $this->p_auth->getShopId();
-        $map = [
-            'shop_id' => $shop,
-            'status' => 1
-        ];
-        $money = Db::name('orders')->where($map)->sum('shop_price');
 
-        return ajaxSuccess(1,'本店全部收益',$money);
+        $todey = strtotime(date('Y-m-d',time()));
+        $small = strtotime('2017-8-20');
+        $nodey = ($todey-$small)/(24*60*60);
+        for($i = 1;$i >= $nodey;$i++){
+            $time[$i] = (24*60*60);
+        }
+        return $i;
+        exit;
+//        $start = 1504266077;
+//        $end = 1505821277;
+//        $data = $this->m_orders->timeOrders($shop,$start,$end);
+
     }
 
 

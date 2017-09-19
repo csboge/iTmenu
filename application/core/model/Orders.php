@@ -58,9 +58,9 @@ class Orders extends Model
      */
     public function isFirstCons($shopid,$userid){
         $map = [
-            'shop_id' => $shopid,
-            'user_id' => $userid,
-            'status' => 1
+            'shop_id'   => $shopid,
+            'user_id'   => $userid,
+            'status'    => 1
         ];
         $row = $this->where($map)->count();
 
@@ -93,8 +93,8 @@ class Orders extends Model
     public function ordersMoney($shop_id)
     {
         $map = [
-            'shop_id' => $shop_id,
-            'status' => 1
+            'shop_id'   => $shop_id,
+            'status'    => 1
         ];
         $money = $this->where($map)->sum('shop_price');
 
@@ -112,11 +112,77 @@ class Orders extends Model
     public function ordersPeople($shop_id)
     {
         $map = [
-            'shop_id' => $shop_id,
-            'status' => 1
+            'shop_id'   => $shop_id,
+            'status'    => 1
         ];
         $people = $this->where($map)->count();
 
         return $people;
     }
+
+    /**
+     * 查询老用户用户人数
+     *
+     * @param   string   $shop_id     商户id
+     *
+     * @return  array    用户数据
+     *
+     */
+    public function isOld($shop_id){
+        $map = [
+            'shop_id'   => $shop_id,
+            'status'    => 1
+        ];
+        $first = $this
+            ->where($map)
+            ->group('user_id')
+            ->having('count(user_id)>1')
+            ->select();
+
+        return json_decode(json_encode($first), true);
+    }
+
+    /**
+     * 查询老用户用户人数
+     *
+     * @param   string   $shop_id     商户id
+     *
+     * @return  array    用户数据
+     *
+     */
+    public function isFirst($shop_id){
+        $map = [
+            'shop_id'   => $shop_id,
+            'status'    => 1
+        ];
+        $first = $this
+            ->where($map)
+            ->group('user_id')
+            ->having('count(user_id)=1')
+            ->select();
+
+        return json_decode(json_encode($first), true);
+    }
+
+    /**
+     * 查询时间段的订单
+     *
+     * @param   string   $shop        商户id
+     * @param   string   $start       开始时间
+     * @param   string   $end         结束时间
+     *
+     * @return  array    用户数据
+     *
+     */
+    public function timeOrders($shop,$start,$end){
+        $map = [
+            'shop_id'   => $shop,
+            'status'    => 1,
+            'pay_time'  => array(['>',$start],['<',$end],'and'),
+        ];
+        $data = $this->where($map)->select();
+
+        return json_decode(json_encode($data), true);
+    }
+
 }

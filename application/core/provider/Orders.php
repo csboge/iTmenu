@@ -19,6 +19,7 @@ class Orders
     private $m_shop;
     private $m_coupon;
     private $request;
+    private $m_tistics;
 
     public function __construct()
     {
@@ -40,6 +41,8 @@ class Orders
         //获取当前控制器名
         $this->request = \think\Request::instance();
 
+        //商户收入统计模型
+        $this->m_tistics = new \app\core\model\Tistics();
     }
 
 
@@ -85,7 +88,6 @@ class Orders
 
             //新用户验证
             $count = $this->m_order->isFirstCons($order_info['shop_id'], $order_info['user_id']);
-
             if ($order_info['is_first'] > 0 && $count > 0)
             {
                 my_log('orders',$order_info['order_sn'],$action_name,-$type,'新用户验证不通过');
@@ -145,9 +147,23 @@ class Orders
         Db::startTrans();
 
         try {
+            //判断统计表是否有当天的数据
+            $ististics = $this->m_tistics->isTistics($order_info['shop_id']);
 
+            $money = $order_info['shop_price'] - $order_info['mode_money'];
+
+            if(!$ististics){
+                //写入数据统计
+                $tistics = $this->m_tistics->insertTistics($order_info['shop_id'],$money);
+            }else{
+                //更新数据统计
+                $non = $ististics->toArray();
+                $tistics = $this->m_tistics->updateTistics($non['id'],$money);
+            }
+            
             //更新订单
-            $ret = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id' => $order_info['user_id']]);
+            $ret = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id' => $order_info['user_id'], 'tistics_id' => $tistics]);
+
             if ($order_info['offset_money'] !== 0) {
                 //修改用户钱包余额
                 $user_money = $this->m_user->userMoney($order_info['user_id'], $order_info['offset_money']);
@@ -161,7 +177,7 @@ class Orders
                 $user_coupon = 1;
             }
 
-            if (!$ret || !$user_money || !$user_coupon) {
+            if (!$tistics || !$ret || !$user_money || !$user_coupon) {
 //
                 // 回滚事务
                 Db::rollback();

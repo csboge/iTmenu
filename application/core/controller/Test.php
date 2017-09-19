@@ -33,7 +33,8 @@ class Test
         \app\core\model\CouponList      $m_couponlist,
         \app\core\model\RedCashLog      $m_redcashlog,
         \app\core\model\RedCash         $m_red,
-        \app\core\model\Goods           $m_goods
+        \app\core\model\Goods           $m_goods,
+        \app\core\model\Tistics         $m_tistics
     )
     {
         //验证授权合法
@@ -71,6 +72,14 @@ class Test
 
         //商品模型
         $this->m_goods     = $m_goods;
+        $this->m_tistics     = $m_tistics;
+
+    }
+
+    public function ta(){
+        $a = input('param.');
+        $data = $this->m_tistics->isTistics($a['shop']);
+        print_r($data->toArray());exit;
 
     }
 
@@ -284,14 +293,14 @@ class Test
 
     public function asde(){
         $stat = $this->m_red->endTime(1);
-        print_r($stat);exit;
         $time = time();
-        $data = $time-$stat;
-        $res = $data/(60*60);
+        $data = ($time-$stat)/(60*60*24);
         $rev = date('Y-m-d H:i:s',$stat);
         $red = date('Y-m-d H:i:s',$time);
-        print_r($res);echo "<br>";
         print_r($rev);echo "<br>";
+        print_r($data);echo "<br>";
 
     }
+
+
 }

@@ -90,13 +90,19 @@ class User
 
         $people = $this->m_orders->ordersPeople($shop);         //付款人数，收款笔数
 
-        $single = round($money/$people, 2);
+        $single = round($money/$people, 2);         //单笔均价
+
+        $first = count($this->m_orders->isFirst($shop));        //新用户人数
+
+        $old = count($this->m_orders->isOld($shop));            //老用户人数
 
         $arr = [
             'money'     => $money,
             'people'    => $people,
             'pens'      => $people,
-            'single'    => $single
+            'single'    => $single,
+            'first'     => $first,
+            'old'       => $old
         ];
 
         return ajaxSuccess(1,'报表详情',$arr);
