@@ -254,6 +254,11 @@ class Buy
             return jsonData(0, '红包余额不够',$is_money);
         }
 
+        $mode_money = $info['mode_rate']*($info['total_price']-$info['coupon_price']);
+        if($mode_money !== $info['mode_money']){
+            return jsonData(0, '红包发出金额不对',$mode_money);
+        }
+
         //本地 - 订单信息
         $orderinfo      = array(
 
@@ -580,6 +585,7 @@ class Buy
         if($is_money < $info['offset_money']){
             return jsonData(0, '红包余额不够',$is_money);
         }
+        $status = $info['pay_way'] === 1 ? 0 : 1;
 
         //本地 - 订单信息
         $orderinfo      = array(
@@ -622,7 +628,7 @@ class Buy
 
             'pay_way'           => $info['pay_way'],                    //支付方式
 
-            'status'            => 1,
+            'status'            => $status,
             'pay_time'          => time(),
             'created'           => time(),
             'updated'           => time()
@@ -647,7 +653,6 @@ class Buy
             'transaction_id' => '',
             'time_end' => ''
         ];
-
 
 
         Db::startTrans();
