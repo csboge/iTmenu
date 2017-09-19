@@ -110,7 +110,8 @@ class User
         if($data){
             foreach ($data as &$volue){
                 $bagid = $this->m_red->isOrder($volue['order_sn'],$shop);
-                $volue['bagid'] = $bagid;
+                $aa = $bagid->toArray();
+                $volue['bagid'] = $aa['id'];
                 if($volue['status'] == 0){
                     $volue['status'] = '待支付';
                 }elseif ($volue['status'] == 1){
