@@ -16,7 +16,8 @@ class User
      */
     public function __construct(
         Request                         $request,
-        \app\core\provider\Auth         $p_auth
+        \app\core\provider\Auth         $p_auth,
+        \app\core\model\RedCash         $m_red
     )
     {
         //验证授权合法
@@ -27,6 +28,9 @@ class User
 
         //授权服务
         $this->p_auth   = $p_auth;
+
+        //红包模型
+        $this->m_red    = $m_red;
 
     }
 
@@ -105,6 +109,7 @@ class User
             ->select();
         if($data){
             foreach ($data as &$volue){
+                $volue['bagid'] = $this->m_red->endTime();
                 if($volue['status'] == 0){
                     $volue['status'] = '待支付';
                 }elseif ($volue['status'] == 1){

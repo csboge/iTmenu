@@ -16,13 +16,14 @@ class UserAdmin extends Model
     /**
      * 查询用户（手机号）
      *
-     * @param   string   $openid        用户openid
+     * @param   string   $mobile        用户手机号
      *
      * @return  result
      *
      */
-    public function isUserAdmin($openid){
-        $rew = $this->where('openid',$openid)->field('user_id,shop_id')->find()->toArray();
+    public function isUserAdmin($mobile){
+        $rew = $this->where('mobile',$mobile)->find();
+
         return $rew;
     }
 

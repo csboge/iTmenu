@@ -97,4 +97,23 @@ class RedCash extends Model
         return $res['created'];
     }
 
+    /**
+     * 查询红包 - 返回id
+     *
+     * @param   string   $order      订单id
+     * @param   string   $shop       商户id
+     *
+     * @return  result
+     *
+     */
+    public function isOrder($order,$shop){
+        $map = [
+            'order_sn' => $order,
+            'shop_id' => $shop
+        ];
+        $res = $this->where($map)->field('id')->find()->toArray();
+
+        return $res['id'];
+    }
+
 }

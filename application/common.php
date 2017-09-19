@@ -62,22 +62,9 @@ function cut_str($str,$len,$suffix="..."){
     }
 }
 
-function ajaxError($msg = '', $url = ''){
-    $data = ['data'=>'','info'=>$msg,'status'=>0];
-    if(!empty($url)){
-        $data['url']    = $url;
-    }
-    return json($data);
-}
+function ajaxSuccess($code, $message = '', $data = []){
+    $data = ['code'=>$code,'message'=>$message,'data'=>$data];
 
-function ajaxSuccess($msg = '',$url = '', $data = []){
-    $data = ['info'=>$msg,'status'=>1];
-    if(!empty($url)){
-        $data['url']    = $url;
-    }
-    if(!empty($data)){
-        $data['data']   = $data;
-    }
     return json($data);
 }
 

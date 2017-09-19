@@ -24,8 +24,8 @@ class User
     public function __construct(
         Request                         $request,
         \app\core\provider\Auth         $p_auth,
-        \app\core\model\UserAdmin       $m_useradmin,
-        \app\core\model\User            $m_user
+        \app\core\model\User            $m_user,
+        \app\core\model\UserAdmin       $m_useradmin
     )
     {
         //验证授权合法
@@ -52,11 +52,16 @@ class User
     public function isAdmin(){
         $data = input('param.');
         if(empty($data)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>null],true);
+            return ajaxSuccess('未接收到数据');
+        }
+        $admin = $this->m_useradmin->isUserAdmin($data['mobile'])->toArray();
+        if(empty($admin)){
+            return ajaxSuccess('您不是管理员');
         }
 
+        print_r($admin);exit;
+
         $res = $this->m_user->getUserMobile($data['mobile']);
-        print_r($res);exit;
         $is_admin = $this->m_useradmin->isUserAdmin($res['openid']);
         if($is_admin){
             return json_encode(['code'=>1,'message'=>'OK','data'=>$is_admin],true);
