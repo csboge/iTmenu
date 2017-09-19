@@ -10,6 +10,9 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Db;
+use think\Loader;
+use app\index\model\Shop;
+use app\index\model\User as Users;
 
 
 class User extends Controller
@@ -79,21 +82,31 @@ class User extends Controller
     //设置管理员
     public function is_admin(){
         if (input('param.')) {
-            $where = input('param.');
-            $shop = new \app\index\model\Shop();
-            $shop_id = $shop->isShop($where['shop']);
-            if ($shop_id == 0) {
-                return false;
+            $dbs = Db::name('user_admin');
+            $data = input('post.');
+
+            if($data['password'] !== $data['repassword']){
+                return -1;
             }
-            $user = new \app\index\model\User();
-            $db = $user->userList($where['id']);
+            unset($data['repassword']);//验证完成后删除重复密码
+
+            $data['password'] = tplus_ucenter_md5($data['password'],config('auth_key'));//加密
+
+            $shop = new Shop();
+            $shop_id = $shop->isShop($data['shop']);
+            if ($shop_id == 0) {
+                return -2;
+            }
+            $user = new Users();
+            $db = $user->userList($data['id']);
             $ma = [
-                'user_id'       => $where['id'],
+                'user_id'       => $data['id'],
+                'shop_id'       => $data['shop'],
+                'password'      => $data['password'],
+                'mobile'        => $data['mobile'],
                 'nickname'      => $db['nickname'],
                 'sex'           => $db['sex'],
                 'openid'        => $db['openid'],
-                'shop_id'       => $where['shop'],
-                'mobile'        => $where['mobile'],
                 'city'          => $db['city'],
                 'province'      => $db['province'],
                 'status'        => 1,
@@ -103,25 +116,23 @@ class User extends Controller
             $a = json_encode($ma,true);
             Db::startTrans();
             try {
-                $user_admin = Db::name('user_admin')->insert($ma);
-                $user_list  = $user->userAdmin($where['id']);
-
+                $user_admin = $dbs->insert($ma);
+                $user_list  = $user->userAdmin($data['id']);
                 if(!$user_admin || !$user_list){
                     Db::rollback();
 
-                    my_log('user_admin',$user_list,'user/admin_index','-1',$a);
-                    return false;
+                    my_log('user_admin',$user_list,'user/admin_index1','-1',$a);
+                    return -3;
                 }
-
                 Db::commit();
                 return true;
             }catch(\Exception $e){
                 Db::rollback();
-                my_log('user_admin',$where['id'],'user/admin_index','-1',$a);
-                return false;
+                my_log('user_admin',$data['id'],'user/admin_index2','-1',$a);
+                return -4;
             }
         }else{
-            return false;
+            return -5;
         }
     }
 }

@@ -77,6 +77,21 @@ class User extends Model
     }
 
     /**
+     * 查询用户（mobile）
+     *
+     * @param   string   mobile     用户手机号
+     *
+     * @return  result
+     *
+     */
+    public function getUserMobile($mobile)
+    {
+        $row = $this->where('openid', trim($mobile))->find();
+
+        return $row;
+    }
+
+    /**
      * 查询用户余额
      *
      * @param   string   $userid     用户开放唯一标识

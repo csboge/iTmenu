@@ -123,29 +123,50 @@
     
     function is_admin(id) {
         //prompt层
-        layer.prompt({title: '输入商户id，并确认', formType: 3}, function(pass, index){
+        layer.prompt({title: '输入商户id，并确认', formType: 3}, function(shop, index){
             layer.close(index);
-            layer.prompt({title: '输入电话号码，并确认', formType: 3}, function(mobile, index){
+            layer.prompt({title: '请输入手机号', formType: 3}, function(mobile, index) {
                 layer.close(index);
-                var url = "{:url('User/is_admin')}";
-                $.ajax({
-                    url:url,
-                    type:"post",
-                    data:{shop:pass,id:id,mobile:mobile},
-                    success:function (res) {
-                        console.log(res);
-                        if(res === true){
-                            layer.msg('设置成功',{icon:1,time:500});
-                            setTimeout(function () {
-                                location.href = "{:url('user/admin_index')}"
-                            },1000)
-                        }else {
-                            layer.msg('设置失败',{icon:2,time:500});
-                            setTimeout(function () {
-                                location.href = "{:url('user/index')}"
-                            },1000)
-                        }
-                    }
+                layer.prompt({title: '请输入密码', formType: 1}, function (password, index) {
+                    layer.close(index);
+                    layer.prompt({title: '请确认密码', formType: 1}, function (repassword, index) {
+                        layer.close(index);
+                        var url = "{:url('User/is_admin')}";
+                        $.ajax({
+                            url: url,
+                            type: "post",
+                            data: {shop: shop, id: id,mobile:mobile, password: password, repassword: repassword},
+                            success: function (res) {
+                                console.log(res);
+                                if (res === true) {
+                                    layer.msg('设置成功', {icon: 1, time: 1000});
+                                    setTimeout(function () {
+                                        location.href = "{:url('user/admin_index')}"
+                                    }, 1500)
+                                } else if(res === -1){
+                                    layer.msg('两次密码不同', {icon: 2, time: 1000});
+                                    setTimeout(function () {
+                                        location.href = "{:url('user/index')}"
+                                    }, 1500)
+                                } else if(res === -2){
+                                    layer.msg('未找到此商户', {icon: 2, time: 1000});
+                                    setTimeout(function () {
+                                        location.href = "{:url('user/index')}"
+                                    }, 1500)
+                                } else if(res === -5){
+                                    layer.msg('未接收到值', {icon: 2, time: 1000});
+                                    setTimeout(function () {
+                                        location.href = "{:url('user/index')}"
+                                    }, 1500)
+                                } else {
+                                    layer.msg('设置失败', {icon: 2, time: 1000});
+                                    setTimeout(function () {
+                                        location.href = "{:url('user/index')}"
+                                    }, 1500)
+                                }
+                            }
+                        })
+                    })
                 })
             })
         });

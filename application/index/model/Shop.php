@@ -15,7 +15,7 @@ class Shop extends Model
         return $name;
     }
 
-    //验证商品是否存在
+    //验证商户是否存在
     public function isShop($id){
         $name = $this->where('id',$id)->count();
         return $name;
