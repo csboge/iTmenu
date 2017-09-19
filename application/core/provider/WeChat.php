@@ -94,7 +94,6 @@ class WeChat
      */
     public function checkSign($post_sign, $post_data)
     {
-        my_log('orders',1,'wechat/checkSign',-1,'支付回调');
         $weixinpay      = new \app\core\provider\WeixinPay(APPID, NULL, MCHID, SIGNKEY, NULL, NULL, NULL);
 
         unset($post_data['sign']);
@@ -108,7 +107,6 @@ class WeChat
      * 给微信发送确认订单金额和签名正确，SUCCESS信息 -xzz0521
      */
     public function return_success(){
-        my_log('orders',1,'wechat/return_success',-1,'给微信发送确认订单金额和签名正确');
         $return['return_code'] = 'SUCCESS';
         $return['return_msg'] = 'OK';
         $xml_post = '<xml>
