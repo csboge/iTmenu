@@ -81,4 +81,42 @@ class Orders extends Model
 
         return $data;
     }
+
+    /**
+     * 查询总额
+     *
+     * @param   string   $shop_id     商户id
+     *
+     * @return  string    总金额
+     *
+     */
+    public function ordersMoney($shop_id)
+    {
+        $map = [
+            'shop_id' => $shop_id,
+            'status' => 1
+        ];
+        $money = $this->where($map)->sum('shop_price');
+
+        return $money;
+    }
+
+    /**
+     * 查询付款人数
+     *
+     * @param   string   $shop_id     商户id
+     *
+     * @return  string    总金额
+     *
+     */
+    public function ordersPeople($shop_id)
+    {
+        $map = [
+            'shop_id' => $shop_id,
+            'status' => 1
+        ];
+        $people = $this->where($map)->count();
+
+        return $people;
+    }
 }

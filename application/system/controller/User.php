@@ -25,7 +25,8 @@ class User
         Request                         $request,
         \app\core\provider\Auth         $p_auth,
         \app\core\model\User            $m_user,
-        \app\core\model\UserAdmin       $m_useradmin
+        \app\core\model\UserAdmin       $m_useradmin,
+        \app\core\model\Orders          $m_orders
     )
     {
         //验证授权合法
@@ -42,6 +43,9 @@ class User
 
         //管理员模型
         $this->m_useradmin      = $m_useradmin;
+
+        //订单模型
+        $this->m_orders         = $m_orders;
     }
 
     /***
@@ -70,6 +74,38 @@ class User
         ];
         return ajaxSuccess(1,'登录成功',$res);
     }
+
+    /***
+     * 收益 -- 总额
+     * @参数 shop_id           商户id
+     */
+    public function totalMoney(){
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+        if(empty($shop)){
+            return ajaxSuccess(0,'未接收到数据',null);
+        }
+
+        $money = $this->m_orders->ordersMoney($shop);           //店铺总收益
+
+        $people = $this->m_orders->ordersPeople($shop);         //付款人数，收款笔数
+
+        $single = round($money/$people, 2);
+
+        $arr = [
+            'money'     => $money,
+            'people'    => $people,
+            'pens'      => $people,
+            'single'    => $single
+        ];
+
+        return ajaxSuccess(1,'报表详情',$arr);
+    }
+
+
+
+
+
 
 
 }

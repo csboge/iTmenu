@@ -344,7 +344,6 @@ class Buy
     //微信支付 回调
     public function notify()
     {
-        my_log('orders',1,'buy/notify',0,'微信回调第一行');
 
         /*  微信官方提醒：
          *  商户系统对于支付结果通知的内容一定要做【签名验证】,
@@ -386,7 +385,6 @@ class Buy
         $post_data = $this->xmlToArray($xmlstring);
 
 
-        my_log('orders',$post_data['out_trade_no'],$action_name,0,'微信回调过来的订单号');
 
         //实际支付金额
         $pay_price      = $post_data['total_fee'];  
@@ -407,7 +405,6 @@ class Buy
 
             if(!$order_info) { return 0; }
 
-            my_log('orders',$order_info['status'],$action_name,0,'微信回调后查询的订单状态');
             //验证： 订单支付金额 -- 订单状态
             $order_pay_price        = floatval($order_info['pay_price'] * 100); 
             $is_pay_price           = ($order_pay_price == $pay_price) ? true : false;
