@@ -166,10 +166,27 @@ class Goods extends Controller
 
     //菜品列表
     public function goods_index(){
-        $map = [
-            'hd_status' => 1,
-            'shop_id' => session('shop_id')
-        ];
+        $where = input('param.');
+        $map = [];
+        if ($where) {
+            $start = strtotime($where['start']);
+            $end = strtotime($where['end']);
+            $username = $where['username'];
+            if ($start && $end) {
+                $map['created'] = array(['>',$start],['<',$end],'and');
+
+            }elseif ($start){
+                $map['created'] = array('>', $start);
+
+            }elseif ($end){
+                $map['created'] = array('<', $end);
+            }
+            if ($username) {
+                $map['title'] = array('like', "%{$username}%");
+            }
+        }
+        $map['hd_status'] = 1;
+        $map['shop_id'] = session('shop_id');
         $data = Db::name('goods')->order('rec desc')->order('rank asc')->where($map)->paginate(1000);
         $count = count_list('goods','shop_id',session('shop_id'));
         $title = session('shop_title');
