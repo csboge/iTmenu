@@ -309,7 +309,6 @@ class Buy
         //创建订单
         $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
-        my_log('orders',$ordersn,$action_name,-1,'创建订单');
 
         if (!$result['order']) {
             return jsonData(0, '订单 - 创建失败',$result);
