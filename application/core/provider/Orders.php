@@ -154,7 +154,7 @@ class Orders
 
             if(!$ististics){
                 //写入数据统计
-                $tistics = $this->m_tistics->insertTistics($order_info['shop_id'],$money);
+                $tistics = $this->m_tistics->insertTistics($order_info['shop_id'],$order_info['user_id'],$money);
                 my_log('orders',$tistics,$action_name,-1,'写入数据统计');
             }else{
                 //更新数据统计

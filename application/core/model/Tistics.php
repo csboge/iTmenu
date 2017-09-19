@@ -34,14 +34,16 @@ class Tistics extends Model
      * 新增商户统计表
      *
      * @param   string   $shopid    商户id
+     * @param   string   $userid    用户id
      * @param   string   $money     订单金额
      *
      * @return   int       id
      *
      */
-    public function insertTistics($shopid,$money){
+    public function insertTistics($shopid,$userid,$money){
         $map = [
             'shop_id'       => $shopid,
+            'user_id'       => $userid,
             'money'         => $money,
             'statistics'    => date('Y-m-d',time()),
             'created'       => time()
