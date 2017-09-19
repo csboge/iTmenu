@@ -185,7 +185,7 @@ class Orders
                 Db::rollback();
                 //订单错误
 
-                my_log('orders',$order_info['order_sn'],$action_name,-1,'执行出错~~事务回滚1ret:'.$ret.';user_money:'.$user_money.';user_coupon:'.$user_coupon);
+                my_log('orders',$order_info['order_sn'],$action_name,-1,'执行出错~~事务回滚1ret:'.$ret.';user_money:'.$user_money.';user_coupon:'.$user_coupon.';tistics:'.$tistics);
 
                 $this->m_order->error_log($order_info['order_sn']);
 
