@@ -52,21 +52,22 @@ class User
     public function isAdmin(){
         $data = input('param.');
         if(empty($data)){
-            return ajaxSuccess('未接收到数据');
+            return ajaxSuccess(0,'未接收到数据',null);
         }
-        $admin = $this->m_useradmin->isUserAdmin($data['mobile'])->toArray();
+        $admin = $this->m_useradmin->isUserAdmin($data['mobile']);
         if(empty($admin)){
-            return ajaxSuccess('您不是管理员');
+            return ajaxSuccess(0,'您不是管理员',null);
         }
+        $admin = $admin->toArray();
 
-        print_r($admin);exit;
-
-        $res = $this->m_user->getUserMobile($data['mobile']);
-        $is_admin = $this->m_useradmin->isUserAdmin($res['openid']);
-        if($is_admin){
-            return json_encode(['code'=>1,'message'=>'OK','data'=>$is_admin],true);
-        }else{
-            return json_encode(['code'=>0,'message'=>'未查到数据','data'=>null],true);
+        $data['password'] = tplus_ucenter_md5($data['password'],config('auth_key'));//加密
+        if($admin['password'] !== $data['password']){
+            return ajaxSuccess(0,'密码错误',null);
         }
+        $res = [
+            'shop_id' => $admin['shop_id'],
+            'user_id' => $admin['id']
+        ];
+        return ajaxSuccess(1,'登录成功',$res);
     }
 }

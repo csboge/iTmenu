@@ -109,7 +109,7 @@ class User
             ->select();
         if($data){
             foreach ($data as &$volue){
-                $volue['bagid'] = $this->m_red->endTime();
+                $volue['bagid'] = $this->m_red->isOrder($data['order_sn'],$shop);
                 if($volue['status'] == 0){
                     $volue['status'] = '待支付';
                 }elseif ($volue['status'] == 1){

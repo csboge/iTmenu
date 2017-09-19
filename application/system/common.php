@@ -70,6 +70,16 @@ function is_coupon($user_id,$coupon_id,$shop_id){
     return $data;
 }
 
+
+/**
+ * 系统非常规MD5加密方法
+ * @param  string $str 要加密的字符串
+ * @return string
+ */
+function tplus_ucenter_md5($str, $key = 'T+orTplus'){
+    return '' === $str ? '' : md5(sha1($str) . $key);
+}
+
 /***
  * 判断 -- 是否已领完优惠券
  * @参数 user_id    用户id
