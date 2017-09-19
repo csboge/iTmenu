@@ -79,13 +79,11 @@ class Orders
 
         $pay_time = time();
         $data = ['status' => 1, 'pay_time' => $pay_time, 'updated' => $pay_time, 'transaction_id' => $post_data['transaction_id'], 'time_end' => $post_data['time_end']];
-        my_log('orders',$order_info['order_sn'],$action_name,-1,'检查3');
         if (!empty($type))
         {
             /**
              * 订单信息验证
              */
-            my_log('orders',$order_info['order_sn'],$action_name,-1,'检查4');
             //新用户验证
             $count = $this->m_order->isFirstCons($order_info['shop_id'], $order_info['user_id']);
             if ($order_info['is_first'] > 0 && $count > 0)
@@ -143,13 +141,11 @@ class Orders
             }
 
         }
-        my_log('orders',$order_info['order_sn'],$action_name,-1,'检查');
         Db::startTrans();
 
         try {
-            my_log('orders',$order_info['order_sn'],$action_name,-1,'检查2');
             //判断统计表是否有当天的数据
-            $ististics = $this->m_tistics->isTistics($order_info['shop_id']);
+            $ististics = $this->m_tistics->isTistics($order_info['shop_id'])?$this->m_tistics->isTistics($order_info['shop_id']):0;
             my_log('orders',$ististics,$action_name,-1,'判断统计表是否有当天的数据');
             $money = $order_info['shop_price'] - $order_info['mode_money'];
 
