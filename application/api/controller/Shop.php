@@ -145,7 +145,7 @@ class Shop
         //获得商店id
         $shop     =  $this->p_auth->getShopId();
 
-        $data = $this->p_wechat->code($shop);
+        $data = GET_IMG_URL.$this->p_wechat->code($shop);
 
         return jsonData(1, 'OK', $data);
     }
