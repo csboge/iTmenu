@@ -14,7 +14,8 @@ class Shop
      */
     public function __construct(
         Request                         $request,
-        \app\core\provider\Auth         $p_auth
+        \app\core\provider\Auth         $p_auth,
+        \app\core\provider\WeChat       $p_wechat
     )
     {
         //验证授权合法
@@ -24,7 +25,10 @@ class Shop
         ]);
 
         //授权服务
-        $this->p_auth   = $p_auth;
+        $this->p_auth           = $p_auth;
+
+        //微信服务
+        $this->p_wechat         = $p_wechat;
 
     }
 
@@ -132,5 +136,17 @@ class Shop
         }else{
             return jsonData(1, '未查到到数据', []);
         }
+    }
+
+    /***
+     * 商户 - 优惠券
+     */
+    public function cou(){
+        //获得商店id
+        $shop     =  $this->p_auth->getShopId();
+
+        $data = $this->p_wechat->code($shop);
+
+        return jsonData(1, 'OK', $data);
     }
 }

@@ -25,8 +25,14 @@ define('SIGNKEY', 'csboge1073payKEY2913epoqiwpemans');	//*必填*: 密钥
  */
 class WeChat
 {
+    private     $p_auth;
 
-    public function __construct(){}
+    public function __construct(){
+
+        //授权服务
+        //订单模型
+        $this->p_auth = new \app\core\provider\Auth();
+    }
     
 
 
@@ -123,10 +129,42 @@ class WeChat
      * @param   int   $shop_id       商户id
      *
      */
-    public function code($shop_id){
-        $access_token = 'EAch24tpZcZskK8ohcYQSXonojHlC85Ol9PeiWOG6n823cRATKM2HDd82FuSAuI74PVtSYExZHtHzMbySoTz_7bVFhtpvGgzWCDZxt1KDrSMkLeBJLCENiXcL6NutTyWQDVhAFAKXP';
-        $path = 'https://demo.ai-life.me';
-        $width = 430;
 
+    public function code($shop_id){
+
+        $session        = $this->p_auth->session();
+        $access_token = $session['access_token'];
+
+        $path = "https://demo.ai-life.me";
+        $width = 430;
+        $scene = "shop_id=".$shop_id;
+
+        $url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=$access_token";
+
+        $data = [
+            'path'      => $path,
+            'width'     => $width,
+            'scene'     => $scene
+        ];
+
+        $post_data = json_encode($data);
+
+
+        $result= api_notice_increment($url,$post_data);
+
+        $url = 'picture/code/' . date('Ymd', time()) . '/';
+        $PATH = ROOT_PATH . 'Uploads/picture/code/' . date('Ymd', time()) . '/';
+
+        if (!is_dir($PATH)) {
+            mkdir($PATH, 0777, true);
+        }//判断目录是否存在，不存在则创建
+        $name = md5(rand(100, 999) . time());
+        $imgPath = $PATH . $name . '.jpeg';
+        file_put_contents($imgPath, $result);
+
+        $paths = $url . $name . '.jpeg';
+
+        return $paths;
     }
+
 }

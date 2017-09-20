@@ -34,7 +34,8 @@ class Test
         \app\core\model\RedCashLog      $m_redcashlog,
         \app\core\model\RedCash         $m_red,
         \app\core\model\Goods           $m_goods,
-        \app\core\model\Tistics         $m_tistics
+        \app\core\model\Tistics         $m_tistics,
+        \app\core\provider\WeChat       $p_wechat
     )
     {
         //验证授权合法
@@ -73,11 +74,18 @@ class Test
         //商品模型
         $this->m_goods     = $m_goods;
         $this->m_tistics     = $m_tistics;
+        $this->p_wechat     = $p_wechat;
 
     }
 
+    public function aased(){
+        $shop_id = 3;
+        $data = $this->p_wechat->code($shop_id);
+        print_r($data);exit;
+    }
+
     public function ta(){
-        $access_token = 'zq5fJz3SsAJ2m8jNIqlBEJY2KmdTIOKVggfYiPuoxuhjiSneqBaFjvjVGF6t_OjoPZ__kQE43e8G-xWGdpZVqlLh8DxvRaNsPNsmv_qWw0pzc-0PSulDfKk1Zj3XJk5QVZYdAGAEIH';
+        $access_token = 'EUmkPotuDteHFu-_lNdFfgEeIhE0L76qbGPZnhHVoPGEy_x0roJ_VHu_lR67Ps1uOzLbWw5Mx7xVsUK7QNwxXzG5HJ_MWc6YksmJCBuEpYMKEWgAAAPJB';
         $path = "https://demo.ai-life.me";
         $width = 430;
         $shop_id = "shop_id=3";
@@ -108,9 +116,11 @@ class Test
 //        echo "<img src='{$result}' />";
 
 //        $string = gzdecode ($result);
-        return $result;
+        //return $result;
 
-
+        //$content=addslashes($result);
+        header('Content-type: image/jpg');
+        echo $result;
     }
 
     function api_notice_increment($url, $data){
