@@ -29,6 +29,16 @@ class Auth
         return input('param.shop_id/d');
     }
 
+    /***
+     * 获得商店id
+     *
+     * @return array
+     */
+    public function getBagid()
+    {
+        return input('param.bag_id/d');
+    }
+
 
     /***
      * 获得合法授权

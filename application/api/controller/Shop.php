@@ -142,10 +142,12 @@ class Shop
      * 商户 - 优惠券
      */
     public function cou(){
-        //获得商店id
-        $shop     =  $this->p_auth->getShopId();
 
-        $data = GET_IMG_URL.$this->p_wechat->code($shop);
+        $shop      =  $this->p_auth->getShopId();//获得商店id
+        
+        $bagid     =  $this->p_auth->getBagid();//获得红包id
+
+        $data = GET_IMG_URL.$this->p_wechat->code($shop,$bagid);
 
         return jsonData(1, 'OK', $data);
     }
