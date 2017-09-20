@@ -67,9 +67,9 @@ class Menu
             }
             $list['cate_list'] = $res;
             $list['mob_list'] = $rew;
-            return jsonData(200, 'OK', $list);
+            return jsonData(1, 'OK', $list);
         }else{
-            return jsonData(405, '1未查到数据', '');
+            return jsonData(0, '1未查到数据', '');
         }
     }
 
@@ -77,7 +77,6 @@ class Menu
      * 获取 - 菜品详情
      * @参数 cat_id       分类id (可不传)
      * @参数 package      套餐id (可不传)
-
      */
     public function goods_list(){
         //获得商店id
@@ -120,10 +119,41 @@ class Menu
                 $value['name'] = $value['title'];
                 unset($value['title']);
             }
-            return jsonData(200, 'OK', $res);
+            return jsonData(1, 'OK', $res);
         }else{
-            return jsonData(405, '未查到数据', '');
+            return jsonData(0, '未查到数据', '');
         }
+    }
+
+
+    /***
+     * 获取 - 提示信息
+     * @参数 cat_id       分类id (可不传)
+     * @参数 package      套餐id (可不传)
+     */
+    public function tishi(){
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+        $data = [
+            'gonggao' => [
+                '10号桌点餐牛肉炒面',
+                '10号桌点餐牛肉炒面',
+                '10号桌点餐牛肉炒面',
+                '10号桌点餐牛肉炒面',
+                '10号桌点餐牛肉炒面',
+                '10号桌点餐牛肉炒面',
+                '10号桌点餐牛肉炒面',
+                '10号桌点餐牛肉炒面',
+                '10号桌点餐牛肉炒面',
+                '10号桌点餐牛肉炒面',
+            ],
+            'avatar' => [
+                'https://wx.qlogo.cn/mmopen/vi_32/QXsjJ6a9S6IZacPhoShtGlnzdK2QLefIZl8ezX2Q35lwjictRE6ABlvPCBibASXWB9FvmgezySPkvrSC3S9BCrIQ/0',
+                'https://wx.qlogo.cn/mmopen/vi_32/CoHtDnx1Iw8jcsUsibicc3dkOic6TybmQuh0Vq6LAWUzhbYvWibGbR6ybBKRN8PDOTib5svtegBENoSs7tKjGUXiaWnA/0',
+                'https://wx.qlogo.cn/mmopen/vi_32/DG5T7nYdwEqAPNL2IjicAia5XpfjXLzLN5ofSfwsGWmnW8B3RKTfkQiaNwWORMxGtxQ9akib51FDzTrJ70AGZxAhSg/0'
+            ]
+        ];
+        return jsonData(1, 'OK', $data);
     }
 
 }
