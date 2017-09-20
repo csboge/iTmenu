@@ -32,12 +32,9 @@ class Banner extends Model
         ];
 
         $row = $this->where($map)->field('image')->select();
-        $data = [];
-        foreach ($row as $volue){
-            $data[] = $volue->toArray();
-        }
 
-        return $data;
+
+        return json_decode(json_encode($row), true);
     }
 
 }

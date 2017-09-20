@@ -101,9 +101,9 @@ class User extends Model
      */
     public function isMoney($userid)
     {
-        $row = $this->where('id',$userid)->field('money')->find()->toArray();
+        $row = $this->where('id',$userid)->field('money')->find();
 
-        return $row['money'];
+        return json_decode(json_encode($row), true);
     }
 
     /**

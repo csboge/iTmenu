@@ -31,12 +31,9 @@ class RedCashLog extends Model
         ];
 
         $row = $this->where($map)->order('id desc')->field('user_id,audio,menoy,created')->select();
-        $data = [];
-        foreach ($row as $volue){
-            $data[] = $volue->toArray();
-        }
 
-        return $data;
+
+        return json_decode(json_encode($row), true);
     }
 
     /**

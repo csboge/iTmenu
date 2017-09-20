@@ -23,9 +23,9 @@ class Shop extends Model
      *
      */
     public function isShopMoney($shopid){
-        $row = $this->where('id',$shopid)->field('is_first')->find()->toArray();
+        $row = $this->where('id',$shopid)->field('is_first')->find();
 
-        return $row['is_first'];
+        return json_decode(json_encode($row), true);
     }
 
     /**
@@ -37,9 +37,9 @@ class Shop extends Model
      *
      */
     public function getShop($shopid){
-        $data = $this->where('id',$shopid)->field('title,mobile,tel,adress,printer')->find()->toArray();
+        $data = $this->where('id',$shopid)->field('title,mobile,tel,adress,printer')->find();
 
-        return $data;
+        return json_decode(json_encode($data), true);
     }
 
 
