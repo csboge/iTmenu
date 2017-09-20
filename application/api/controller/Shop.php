@@ -51,7 +51,7 @@ class Shop
             $data['video'] = GET_VIDEO_URL.$data['video'];
             return jsonData(1, 'OK', $data);
         }else{
-            return jsonData(0, '未查到到数据', null);
+            return jsonData(0, '未查到到数据', []);
         }
     }
 
@@ -82,7 +82,7 @@ class Shop
             }
             return jsonData(1, 'OK', $data);
         }else{
-            return jsonData(0, '未查到到数据', null);
+            return jsonData(0, '未查到到数据', []);
         }
     }
 
@@ -130,7 +130,7 @@ class Shop
             }
             return jsonData(1, 'OK', $data);
         }else{
-            return jsonData(1, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', []);
         }
     }
 }
