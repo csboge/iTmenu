@@ -33,7 +33,6 @@ class Shop
     }
 
 
-
     /***
      * 商户 - 信息
      */
@@ -147,8 +146,24 @@ class Shop
 
         $bagid     =  $this->p_auth->getBagid();//获得红包id
 
-        $data = GET_IMG_URL.$this->p_wechat->code($shop,$bagid);
+        $data = GET_IMG_URL.$this->p_wechat->code($shop,$bagid); //获取微信小程序二维码
 
-        return jsonData(1, 'OK', $data);
+
+
+        header('content-type:image/png');
+
+        $A = GET_IMG_URL."picture/1.jpeg";
+        $B = GET_IMG_URL."picture/2.jpg";
+
+        $im1 = imagecreatefromstring(file_get_contents($A));
+        $im2 = imagecreatefromstring(file_get_contents($B));
+
+        imagecopymerge($im1, $im2, 110, 390, 0, 0, imagesx($im2), imagesy($im2), 100);
+
+        imagepng($im1);
+        imagedestroy($im1);
+
+//        return jsonData(1, 'OK', $data);
     }
+
 }
