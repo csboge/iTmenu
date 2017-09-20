@@ -133,6 +133,7 @@ class WeChat
     public function code($shop_id,$bagid){
 
         $session        = $this->p_auth->session();
+        return $session;
         $date = json_encode($session);
         my_log('orders',$date,'wechat/code',0,'新用户验证不通过');
         $access_token = $session['access_token'];
