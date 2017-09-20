@@ -162,14 +162,14 @@ class Orders
             //更新订单
             $ret = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id' => $order_info['user_id']]);
             my_log('orders',$order_info['offset_money'],$action_name,0,'修改用户钱包余额1');
-            if ($order_info['offset_money'] != 0) {
+            if (empty($order_info['offset_money'])) {
                 //修改用户钱包余额
                 $user_money = $this->m_user->userMoney($order_info['user_id'], $order_info['offset_money']);
                 my_log('orders',$user_money,$action_name,-1,'修改用户钱包余额2');
             } else {
                 $user_money = 1;
             }
-            if ($order_info['coupon_list_id'] != 0) {
+            if (empty($order_info['coupon_list_id'])) {
                 //修改用户优惠券使用记录
                 $user_coupon = $this->m_couponlist->CouponStatus($order_info['user_id'], $order_info['coupon_list_id']);
 
