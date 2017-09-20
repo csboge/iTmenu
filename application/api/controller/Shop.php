@@ -144,7 +144,7 @@ class Shop
     public function cou(){
 
         $shop      =  $this->p_auth->getShopId();//获得商店id
-        
+
         $bagid     =  $this->p_auth->getBagid();//获得红包id
 
         $data = GET_IMG_URL.$this->p_wechat->code($shop,$bagid);
