@@ -717,7 +717,7 @@ class Buy
     public function isFirst()
     {
         //用户信息
-        $user['userid']    = 1;//$this->p_auth->session();
+        $user['userid']    = $this->p_auth->session();
 
         //获得商店id
         $shop     = $this->p_auth->getShopId();
