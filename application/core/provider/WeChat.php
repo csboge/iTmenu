@@ -130,14 +130,18 @@ class WeChat
      *
      */
 
-    public function code($shop_id){
+    public function code($shop_id,$bagid){
 
         $session        = $this->p_auth->session();
         $access_token = $session['access_token'];
 
         $path = "https://demo.ai-life.me";
         $width = 430;
-        $scene = "shop_id=".$shop_id;
+        $map  = [
+            'shop_id'   => $shop_id,
+            'bagid'     => $bagid
+        ];
+        $scene = json_encode($map);
 
         $url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=$access_token";
 
