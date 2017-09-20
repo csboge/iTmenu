@@ -38,25 +38,6 @@ function getImgUrl($id,$field = 'path'){
 }
 
 /***
- * 上传 -- ceshi
- * @参数 file      文件
- */
-function upload_video($file){
-    $info = $file
-        ->validate([
-            'size'=>145678,
-            'ext'=>'png,jpg,jpeg,gif',
-        ])
-        ->move(ROOT_PATH . 'Uploads' . DS . 'video');
-    if($info){
-        // 成功上传后 获取上传信息
-        $path = 'video/'.$info->getSaveName();
-        return $path;
-    }else{
-        return false;
-    }
-}
-/***
  * 上传 -- base64
  * @参数 file      文件
  */
