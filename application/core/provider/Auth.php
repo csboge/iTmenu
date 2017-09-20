@@ -30,7 +30,7 @@ class Auth
     }
 
     /***
-     * 获得商店id
+     * 获得红包id
      *
      * @return array
      */

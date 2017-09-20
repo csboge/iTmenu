@@ -133,14 +133,10 @@ class WeChat
     public function code($shop_id,$bagid){
 
         $access_token = $this->asscessToken();
-
         $path = "https://demo.ai-life.me";
         $width = 430;
-        $map  = [
-            'shop_id'   => $shop_id,
-            'bagid'     => $bagid
-        ];
-        $scene = json_encode($map);
+
+        $scene = 'shop_id='.$shop_id.'&bagid='.$bagid;
 
         $url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=$access_token";
 
@@ -153,17 +149,17 @@ class WeChat
         $post_data = json_encode($data);
 
 
-        $result= api_notice_increment($url,$post_data);
+        $result= api_notice_increment($url,$post_data);     //获取微信小程序二维码
 
-        $url = 'picture'.DS.'code'.DS . date('Ymd', time()) . DS;
-        $PATH = ROOT_PATH . 'Uploads'.DS.'picture'.DS.'code'. DS . date('Ymd', time()) . DS;
+        $url = 'picture/code/' . date('Ymd', time()) . '/';
+        $PATH = ROOT_PATH . 'Uploads/picture/code/' . date('Ymd', time()) . '/';
 
         if (!is_dir($PATH)) {
             mkdir($PATH, 0777, true);
         }//判断目录是否存在，不存在则创建
         $name = md5(rand(100, 999) . time());
         $imgPath = $PATH . $name . '.jpeg';
-        file_put_contents($imgPath, $result);
+        file_put_contents($imgPath, $result);       //保存图片
 
         $paths = $url . $name . '.jpeg';
 
