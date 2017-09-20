@@ -84,7 +84,7 @@ class Menu
 
         $data = input('post.');
         if(empty($data)){
-            return jsonData(404, '未接收到数据', '');
+            return jsonData(0, '未接收到数据', '');
         }
         if(!empty($data['package'])){
             $map = [

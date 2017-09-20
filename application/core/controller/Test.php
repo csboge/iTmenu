@@ -77,10 +77,64 @@ class Test
     }
 
     public function ta(){
-        $a = input('param.');
-        $data = $this->m_order->upTistics($a['orders'],$a['userid'],$a['tistics']);
-        print_r($data);exit;
+        $access_token = 'ZHRodunZs-THI9-9PXdZpcEV--faku3iw0klUuFGTDadfHV7AFgs5fMjgJfwqUZtw-JRtjLe9MFrYltTHRTZLPrqZFbq9dwWZ11YMDAABeiQyZgecZ1I8CTryyl9Bov4AKDjABAQAT';
+        $path = "https://demo.ai-life.me";
+        $width = 430;
+        $shop_id = "shop_id=3";
 
+        $url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=$access_token";
+
+        $post_data = '{"path":"https://demo.ai-life.me","width":430,"scene":"shop_id=3"}';
+
+//        echo $post_data;exit;
+
+        $result=$this->api_notice_increment($url,$post_data);
+
+//        $data = upload_video($result);
+//        $chunk_size = (integer)hexdec(fgets( $socket_fd, 4096 ) );
+//        while(!feof($socket_fd) && $chunk_size > 0)
+//        {
+//            $bodyContent .= fread( $socket_fd, $chunk_size );
+//            fread( $socket_fd, 2 ); // skip /r/n
+//            $chunk_size = (integer)hexdec(fgets( $socket_fd, 4096 ) );
+//        }
+
+//        $filepath = ROOT_PATH . 'Uploads/picture/' . date('Ymd', time()) . '/';
+
+//        $id = base64_img($result,'jpeg');
+//        $filepath = ImgUrl($id);
+//        file_put_contents($filepath, $result);
+
+//        echo "<img src='{$result}' />";
+
+//        $string = gzdecode ($result);
+        return $result;
+
+
+    }
+
+    function api_notice_increment($url, $data){
+        $ch = curl_init();
+        $header = array("Accept-Charset: utf-8");
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_AUTOREFERER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $tmpInfo = curl_exec($ch);
+        //     var_dump($tmpInfo);
+        //    exit;
+        if (curl_errno($ch)) {
+            return false;
+        }else{
+            // var_dump($tmpInfo);
+            return $tmpInfo;
+        }
     }
 
     public function tib()

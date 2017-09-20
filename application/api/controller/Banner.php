@@ -37,7 +37,7 @@ class Banner
         $shop     = $this->p_auth->getShopId();
 
         $where = input('param.');
-        if(empty($where))return jsonData(404, '未接收到数据', null);
+        if(empty($where))return jsonData(0, '未接收到数据', []);
         if($where['cat'] == 1) {
             $map = [
                 'shop_id' => $shop,
@@ -74,7 +74,7 @@ class Banner
             }
             return jsonData(1, 'OK', $data);
         }else{
-            return jsonData(405, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', []);
         }
 
     }

@@ -24,6 +24,8 @@ if (!function_exists('getable')) {
 }
 
 
+
+
 //获取图片
 function getImgUrl($id,$field = 'path'){
     $db = new \think\Db;
@@ -33,6 +35,66 @@ function getImgUrl($id,$field = 'path'){
     else
         $imgUrl = false;
     return $imgUrl;
+}
+
+/***
+ * 上传 -- ceshi
+ * @参数 file      文件
+ */
+function upload_video($file){
+    $info = $file
+        ->validate([
+            'size'=>145678,
+            'ext'=>'png,jpg,jpeg,gif',
+        ])
+        ->move(ROOT_PATH . 'Uploads' . DS . 'video');
+    if($info){
+        // 成功上传后 获取上传信息
+        $path = 'video/'.$info->getSaveName();
+        return $path;
+    }else{
+        return false;
+    }
+}
+/***
+ * 上传 -- base64
+ * @参数 file      文件
+ */
+function base64_img($base_64,$type='')
+{
+    if(!$type){
+        preg_match('/^(data:\s*image\/(\w+);base64,)/', $base_64, $result);
+        $type = $result[2];//图片格式
+    }
+    $pattern = '/data:.*base64/U';
+    $res = preg_replace($pattern, '', $base_64);
+    $str = base64_decode($res);
+    $md5 = md5($str);
+    $sha1 = sha1($str);
+    $db = new \think\Db;
+    $re = $db::name('picture')->where(['md5' => $md5, 'sha1' => $sha1])->find();
+    if ($re) {
+        return $re['id'];
+    } else {
+        $url = 'picture/' . date('Ymd', time()) . '/';
+        $PATH = ROOT_PATH . 'Uploads/picture/' . date('Ymd', time()) . '/';
+        if (!is_dir($PATH)) {
+            mkdir($PATH, 0777, true);
+        }//判断目录是否存在，不存在则创建
+        $name = md5(rand(100, 999) . time());
+        $imgPath = $PATH . $name . '.' . $type;
+        file_put_contents($imgPath, $str);
+        $data = [
+            'path' => $url . $name . '.' . $type,
+            'md5' => $md5,
+            'sha1' => $sha1,
+            'status' => 1,
+            'create_time' => time(),
+        ];
+        $id = $db::name('picture')->insertGetId($data);
+        return $id;
+    }
+
 }
 
 

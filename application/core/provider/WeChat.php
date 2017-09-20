@@ -116,4 +116,17 @@ class WeChat
         echo $xml_post;
         exit;
     }
+
+    /***
+     * 生成带参小程序码
+     *
+     * @param   int   $shop_id       商户id
+     *
+     */
+    public function code($shop_id){
+        $access_token = 'EAch24tpZcZskK8ohcYQSXonojHlC85Ol9PeiWOG6n823cRATKM2HDd82FuSAuI74PVtSYExZHtHzMbySoTz_7bVFhtpvGgzWCDZxt1KDrSMkLeBJLCENiXcL6NutTyWQDVhAFAKXP';
+        $path = 'https://demo.ai-life.me';
+        $width = 430;
+
+    }
 }

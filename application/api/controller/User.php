@@ -91,7 +91,7 @@ class User
         $shop     = $this->p_auth->getShopId();
 
         $where = input('param.');
-        if(empty($where))return jsonData(404, '未接收到数据', null);
+        if(empty($where))return jsonData(0, '未接收到数据', null);
         $map = [
             'user_id' => $user['userid'],
             'shop_id' => $shop,
@@ -185,7 +185,7 @@ class User
      */
     public function get_coupon(){
         $where = input('param.');
-        if(empty($where))return jsonData(404, '未接收到数据', null);
+        if(empty($where))return jsonData(0, '未接收到数据', null);
 
         //用户信息
         $user    = $this->p_auth->session();
@@ -225,7 +225,7 @@ class User
         }catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
-            return jsonData(405, '领取失败', null);
+            return jsonData(0, '领取失败', null);
         }
     }
 
@@ -239,7 +239,7 @@ class User
         $user    = $this->p_auth->session();
 
         $where = input('param.');
-        if(empty($where))return jsonData(404, '未接收到数据', null);
+        if(empty($where))return jsonData(0, '未接收到数据', null);
         $map =[
             'user_id' => $user['userid']
         ];
@@ -277,7 +277,7 @@ class User
         $user    = $this->p_auth->session();
 
         $where = input('param.');
-        if(empty($where))return jsonData(404, '未接收到数据', null);
+        if(empty($where))return jsonData(0, '未接收到数据', null);
         $map =[
             'user_id' => $user['userid'],
             'status' => 1,
