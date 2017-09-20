@@ -45,4 +45,21 @@ class Coupon extends Model
         return json_decode(json_encode($row), true);
     }
 
+    /**
+     * 查询优惠
+     *
+     * @param   string   $coupon_id    优惠券id
+     *
+     * @return   string    立减金额
+     *
+     */
+    public function isCoupon($coupon_id){
+
+        $row = $this->where('id',$coupon_id)->field('title,type,dis_price,end_time,start_time,conditon')->find();
+
+        return json_decode(json_encode($row), true);
+    }
+
+
+
 }

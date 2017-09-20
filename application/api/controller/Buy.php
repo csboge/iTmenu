@@ -717,18 +717,28 @@ class Buy
     public function isFirst()
     {
         //用户信息
-        $user['userid']    = $this->p_auth->session();
+        $session  = $this->p_auth->session();
 
         //获得商店id
         $shop     = $this->p_auth->getShopId();
 
         $map = [
-            'id' => $user['userid']
+            'id' => $session['userid']
         ];
 
         $res = Db::name('user')->where($map)->field('money')->find();       //红包余额
-        $coupon = get_coupon($user['userid'],$shop);                        //查询优惠券
-        $first = is_first($user['userid'],$shop);                           //新用户立减
+        $coupon_list = $this->m_couponlist->getCoupon($session['userid'],$shop);                        //查询优惠券
+
+        foreach ($coupon_list as &$volue){
+            $coupon = $this->m_coupon->isCoupon($volue['coupon_id']);
+            $volue['title'] = $coupon['title'];
+            $volue['type'] = $coupon['type'];
+            $volue['dis_price'] = $coupon['dis_price'];
+            $volue['start_time'] = $coupon['start_time'];
+            $volue['end_time'] = $coupon['end_time'];
+            $volue['conditon'] = $coupon['conditon'];
+        }
+        $first = is_first($session['userid'],$shop);                           //新用户立减
         $use_base = $this->m_goods->getBowl($shop);                         //查询餐具
         foreach ($use_base as &$volue){
             $attrs = json_decode($volue['attrs'],true);
@@ -745,7 +755,7 @@ class Buy
         $data = [
             'money' => $res['money']?$res['money']:0,
             'first' => $first,
-            'coupon' => $coupon,
+            'coupon' => $coupon_list,
             'order_rate' => 0.02,
             'mode_rate' => 0.08,
             "pay_type" => [
