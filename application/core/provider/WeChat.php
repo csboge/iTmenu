@@ -155,8 +155,8 @@ class WeChat
 
         $result= api_notice_increment($url,$post_data);
 
-        $url = 'picture/code/' . date('Ymd', time()) . '/';
-        $PATH = ROOT_PATH . 'Uploads/picture/code/' . date('Ymd', time()) . '/';
+        $url = 'picture'.DS.'code'.DS . date('Ymd', time()) . DS;
+        $PATH = ROOT_PATH . 'Uploads'.DS.'picture'.DS.'code'. DS . date('Ymd', time()) . DS;
 
         if (!is_dir($PATH)) {
             mkdir($PATH, 0777, true);
