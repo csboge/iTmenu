@@ -79,7 +79,7 @@
             <td>{:cut_str($vo.notice,8)}</td>
             <td>{:cut_str($vo.adress,8)}</td>
             <td>{$vo.wechat}</td>
-            {if condition="$vo.is_first === 1"}
+            {if condition="$vo.is_first > 0"}
             <td class="td-status">
                 <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status('is_first',0,{$vo.id})">是</span>
             </td>

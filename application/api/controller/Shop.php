@@ -37,7 +37,6 @@ class Shop
     {
         //获得商店id
         $shop     = $this->p_auth->getShopId();
-
         $map = [
             'id' => $shop,
             'status' => 1,
@@ -45,7 +44,7 @@ class Shop
         ];
         $data = Db::name('shop')
             ->where($map)
-            ->field('title,logo,mobile,tel,video,shop_hours,notice,adress,lng,Lat,stations,package')
+            ->field('title,logo,mobile,tel,video,shop_hours,notice,is_first,adress,lng,Lat,stations')
             ->find();
         if($data){
             $data['logo'] = ImgUrl($data['logo']);

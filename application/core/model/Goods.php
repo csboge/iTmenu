@@ -30,11 +30,10 @@ class Goods extends Model
             'hd_status' => 1,
             'sd_status' =>1
         ];
-        $row = $this->where($map)->field('id,title,price,image,cat_id,bowl')->select();
-        foreach ($row as $volue){
-            $data[] = $volue->toArray();
-        }
-        return $data;
+
+        $row = $this->where($map)->field('id,title,price,image,cat_id,bowl,attrs')->select();
+
+        return json_decode(json_encode($row), true);
     }
 
 

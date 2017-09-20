@@ -33,7 +33,7 @@ class Buy
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['notify'],
+            'public' => ['notify','isFirst'],
             'private'=> []
         ]);
 
@@ -710,14 +710,14 @@ class Buy
 
 
     /***
-     * 订单 - 确认支付
+     * 订单 - 确认支付页
      * @参数 user_id      用户id
      * @参数 shop_id      商户id
      */
     public function isFirst()
     {
         //用户信息
-        $user    = $this->p_auth->session();
+        $user['userid']    = 1;//$this->p_auth->session();
 
         //获得商店id
         $shop     = $this->p_auth->getShopId();
@@ -725,20 +725,20 @@ class Buy
         $map = [
             'id' => $user['userid']
         ];
+
         $res = Db::name('user')->where($map)->field('money')->find();       //红包余额
         $coupon = get_coupon($user['userid'],$shop);                        //查询优惠券
         $first = is_first($user['userid'],$shop);                           //新用户立减
         $use_base = $this->m_goods->getBowl($shop);                         //查询餐具
         foreach ($use_base as &$volue){
+            $attrs = json_decode($volue['attrs'],true);
             $volue['name'] = $volue['title'];
             $volue['cate_id'] = $volue['cat_id'];
             $volue['img_url'] = ImgUrl($volue['image']);
-            if($volue['bowl'] == 1){
-                $volue['num'] = 0;
-            }else{
-                $volue['num'] = 2;
-            }
+            $volue['num'] = $attrs[0]['titles']?$attrs[0]['titles']:0;
+            $volue['price'] = $volue['price']?$volue['price']:$attrs[0]['prices'];
             unset($volue['title']);
+            unset($volue['attrs']);
             unset($volue['cat_id']);
             unset($volue['image']);
         }
@@ -762,6 +762,7 @@ class Buy
             ],
             "use_base" => $use_base
         ];
+
         return jsonData(1, 'ok', $data);
     }
 }
