@@ -77,7 +77,7 @@ class Test
     }
 
     public function ta(){
-        $access_token = 'ZHRodunZs-THI9-9PXdZpcEV--faku3iw0klUuFGTDadfHV7AFgs5fMjgJfwqUZtw-JRtjLe9MFrYltTHRTZLPrqZFbq9dwWZ11YMDAABeiQyZgecZ1I8CTryyl9Bov4AKDjABAQAT';
+        $access_token = 'zq5fJz3SsAJ2m8jNIqlBEJY2KmdTIOKVggfYiPuoxuhjiSneqBaFjvjVGF6t_OjoPZ__kQE43e8G-xWGdpZVqlLh8DxvRaNsPNsmv_qWw0pzc-0PSulDfKk1Zj3XJk5QVZYdAGAEIH';
         $path = "https://demo.ai-life.me";
         $width = 430;
         $shop_id = "shop_id=3";
