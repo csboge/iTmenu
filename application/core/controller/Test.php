@@ -79,9 +79,14 @@ class Test
     }
 
     public function aased(){
-        $shop_id = 3;
-        $data = $this->p_wechat->code($shop_id);
-        print_r($data);exit;
+        $appid = 'wx3fcef4db43bcfaed';
+        $SECRET = '1354bdaf7a9e13b5fe97c22de97b90b3';
+        $token_access_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" . $appid . "&secret=" . $SECRET;
+        $res = file_get_contents($token_access_url); //获取文件内容或获取网络请求的内容
+        //echo $res;
+        $result = json_decode($res, true); //接受一个 JSON 格式的字符串并且把它转换为 PHP 变量
+        $access_token = $result['access_token'];
+        echo $access_token;
     }
 
     public function ta(){

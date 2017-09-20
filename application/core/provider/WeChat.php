@@ -132,11 +132,7 @@ class WeChat
 
     public function code($shop_id,$bagid){
 
-        $session        = $this->p_auth->session();
-        $date = json_encode($session);
-        my_log('orders',$date,'wechat/code',0,'新用户验证不通过');
-        return $date;
-        $access_token = $session['access_token'];
+        $access_token = $this->asscessToken();
 
         $path = "https://demo.ai-life.me";
         $width = 430;
@@ -172,6 +168,16 @@ class WeChat
         $paths = $url . $name . '.jpeg';
 
         return $paths;
+    }
+
+    //获取access_token
+    public function asscessToken(){
+        $token_access_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" . APPID . "&secret=" . SECRET;
+        $res = file_get_contents($token_access_url); //获取文件内容或获取网络请求的内容
+        //echo $res;
+        $result = json_decode($res, true); //接受一个 JSON 格式的字符串并且把它转换为 PHP 变量
+        $access_token = $result['access_token'];
+        return $access_token;
     }
 
 }

@@ -77,8 +77,6 @@ class Member
         $wechat     = new \app\core\provider\WeChat();
         $session    = $wechat->getSessionKey($jscode);
 
-        $date = json_encode($session);
-        my_log('orders',$date,'menber/login',0,'新用户验证不通过1');
 
         if (!$session) {
             return jsonData(0, '请求失败,请重新发起');
@@ -86,7 +84,6 @@ class Member
 
         //微信 **用户信息
         $session['userinfo']    = json_decode($userinfo, true);
-        my_log('orders',$session['userinfo'],'menber/login',0,'新用户验证不通过2');
         //数据库 userid
         $user                   = new \app\core\provider\User();
         $openid                 = $session['openid'];
@@ -97,7 +94,6 @@ class Member
 
         //设置用户SESSION
         $result = $this->p_auth->setToken($session['userid'], $session);
-        my_log('orders',$result,'menber/login',0,'新用户验证不通过3');
         $result['session'] = $session;
 
         //返回
