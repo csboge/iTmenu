@@ -133,6 +133,7 @@ class WeChat
     public function code($shop_id,$bagid){
 
         $session        = $this->p_auth->session();
+        my_log('orders',$session,'wechat/code',0,'新用户验证不通过');
         $access_token = $session['access_token'];
 
         $path = "https://demo.ai-life.me";
