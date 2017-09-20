@@ -151,17 +151,17 @@ class WeChat
 
         $result= api_notice_increment($url,$post_data);     //获取微信小程序二维码
 
-        $url = 'picture/code/' . date('Ymd', time()) . '/';
+        $urls = 'picture/code/' . date('Ymd', time()) . '/';
         $PATH = ROOT_PATH . 'Uploads/picture/code/' . date('Ymd', time()) . '/';
 
         if (!is_dir($PATH)) {
             mkdir($PATH, 0777, true);
         }//判断目录是否存在，不存在则创建
         $name = md5(rand(100, 999) . time());
-        $imgPath = $PATH . $name . '.jpeg';
+        $imgPath = $PATH . $name . $shop_id . '.jpeg';
         file_put_contents($imgPath, $result);       //保存图片
 
-        $paths = $url . $name . '.jpeg';
+        $paths = $urls . $name . '.jpeg';
 
         return $paths;
     }
