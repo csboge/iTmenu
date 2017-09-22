@@ -79,6 +79,7 @@ class Orders
 
         $pay_time = time();
         $data = ['status' => 1, 'pay_time' => $pay_time, 'updated' => $pay_time, 'transaction_id' => $post_data['transaction_id'], 'time_end' => $post_data['time_end']];
+        my_log('orders',$pay_time,$action_name,-1,'当前模块控制器方法');
         if (!empty($type))
         {
             /**
@@ -141,6 +142,8 @@ class Orders
             }
 
         }
+
+        my_log('orders',$pay_time,$action_name,-1,'事务开启~~');
         Db::startTrans();
 
         try {
@@ -160,8 +163,12 @@ class Orders
             //更新订单入账记录
             $tistics_id = $this->m_order->upTistics($order_info['order_sn'],$order_info['user_id'],$tistics);
 
+            my_log('orders',$tistics_id,$action_name,-1,'更新订单入账记录');
+
             //更新订单
             $ret = $this->m_order->save($data, ['order_sn' => $order_info['order_sn'], 'user_id' => $order_info['user_id']]);
+
+            my_log('orders',$ret,$action_name,-1,'更新订单');
             if ($order_info['offset_money'] > 0) {
                 //修改用户钱包余额
                 $user_money = $this->m_user->userMoney($order_info['user_id'], $order_info['offset_money']);
@@ -175,6 +182,8 @@ class Orders
             } else {
                 $user_coupon = 1;
             }
+
+            my_log('orders',$order_info['order_sn'],$action_name,-1,'回滚判断');
 
             if (!$tistics|| !$tistics_id || !$ret || !$user_money || !$user_coupon) {
 //
