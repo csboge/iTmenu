@@ -182,8 +182,6 @@ class Discount
 
         //红包时间超过24小时
         $redTime = $this->m_red->endTime($bagid);       //红包创建时间
-
-        my_log('orders',$redTime['created'],'api/discount/robbed',0,'红包时间超过24小时');
         $time = time();                                 //当前时间
         $data = ($time-$redTime['created'])/(60*60);               //距离当前时间
         if($data >= 24){
@@ -192,14 +190,12 @@ class Discount
 
         $baginfo    = json_decode($bagstr, true);
 
-        my_log('orders',$baginfo,'api/discount/robbed',0,'合法验证');
         $baginfo['use_users'] = '';
         //是否还可以抢夺
         $is_user = $this->m_red_log->isUserRed($session['userid'],$bagid);
         if($is_user){
             return jsonData(-6, '嗨，你已经抢过了');
         }
-        my_log('orders',$is_user,'api/discount/robbed',0,'是否还可以抢夺');
 //        if (isset($baginfo['use_users'])){
 //            if (in_array($session['userid'], explode(',', $baginfo['use_users']))) {
 //                return jsonData(-6, '嗨，你已经抢过了');
@@ -209,7 +205,6 @@ class Discount
 
         //剩余红包数量
         $nums  = $redis->DECR('discount:red:' . $bagid);
-        my_log('orders',$nums,'api/discount/robbed',0,'剩余红包数量');
         if ($nums <= -1) {
             return jsonData(-2, '红包已经被抢完了');
         }
@@ -217,8 +212,7 @@ class Discount
         //本次抢夺金额
         $my_money = $this->m_red->getMoney($baginfo['surplus'], $nums+1, $baginfo['num']);
 
-        my_log('orders',$my_money,'api/discount/robbed',0,'本次抢夺金额');
-        if ($my_money <= 0) { 
+        if ($my_money <= 0) {
             return jsonData(-5, '红包已经被抢完了');
         }
 
@@ -232,7 +226,6 @@ class Discount
         $baginfo['updated']  = time();
         $redis->set('discount:redinfo:' . $bagid, json_encode($baginfo));
 
-        my_log('orders',$bagid,'api/discount/robbed',0,'更新缓存');
 
         //红包完结 - 可能要做的清理工作。
         if ($nums <= 0) { }
@@ -248,7 +241,6 @@ class Discount
 
         $audio_url = GET_VIDEO_URL.$video_url;
 
-        my_log('orders',$audio_url,'api/discount/robbed',0,'文件地址');
 
         // 开启 - 数据库事务
         Db::startTrans();

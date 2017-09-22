@@ -48,7 +48,7 @@ class Test
         $this->p_auth = $p_auth;
 
         //红包模型
-        $this->m_red            = $m_red;
+        $this->m_red    = $m_red;
 
         //订单服务
         $this->p_order = $p_order;
@@ -76,6 +76,12 @@ class Test
         $this->m_tistics     = $m_tistics;
         $this->p_wechat     = $p_wechat;
 
+    }
+
+    public function asddsa(){
+        $ase = input('param.');
+        $ma = $this->m_red->endTime($ase['shop']);
+        print_r($ma);
     }
 
     public function aased(){
