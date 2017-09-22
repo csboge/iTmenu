@@ -156,7 +156,7 @@ class Discount
      */
     function robbed()
     {
-
+        my_log('orders',111,'api/discount/robbed',0,'红包');
         //红包id
         $bagid      = input('param.bagid/d');
 
@@ -172,9 +172,14 @@ class Discount
 
         $redis = $this->redisFactory();
 
+        $abc = json_encode($session);
+        my_log('orders',$abc,'api/discount/robbed',0,'用户信息');
 
         //合法验证
         $bagstr    = $redis->get('discount:redinfo:' . $bagid);
+
+        $abcd = json_encode($bagstr);
+        my_log('orders',$abcd,'api/discount/robbed',0,'合法验证');
 
         if (!$bagstr) {
             return jsonData(-1, '红包已经过期了' . $bagid);
