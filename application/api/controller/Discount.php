@@ -183,9 +183,9 @@ class Discount
         //红包时间超过24小时
         $redTime = $this->m_red->endTime($bagid);       //红包创建时间
 
-        my_log('orders',$redTime,'api/discount/robbed',0,'红包时间超过24小时');
+        my_log('orders',$redTime['created'],'api/discount/robbed',0,'红包时间超过24小时');
         $time = time();                                 //当前时间
-        $data = ($time-$redTime)/(60*60);               //距离当前时间
+        $data = ($time-$redTime['created'])/(60*60);               //距离当前时间
         if($data >= 24){
             return jsonData(-1, '红包已经过期了' . $bagid);
         }
