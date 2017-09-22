@@ -447,6 +447,7 @@ class Buy
 
 
                     $printer->printOrderInfo($order_info,$post_data);
+
                     my_log('orders',$printer,$action,-1,'微信支付 回调');
                     //5台同时打
                     //$printer->getWordsChip();
