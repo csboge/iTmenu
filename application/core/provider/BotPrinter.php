@@ -187,7 +187,6 @@ class BotPrinter
 
         $sn         = $shop['printer'];
 
-
         foreach ($arr as &$value){
             $value['extras'] = $value['price']*$value['num'];
         }

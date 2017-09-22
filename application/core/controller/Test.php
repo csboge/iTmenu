@@ -297,17 +297,17 @@ class Test
         ];
 
 
-//        $printer = new \app\core\provider\BotPrinter();
+        $printer = new \app\core\provider\BotPrinter();
 //
 //        $aa = json_encode($info['goods_list'], true);
 ////        print_r($aa);exit;
-//        $printer->printOrderInfo($info, $post_data);
+        $printer->printOrderInfo($info, $post_data);
         //结束订单(事务处理)
-        $bay = new \app\core\provider\Orders();
+//        $bay = new \app\core\provider\Orders();
 
-        $result = $bay->endOrderStatus($info, $post_data);
+//        $result = $bay->endOrderStatus($info, $post_data);
 
-        print_r($result);
+        print_r($printer);
     }
 
     public function ast()

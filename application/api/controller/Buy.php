@@ -376,7 +376,6 @@ class Buy
         //当前模块控制器方法
         $action= $this->request->module().DS.$this->request->controller().DS.$this->request->action();
 
-        my_log('orders',$xmlstring,$action,-1,'微信支付 回调');
 
 
         $redis = $this->redisFactory();
@@ -436,7 +435,6 @@ class Buy
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);//******
 
-                my_log('orders',$result,$action,-1,'结束订单(事务处理)');
 
                 if ($result) {
 
@@ -448,7 +446,6 @@ class Buy
 
                     $printer->printOrderInfo($order_info,$post_data);
 
-                    my_log('orders',$printer,$action,-1,'微信支付 回调');
                     //5台同时打
                     //$printer->getWordsChip();
 
@@ -658,6 +655,18 @@ class Buy
         Db::startTrans();
 
         try {
+            //判断统计表是否有当天的数据
+            $ististics = $this->m_tistics->isTistics($order_info['shop_id'])?$this->m_tistics->isTistics($order_info['shop_id']):0;
+            $money = $order_info['shop_price'] - $order_info['mode_money'];
+            if(!$ististics){
+                //写入数据统计
+                $tistics = $this->m_tistics->insertTistics($order_info['shop_id'],$money);
+            }else{
+                //更新数据统计
+                $tistics = $this->m_tistics->updateTistics($ististics['id'],$money);
+            }
+            //更新订单入账记录
+            $tistics_id = $this->m_order->upTistics($order_info['order_sn'],$order_info['user_id'],$tistics);
 
             //新增订单
             $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
@@ -676,7 +685,7 @@ class Buy
             }
 
 
-            if ($result['order'] && $user_money !== 0 && $user_coupon !== 0) {
+            if ($tistics && $tistics_id && $result['order'] && $user_money !== 0 && $user_coupon !== 0) {
                 // 提交事务
                 Db::commit();
 
