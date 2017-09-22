@@ -708,7 +708,7 @@ class Buy
 
                 $this->m_order->error_log($orderinfo['order_sn']);
 
-                return jsonData(0, '出现错误~~事务回滚1',$orderinfo);
+                return jsonData(0, '出现错误~~事务回滚1',$tistics.$tistics_id);
             }
         } catch (\Exception $e) {
             // 回滚事务
