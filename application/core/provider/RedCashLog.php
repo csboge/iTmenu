@@ -36,7 +36,9 @@ class RedCashLog
     public function getRedList($shop,$bagid)
     {
         $list_red = $this->m_redcashlog->isRedList($shop,$bagid);
+
         foreach ($list_red as &$itme){
+
             $itme['audio'] = GET_VIDEO_URL.$itme['audio'];
             $itme['created'] = date('Y-m-d H:i:s',$itme['created']);
             $vcr = $this->m_user->getUserForId($itme['user_id']);

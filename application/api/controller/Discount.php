@@ -238,7 +238,9 @@ class Discount
          * 
          *
          */
-        $audio_url = upload_video($audio);
+        $video_url = upload_video($audio);
+
+        $audio_url = GET_VIDEO_URL.$video_url;
 
 
 
