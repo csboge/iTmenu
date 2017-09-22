@@ -237,9 +237,9 @@ class Discount
          * 
          *
          */
-        $video_url = upload_video($audio);
+        $audio_url = upload_video($audio);
 
-        $audio_url = GET_VIDEO_URL.$video_url;
+//        $audio_url = GET_VIDEO_URL.$video_url;
 
 
         // 开启 - 数据库事务
