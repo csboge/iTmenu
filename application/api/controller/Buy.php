@@ -704,7 +704,7 @@ class Buy
                 Db::rollback();
                 //订单错误
 
-                my_log('orders',$ordersn,'api/controller/buy/submitOffs',-1,'执行出错~~事务回滚');
+                my_log('orders',$ordersn,'api/controller/buy/submitOffs',-1,'执行出错~~事务回滚'.$tistics.$tistics_id);
 
                 $this->m_order->error_log($orderinfo['order_sn']);
 
