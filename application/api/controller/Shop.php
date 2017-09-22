@@ -148,7 +148,7 @@ class Shop
 
         $data['code']   = GET_IMG_URL.$this->p_wechat->code($shop,$bagid); //获取微信小程序二维码
 
-        $data['back']   = "http://img1.my-shop.cc/picture/1.jpeg";
+        $data['back']   = GET_IMG_URL."picture/1.jpeg";
 
         return jsonData(1, 'OK', $data);
     }
