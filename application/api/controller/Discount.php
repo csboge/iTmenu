@@ -242,7 +242,7 @@ class Discount
 
         $audio_url = GET_VIDEO_URL.$video_url;
 
-
+        my_log('orders',$audio_url,'api/discount/robbed',0,'文件地址');
 
         // 开启 - 数据库事务
         Db::startTrans();
@@ -312,12 +312,12 @@ class Discount
                 //获得抢红包记录
                 $list_red       = $this->p_redcashlog->getRedList($shop,$bagid);
 
-                
+                my_log('orders',$list_red,'api/discount/robbed',0,'提交事务');
                 //抢到红包金额     已抢数量
                 return jsonData(1, 'ok', $list_red);
             }
-            
 
+            my_log('orders',$bagid,'api/discount/robbed',0,'红包抢夺失败了');
             return jsonData(-3, '抱歉 - 红包抢夺失败了');
 
 
