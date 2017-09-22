@@ -26,7 +26,8 @@ class Tistics extends Model
             'statistics'    => date('Y-m-d',time())
         ];
         $row = $this->where($map)->find();
-        return $row;
+
+        return json_decode(json_encode($row), true);
     }
 
 
