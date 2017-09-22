@@ -28,7 +28,8 @@ class Buy
         \app\core\model\Coupon          $m_coupon,
         \app\core\model\User            $m_user,
         \app\core\model\CouponList      $m_couponlist,
-        \app\core\model\Goods           $m_goods
+        \app\core\model\Goods           $m_goods,
+        \app\core\model\Tistics         $m_tistics
     )
     {
         //验证授权合法
@@ -64,6 +65,9 @@ class Buy
 
         //获取当前控制器名
         $this->request = \think\Request::instance();
+
+        //商户收入统计模型
+        $this->m_tistics = $m_tistics;
 
     }
 
@@ -656,17 +660,17 @@ class Buy
 
         try {
             //判断统计表是否有当天的数据
-            $ististics = $this->m_tistics->isTistics($order_info['shop_id'])?$this->m_tistics->isTistics($order_info['shop_id']):0;
-            $money = $order_info['shop_price'] - $order_info['mode_money'];
+            $ististics = $this->m_tistics->isTistics($orderinfo['shop_id'])?$this->m_tistics->isTistics($orderinfo['shop_id']):0;
+            $money = $orderinfo['shop_price'] - $orderinfo['mode_money'];
             if(!$ististics){
                 //写入数据统计
-                $tistics = $this->m_tistics->insertTistics($order_info['shop_id'],$money);
+                $tistics = $this->m_tistics->insertTistics($orderinfo['shop_id'],$money);
             }else{
                 //更新数据统计
                 $tistics = $this->m_tistics->updateTistics($ististics['id'],$money);
             }
             //更新订单入账记录
-            $tistics_id = $this->m_order->upTistics($order_info['order_sn'],$order_info['user_id'],$tistics);
+            $tistics_id = $this->m_order->upTistics($orderinfo['order_sn'],$orderinfo['user_id'],$tistics);
 
             //新增订单
             $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
