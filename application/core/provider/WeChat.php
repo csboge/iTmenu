@@ -161,7 +161,7 @@ class WeChat
         $imgPath = $PATH . $name . $shop_id . '.jpeg';
         file_put_contents($imgPath, $result);       //保存图片
 
-        $paths = $urls . $name . '.jpeg';
+        $paths = $urls . $name . $shop_id . '.jpeg';
 
         return $paths;
     }
