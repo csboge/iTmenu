@@ -74,12 +74,11 @@ class Orders
         }
 
         //当前模块控制器方法
-        $action_name= $this->request->module().DS.$this->request->controller().DS.$this->request->action();
+        $action_name= 'core'.DS.'Orders'.DS.'endOrderStatus';
 
 
         $pay_time = time();
         $data = ['status' => 1, 'pay_time' => $pay_time, 'updated' => $pay_time, 'transaction_id' => $post_data['transaction_id'], 'time_end' => $post_data['time_end']];
-        my_log('orders',$pay_time,$action_name,-1,'当前模块控制器方法');
         if (!empty($type))
         {
             /**
@@ -143,7 +142,6 @@ class Orders
 
         }
 
-        my_log('orders',$pay_time,$action_name,-1,'事务开启~~');
         Db::startTrans();
 
         try {
@@ -198,6 +196,7 @@ class Orders
                 return false;
 
             }
+
             // 提交事务
             Db::commit();
 

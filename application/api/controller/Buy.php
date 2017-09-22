@@ -343,7 +343,6 @@ class Buy
     //微信支付 回调
     public function notify()
     {
-
         /*  微信官方提醒：
          *  商户系统对于支付结果通知的内容一定要做【签名验证】,
          *  并校验返回的【订单金额是否与商户侧的订单金额】一致，
@@ -375,7 +374,10 @@ class Buy
         }
 
         //当前模块控制器方法
-        $action_name= $this->request->module().DS.$this->request->controller().DS.$this->request->action();
+        $action= $this->request->module().DS.$this->request->controller().DS.$this->request->action();
+
+        my_log('orders',$xmlstring,$action,-1,'微信支付 回调');
+
 
         $redis = $this->redisFactory();
         $redis->set('notify_post_data', $xmlstring);
@@ -434,6 +436,7 @@ class Buy
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);//******
 
+                my_log('orders',$result,$action,-1,'结束订单(事务处理)');
 
                 if ($result) {
 
@@ -444,7 +447,7 @@ class Buy
 
 
                     $printer->printOrderInfo($order_info,$post_data);
-
+                    my_log('orders',$printer,$action,-1,'微信支付 回调');
                     //5台同时打
                     //$printer->getWordsChip();
 
