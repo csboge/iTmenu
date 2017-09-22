@@ -31,7 +31,7 @@ class Discount
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['robInfo','redList'],
+            'public' => ['robInfo','redList','robbed'],
             'private'=> []
         ]);
 
@@ -156,7 +156,7 @@ class Discount
      */
     function robbed()
     {
-        my_log('orders',111,'api/discount/robbed',0,'红包');
+
         //红包id
         $bagid      = input('param.bagid/d');
 
@@ -170,16 +170,11 @@ class Discount
         //用户信息
         $session    = $this->p_auth->session();
 
+        my_log('orders',$bagid,'api/discount/robbed',0,'用户信息');
         $redis = $this->redisFactory();
-
-        $abc = json_encode($session);
-        my_log('orders',$abc,'api/discount/robbed',0,'用户信息');
 
         //合法验证
         $bagstr    = $redis->get('discount:redinfo:' . $bagid);
-
-        $abcd = json_encode($bagstr);
-        my_log('orders',$abcd,'api/discount/robbed',0,'合法验证');
 
         if (!$bagstr) {
             return jsonData(-1, '红包已经过期了' . $bagid);
@@ -195,13 +190,14 @@ class Discount
 
         $baginfo    = json_decode($bagstr, true);
 
+        my_log('orders',$baginfo,'api/discount/robbed',0,'合法验证');
         $baginfo['use_users'] = '';
         //是否还可以抢夺
         $is_user = $this->m_red_log->isUserRed($session['userid'],$bagid);
         if($is_user){
             return jsonData(-6, '嗨，你已经抢过了');
         }
-
+        my_log('orders',$is_user,'api/discount/robbed',0,'是否还可以抢夺');
 //        if (isset($baginfo['use_users'])){
 //            if (in_array($session['userid'], explode(',', $baginfo['use_users']))) {
 //                return jsonData(-6, '嗨，你已经抢过了');
@@ -211,13 +207,15 @@ class Discount
 
         //剩余红包数量
         $nums  = $redis->DECR('discount:red:' . $bagid);
+        my_log('orders',$nums,'api/discount/robbed',0,'剩余红包数量');
         if ($nums <= -1) {
             return jsonData(-2, '红包已经被抢完了');
         }
 
         //本次抢夺金额
         $my_money = $this->m_red->getMoney($baginfo['surplus'], $nums+1, $baginfo['num']);
-        
+
+        my_log('orders',$my_money,'api/discount/robbed',0,'本次抢夺金额');
         if ($my_money <= 0) { 
             return jsonData(-5, '红包已经被抢完了');
         }
@@ -232,6 +230,7 @@ class Discount
         $baginfo['updated']  = time();
         $redis->set('discount:redinfo:' . $bagid, json_encode($baginfo));
 
+        my_log('orders',$bagid,'api/discount/robbed',0,'更新缓存');
 
         //红包完结 - 可能要做的清理工作。
         if ($nums <= 0) { }
