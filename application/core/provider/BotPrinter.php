@@ -183,16 +183,27 @@ class BotPrinter
 
         $youhui     = $order_info['coupon_price']+$order_info['first_money']+$order_info['offset_money'];
 
-        $shop       = $this->m_shop->getShop($order_info['shop_id']);
+        $shop       = $this->m_shop->getShop($order_info['shop_id']);                   //查询商户信息
 
         $sn         = $shop['printer'];
 
         foreach ($arr as &$value){
             $value['extras'] = $value['price']*$value['num'];
         }
+
+        $this->printer_one($order_info,$arr,$sn);
+
+        if($shop['printer_list']){
+            $printe = json_decode($shop['printer_list'],true);
+            $this->printer_one($order_info,$arr,$printe['number']);
+        }
+
+    }
+
+    public function printer_one($order_info,$arr,$sn){
         $orderInfo = '<CB>电子菜谱</CB><BR>';
-		$orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
-		$orderInfo .= '--------------------------------<BR>';
+        $orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
+        $orderInfo .= '--------------------------------<BR>';
         foreach($arr as $item){
             $length = strlen($item['name']);
 //            $length_price = strlen($item['price']);
@@ -218,20 +229,18 @@ class BotPrinter
                 $orderInfo .= $name_b."<BR>";
             }
         }
-		$orderInfo .= '--------------------------------<BR>';
-		$orderInfo .= '桌位：'.$order_info['desk_sn'].'号桌<BR>';
-		$orderInfo .= '支付：'.$order_info['pay_price'].'元<BR>';
-		$orderInfo .= '红包：'.$order_info['mode_money'].'元<BR>';
+        $orderInfo .= '--------------------------------<BR>';
+        $orderInfo .= '桌位：'.$order_info['desk_sn'].'号桌<BR>';
+        $orderInfo .= '支付：'.$order_info['pay_price'].'元<BR>';
+        $orderInfo .= '红包：'.$order_info['mode_money'].'元<BR>';
+        $orderInfo .= '下单时间：'.date('Y-m-d H:i:s', time()).'<BR>';
 
 //		$orderInfo .= '地址：'.$shop['adress'].'<BR>';
 //		$orderInfo .= '联系电话：'.$shop['mobile'].'<BR>';
 //		$orderInfo .= '座机电话：'.$shop['tel'].'<BR>';
-//		$orderInfo .= '下单时间：'.date('Y-m-d H:i:s', time()).'<BR>';
 //		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
 
         $re = $this->wp_print($sn, $orderInfo, 1);
-        //echo $re;
-        //exit;
     }
     
 
