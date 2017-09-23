@@ -55,6 +55,24 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label for="adress" class="layui-form-label">
+                        <span class="x-red"></span>地址
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="adress" name="adress" value="{$vo.adress}" required=""
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="printer" class="layui-form-label">
+                        <span class="x-red"></span>打印机编号
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="printer" name="printer" value="{$vo.printer}" required="" lay-verify="number"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label for="mode_id" class="layui-form-label">
                         <span class="x-red"></span>返利模式
                     </label>
