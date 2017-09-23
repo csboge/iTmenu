@@ -59,21 +59,14 @@ class Orders
     public function orderList(){
         //获得商店id
         $shop     = $this->p_auth->getShopId();
-
+        if(!$shop)return ajaxSuccess(0,'未收到数据',[]);
         $tistics = $this->m_tistics->listTistics($shop);                                        //获取商户收入统计
-
         if($tistics){
-
             foreach ($tistics as $key=>&$volue){
-
                 $volue['list'] = $this->m_orders->liseOrder($volue['id'],$shop);                //查询商户入账下的订单
-
                 foreach ($volue['list'] as &$imtil){
-
                     $imtil['pay_time'] = date('Y-m-d H:i:s',$imtil['pay_time']);
-
                     $user = $this->m_user->getUserForId($imtil['user_id']);                     //查询用户
-
                     $imtil['nickname'] = $user['nickname'];
                     $imtil['avatar'] = $user['avatar'];
                     if($user['sex'] == 1){
@@ -83,7 +76,6 @@ class Orders
                     }else{
                         $imtil['sex'] = '保密';
                     }
-
                 }
             }
             return ajaxSuccess(1,'收入统计',$tistics);
@@ -98,12 +90,35 @@ class Orders
      * @参数 shop_id           商户id
      */
     public function todey(){
+        //获得商店id
         $shop     = $this->p_auth->getShopId();
+        if(!$shop)return ajaxSuccess(0,'未收到数据',[]);
         $tistics = $this->m_tistics->toeles($shop);                                 //店铺收入
-        $tistics['title'] = $this->m_shup->getShop($shop)['title'];                 //店名
-        $tistics['people'] = $this->m_orders->ordersTistics($tistics['id']);        //付款人数，收款笔数
-        return ajaxSuccess(1,'当日收益',$tistics);
+        $title = $this->m_shup->getShop($shop)['title'];                 //店名
+        $people = $this->m_orders->ordersTistics($tistics['id']);        //付款人数，收款笔数
+        $arr = [
+            'id'            =>  $tistics['id'],
+            'money'         =>  $tistics['money'],
+            'statistics'    =>  $tistics['statistics'],
+            'title'         =>  $title,
+            'people'        =>  $people
+        ];
+        return ajaxSuccess(1,'当日收益',$arr);
     }
 
-    
+    /***
+     * 收益 -- 日报
+     * @参数 shop_id           商户id
+     */
+    public function deyList(){
+        //获得商店id
+        $shop     = $this->p_auth->getShopId();
+        if(!$shop)return ajaxSuccess(0,'未收到数据',[]);
+        $tistics = $this->m_tistics->listTistics($shop);                               //店铺收入
+        foreach ($tistics as &$time){
+            $time['people'] = $this->m_orders->ordersTistics($time['id']);        //付款人数，收款笔数
+            $time['single'] = $time['money']/$time['people'];
+        }
+        print_r($tistics);
+    }
 }
