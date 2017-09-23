@@ -147,7 +147,7 @@ class Orders
         try {
             //判断统计表是否有当天的数据
             $ististics = $this->m_tistics->isTistics($order_info['shop_id'])?$this->m_tistics->isTistics($order_info['shop_id']):0;
-            $money = $order_info['shop_price'] - $order_info['mode_money'];
+            $money = $order_info['shop_price'];
             if(!$ististics){
                 //写入数据统计
                 $tistics = $this->m_tistics->insertTistics($order_info['shop_id'],$money);

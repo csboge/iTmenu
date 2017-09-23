@@ -293,7 +293,7 @@ class Buy
             'order_money'       => $info['order_money'],                //手续费金额
 
             'offset_money'      => $info['offset_money'],               //使用红包抵扣金额
-            'shop_price'        => $info['must_price'],                 //商家实际到账金额          
+            'shop_price'        => $info['must_price']-$info['mode_money'],                 //商家实际到账金额
 
             'goods_price'       => $info['goods_price'],                //商品总价
             'goods_list'        => $info['goods_list'],                 //购物车(商品列表)
@@ -618,7 +618,7 @@ class Buy
             'order_money'       => $info['order_money'],                //手续费金额
 
             'offset_money'      => $info['offset_money'],               //使用红包抵扣金额
-            'shop_price'        => $info['must_price'],                 //商家实际到账金额
+            'shop_price'        => $info['must_price']-$info['mode_money'],                 //商家实际到账金额
 
             'goods_price'       => $info['goods_price'],                //商品总价
             'goods_list'        => $info['goods_list'],                 //购物车(商品列表)
@@ -664,7 +664,7 @@ class Buy
 
             //判断统计表是否有当天的数据
             $ististics = $this->m_tistics->isTistics($orderinfo['shop_id'])?$this->m_tistics->isTistics($orderinfo['shop_id']):0;
-            $money = $orderinfo['shop_price'] - $orderinfo['mode_money'];
+            $money = $orderinfo['shop_price'];
             if(!$ististics){
                 //写入数据统计
                 $tistics = $this->m_tistics->insertTistics($orderinfo['shop_id'],$money);

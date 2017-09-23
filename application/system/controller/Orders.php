@@ -56,12 +56,19 @@ class Orders
         //获得商店id
         $shop     = $this->p_auth->getShopId();
         $tistics = $this->m_tistics->listTistics($shop);                                        //获取商户收入统计
+
         if($tistics){
+
             foreach ($tistics as $key=>&$volue){
+
                 $volue['list'] = $this->m_orders->liseOrder($volue['id'],$shop);                //查询商户入账下的订单
+
                 foreach ($volue['list'] as &$imtil){
+
                     $imtil['pay_time'] = date('Y-m-d H:i:s',$imtil['pay_time']);
+
                     $user = $this->m_user->getUserForId($imtil['user_id']);                     //查询用户
+
                     $imtil['nickname'] = $user['nickname'];
                     $imtil['avatar'] = $user['avatar'];
                     if($user['sex'] == 1){
