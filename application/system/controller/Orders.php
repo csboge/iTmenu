@@ -114,7 +114,7 @@ class Orders
         //获得商店id
         $shop       = $this->p_auth->getShopId();
         $page       = input('param.page/d');
-        if(!$shop)return ajaxSuccess(0,'未收到数据',[]);
+        if(!$shop && !$page)return ajaxSuccess(0,'未收到数据',[]);
         $tistics = $this->m_tistics->listTistics($shop,$page);                    //店铺收入
         foreach ($tistics as &$time){
             $time['people'] = $this->m_orders->ordersTistics($time['id']);        //付款人数，收款笔数
