@@ -60,7 +60,7 @@ class Orders
         //获得商店id
         $shop     = $this->p_auth->getShopId();
         if(!$shop)return ajaxSuccess(0,'未收到数据',[]);
-        $tistics = $this->m_tistics->listTistics($shop);                                        //获取商户收入统计
+        $tistics = $this->m_tistics->listTisticsOr($shop);                                        //获取商户收入统计
         if($tistics){
             foreach ($tistics as $key=>&$volue){
                 $volue['list'] = $this->m_orders->liseOrder($volue['id'],$shop);                //查询商户入账下的订单
@@ -112,9 +112,10 @@ class Orders
      */
     public function deyList(){
         //获得商店id
-        $shop     = $this->p_auth->getShopId();
+        $shop       = $this->p_auth->getShopId();
+        $page       = input('param.page/d');
         if(!$shop)return ajaxSuccess(0,'未收到数据',[]);
-        $tistics = $this->m_tistics->listTistics($shop);                               //店铺收入
+        $tistics = $this->m_tistics->listTistics($shop,$page);                    //店铺收入
         foreach ($tistics as &$time){
             $time['people'] = $this->m_orders->ordersTistics($time['id']);        //付款人数，收款笔数
             $time['single'] = round($time['money']/$time['people'],2);

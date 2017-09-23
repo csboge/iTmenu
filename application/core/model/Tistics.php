@@ -73,11 +73,29 @@ class Tistics extends Model
      * 查询商户下的所有数据
      *
      * @param   string   $shopid      商户id
+     * @param   string   $page
      *
      * @return   int       id
      *
      */
-    public function listTistics($shopid){
+    public function listTistics($shopid,$page){
+        $limit = 2;
+        $pre  = ($page-1)*$limit;
+        $row = $this->where('shop_id',$shopid)->order('id desc')->field('id,money,statistics')->limit($pre,$limit)->select();
+
+        return json_decode(json_encode($row), true);
+    }
+
+    /**
+     * 查询商户下的所有数据
+     *
+     * @param   string   $shopid      商户id
+     *
+     * @return   int       id
+     *
+     */
+    public function listTisticsOr($shopid){
+
         $row = $this->where('shop_id',$shopid)->order('id desc')->field('id,money,statistics')->select();
 
         return json_decode(json_encode($row), true);
