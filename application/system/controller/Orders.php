@@ -117,8 +117,8 @@ class Orders
         $tistics = $this->m_tistics->listTistics($shop);                               //店铺收入
         foreach ($tistics as &$time){
             $time['people'] = $this->m_orders->ordersTistics($time['id']);        //付款人数，收款笔数
-            $time['single'] = $time['money']/$time['people'];
+            $time['single'] = round($time['money']/$time['people'],2);
         }
-        print_r($tistics);
+        return ajaxSuccess(1,'日收益列表',$tistics);
     }
 }

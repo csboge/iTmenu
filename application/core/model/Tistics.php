@@ -78,7 +78,7 @@ class Tistics extends Model
      *
      */
     public function listTistics($shopid){
-        $row = $this->where('shop_id',$shopid)->field('id,money,statistics')->select();
+        $row = $this->where('shop_id',$shopid)->order('id desc')->field('id,money,statistics')->select();
 
         return json_decode(json_encode($row), true);
     }
