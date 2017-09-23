@@ -79,7 +79,7 @@ class Tistics extends Model
      *
      */
     public function listTistics($shopid,$page){
-        $limit = 2;
+        $limit = 10;
         $pre  = ($page-1)*$limit;
         $row = $this->where('shop_id',$shopid)->order('id desc')->field('id,money,statistics')->limit($pre,$limit)->select();
 
