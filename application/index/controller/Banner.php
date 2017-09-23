@@ -16,20 +16,17 @@ class Banner extends Controller
 {
     //轮播图列表
     public function index(){
-        $type = input('param.');
-        if(empty($type))return false;
-        $shop = session('shop_id');
-        $map = [
-            'hd_status' => 1,
-            'cat_id' => $type['cat_id'],
-            'shop_id' => $shop
-        ];
+        $where = input('param.');
+        if(empty($where))return false;
+        $map['hd_status'] = 1;
+        $map['cat_id'] = $where['cat_id'];
+        $map['shop_id'] = session('shop_id');
         $res = Db::name('banner')->where($map)->order('id desc')->select();
         $count = count_list('banner','shop_id',session('shop_id'));
         $title = session('shop_title');
         $this->assign('title',$title);
         $this->assign('count',$count);
-        $this->assign('cat_id',$type['cat_id']);
+        $this->assign('cat_id',$where['cat_id']);
         $this->assign('list',$res);
         return view();
     }

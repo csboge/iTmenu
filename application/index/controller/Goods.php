@@ -36,10 +36,8 @@ class Goods extends Controller
                 $map['name'] = array('like', "%{$username}%");
             }
         }
-        $map = [
-            'hd_status' => 1,
-            'shop_id' => session('shop_id')
-        ];
+        $map['hd_status'] = 1;
+        $map['shop_id'] = session('shop_id');
         $data = Db::name('category')->order('rank asc')->where($map)->paginate(100);
         $count = count_list('category','shop_id',session('shop_id'));
         $title = session('shop_title');
@@ -100,12 +98,30 @@ class Goods extends Controller
 
     //套餐列表
     public function package_index(){
-        $shop = session('shop_id');
-        $map = [
-            'shop_id' => $shop,
-            'hd_status' => 1,
-            'sd_status' => 1
-        ];
+        $where = input('param.');
+        $map = [];
+        if ($where) {
+            $start = strtotime($where['start']);
+            $end = strtotime($where['end']);
+            $username = $where['username'];
+            if ($start && $end) {
+                $map['created'] = array(['>',$start],['<',$end],'and');
+
+            }elseif ($start){
+                $map['created'] = array('>', $start);
+
+            }elseif ($end){
+                $map['created'] = array('<', $end);
+            }
+            if ($username) {
+                $map['name'] = array('like', "%{$username}%");
+            }
+        }
+
+        $map['shop_id'] = session('shop_id');
+        $map['hd_status'] = 1;
+        $map['sd_status'] = 1;
+
         $data = Db::name('package')->where($map)->order('rank asc')->paginate(100);
         $count = count_list('package','shop_id',session('shop_id'));
         $title = session('shop_title');

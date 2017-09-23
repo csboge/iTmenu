@@ -16,11 +16,28 @@ class Coupon extends Controller
 {
     //优惠券列表
     public function index(){
+        $where = input('param.');
+        $map = [];
+        if ($where) {
+            $start = strtotime($where['start']);
+            $end = strtotime($where['end']);
+            $username = $where['username'];
+            if ($start && $end) {
+                $map['created'] = array(['>',$start],['<',$end],'and');
+
+            }elseif ($start){
+                $map['created'] = array('>', $start);
+
+            }elseif ($end){
+                $map['created'] = array('<', $end);
+            }
+            if ($username) {
+                $map['title'] = array('like', "%{$username}%");
+            }
+        }
         $shop = session('shop_id');
-        $map = [
-            'hd_status' => 1,
-            'shop_id' => $shop
-        ];
+        $map['hd_status'] = 1;
+        $map['hd_status'] = $shop;
         $data = Db::name('coupon')->order('id desc')->where($map)->paginate(100);
         $count = count_list('coupon','shop_id',session('shop_id'));
         $title = session('shop_title');
