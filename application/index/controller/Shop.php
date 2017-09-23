@@ -19,29 +19,36 @@ class Shop extends Controller
         $where = input('param.');
         $map = [];
         if ($where) {
-            $start = strtotime($where['start']);
-            $end = strtotime($where['end']);
-            $username = $where['username'];
-            if ($start && $end) {
-                $map['created'] = array(['>',$start],['<',$end],'and');
+            if (isset($where['starte']) && isset($where['ende'])) {
+                $starte = strtotime($where['starte']);
+                $ende = strtotime($where['ende']);
+                $map['created'] = array(['>',$starte],['<',$ende],'and');
 
-            }elseif ($start){
-                $map['created'] = array('>', $start);
+            }elseif (isset($where['starte'])){
+                $starte = strtotime($where['starte']);
+                $map['created'] = array('>', $starte);
 
-            }elseif ($end){
-                $map['created'] = array('<', $end);
+            }elseif (isset($where['ende'])){
+                $ende = strtotime($where['ende']);
+                $map['created'] = array('<', $ende);
             }
-            if ($username) {
+            if (isset($where['username'])) {
+                $username = $where['username'];
                 $map['title'] = array('like', "%{$username}%");
             }
         }
         $map['hd_status'] = 1;
-        $data = Db::name('shop')->order('id desc')->where($map)->select();
+        $list = Db::name('shop')->order('id desc')->where($map)->paginate(10);
+        $data = $list->all();
         foreach ($data as &$volue){
             $volue['shop_hours'] = json_decode($volue['shop_hours'],true);
         }
 //        echo "<pre>";print_r($data);exit;
         $count = count_list('shop');
+        // 获取分页显示
+        $page = $list->render();
+        // 模板变量赋值
+        $this->assign('page', $page);
         $this->assign('count',$count);
         $this->assign('list',$data);
         return view();

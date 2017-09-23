@@ -20,27 +20,33 @@ class Goods extends Controller
         $where = input('param.');
         $map = [];
         if ($where) {
-            $start = strtotime($where['start']);
-            $end = strtotime($where['end']);
-            $username = $where['username'];
-            if ($start && $end) {
-                $map['created'] = array(['>',$start],['<',$end],'and');
+            if (isset($where['starte']) && isset($where['ende'])) {
+                $starte = strtotime($where['starte']);
+                $ende = strtotime($where['ende']);
+                $map['created'] = array(['>',$starte],['<',$ende],'and');
 
-            }elseif ($start){
-                $map['created'] = array('>', $start);
+            }elseif (isset($where['starte'])){
+                $starte = strtotime($where['starte']);
+                $map['created'] = array('>', $starte);
 
-            }elseif ($end){
-                $map['created'] = array('<', $end);
+            }elseif (isset($where['ende'])){
+                $ende = strtotime($where['ende']);
+                $map['created'] = array('<', $ende);
             }
-            if ($username) {
+            if (isset($where['username'])) {
+                $username = $where['username'];
                 $map['name'] = array('like', "%{$username}%");
             }
         }
         $map['hd_status'] = 1;
         $map['shop_id'] = session('shop_id');
-        $data = Db::name('category')->order('rank asc')->where($map)->paginate(100);
+        $data = Db::name('category')->order('rank asc')->where($map)->paginate(10);
         $count = count_list('category','shop_id',session('shop_id'));
         $title = session('shop_title');
+        // 获取分页显示
+        $page = $data->render();
+        // 模板变量赋值
+        $this->assign('page', $page);
         $this->assign('title',$title);
         $this->assign('count',$count);
         $this->assign('list',$data);
@@ -101,19 +107,21 @@ class Goods extends Controller
         $where = input('param.');
         $map = [];
         if ($where) {
-            $start = strtotime($where['start']);
-            $end = strtotime($where['end']);
-            $username = $where['username'];
-            if ($start && $end) {
-                $map['created'] = array(['>',$start],['<',$end],'and');
+            if (isset($where['starte']) && isset($where['ende'])) {
+                $starte = strtotime($where['starte']);
+                $ende = strtotime($where['ende']);
+                $map['created'] = array(['>',$starte],['<',$ende],'and');
 
-            }elseif ($start){
-                $map['created'] = array('>', $start);
+            }elseif (isset($where['starte'])){
+                $starte = strtotime($where['starte']);
+                $map['created'] = array('>', $starte);
 
-            }elseif ($end){
-                $map['created'] = array('<', $end);
+            }elseif (isset($where['ende'])){
+                $ende = strtotime($where['ende']);
+                $map['created'] = array('<', $ende);
             }
-            if ($username) {
+            if (isset($where['username'])) {
+                $username = $where['username'];
                 $map['name'] = array('like', "%{$username}%");
             }
         }
@@ -122,9 +130,13 @@ class Goods extends Controller
         $map['hd_status'] = 1;
         $map['sd_status'] = 1;
 
-        $data = Db::name('package')->where($map)->order('rank asc')->paginate(100);
+        $data = Db::name('package')->where($map)->order('rank asc')->paginate(10);
         $count = count_list('package','shop_id',session('shop_id'));
         $title = session('shop_title');
+        // 获取分页显示
+        $page = $data->render();
+        // 模板变量赋值
+        $this->assign('page', $page);
         $this->assign('title',$title);
         $this->assign('count',$count);
         $this->assign('list',$data);
@@ -185,26 +197,32 @@ class Goods extends Controller
         $where = input('param.');
         $map = [];
         if ($where) {
-            $start = strtotime($where['start']);
-            $end = strtotime($where['end']);
-            $username = $where['username'];
-            if ($start && $end) {
+            if (isset($where['start']) && isset($where['end'])) {
+                $start = strtotime($where['start']);
+                $end = strtotime($where['end']);
                 $map['created'] = array(['>',$start],['<',$end],'and');
 
-            }elseif ($start){
+            }elseif (isset($where['start'])){
+                $start = strtotime($where['start']);
                 $map['created'] = array('>', $start);
 
-            }elseif ($end){
+            }elseif (isset($where['end'])){
+                $end = strtotime($where['end']);
                 $map['created'] = array('<', $end);
             }
-            if ($username) {
+            if (isset($where['username'])) {
+                $username = $where['username'];
                 $map['title'] = array('like', "%{$username}%");
             }
         }
         $map['hd_status'] = 1;
         $map['shop_id'] = session('shop_id');
-        $data = Db::name('goods')->order('rec desc')->order('rank asc')->where($map)->paginate(1000);
+        $data = Db::name('goods')->order('rec desc')->order('rank asc')->where($map)->paginate(10);
         $count = count_list('goods','shop_id',session('shop_id'));
+        // 获取分页显示
+        $page = $data->render();
+        // 模板变量赋值
+        $this->assign('page', $page);
         $title = session('shop_title');
         $this->assign('title',$title);
         $this->assign('count',$count);

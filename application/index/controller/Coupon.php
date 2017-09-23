@@ -19,28 +19,34 @@ class Coupon extends Controller
         $where = input('param.');
         $map = [];
         if ($where) {
-            $start = strtotime($where['start']);
-            $end = strtotime($where['end']);
-            $username = $where['username'];
-            if ($start && $end) {
-                $map['created'] = array(['>',$start],['<',$end],'and');
+            if (isset($where['starte']) && isset($where['ende'])) {
+                $starte = strtotime($where['starte']);
+                $ende = strtotime($where['ende']);
+                $map['created'] = array(['>',$starte],['<',$ende],'and');
 
-            }elseif ($start){
-                $map['created'] = array('>', $start);
+            }elseif (isset($where['starte'])){
+                $starte = strtotime($where['starte']);
+                $map['created'] = array('>', $starte);
 
-            }elseif ($end){
-                $map['created'] = array('<', $end);
+            }elseif (isset($where['ende'])){
+                $ende = strtotime($where['ende']);
+                $map['created'] = array('<', $ende);
             }
-            if ($username) {
+            if (isset($where['username'])) {
+                $username = $where['username'];
                 $map['title'] = array('like', "%{$username}%");
             }
         }
         $shop = session('shop_id');
         $map['hd_status'] = 1;
         $map['hd_status'] = $shop;
-        $data = Db::name('coupon')->order('id desc')->where($map)->paginate(100);
+        $data = Db::name('coupon')->order('id desc')->where($map)->paginate(10);
         $count = count_list('coupon','shop_id',session('shop_id'));
         $title = session('shop_title');
+        // 获取分页显示
+        $page = $data->render();
+        // 模板变量赋值
+        $this->assign('page', $page);
         $this->assign('title',$title);
         $this->assign('shop',$shop);
         $this->assign('count',$count);

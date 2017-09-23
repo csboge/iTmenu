@@ -21,9 +21,13 @@ class Banner extends Controller
         $map['hd_status'] = 1;
         $map['cat_id'] = $where['cat_id'];
         $map['shop_id'] = session('shop_id');
-        $res = Db::name('banner')->where($map)->order('id desc')->select();
+        $res = Db::name('banner')->where($map)->order('id desc')->paginate(10);
         $count = count_list('banner','shop_id',session('shop_id'));
         $title = session('shop_title');
+        // 获取分页显示
+        $page = $res->render();
+        // 模板变量赋值
+        $this->assign('page', $page);
         $this->assign('title',$title);
         $this->assign('count',$count);
         $this->assign('cat_id',$where['cat_id']);
