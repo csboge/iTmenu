@@ -83,4 +83,21 @@ class Tistics extends Model
         return json_decode(json_encode($row), true);
     }
 
+    /**
+     * 查询商户下当天的收益
+     *
+     * @param   string   $shopid      商户id
+     *
+     * @return   int       id
+     *
+     */
+    public function toeles($shopid){
+        $map = [
+          'shop_id' => $shopid,
+          'statistics' => date('Y-m-d 00:00:00',time())
+        ];
+        $row = $this->where($map)->field('id,money,statistics')->find();
+        return json_decode(json_encode($row), true);
+    }
+
 }

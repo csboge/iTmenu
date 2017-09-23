@@ -121,6 +121,25 @@ class Orders extends Model
     }
 
     /**
+     * 查询付款人数
+     *
+     * @param   string   $tistics     商户收入id
+     *
+     * @return  string    总金额
+     *
+     */
+    public function ordersTistics($tistics)
+    {
+        $map = [
+            'tistics_id'   => $tistics,
+            'status'    => 1
+        ];
+        $people = $this->where($map)->count();
+
+        return $people;
+    }
+
+    /**
      * 查询老用户用户人数
      *
      * @param   string   $shop_id     商户id

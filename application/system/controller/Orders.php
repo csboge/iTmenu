@@ -26,6 +26,7 @@ class Orders
         \app\core\provider\Auth         $p_auth,
         \app\core\model\User            $m_user,
         \app\core\model\Orders          $m_orders,
+        \app\core\model\Shop            $m_shop,
         \app\core\model\Tistics         $m_tistics
     )
     {
@@ -41,6 +42,9 @@ class Orders
         //用户模型
         $this->m_user           = $m_user;
 
+        //商户模型
+        $this->m_shup           = $m_shop;
+
         //订单模型
         $this->m_orders         = $m_orders;
 
@@ -55,6 +59,7 @@ class Orders
     public function orderList(){
         //获得商店id
         $shop     = $this->p_auth->getShopId();
+
         $tistics = $this->m_tistics->listTistics($shop);                                        //获取商户收入统计
 
         if($tistics){
@@ -88,9 +93,17 @@ class Orders
     }
 
 
+    /***
+     * 收益 -- 当日
+     * @参数 shop_id           商户id
+     */
+    public function todey(){
+        $shop     = $this->p_auth->getShopId();
+        $tistics = $this->m_tistics->toeles($shop);                                 //店铺收入
+        $tistics['title'] = $this->m_shup->getShop($shop)['title'];                 //店名
+        $tistics['people'] = $this->m_orders->ordersTistics($tistics['id']);        //付款人数，收款笔数
+        return ajaxSuccess(1,'当日收益',$tistics);
+    }
 
-
-
-
-
+    
 }
