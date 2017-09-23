@@ -76,7 +76,7 @@ class Orders
             }
             return ajaxSuccess(1,'收入统计',$tistics);
         }else{
-            return ajaxSuccess(0,'没有收入',null);
+            return ajaxSuccess(1,'没有收入',null);
         }
     }
 
