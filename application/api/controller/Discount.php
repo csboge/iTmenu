@@ -170,7 +170,6 @@ class Discount
         //用户信息
         $session    = $this->p_auth->session();
 
-        my_log('orders',$bagid,'api/discount/robbed',0,'用户信息');
         $redis = $this->redisFactory();
 
         //合法验证
@@ -302,15 +301,14 @@ class Discount
 
             // 提交事务
             if ($ret1 && $ret2 && $ret3 && $ret4) {
-                Db::commit();
-
                 //获得商店id
                 $shop           = $this->p_auth->getShopId();
 
                 //获得抢红包记录
                 $list_red       = $this->p_redcashlog->getRedList($shop,$bagid);
 
-                my_log('orders',$list_red,'api/discount/robbed',0,'提交事务');
+                Db::commit();
+
                 //抢到红包金额     已抢数量
                 return jsonData(1, 'ok', $list_red);
             }
