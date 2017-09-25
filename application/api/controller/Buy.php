@@ -230,12 +230,12 @@ class Buy
             //首次立减金额验证
             $first_money = $this->m_shop->isShopMoney($shopid);
 
-            if ($info['is_first'] > 0 && $info['first_money'] !== $first_money) {
+            if ($info['is_first'] > 0 && $info['first_money'] != $first_money) {
                 return jsonData(0, '首次立减金额不对', $first_money);
             }
 
         }
-        if($info['coupon_list_id'] !== 0 && $info['coupon_price'] !== 0){
+        if($info['coupon_list_id'] != 0 && $info['coupon_price'] != 0){
             //优惠券是否存在
             $coupon_price   = $this->m_coupon->isCouponPrice($info['coupon_list_id']);
             if(!$coupon_price){
