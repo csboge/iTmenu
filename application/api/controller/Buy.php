@@ -230,7 +230,7 @@ class Buy
             //首次立减金额验证
             $first_money = $this->m_shop->isShopMoney($shopid);
 
-            if ($info['is_first'] > 0 && $info['is_first'] != $first_money) {
+            if ($info['is_first'] > 0 && $info['first_money'] != $first_money['is_first']) {
                 return jsonData(0, '首次立减金额不对', $first_money);
             }
 
