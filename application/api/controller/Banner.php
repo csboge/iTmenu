@@ -35,7 +35,6 @@ class Banner
     public function banner_hongbao(){
         //获得商店id
         $shop     = $this->p_auth->getShopId();
-
         $where = input('param.');
         if(empty($where))return jsonData(0, '未接收到数据', []);
         if($where['cat'] == 1) {

@@ -34,7 +34,7 @@ class Buy
     {
         //验证授权合法
         $p_auth->check($request, [
-            'public' => ['notify','isFirst'],
+            'public' => ['notify'],
             'private'=> []
         ]);
 

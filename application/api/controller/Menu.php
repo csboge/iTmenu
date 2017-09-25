@@ -69,7 +69,7 @@ class Menu
             $list['mob_list'] = $rew;
             return jsonData(1, 'OK', $list);
         }else{
-            return jsonData(0, '1未查到数据', '');
+            return jsonData(1, '未查到数据', []);
         }
     }
 
@@ -121,7 +121,7 @@ class Menu
             }
             return jsonData(1, 'OK', $res);
         }else{
-            return jsonData(0, '未查到数据', '');
+            return jsonData(1, '未查到数据', '');
         }
     }
 
