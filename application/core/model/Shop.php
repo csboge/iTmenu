@@ -37,7 +37,22 @@ class Shop extends Model
      *
      */
     public function getShop($shopid){
+
         $data = $this->where('id',$shopid)->field('title,mobile,tel,adress,printer,printer_list')->find();
+
+        return json_decode(json_encode($data), true);
+    }
+
+    /**
+     * 查询商户上线状态
+     *
+     * @param   string   $shopid    商户id
+     *
+     * @return   array    商户信息
+     *
+     */
+    public function isOnline($shopid){
+        $data = $this->where('id',$shopid)->field('status')->find();
 
         return json_decode(json_encode($data), true);
     }

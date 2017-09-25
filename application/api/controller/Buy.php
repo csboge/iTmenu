@@ -139,7 +139,7 @@ class Buy
         $userid         = $session['userid'];
         //$shopid         = input('param.shop_id/d');
 
-
+        $shopid = intval($this->p_auth->getShopId());
 
         //接收 - 订单数据包
         $order_info     = input('param.order/s');
@@ -198,15 +198,19 @@ class Buy
             return jsonData(0, '请填写就餐人数');
         }
 
-        //测试支付
-        $info['pay_price']      = 0.01;
+        //商户是否上线
+        $isOnline = $this->m_shop->isOnline($shopid);
+        if($isOnline['status'] == 0){
+            //测试支付
+            $info['pay_price']      = 0.01;
+        }
 
         $offset_money           =  $info['offset_money'];
 
         //向微信发送预订单
         $wechat         = new \app\core\provider\WeChat();
 
-        $shopid = intval($this->p_auth->getShopId());
+
 
 
         //付款 - 单位转换
