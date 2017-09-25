@@ -46,7 +46,7 @@ class User
         if($data){
             return jsonData(1, 'OK', $data);
         }else{
-            return jsonData(1, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', []);
         }
     }
 
@@ -72,7 +72,7 @@ class User
         if($data){
             return jsonData(1, 'OK', $data);
         }else{
-            return jsonData(1, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', []);
         }
     }
 
@@ -91,7 +91,7 @@ class User
         $shop     = $this->p_auth->getShopId();
 
         $where = input('param.');
-        if(empty($where))return jsonData(0, '未接收到数据', null);
+        if(empty($where))return jsonData(0, '未接收到数据', []);
         $map = [
             'user_id' => $user['userid'],
             'shop_id' => $shop,
@@ -127,7 +127,7 @@ class User
             }
             return jsonData(1, 'OK', $data);
         }else{
-            return jsonData(1, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', []);
         }
     }
 
@@ -174,7 +174,7 @@ class User
             }
             return jsonData(1, 'OK', $list_mit);
         }else{
-            return jsonData(1, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', []);
         }
     }
 
@@ -185,7 +185,7 @@ class User
      */
     public function get_coupon(){
         $where = input('param.');
-        if(empty($where))return jsonData(0, '未接收到数据', null);
+        if(empty($where))return jsonData(0, '未接收到数据', []);
 
         //用户信息
         $user    = $this->p_auth->session();
@@ -195,11 +195,11 @@ class User
 
         //判断是否可以领取
         $is = is_coupon($user['userid'],$where['coupon_id'],$shop);
-        if($is)return jsonData(306, '已领过', null);
+        if($is)return jsonData(306, '已领过', []);
 
         //判断优惠券是否已领完
         $num = num_coupon($where['coupon_id'],$shop);
-        if(!$num)return jsonData(307, '已领完', null);
+        if(!$num)return jsonData(307, '已领完', []);
 
         // 启动事务
         Db::startTrans();
@@ -217,7 +217,7 @@ class User
             if($res1 && $res2){
                 // 提交事务
                 Db::commit();
-                return jsonData(1, 'OK', null);
+                return jsonData(1, 'OK', []);
             }else{
                 // 回滚事务
                 Db::rollback();
@@ -225,7 +225,7 @@ class User
         }catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
-            return jsonData(0, '领取失败', null);
+            return jsonData(0, '领取失败', []);
         }
     }
 
@@ -239,7 +239,7 @@ class User
         $user    = $this->p_auth->session();
 
         $where = input('param.');
-        if(empty($where))return jsonData(0, '未接收到数据', null);
+        if(empty($where))return jsonData(0, '未接收到数据', []);
         $map =[
             'user_id' => $user['userid']
         ];
@@ -263,7 +263,7 @@ class User
             }
             return jsonData(1, 'OK', $res);
         }else{
-            return jsonData(1, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', []);
         }
     }
 
@@ -277,7 +277,7 @@ class User
         $user    = $this->p_auth->session();
 
         $where = input('param.');
-        if(empty($where))return jsonData(0, '未接收到数据', null);
+        if(empty($where))return jsonData(0, '未接收到数据', []);
         $map =[
             'user_id' => $user['userid'],
             'status' => 1,
@@ -303,7 +303,7 @@ class User
             }
             return jsonData(1, 'OK', $res);
         }else{
-            return jsonData(1, '未查到到数据', null);
+            return jsonData(1, '未查到到数据', []);
         }
     }
 }

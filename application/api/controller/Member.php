@@ -37,7 +37,7 @@ class Member
          * 生成验证码， 发送验证码
          * 
          */
-        return jsonData(1, 'ok', null);
+        return jsonData(1, 'ok', []);
     }
 
 
@@ -112,7 +112,7 @@ class Member
          * 执行修改
          * 
          */
-        return jsonData(1, 'ok', null);
+        return jsonData(1, 'ok', []);
     }
 
 
@@ -128,7 +128,7 @@ class Member
          * 执行修改
          * 
          */
-        return jsonData(1, 'ok', null);
+        return jsonData(1, 'ok', []);
     }
 
 
@@ -142,7 +142,7 @@ class Member
          * 执行添加 / 更新
          * 
          */
-        return jsonData(1, 'ok', null);
+        return jsonData(1, 'ok', []);
     }
 
 

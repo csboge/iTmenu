@@ -72,7 +72,7 @@ class Shopjoin
             if(preg_match("/^1[34578]{1}\d{9}$/",$data['mobile'])){  
                echo "输入正确";  
             }else{  
-                return jsonData(-1, '请输入正确的手机号码格式', null);
+                return jsonData(-1, '请输入正确的手机号码格式', []);
             }  
     //写入数据库
         $data['imgz'] =  $img_url;
@@ -94,7 +94,7 @@ class Shopjoin
 
     // var_dump($data);
 
-    return jsonData(1, 'ok', null);
+    return jsonData(1, 'ok', []);
     }
 
 
