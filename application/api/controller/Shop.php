@@ -40,6 +40,7 @@ class Shop
     {
         //获得商店id
         $shop     = $this->p_auth->getShopId();
+        if(empty($shop))return jsonData(0, '未接收到数据', null);
         $map = [
             'id' => $shop,
             'status' => 1,
@@ -64,7 +65,7 @@ class Shop
     function rec(){
         //获得商店id
         $shop  = $this->p_auth->getShopId();
-
+        if(empty($shop))return jsonData(0, '未接收到数据', null);
         $map = [
             'shop_id' => $shop,
             'rec' => 1,
@@ -98,7 +99,7 @@ class Shop
 
         //获得商店id
         $shop     =  $this->p_auth->getShopId();
-
+        if(empty($shop))return jsonData(0, '未接收到数据', null);
         $map = [
             'shop_id' => $shop,
             'is_time' => 0,
@@ -145,6 +146,8 @@ class Shop
         $shop      =  $this->p_auth->getShopId();//获得商店id
 
         $bagid     =  $this->p_auth->getBagid();//获得红包id
+
+        if(empty($shop) && empty($bagid))return jsonData(0, '未接收到数据', null);
 
         $data['code']   = GET_IMG_URL.$this->p_wechat->code($shop,$bagid); //获取微信小程序二维码
 
