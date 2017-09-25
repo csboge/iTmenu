@@ -57,12 +57,12 @@ class Menu
         $rew = Db::name('package')->where($ma)->field('id,name')->order('rank asc')->select();
         if($res || $rew){
             foreach ($res as &$value){
-                $ma = [
+                $mad = [
                     'parent_id' => $value['id'],
                     'status' => 1,
                     'hd_status' => 1
                 ];
-                $dp = Db::name('category')->where($ma)->field('id,name')->order('rank asc')->select();
+                $dp = Db::name('category')->where($mad)->field('id,name')->order('rank asc')->select();
                 $value['list'] = $dp;
             }
             $list['cate_list'] = $res;
