@@ -141,11 +141,13 @@ function count_list($name,$type='',$volue='',$status = '1'){
     if(!empty($type) && !empty($volue)){
         $map = [
             $type => $volue,
-            'hd_status' => $status
+            'hd_status' => $status,
+            'status'    => $status
         ];
     }else{
         $map = [
-            'hd_status' => $status
+            'hd_status' => $status,
+            'status'    => $status
         ];
     }
     $db = new \think\Db;

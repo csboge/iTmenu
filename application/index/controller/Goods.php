@@ -20,19 +20,19 @@ class Goods extends Controller
         $where = input('param.');
         $map = [];
         if ($where) {
-            if (isset($where['starte']) && isset($where['ende'])) {
-                $starte = strtotime($where['starte']);
-                $ende = strtotime($where['ende']);
-                $map['created'] = array(['>',$starte],['<',$ende],'and');
-
-            }elseif (isset($where['starte'])){
-                $starte = strtotime($where['starte']);
-                $map['created'] = array('>', $starte);
-
-            }elseif (isset($where['ende'])){
-                $ende = strtotime($where['ende']);
-                $map['created'] = array('<', $ende);
-            }
+//            if (isset($where['starte']) && isset($where['ende'])) {
+//                $starte = strtotime($where['starte']);
+//                $ende = strtotime($where['ende']);
+//                $map['created'] = array(['>',$starte],['<',$ende],'and');
+//
+//            }elseif (isset($where['starte'])){
+//                $starte = strtotime($where['starte']);
+//                $map['created'] = array('>', $starte);
+//
+//            }elseif (isset($where['ende'])){
+//                $ende = strtotime($where['ende']);
+//                $map['created'] = array('<', $ende);
+//            }
             if (isset($where['username'])) {
                 $username = $where['username'];
                 $map['name'] = array('like', "%{$username}%");
@@ -40,6 +40,7 @@ class Goods extends Controller
         }
         $map['hd_status'] = 1;
         $map['shop_id'] = session('shop_id');
+//        echo "<pre>";print_r($map);exit;
         $data = Db::name('category')->order('rank asc')->where($map)->paginate(10);
         $count = count_list('category','shop_id',session('shop_id'));
         $title = session('shop_title');
@@ -107,19 +108,19 @@ class Goods extends Controller
         $where = input('param.');
         $map = [];
         if ($where) {
-            if (isset($where['starte']) && isset($where['ende'])) {
-                $starte = strtotime($where['starte']);
-                $ende = strtotime($where['ende']);
-                $map['created'] = array(['>',$starte],['<',$ende],'and');
-
-            }elseif (isset($where['starte'])){
-                $starte = strtotime($where['starte']);
-                $map['created'] = array('>', $starte);
-
-            }elseif (isset($where['ende'])){
-                $ende = strtotime($where['ende']);
-                $map['created'] = array('<', $ende);
-            }
+//            if (isset($where['starte']) && isset($where['ende'])) {
+//                $starte = strtotime($where['starte']);
+//                $ende = strtotime($where['ende']);
+//                $map['created'] = array(['>',$starte],['<',$ende],'and');
+//
+//            }elseif (isset($where['starte'])){
+//                $starte = strtotime($where['starte']);
+//                $map['created'] = array('>', $starte);
+//
+//            }elseif (isset($where['ende'])){
+//                $ende = strtotime($where['ende']);
+//                $map['created'] = array('<', $ende);
+//            }
             if (isset($where['username'])) {
                 $username = $where['username'];
                 $map['name'] = array('like', "%{$username}%");
@@ -197,19 +198,19 @@ class Goods extends Controller
         $where = input('param.');
         $map = [];
         if ($where) {
-            if (isset($where['start']) && isset($where['end'])) {
-                $start = strtotime($where['start']);
-                $end = strtotime($where['end']);
-                $map['created'] = array(['>',$start],['<',$end],'and');
-
-            }elseif (isset($where['start'])){
-                $start = strtotime($where['start']);
-                $map['created'] = array('>', $start);
-
-            }elseif (isset($where['end'])){
-                $end = strtotime($where['end']);
-                $map['created'] = array('<', $end);
-            }
+//            if (isset($where['start']) && isset($where['end'])) {
+//                $start = strtotime($where['start']);
+//                $end = strtotime($where['end']);
+//                $map['created'] = array(['>',$start],['<',$end],'and');
+//
+//            }elseif (isset($where['start'])){
+//                $start = strtotime($where['start']);
+//                $map['created'] = array('>', $start);
+//
+//            }elseif (isset($where['end'])){
+//                $end = strtotime($where['end']);
+//                $map['created'] = array('<', $end);
+//            }
             if (isset($where['username'])) {
                 $username = $where['username'];
                 $map['title'] = array('like', "%{$username}%");
@@ -217,7 +218,8 @@ class Goods extends Controller
         }
         $map['hd_status'] = 1;
         $map['shop_id'] = session('shop_id');
-        $data = Db::name('goods')->order('rec desc')->order('rank asc')->where($map)->paginate(10);
+//        echo '<pre>';print_r($map);exit;
+        $data = Db::name('goods')->where($map)->order('rec desc')->order('rank asc')->paginate(10);
         $count = count_list('goods','shop_id',session('shop_id'));
         // 获取分页显示
         $page = $data->render();

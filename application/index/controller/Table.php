@@ -20,19 +20,19 @@ class Table extends Controller
         $where = input('param.');
         $map = [];
         if ($where) {
-            if (isset($where['starte']) && isset($where['ende'])) {
-                $starte = strtotime($where['starte']);
-                $ende = strtotime($where['ende']);
-                $map['created'] = array(['>',$starte],['<',$ende],'and');
-
-            }elseif (isset($where['starte'])){
-                $starte = strtotime($where['starte']);
-                $map['created'] = array('>', $starte);
-
-            }elseif (isset($where['ende'])){
-                $ende = strtotime($where['ende']);
-                $map['created'] = array('<', $ende);
-            }
+//            if (isset($where['starte']) && isset($where['ende'])) {
+//                $starte = strtotime($where['starte']);
+//                $ende = strtotime($where['ende']);
+//                $map['created'] = array(['>',$starte],['<',$ende],'and');
+//
+//            }elseif (isset($where['starte'])){
+//                $starte = strtotime($where['starte']);
+//                $map['created'] = array('>', $starte);
+//
+//            }elseif (isset($where['ende'])){
+//                $ende = strtotime($where['ende']);
+//                $map['created'] = array('<', $ende);
+//            }
             if (isset($where['username'])) {
                 $username = $where['username'];
                 $map['name'] = array('like', "%{$username}%");
@@ -107,19 +107,19 @@ class Table extends Controller
         $where = input('param.');
         $map = [];
         if ($where) {
-            if (isset($where['starte']) && isset($where['ende'])) {
-                $starte = strtotime($where['starte']);
-                $ende = strtotime($where['ende']);
-                $map['created'] = array(['>',$starte],['<',$ende],'and');
-
-            }elseif (isset($where['starte'])){
-                $starte = strtotime($where['starte']);
-                $map['created'] = array('>', $starte);
-
-            }elseif (isset($where['ende'])){
-                $ende = strtotime($where['ende']);
-                $map['created'] = array('<', $ende);
-            }
+//            if (isset($where['starte']) && isset($where['ende'])) {
+//                $starte = strtotime($where['starte']);
+//                $ende = strtotime($where['ende']);
+//                $map['created'] = array(['>',$starte],['<',$ende],'and');
+//
+//            }elseif (isset($where['starte'])){
+//                $starte = strtotime($where['starte']);
+//                $map['created'] = array('>', $starte);
+//
+//            }elseif (isset($where['ende'])){
+//                $ende = strtotime($where['ende']);
+//                $map['created'] = array('<', $ende);
+//            }
             if (isset($where['username'])) {
                 $username = $where['username'];
                 $map['name'] = array('like', "%{$username}%");
