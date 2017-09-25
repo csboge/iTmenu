@@ -43,7 +43,6 @@ class Shop
         if(empty($shop))return jsonData(0, '未接收到数据', []);
         $map = [
             'id' => $shop,
-            'status' => 1,
             'hd_status' => 1
         ];
         $data = Db::name('shop')
@@ -69,7 +68,6 @@ class Shop
         $map = [
             'shop_id' => $shop,
             'rec' => 1,
-            'status' => 1,
             'hd_status' => 1,
             'sd_status' => 1
         ];
