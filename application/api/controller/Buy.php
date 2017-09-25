@@ -293,7 +293,7 @@ class Buy
             'order_money'       => $info['order_money'],                //手续费金额
 
             'offset_money'      => $info['offset_money'],               //使用红包抵扣金额
-            'shop_price'        => $info['must_price']-$info['mode_money'],                 //商家实际到账金额
+            'shop_price'        => $info['total_price']-$info['coupon_price']-$info['mode_money'],                 //商家实际到账金额
 
             'goods_price'       => $info['goods_price'],                //商品总价
             'goods_list'        => $info['goods_list'],                 //购物车(商品列表)
@@ -618,7 +618,7 @@ class Buy
             'order_money'       => $info['order_money'],                //手续费金额
 
             'offset_money'      => $info['offset_money'],               //使用红包抵扣金额
-            'shop_price'        => $info['must_price']-$info['mode_money'],                 //商家实际到账金额
+            'shop_price'        => $info['total_price']-$info['coupon_price']-$info['mode_money'],                 //商家实际到账金额
 
             'goods_price'       => $info['goods_price'],                //商品总价
             'goods_list'        => $info['goods_list'],                 //购物车(商品列表)
