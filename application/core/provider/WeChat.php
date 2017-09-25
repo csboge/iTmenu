@@ -133,7 +133,7 @@ class WeChat
     public function code($shop_id,$bagid){
 
         $access_token = $this->asscessToken();
-        $path = "https://demo.ai-life.me";
+        $path = "pages/speakVoice/speakVoice";
         $width = 430;
 
         $scene = 'shop_id='.$shop_id.'&bagid='.$bagid;
