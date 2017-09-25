@@ -80,8 +80,8 @@ class Test
 
     public function asddsa(){
         $ase = input('param.');
-        $ma = $this->m_red->endTime($ase['shop']);
-        print_r($ma);
+        $first_money = $this->m_shop->isShopMoney($ase['shop']);
+        print_r($first_money);
     }
 
     public function aased(){
