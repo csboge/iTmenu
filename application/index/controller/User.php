@@ -75,6 +75,7 @@ class User extends Controller
 //                $ende = strtotime($where['ende']);
 //                $map['created'] = array('<', $ende);
 //            }
+
             if (isset($where['username'])) {
                 $username = $where['username'];
                 $map['nickname'] = array('like', "%{$username}%");
