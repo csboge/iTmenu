@@ -103,7 +103,9 @@ class User extends Controller
             }
             unset($data['repassword']);//验证完成后删除重复密码
 
-            $data['password'] = tplus_ucenter_md5($data['password'],config('auth_key'));//加密
+            $rand = rand();         //随机数
+
+            $data['password'] = tplus_ucenter_md5($data['password'],config('rand',$rand));//加密
 
             $shop = new Shop();
             $shop_id = $shop->isShop($data['shop']);
@@ -116,6 +118,7 @@ class User extends Controller
                 'user_id'       => $data['id'],
                 'shop_id'       => $data['shop'],
                 'password'      => $data['password'],
+                'rand'          => $rand,
                 'mobile'        => $data['mobile'],
                 'nickname'      => $db['nickname'],
                 'sex'           => $db['sex'],

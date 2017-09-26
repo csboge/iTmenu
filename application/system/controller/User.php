@@ -63,8 +63,8 @@ class User
             return ajaxSuccess(0,'您不是管理员',null);
         }
         $admin = $admin->toArray();
-
-        $data['password'] = tplus_ucenter_md5($data['password'],config('auth_key'));//加密
+        $rand = $admin['rand'];
+        $data['password'] = tplus_ucenter_md5($data['password'],config('rand',$rand));//加密
         if($admin['password'] !== $data['password']){
             return ajaxSuccess(0,'密码错误',null);
         }
