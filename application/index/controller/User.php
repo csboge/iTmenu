@@ -105,7 +105,7 @@ class User extends Controller
 
             $rand = rand(1000,9999);         //随机数
 
-            $data['password'] = tplus_ucenter_md5($data['password'],config('rand',$rand));//加密
+            $data['password'] = tplus_ucenter_md5($data['password'],$rand);//加密
 
             $shop = new Shop();
             $shop_id = $shop->isShop($data['shop']);

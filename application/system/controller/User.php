@@ -64,7 +64,7 @@ class User
         }
         $admin = $admin->toArray();
         $rand = $admin['rand'];
-        $data['password'] = tplus_ucenter_md5($data['password'],config('rand',$rand));//加密
+        $data['password'] = tplus_ucenter_md5($data['password'],$rand);//加密
         if($admin['password'] !== $data['password']){
             return ajaxSuccess(0,'密码错误',null);
         }
