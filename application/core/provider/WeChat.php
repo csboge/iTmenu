@@ -148,7 +148,7 @@ class WeChat
 
         $post_data = json_encode($data);
 
-
+        my_log('orders',$post_data,'core/weChat/code',0,'生成带参小程序码');
         $result= api_notice_increment($url,$post_data);     //获取微信小程序二维码
 
         $urls = 'picture/code/' . date('Ymd', time()) . '/';
