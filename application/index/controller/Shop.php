@@ -38,7 +38,7 @@ class Shop extends Controller
             }
         }
         $map['hd_status'] = 1;
-        $list = Db::name('shop')->order('id desc')->where($map)->paginate(10);
+        $list = Db::name('shop')->order('id desc')->order('status desc')->where($map)->paginate(10);
         $data = $list->all();
         foreach ($data as &$volue){
             $volue['shop_hours'] = json_decode($volue['shop_hours'],true);
