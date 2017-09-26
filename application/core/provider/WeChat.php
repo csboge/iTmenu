@@ -133,22 +133,22 @@ class WeChat
     public function code($shop_id,$bagid){
 
         $access_token = $this->asscessToken();
-        $path = "pages/speakVoice/speakVoice";
         $width = 430;
 
         $scene = 'shop_id='.$shop_id.'&bagid='.$bagid;
 
-        $url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=$access_token";
+        $path = "pages/speakVoice/speakVoice?$scene";
+
+//        $url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=$access_token";
+        $url = "https://api.weixin.qq.com/wxa/getwxacode?access_token=$access_token";
 
         $data = [
             'path'      => $path,
             'width'     => $width,
-            'scene'     => $scene
         ];
 
         $post_data = json_encode($data);
 
-        my_log('orders',$post_data,'core/weChat/code',0,'生成带参小程序码');
         $result= api_notice_increment($url,$post_data);     //获取微信小程序二维码
 
         $urls = 'picture/code/' . date('Ymd', time()) . '/';
