@@ -91,6 +91,7 @@ class Menu
                 'shop_id' => $shop,
                 'package' => $data['package'],
                 'status' => 1,
+                'sd_status' => 1,
                 'hd_status' => 1
             ];
         }elseif(!empty($data['cat_id'])){
@@ -98,12 +99,14 @@ class Menu
                 'shop_id' => $shop,
                 'cat_id' => $data['cat_id'],
                 'status' => 1,
+                'sd_status' => 1,
                 'hd_status' => 1
             ];
         }elseif (empty($data['cat_id']) && empty($data['package'])){
             $map = [
                 'shop_id' => $shop,
                 'status' => 1,
+                'sd_status' => 1,
                 'hd_status' => 1
             ];
         }
