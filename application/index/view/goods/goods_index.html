@@ -97,11 +97,11 @@
             {/if}
             {if condition="$vo.sd_status == 1"}
             <td class="td-status">
-                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status('sd_status',0,{$vo.id})">显示</span>
+                <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="is_status('sd_status',0,{$vo.id})">下架</span>
             </td>
             {else}
             <td class="td-status">
-                <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status('sd_status',1,{$vo.id})">隐藏</span>
+                <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="is_status('sd_status',1,{$vo.id})">上架</span>
             </td>
             {/if}
             {if condition="$vo.status == 1"}

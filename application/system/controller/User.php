@@ -56,17 +56,20 @@ class User
     public function isAdmin(){
         $data = input('param.');
         if(empty($data)){
-            return ajaxSuccess(0,'未接收到数据',null);
+            return ajaxSuccess(0,'未接收到数据',[]);
         }
         $admin = $this->m_useradmin->isUserAdmin($data['mobile']);
         if(empty($admin)){
-            return ajaxSuccess(0,'您不是管理员',null);
+            return ajaxSuccess(0,'您不是管理员',[]);
         }
         $admin = $admin->toArray();
+        if($admin['status'] == 0){
+            return ajaxSuccess(0,'您的授权已过期',[]);
+        }
         $rand = $admin['rand'];
         $data['password'] = tplus_ucenter_md5($data['password'],$rand);//加密
         if($admin['password'] !== $data['password']){
-            return ajaxSuccess(0,'密码错误',null);
+            return ajaxSuccess(0,'密码错误',[]);
         }
         $res = [
             'shop_id' => $admin['shop_id'],
@@ -83,7 +86,7 @@ class User
         //获得商店id
         $shop     = $this->p_auth->getShopId();
         if(empty($shop)){
-            return ajaxSuccess(0,'未接收到数据',null);
+            return ajaxSuccess(0,'未接收到数据',[]);
         }
 
         $money = $this->m_orders->ordersMoney($shop);           //店铺总收益
