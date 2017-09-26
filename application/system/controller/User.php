@@ -70,7 +70,7 @@ class User
         }
         $res = [
             'shop_id' => $admin['shop_id'],
-            'user_id' => $admin['id']
+            'user_id' => $admin['user_id']
         ];
         return ajaxSuccess(1,'登录成功',$res);
     }
