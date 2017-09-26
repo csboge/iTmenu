@@ -103,7 +103,7 @@ class User extends Controller
             }
             unset($data['repassword']);//验证完成后删除重复密码
 
-            $rand = rand();         //随机数
+            $rand = rand(1000,9999);         //随机数
 
             $data['password'] = tplus_ucenter_md5($data['password'],config('rand',$rand));//加密
 
