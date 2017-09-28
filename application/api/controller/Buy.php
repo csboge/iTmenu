@@ -385,16 +385,10 @@ class Buy
         //当前模块控制器方法
         $action= $this->request->module().DS.$this->request->controller().DS.$this->request->action();
 
-
-
         $redis = $this->redisFactory();
         $redis->set('notify_post_data', $xmlstring);
 
-
         $post_data = $this->xmlToArray($xmlstring);
-
-
-        $add = json_decode($post_data,true);
 
         //实际支付金额
         $pay_price      = $post_data['total_fee'];  
