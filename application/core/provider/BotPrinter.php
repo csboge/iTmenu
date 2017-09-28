@@ -180,10 +180,10 @@ class BotPrinter
 
         $arr = json_decode($order_info['goods_list'], true);
 
-
         $youhui     = $order_info['coupon_price']+$order_info['first_money']+$order_info['offset_money'];
 
         $shop       = $this->m_shop->getShop($order_info['shop_id']);                   //查询商户信息
+
 
         $sn         = $shop['printer'];
 
@@ -195,7 +195,9 @@ class BotPrinter
 
         if($shop['printer_list']){
             $printe = json_decode($shop['printer_list'],true);
-            $this->printer_one($order_info,$arr,$printe['number']);
+            foreach ($printe as $item){
+                $this->printer_one($order_info,$arr,$item['number']);
+            }
         }
 
     }
