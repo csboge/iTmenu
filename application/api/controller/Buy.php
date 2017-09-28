@@ -668,19 +668,20 @@ class Buy
             //新增订单
             $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
 
-            //判断统计表是否有当天的数据
-            $ististics = $this->m_tistics->isTistics($orderinfo['shop_id'])?$this->m_tistics->isTistics($orderinfo['shop_id']):0;
-            $money = $orderinfo['shop_price'];
-            if(!$ististics){
-                //写入数据统计
-                $tistics = $this->m_tistics->insertTistics($orderinfo['shop_id'],$money);
-            }else{
-                //更新数据统计
-                $tistics = $this->m_tistics->updateTistics($ististics['id'],$money);
-            }
+//            //判断统计表是否有当天的数据
+//            $ististics = $this->m_tistics->isTistics($orderinfo['shop_id'])?$this->m_tistics->isTistics($orderinfo['shop_id']):0;
+//            $money = $orderinfo['shop_price'];
+//            if(!$ististics){
+//                //写入数据统计
+//                $tistics = $this->m_tistics->insertTistics($orderinfo['shop_id'],$money);
+//            }else{
+//                //更新数据统计
+//                $tistics = $this->m_tistics->updateTistics($ististics['id'],$money);
+//            }
+//
+//            //更新订单入账记录
+//            $tistics_id = $this->m_order->upTistics($orderinfo['order_sn'],$orderinfo['user_id'],$tistics);
 
-            //更新订单入账记录
-            $tistics_id = $this->m_order->upTistics($orderinfo['order_sn'],$orderinfo['user_id'],$tistics);
             if ($orderinfo['offset_money'] !== 0) {
                 //修改用户钱包余额
                 $user_money = $this->m_user->userMoney($orderinfo['user_id'], $orderinfo['offset_money']);
