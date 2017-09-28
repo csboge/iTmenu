@@ -39,8 +39,6 @@ class WeixinPay {
     //统一下单接口
     private function unifiedorder() {
         $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
-
-        my_log('unifiedorder',$url,'unifiedorder','0','统一下单接口');
         $parameters = array(
             'appid'         => $this->appid, //小程序ID
             'mch_id'        => $this->mch_id, //商户号
@@ -53,7 +51,7 @@ class WeixinPay {
             'total_fee'     => $this->total_fee,
             'spbill_create_ip' => $_SERVER['REMOTE_ADDR'], //终端IP
             //'spbill_create_ip' => '192.168.0.161', //终端IP
-            'notify_url'    => 'https://demo.ai-life.me/api/Buy/notify/', //通知地址  确保外网能正常访问
+            'notify_url'    => WX_URL_API, //通知地址  确保外网能正常访问
             'openid'        => $this->openid, //用户id
             'trade_type'    => 'JSAPI'//交易类型
         );

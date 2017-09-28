@@ -25,14 +25,8 @@ define('SIGNKEY', 'csboge1073payKEY2913epoqiwpemans');	//*必填*: 密钥
  */
 class WeChat
 {
-    private     $p_auth;
 
-    public function __construct(){
-
-        //授权服务
-        //订单模型
-        $this->p_auth = new \app\core\provider\Auth();
-    }
+    public function __construct(){}
     
 
 
