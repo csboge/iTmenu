@@ -351,6 +351,7 @@ class Buy
     //微信支付 回调
     public function notify()
     {
+        my_log('printOrderInfo',1111111,'notify','0','微信回调');
         /*  微信官方提醒：
          *  商户系统对于支付结果通知的内容一定要做【签名验证】,
          *  并校验返回的【订单金额是否与商户侧的订单金额】一致，
