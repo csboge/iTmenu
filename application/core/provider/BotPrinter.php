@@ -234,7 +234,7 @@ class BotPrinter
             }
         }
         $orderInfo .= '--------------------------------<BR>';
-        $orderInfo .= '桌位：'.$order_info['desk_sn'].'号桌<BR>';
+        $orderInfo .= '桌位：'.$order_info['desk_sn'].'<BR>';
         $orderInfo .= '支付：'.$order_info['pay_price'].'元<BR>';
         $orderInfo .= '红包：'.$order_info['mode_money'].'元<BR>';
         $orderInfo .= '下单时间：'.date('Y-m-d H:i:s', time()).'<BR>';
