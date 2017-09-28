@@ -395,12 +395,12 @@ class Buy
 
         $add = json_decode($post_data,true);
 
-        my_log('xmlToArray','微信回调',$action,0,$add);
         //实际支付金额
         $pay_price      = $post_data['total_fee'];  
         $openid         = $post_data['openid'];
         $ordersn        = $post_data['out_trade_no'];
 
+        my_log('xmlToArray','微信回调',$action,0,$openid);
 
         $wechat             = new \app\core\provider\WeChat();
 
