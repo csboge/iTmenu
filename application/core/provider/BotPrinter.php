@@ -193,13 +193,12 @@ class BotPrinter
 
         $this->printer_one($order_info,$arr,$sn);
 
-        if($shop['printer_list']){
-            my_log('printOrderInfo',$shop['printer_list'],'printOrderInfo',0,'打印机');
-            $printe = json_decode($shop['printer_list'],true);
-            foreach ($printe as $item){
-                $this->printer_one($order_info,$arr,$item['number']);
-            }
-        }
+//        if($shop['printer_list']){
+//            $printe = json_decode($shop['printer_list'],true);
+//            foreach ($printe as $item){
+//                $this->printer_one($order_info,$arr,$item['number']);
+//            }
+//        }
 
     }
 
