@@ -166,6 +166,7 @@ class WeChat
         return $paths;
     }
 
+
     //获取access_token
     public function asscessToken(){
         $token_access_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" . APPID . "&secret=" . SECRET;

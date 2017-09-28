@@ -190,7 +190,7 @@ function my_log($name,$id,$url,$status,$explain){
         'created'       => date('Y-m-d H:i:s',time())
     ];
     $db = new \think\Db();
-    $db::name('log')->insertGetId($map);
+    $db::name('log')->insert($map);
 }
 
 //请求post带参请求url

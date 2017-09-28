@@ -394,7 +394,8 @@ class Buy
 
 
         $add = json_decode($post_data,true);
-        my_log('xmlToArray',$add,$action,0,'微信回调');
+
+        my_log('xmlToArray','微信回调',$action,0,$add);
         //实际支付金额
         $pay_price      = $post_data['total_fee'];  
         $openid         = $post_data['openid'];
