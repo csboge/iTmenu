@@ -197,10 +197,8 @@ class BotPrinter
 
         if($shop['printer_list']){
             $printe = json_decode($shop['printer_list'],true);
-            if($printe['number']){
-                foreach ($printe as $item){
-                    $this->printer_one($order_info,$arr,$item['number']);
-                }
+            foreach ($printe as $item){
+                $this->printer_one($order_info,$arr,$item['number']);
             }
         }
 
