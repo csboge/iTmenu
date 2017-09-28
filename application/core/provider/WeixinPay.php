@@ -39,6 +39,8 @@ class WeixinPay {
     //统一下单接口
     private function unifiedorder() {
         $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
+
+        my_log('unifiedorder',$url,'unifiedorder','0','统一下单接口');
         $parameters = array(
             'appid'         => $this->appid, //小程序ID
             'mch_id'        => $this->mch_id, //商户号
