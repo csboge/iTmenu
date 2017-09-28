@@ -23,7 +23,6 @@ class Buy
         Request                         $request,
         \app\core\provider\Auth         $p_auth,
         \app\core\provider\Orders       $p_order,
-        \app\core\provider\WeixinPay    $p_weixinpay,
         \app\core\model\Orders          $m_order,
         \app\core\model\Shop            $m_shop,
         \app\core\model\Coupon          $m_coupon,
@@ -31,7 +30,6 @@ class Buy
         \app\core\model\CouponList      $m_couponlist,
         \app\core\model\Goods           $m_goods,
         \app\core\model\Tistics         $m_tistics
-
     )
     {
         //验证授权合法
@@ -70,10 +68,6 @@ class Buy
 
         //商户收入统计模型
         $this->m_tistics = $m_tistics;
-
-        //微信服务
-        $this->p_weixinpay  = $p_weixinpay;
-
 
     }
 
@@ -408,9 +402,7 @@ class Buy
 
         my_log('xmlToArray','微信回调',$action,0,$openid);
 
-
         $wechat             = new \app\core\provider\WeChat();
-
 
 
         //签名合法
@@ -464,7 +456,7 @@ class Buy
                     $printer->printOrderInfo($order_info,$post_data);
 
                     //发送模板消息
-                    $this->p_weixinpay->template($openid);
+
 
                     //5台同时打
                     //$printer->getWordsChip();
