@@ -80,7 +80,7 @@ class Test
 
     public function asddsa(){
         $ase = input('param.');
-        $first_money = $this->p_wechat->code($ase['shop'],$ase['bagid']);
+        $first_money = $this->p_wechat->codeTest($ase['shop_id'],$ase['desk_sn']);
         print_r($first_money);
     }
 

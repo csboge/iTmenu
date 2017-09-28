@@ -17,7 +17,8 @@ class WeixinPay {
     protected $out_trade_no;
     protected $body;
     protected $total_fee;
-    
+    protected $wechat;
+
     function __construct($appid, $openid, $mch_id, $key,$out_trade_no,$body,$total_fee) {
         $this->appid            = $appid;
         $this->openid           = $openid;
@@ -26,6 +27,8 @@ class WeixinPay {
         $this->out_trade_no     = $out_trade_no;
         $this->body             = $body;
         $this->total_fee        = $total_fee;
+
+        $this->wechat           = new WeChat();
     }
 
 
@@ -148,6 +151,8 @@ class WeixinPay {
             'package' => 'prepay_id=' . $unifiedorder['prepay_id'], //数据包
             'signType' => 'MD5'//签名方式
         );
+        //发送模板
+        $this->template($unifiedorder['prepay_id']);
         //签名
         $parameters['paySign'] = $this->getSign($parameters);
         return $parameters;
@@ -198,6 +203,31 @@ class WeixinPay {
             $reqPar = substr($buff, 0, strlen($buff) - 1);
         }
         return $reqPar;
+    }
+
+    /***
+     * 发送模板消息
+     *
+     * @param   int   $prepay_id        本次支付的 prepay_id
+     *
+     */
+
+    public function template($prepay_id){
+        //获取access_token
+        $access_token = $this->wechat->asscessToken();
+
+        $url = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=$access_token";
+
+        $post_data = [
+            'touser'            =>  $this->openid,
+            'template_id'       =>  '6PYpHlmT7Cm-JQqpQoXTZOcwleCHYkruRCH0fxEMKeg',
+            'form_id'           =>  $prepay_id,
+            'data'              =>  [
+                'keyword1'      =>  $this->out_trade_no
+            ]
+        ];
+
+
     }
 
 }

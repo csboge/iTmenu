@@ -167,6 +167,49 @@ class WeChat
     }
 
 
+    /***
+     * 生成带参小程序码测试
+     *
+     * @param   int   $shop_id       商户id
+     *
+     */
+
+    public function codeTest($shop_id,$desk_sn){
+
+        $access_token = $this->asscessToken();
+        $width = 430;
+
+        $scene = 'shop_id='.$shop_id.'&desk_sn='.$desk_sn;
+
+        $path = "pages/menu/menu?$scene";
+
+//        $url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=$access_token";
+        $url = "https://api.weixin.qq.com/wxa/getwxacode?access_token=$access_token";
+
+        $data = [
+            'path'      => $path,
+            'width'     => $width,
+        ];
+
+        $post_data = json_encode($data);
+
+        $result= api_notice_increment($url,$post_data);     //获取微信小程序二维码
+
+        $urls = 'picture/code/' . date('Ymd', time()) . '/';
+        $PATH = ROOT_PATH . 'Uploads/picture/code/' . date('Ymd', time()) . '/';
+
+        if (!is_dir($PATH)) {
+            mkdir($PATH, 0777, true);
+        }//判断目录是否存在，不存在则创建
+
+        $imgPath = $PATH . $desk_sn . '.jpeg';
+        file_put_contents($imgPath, $result);       //保存图片
+
+        $paths = $urls . $desk_sn . '.jpeg';
+
+        return $paths;
+    }
+
     //获取access_token
     public function asscessToken(){
         $token_access_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" . APPID . "&secret=" . SECRET;
