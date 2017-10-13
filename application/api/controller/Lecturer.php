@@ -14,11 +14,11 @@ class Lecturer
                 'portrait'      => GET_IMG_URL.'lecturer/zlf/portrait.jpg',
                 'phone'         => '18671621319',
                 'banner'        => [
-                    'banner1'       => GET_IMG_URL.'lecturer/zlf/banner1.jpeg',
-                    'banner2'       => GET_IMG_URL.'lecturer/zlf/banner2.jpeg',
-                    'banner3'       => GET_IMG_URL.'lecturer/zlf/banner3.jpeg',
-                    'banner4'       => GET_IMG_URL.'lecturer/zlf/banner4.jpeg',
-                    'banner5'       => GET_IMG_URL.'lecturer/zlf/banner5.jpeg',
+                    'banner1'       => GET_IMG_URL.'lecturer/zlf/banner1.jpg',
+                    'banner2'       => GET_IMG_URL.'lecturer/zlf/banner2.jpg',
+                    'banner3'       => GET_IMG_URL.'lecturer/zlf/banner3.jpg',
+                    'banner4'       => GET_IMG_URL.'lecturer/zlf/banner4.jpg',
+                    'banner5'       => GET_IMG_URL.'lecturer/zlf/banner5.jpg',
                 ],
                 'deeds'         => [
                     1               => [
