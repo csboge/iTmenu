@@ -137,7 +137,7 @@ class Shop
     }
 
     /***
-     * 商户 - 优惠券
+     * 商户 - 生成转发二维码
      */
     public function cou(){
 

@@ -8,6 +8,7 @@
 
 namespace app\index\controller;
 
+use app\index\model\TypeGoods;
 use think\Controller;
 use think\Db;
 use app\index\model\Shop;
@@ -256,6 +257,9 @@ class Goods extends Controller
         }else{
             $info = Db::name('category')->where(['hd_status'=>1,'status'=>1,'shop_id'=>session('shop_id')])->select();
             $list = Db::name('package')->where(['hd_status'=>1,'sd_status'=>1,'shop_id'=>session('shop_id')])->select();
+            $typeId = new TypeGoods();
+            $type = $typeId->typeId();
+            $this->assign('type',$type);
             $this->assign('info',$info);
             $this->assign('list',$list);
         }
@@ -271,6 +275,9 @@ class Goods extends Controller
         $db['image'] = ImgUrl($db['image']);
         $info = Db::name('category')->where(['hd_status'=>1,'status'=>1,'shop_id'=>session('shop_id')])->select();
         $list = Db::name('package')->where(['hd_status'=>1,'sd_status'=>1,'shop_id'=>session('shop_id')])->select();
+        $typeId = new TypeGoods();
+        $type = $typeId->typeId();
+        $this->assign('type',$type);
         $this->assign('info',$info);
         $this->assign('list',$list);
         $this->assign('vo',$db);

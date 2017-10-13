@@ -20,7 +20,8 @@ class Menu
      */
     public function __construct(
         Request                         $request,
-        \app\core\provider\Auth         $p_auth
+        \app\core\provider\Auth         $p_auth,
+        \app\core\model\TypeGoods       $m_typegoods
     )
     {
         //验证授权合法
@@ -30,7 +31,10 @@ class Menu
         ]);
 
         //授权服务
-        $this->p_auth   = $p_auth;
+        $this->p_auth           = $p_auth;
+
+        //类型模型
+        $this->m_typegoods      = $m_typegoods;
 
     }
 
@@ -110,7 +114,7 @@ class Menu
         $db = Db::name('goods');
         $res = $db
             ->where($map)
-            ->field('id,title,image,sale,attrs,price,cat_id,package,rank,bowl')
+            ->field('id,title,image,sale,attrs,price,cat_id,package,rank,bowl,type_id')
             ->order('rank asc')
             ->select();
         if($res){
@@ -118,6 +122,11 @@ class Menu
                 $value['image'] = ImgUrl($value['image'])?ImgUrl($value['image']):'';
                 $value['name'] = $value['title'];
                 unset($value['title']);
+                if($value['type_id'] == 0){
+                    $value['type_id'] = '';
+                }else{
+                    $value['type_id'] = $this->m_typegoods->typeList($value['type_id']);
+                }
             }
             return jsonData(1, 'OK', $res);
         }else{

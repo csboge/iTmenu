@@ -170,6 +170,7 @@ class WeChat
 
     public function codeTest($shop_id,$desk_sn){
 
+
         $access_token = $this->asscessToken();
         $width = 430;
 
@@ -196,10 +197,20 @@ class WeChat
             mkdir($PATH, 0777, true);
         }//判断目录是否存在，不存在则创建
 
-        $imgPath = $PATH . $desk_sn . '.jpeg';
-        file_put_contents($imgPath, $result);       //保存图片
+        if (preg_match("/[\x7f-\xff]/", $desk_sn)) {
+            $imgPath = $PATH . 'zhongwen.jpeg';
+            file_put_contents($imgPath, $result);       //保存图片
 
-        $paths = $urls . $desk_sn . '.jpeg';
+            $paths = $urls . 'zhongwen.jpeg';
+        }else{
+
+            $imgPath = $PATH . $desk_sn . '.jpeg';
+            file_put_contents($imgPath, $result);       //保存图片
+
+            $paths = $urls . $desk_sn . '.jpeg';
+        }
+
+
 
         return $paths;
     }
