@@ -159,12 +159,12 @@ class Lecturer
                     '期待更多的帅哥美女加入大爱团队！'
                 ],
                 'image'          => [
-                    GET_IMG_URL.'lecturer/zl/product/1.jpg',
-                    GET_IMG_URL.'lecturer/zl/product/2.jpg',
-                    GET_IMG_URL.'lecturer/zl/product/3.jpg',
-                    GET_IMG_URL.'lecturer/zl/product/4.jpg',
-                    GET_IMG_URL.'lecturer/zl/product/5.jpg',
-                    GET_IMG_URL.'lecturer/zl/product/6.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/1.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/2.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/3.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/4.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/5.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/6.jpg',
                 ]
             ],
         ];
