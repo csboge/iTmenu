@@ -104,6 +104,106 @@ class Lecturer
                     ]
                 ]
             ],
+            3 => [
+                'name'          => '周莉',
+                'explain'       => '平安资深主任',
+                'portrait'      => GET_IMG_URL.'lecturer/zl/portrait.jpg',
+                'phone'         => '',
+                'bg'            => GET_IMG_URL.'lecturer/zl/bg.jpg',
+                'deeds'         => [
+                    1               => [
+                        'title'         => '2015-12',
+                        'content'       => '入司平安'
+                    ],
+                    2               => [
+                        'title'         => '2016-07',
+                        'content'       => '晋升主任'
+                    ],
+                    3               => [
+                        'title'         => '2017-01',
+                        'content'       => '高级主任'
+                    ],
+                    4               => [
+                        'title'         => '2017-07',
+                        'content'       => '资深主任'
+                    ],
+                    5               => [
+                        'title'         => '2018-01',
+                        'content'       => '冲刺经理'
+                    ]
+                ],
+                'product'        => [
+                    1               => [
+                        'img'           => GET_IMG_URL.'lecturer/zl/product/1.jpg',
+                        'title'         => '儿童综合医疗'
+                    ],
+                    2               => [
+                        'img'           => GET_IMG_URL.'lecturer/zl/product/2.jpg',
+                        'title'         => '平安e生保2017'
+                    ],
+                    3               => [
+                        'img'           => GET_IMG_URL.'lecturer/zl/product/3.jpg',
+                        'title'         => '福寿安康'
+                    ],
+                    4               => [
+                        'img'           => GET_IMG_URL.'lecturer/zl/product/4.jpg',
+                        'title'         => '鸿运随行'
+                    ]
+
+                ],
+
+                'join'          => [
+                    '我们相遇相知......一路上的点点滴滴，',
+                    '一直记在心中！携手共同创业.我们一起努力！',
+                    '再大的困难，都不是困难，齐心协力，勇往直前！',
+                    '期待更多的帅哥美女加入大爱团队！'
+                ],
+                'image'          => [
+                    GET_IMG_URL.'lecturer/zl/product/1.jpg',
+                    GET_IMG_URL.'lecturer/zl/product/2.jpg',
+                    GET_IMG_URL.'lecturer/zl/product/3.jpg',
+                    GET_IMG_URL.'lecturer/zl/product/4.jpg',
+                    GET_IMG_URL.'lecturer/zl/product/5.jpg',
+                    GET_IMG_URL.'lecturer/zl/product/6.jpg',
+                ]
+            ],
+        ];
+        return jsonData(1, 'ok', $data[$id]);
+    }
+
+    public function details(){
+        $id = input('param.id/d');
+        if(empty($id))return jsonData(0, '未接收到数据', []);
+        $data = [
+            1   => [
+                GET_IMG_URL.'lecturer/details/tc3_child1.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_child2.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_child3.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_child4.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_child5.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_child6.jpg',
+            ],
+            2   => [
+                GET_IMG_URL.'lecturer/details/tc3_eb1.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_eb2.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_eb3.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_eb4.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_eb5.jpg',
+            ],
+            3   => [
+                GET_IMG_URL.'lecturer/details/tc3_fs1.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_fs2.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_fs3.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_fs4.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_fs5.jpg',
+            ],
+            4   => [
+                GET_IMG_URL.'lecturer/details/tc3_hy1.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_hy2.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_hy3.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_hy4.jpg',
+            ]
+
         ];
         return jsonData(1, 'ok', $data[$id]);
     }
