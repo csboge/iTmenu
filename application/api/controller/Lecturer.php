@@ -198,7 +198,7 @@ class Lecturer
                 'deeds'         => [
                     1               => [
                         'title'         => '2009年',
-                        'content'       => '流水线工厂'
+                        'content'       => '流水线'
                     ],
                     2               => [
                         'title'         => '2012年',
@@ -206,7 +206,7 @@ class Lecturer
                     ],
                     3               => [
                         'title'         => '2014年',
-                        'content'       => '饭店服务员'
+                        'content'       => '服务员'
                     ],
                     4               => [
                         'title'         => '2015年',
@@ -214,7 +214,7 @@ class Lecturer
                     ],
                     5               => [
                         'title'         => '2017年',
-                        'content'       => '好望角导师'
+                        'content'       => '集团导师'
                     ]
                 ],
                 'product'        => [
