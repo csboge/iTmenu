@@ -157,14 +157,6 @@ class Lecturer
                     '再大的困难，都不是困难，齐心协力，勇往直前！',
                     '期待更多的帅哥美女加入大爱团队！'
                 ],
-                'image'          => [
-                    GET_IMG_URL.'lecturer/zl/photo/1.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/2.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/3.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/4.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/5.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/6.jpg',
-                ],
                 'recruit'          => [
                     1               => [
                         'title'         => '助理2名、售后服务专员5名',
@@ -178,7 +170,24 @@ class Lecturer
                         'title'         => '',
                         'content'       => '节假日正常休息！'
                     ]
-                ]
+                ],
+                'banner'          => [
+                    GET_IMG_URL.'lecturer/zl/banner/1.jpg',
+                    GET_IMG_URL.'lecturer/zl/banner/2.jpg',
+                    GET_IMG_URL.'lecturer/zl/banner/3.jpg',
+                    GET_IMG_URL.'lecturer/zl/banner/4.jpg'
+                ],
+                'image'          => [
+                    GET_IMG_URL.'lecturer/zl/photo/1.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/2.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/3.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/4.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/5.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/6.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/7.jpg',
+                    GET_IMG_URL.'lecturer/zl/photo/8.jpg',
+                ],
+
             ],
         ];
         return jsonData(1, 'ok', $data[$id]);
