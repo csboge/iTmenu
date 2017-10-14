@@ -47,16 +47,26 @@ class Lecturer
     {
         $id = input('param.id/d');
         if(empty($id))return jsonData(0, '未接收到数据', []);
-        if($id == 1){
-            $data = $this->p_zlf->getUser();
-        }elseif($id == 2){
-            $data = $this->p_dp->getUser();
-        }elseif ($id == 3){
-            $data = $this->p_zl->getUser();
-        }elseif ($id == 4){
-            $data = $this->p_xmf->getUser();
+        if($id == 1)
+        {
+            $data = $this->p_zlf->getUser();            //获取 钟林飞个人资料
         }
-
+        elseif($id == 2)
+        {
+            $data = $this->p_dp->getUser();             //获取 童鹏个人资料
+        }
+        elseif ($id == 3)
+        {
+            $data = $this->p_zl->getUser();             //获取 周莉个人资料
+        }
+        elseif ($id == 4)
+        {
+            $data = $this->p_xmf->getUser();            //获取 肖茂峰个人资料
+        }
+        else
+        {
+            $data = [];
+        }
         return jsonData(1, 'ok', $data);
     }
 
