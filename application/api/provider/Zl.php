@@ -2,10 +2,7 @@
 namespace app\api\provider;
 
 /**
- * 短信方面 * 服务 * 操作方法
- *
- *
- *
+ *  周莉 * 个人资料
  */
 class Zl
 {

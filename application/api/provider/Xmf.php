@@ -2,10 +2,7 @@
 namespace app\api\provider;
 
 /**
- * 短信方面 * 服务 * 操作方法
- *
- *
- *
+ *  肖茂峰 * 个人资料
  */
 class Xmf
 {
@@ -15,9 +12,6 @@ class Xmf
 
     /**
      * 获得信息内容
-     *
-     * @param   string   $params   业务参数
-     * @param   string   $index    索引
      *
      * @return  string 
      *
