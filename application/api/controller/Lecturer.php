@@ -217,6 +217,7 @@ class Lecturer
                         'content'       => '集团导师'
                     ]
                 ],
+                'img' => GET_IMG_URL.'lecturer/xmf/img.jpg',
                 'product'        => [
                     1               => [
                         'img'           => GET_IMG_URL.'lecturer/xmf/product/1.jpg',
