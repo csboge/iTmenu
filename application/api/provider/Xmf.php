@@ -56,19 +56,23 @@ class Xmf
             'product'        => [
                 1               => [
                     'img'           => GET_IMG_URL.'lecturer/xmf/product/1.jpg',
-                    'title'         => '中国青年创业导师'
+                    'title'         => '中国青年创业导师',
+                    'type'          => 0
                 ],
                 2               => [
                     'img'           => GET_IMG_URL.'lecturer/xmf/product/2.jpg',
-                    'title'         => '好望角商学院金牌讲师'
+                    'title'         => '好望角商学院金牌讲师',
+                    'type'          => 0
                 ],
                 3               => [
                     'img'           => GET_IMG_URL.'lecturer/xmf/product/3.jpg',
-                    'title'         => '好望角高级内训师'
+                    'title'         => '好望角高级内训师',
+                    'type'          => 0
                 ],
                 4               => [
                     'img'           => GET_IMG_URL.'lecturer/xmf/product/4.jpg',
-                    'title'         => '好望角人性商道研究员'
+                    'title'         => '好望角人性商道研究员',
+                    'type'          => 0
                 ]
 
             ],

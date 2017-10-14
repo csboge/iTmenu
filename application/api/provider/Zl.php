@@ -55,19 +55,23 @@ class Zl
             'product'        => [
                 1               => [
                     'img'           => GET_IMG_URL.'lecturer/zl/product/1.jpg',
-                    'title'         => '儿童综合医疗'
+                    'title'         => '儿童综合医疗',
+                    'type'          => 1
                 ],
                 2               => [
                     'img'           => GET_IMG_URL.'lecturer/zl/product/2.jpg',
-                    'title'         => '平安e生保2017'
+                    'title'         => '平安e生保2017',
+                    'type'          => 1
                 ],
                 3               => [
                     'img'           => GET_IMG_URL.'lecturer/zl/product/3.jpg',
-                    'title'         => '福寿安康'
+                    'title'         => '福寿安康',
+                    'type'          => 1
                 ],
                 4               => [
                     'img'           => GET_IMG_URL.'lecturer/zl/product/4.jpg',
-                    'title'         => '鸿运随行'
+                    'title'         => '鸿运随行',
+                    'type'          => 1
                 ]
 
             ],
