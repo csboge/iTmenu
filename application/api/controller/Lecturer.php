@@ -108,7 +108,7 @@ class Lecturer
                 'name'          => '周莉',
                 'explain'       => '平安资深主任',
                 'portrait'      => GET_IMG_URL.'lecturer/zl/portrait.jpg',
-                'phone'         => '',
+                'phone'         => '18906191509',
                 'bg'            => GET_IMG_URL.'lecturer/zl/bg.jpg',
                 'deeds'         => [
                     1               => [

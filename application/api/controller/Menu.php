@@ -149,12 +149,6 @@ class Menu
                 '10号桌点餐牛肉炒面',
                 '10号桌点餐牛肉炒面',
                 '10号桌点餐牛肉炒面',
-                '10号桌点餐牛肉炒面',
-                '10号桌点餐牛肉炒面',
-                '10号桌点餐牛肉炒面',
-                '10号桌点餐牛肉炒面',
-                '10号桌点餐牛肉炒面',
-                '10号桌点餐牛肉炒面',
             ],
             'avatar' => [
                 'https://wx.qlogo.cn/mmopen/vi_32/QXsjJ6a9S6IZacPhoShtGlnzdK2QLefIZl8ezX2Q35lwjictRE6ABlvPCBibASXWB9FvmgezySPkvrSC3S9BCrIQ/0',

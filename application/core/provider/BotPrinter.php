@@ -178,7 +178,6 @@ class BotPrinter
         header("Content-type: text/html; charset=utf-8");
         //$printer    = new \app\core\provider\BotPrinter();
 
-        my_log('printOrderInfo',$order_info['goods_list'],'printOrderInfo','0','打印机');
 
         $arr = json_decode($order_info['goods_list'], true);
 
