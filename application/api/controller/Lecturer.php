@@ -243,22 +243,22 @@ class Lecturer
                     '而销售人员的天职就是持续不断地为客户创造价值'
                 ],
                 'banner'          => [
-                    GET_IMG_URL.'lecturer/zl/banner/1.jpg',
-                    GET_IMG_URL.'lecturer/zl/banner/2.jpg',
-                    GET_IMG_URL.'lecturer/zl/banner/3.jpg',
-                    GET_IMG_URL.'lecturer/zl/banner/4.jpg'
+                    GET_IMG_URL.'lecturer/xmf/banner/1.jpg',
+                    GET_IMG_URL.'lecturer/xmf/banner/2.jpg',
+                    GET_IMG_URL.'lecturer/xmf/banner/3.jpg',
+                    GET_IMG_URL.'lecturer/xmf/banner/4.jpg'
                 ],
                 'image'          => [
-                    GET_IMG_URL.'lecturer/zl/photo/1.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/2.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/3.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/4.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/5.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/6.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/7.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/8.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/9.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/10.jpg',
+                    GET_IMG_URL.'lecturer/xmf/photo/1.jpg',
+                    GET_IMG_URL.'lecturer/xmf/photo/2.jpg',
+                    GET_IMG_URL.'lecturer/xmf/photo/3.jpg',
+                    GET_IMG_URL.'lecturer/xmf/photo/4.jpg',
+                    GET_IMG_URL.'lecturer/xmf/photo/5.jpg',
+                    GET_IMG_URL.'lecturer/xmf/photo/6.jpg',
+                    GET_IMG_URL.'lecturer/xmf/photo/7.jpg',
+                    GET_IMG_URL.'lecturer/xmf/photo/8.jpg',
+                    GET_IMG_URL.'lecturer/xmf/photo/9.jpg',
+                    GET_IMG_URL.'lecturer/xmf/photo/10.jpg',
                 ],
 
             ],
