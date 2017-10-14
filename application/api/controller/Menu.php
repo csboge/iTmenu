@@ -118,7 +118,7 @@ class Menu
             ->order('rank asc')
             ->select();
         if($res){
-            foreach ($res as &$value){
+            foreach ($res as $key=>&$value){
                 $value['image'] = ImgUrl($value['image'])?ImgUrl($value['image']):'';
                 $value['name'] = $value['title'];
                 unset($value['title']);
@@ -126,6 +126,10 @@ class Menu
                     $value['type_id'] = '';
                 }else{
                     $value['type_id'] = $this->m_typegoods->typeList($value['type_id']);
+                }
+                $value['attrs'] = json_decode($value['attrs'],true);
+                if(!isset($value['attrs'][$key]['titles'])){
+                    $value['attrs'] = [];
                 }
             }
             return jsonData(1, 'OK', $res);

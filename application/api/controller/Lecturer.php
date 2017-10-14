@@ -43,6 +43,7 @@ class Lecturer
 
     }
 
+
     public function index()
     {
         $id = input('param.id/d');
