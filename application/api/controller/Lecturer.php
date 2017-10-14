@@ -1,271 +1,63 @@
 <?php
 namespace app\api\controller;
 
+use think\Request;
+
 class Lecturer
 {
+    private     $p_auth;
+
+    /***
+     * 公共 - 注入依赖
+     *
+     */
+    public function __construct(
+        Request                         $request,
+        \app\core\provider\Auth         $p_auth,
+        \app\api\provider\Zlf           $p_zlf,
+        \app\api\provider\Dp            $p_dp,
+        \app\api\provider\Zl            $p_zl,
+        \app\api\provider\Xmf            $p_xmf
+    )
+    {
+        //验证授权合法
+        $p_auth->check($request, [
+            'public' => ['*'],
+            'private'=> []
+        ]);
+
+        //授权服务
+        $this->p_auth   = $p_auth;
+
+        //钟林飞
+        $this->p_zlf    = $p_zlf;
+
+        //童鹏
+        $this->p_dp     = $p_dp;
+
+        //周莉
+        $this->p_zl     = $p_zl;
+
+        //肖茂峰
+        $this->p_xmf    = $p_xmf;
+
+    }
+
     public function index()
     {
         $id = input('param.id/d');
         if(empty($id))return jsonData(0, '未接收到数据', []);
-        $data = [
-            1 => [
-                'name'          => '钟林飞',
-                'explain'       => '好望角全国首席讲师',
-                'portrait'      => GET_IMG_URL.'lecturer/zlf/portrait.jpg',
-                'phone'         => '18671621319',
-                'banner'        => [
-                    'banner1'       => GET_IMG_URL.'lecturer/zlf/banner1.jpg',
-                    'banner2'       => GET_IMG_URL.'lecturer/zlf/banner2.jpg',
-                    'banner3'       => GET_IMG_URL.'lecturer/zlf/banner3.jpg',
-                    'banner4'       => GET_IMG_URL.'lecturer/zlf/banner4.jpg',
-                    'banner5'       => GET_IMG_URL.'lecturer/zlf/banner5.jpg',
-                ],
-                'deeds'         => [
-                    1               => [
-                        'title'         => '亚洲90后超级演说家',
-                        'content'       => '22岁打破集团9年来的销售记录',
-                        'colour'        => '#e0620c'
-                    ],
-                    2               => [
-                        'title'         => '好望角集团浙江分公司总经理',
-                        'content'       => '23岁成为浙江分公司总经理',
-                        'colour'        => '#00a0e9'
-                    ],
-                    3               => [
-                        'title'         => '好望角商学院首席创业导师',
-                        'content'       => '24岁仅用九个月成功挑战开上宝马',
-                        'colour'        => '#35b16c'
-                    ],
-                    4               => [
-                        'title'         => '好望角集团董事',
-                        'content'       => '27岁成为集团董事帮助团队伙伴开上奔驰宝马',
-                        'colour'        => '#959595'
-                    ]
-                ]
-            ],
-            2 => [
-                'name'          => '童鹏',
-                'explain'       => '好望角集团湖北分总司总经理',
-                'portrait'      => GET_IMG_URL.'lecturer/dp/portrait.jpg',
-                'phone'         => '18671621319',
-                'banner'        => [
-                    '1'             => GET_IMG_URL.'lecturer/dp/2.jpg',
-                    '2'             => GET_IMG_URL.'lecturer/dp/4.jpg',
-                    '3'             => GET_IMG_URL.'lecturer/dp/1.jpg',
-                    '4'             => GET_IMG_URL.'lecturer/dp/3.jpg',
-                    '5'             => GET_IMG_URL.'lecturer/dp/5.jpg',
-                    '6'             => GET_IMG_URL.'lecturer/dp/6.jpg',
-                    '7'             => GET_IMG_URL.'lecturer/dp/7.jpg',
-                    '8'             => GET_IMG_URL.'lecturer/dp/8.jpg'
-                ],
-                'describe'      => [
-                    '他曾经做推销连200块的房租都交不起！',
-                    '他曾经被人认为不适合做销售',
-                    '他曾经拜访客户到晚上12点！',
-                    '他曾经每天陌生拜访至少30家客户，连续三个月，结果依然不好，',
-                    '但他坚信他是一个干大事的人，他下定决心改变自己',
-                    '和家族的命运，',
-                    '于是他大量的学习和练习销售，他的生命开始发生奇迹般的改变'
-                ],
-                'dream'      => [
-                    '他此生梦想点亮',
-                    '一亿人学会销售改变命运！',
-                    '并协助恩师黄佰胜老师建立千',
-                    '年学府，恩泽子孙后代一千年!',
-                    '他被无数的小伙伴誉为最帅、',
-                    '最有魅力、最有爱心、最具',
-                    '亲和力最实战的超级',
-                    '演说家'
-                ],
-                'deeds'         => [
-                    1               => [
-                        'title'         => '21岁',
-                        'content'       => '成为好望角集团湖北分公司总经理'
-                    ],
-                    2               => [
-                        'title'         => '22岁',
-                        'content'       => '巡回全中国做演讲'
-                    ],
-                    3               => [
-                        'title'         => '24岁',
-                        'content'       => '年收入超过50万'
-                    ],
-                    4               => [
-                        'title'         => '25岁',
-                        'content'       => '全款买上奔驰轿车'
-                    ],
-                    5               => [
-                        'title'         => '26岁',
-                        'content'       => '买上百万房子送给老婆当结婚礼物'
-                    ],
-                    6               => [
-                        'title'         => '',
-                        'content'       => '影响学员超过30万'
-                    ]
-                ]
-            ],
-            3 => [
-                'name'          => '周莉',
-                'explain'       => '平安资深主任',
-                'portrait'      => GET_IMG_URL.'lecturer/zl/portrait.jpg',
-                'phone'         => '18906191509',
-                'bg'            => GET_IMG_URL.'lecturer/zl/bg.jpg',
-                'deeds'         => [
-                    1               => [
-                        'title'         => '2015-12',
-                        'content'       => '入司平安'
-                    ],
-                    2               => [
-                        'title'         => '2016-07',
-                        'content'       => '晋升主任'
-                    ],
-                    3               => [
-                        'title'         => '2017-01',
-                        'content'       => '高级主任'
-                    ],
-                    4               => [
-                        'title'         => '2017-07',
-                        'content'       => '资深主任'
-                    ],
-                    5               => [
-                        'title'         => '2018-01',
-                        'content'       => '冲刺经理'
-                    ]
-                ],
-                'product'        => [
-                    1               => [
-                        'img'           => GET_IMG_URL.'lecturer/zl/product/1.jpg',
-                        'title'         => '儿童综合医疗'
-                    ],
-                    2               => [
-                        'img'           => GET_IMG_URL.'lecturer/zl/product/2.jpg',
-                        'title'         => '平安e生保2017'
-                    ],
-                    3               => [
-                        'img'           => GET_IMG_URL.'lecturer/zl/product/3.jpg',
-                        'title'         => '福寿安康'
-                    ],
-                    4               => [
-                        'img'           => GET_IMG_URL.'lecturer/zl/product/4.jpg',
-                        'title'         => '鸿运随行'
-                    ]
+        if($id == 1){
+            $data = $this->p_zlf->getUser();
+        }elseif($id == 2){
+            $data = $this->p_dp->getUser();
+        }elseif ($id == 3){
+            $data = $this->p_zl->getUser();
+        }elseif ($id == 4){
+            $data = $this->p_xmf->getUser();
+        }
 
-                ],
-                'join'          => [
-                    '我们相遇相知......一路上的点点滴滴，',
-                    '一直记在心中！携手共同创业.我们一起努力！',
-                    '再大的困难，都不是困难，齐心协力，勇往直前！',
-                    '期待更多的帅哥美女加入大爱团队！'
-                ],
-                'recruit'          => [
-                    1               => [
-                        'title'         => '助理2名、售后服务专员5名',
-                        'content'       => '工资在3000元—5000元'
-                    ],
-                    2               => [
-                        'title'         => '信用卡专员及银行的存款贷款专员5名',
-                        'content'       => '高中以上文凭、底薪3500元加提成、都是双休、'
-                    ],
-                    3               => [
-                        'title'         => '',
-                        'content'       => '节假日正常休息！'
-                    ]
-                ],
-                'banner'          => [
-                    GET_IMG_URL.'lecturer/zl/banner/1.jpg',
-                    GET_IMG_URL.'lecturer/zl/banner/2.jpg',
-                    GET_IMG_URL.'lecturer/zl/banner/3.jpg',
-                    GET_IMG_URL.'lecturer/zl/banner/4.jpg'
-                ],
-                'image'          => [
-                    GET_IMG_URL.'lecturer/zl/photo/1.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/2.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/3.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/4.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/5.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/6.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/7.jpg',
-                    GET_IMG_URL.'lecturer/zl/photo/8.jpg',
-                ],
-
-            ],
-            4 => [
-                'name'          => '肖茂峰',
-                'explain'       => '好望角高级内训师',
-                'portrait'      => GET_IMG_URL.'lecturer/xmf/portrait.jpg',
-                'phone'         => '15956540455',
-                'bg'            => GET_IMG_URL.'lecturer/xmf/bg.jpg',
-                'deeds'         => [
-                    1               => [
-                        'title'         => '2009年',
-                        'content'       => '流水线'
-                    ],
-                    2               => [
-                        'title'         => '2012年',
-                        'content'       => '送货员'
-                    ],
-                    3               => [
-                        'title'         => '2014年',
-                        'content'       => '服务员'
-                    ],
-                    4               => [
-                        'title'         => '2015年',
-                        'content'       => '外资企业'
-                    ],
-                    5               => [
-                        'title'         => '2017年',
-                        'content'       => '集团导师'
-                    ]
-                ],
-                'img' => GET_IMG_URL.'lecturer/xmf/img.jpg',
-                'product'        => [
-                    1               => [
-                        'img'           => GET_IMG_URL.'lecturer/xmf/product/1.jpg',
-                        'title'         => '中国青年创业导师'
-                    ],
-                    2               => [
-                        'img'           => GET_IMG_URL.'lecturer/xmf/product/2.jpg',
-                        'title'         => '好望角商学院金牌讲师'
-                    ],
-                    3               => [
-                        'img'           => GET_IMG_URL.'lecturer/xmf/product/3.jpg',
-                        'title'         => '好望角高级内训师'
-                    ],
-                    4               => [
-                        'img'           => GET_IMG_URL.'lecturer/xmf/product/4.jpg',
-                        'title'         => '好望角人性商道研究员'
-                    ]
-
-                ],
-                'join'          => [
-                    '曾经因为一场演讲点亮了自己的生命',
-                    '明白了帮助别人实现梦想点亮他人生命才是人生的真谛',
-                    '讲师站上舞台就是帮助别人实现更大价值',
-                    '而销售人员的天职就是持续不断地为客户创造价值'
-                ],
-                'banner'          => [
-                    GET_IMG_URL.'lecturer/xmf/banner/1.jpg',
-                    GET_IMG_URL.'lecturer/xmf/banner/2.jpg',
-                    GET_IMG_URL.'lecturer/xmf/banner/3.jpg',
-                    GET_IMG_URL.'lecturer/xmf/banner/4.jpg'
-                ],
-                'image'          => [
-                    GET_IMG_URL.'lecturer/xmf/photo/1.jpg',
-                    GET_IMG_URL.'lecturer/xmf/photo/2.jpg',
-                    GET_IMG_URL.'lecturer/xmf/photo/3.jpg',
-                    GET_IMG_URL.'lecturer/xmf/photo/4.jpg',
-                    GET_IMG_URL.'lecturer/xmf/photo/5.jpg',
-                    GET_IMG_URL.'lecturer/xmf/photo/6.jpg',
-                    GET_IMG_URL.'lecturer/xmf/photo/7.jpg',
-                    GET_IMG_URL.'lecturer/xmf/photo/8.jpg',
-                    GET_IMG_URL.'lecturer/xmf/photo/9.jpg',
-                    GET_IMG_URL.'lecturer/xmf/photo/10.jpg',
-                ],
-
-            ],
-
-        ];
-        return jsonData(1, 'ok', $data[$id]);
+        return jsonData(1, 'ok', $data);
     }
 
 
