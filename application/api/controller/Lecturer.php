@@ -165,6 +165,20 @@ class Lecturer
                     GET_IMG_URL.'lecturer/zl/photo/4.jpg',
                     GET_IMG_URL.'lecturer/zl/photo/5.jpg',
                     GET_IMG_URL.'lecturer/zl/photo/6.jpg',
+                ],
+                'recruit'          => [
+                    1               => [
+                        'title'         => '助理2名、售后服务专员5名',
+                        'content'       => '工资在3000元—5000元'
+                    ],
+                    2               => [
+                        'title'         => '信用卡专员及银行的存款贷款专员5名',
+                        'content'       => '高中以上文凭、底薪3500元加提成、都是双休、'
+                    ],
+                    3               => [
+                        'title'         => '',
+                        'content'       => '节假日正常休息！'
+                    ]
                 ]
             ],
         ];
