@@ -218,3 +218,25 @@ function api_notice_increment($url, $data){
     }
 }
 
+/**
+ * 将多维数组降维成一维数组，递归实现
+ * @param unknown $arr
+ * @param string $delimiter
+ * @param string $key
+ * @return boolean|Ambigous <multitype:string , multitype:>
+ */
+function multiToSingle($arr) {
+    $resultAry = array();
+    if (!(is_array($arr) && count($arr)>0)) {
+        return false;
+    }
+    foreach ($arr AS $k=>$val) {
+        if (is_array($val) && count($val)>0) {
+            $resultAry = array_merge($resultAry, multiToSingle($val));
+        } else {
+            $resultAry[] = $val;
+        }
+    }
+    return $resultAry;
+}
+

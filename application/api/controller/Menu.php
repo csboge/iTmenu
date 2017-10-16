@@ -128,7 +128,8 @@ class Menu
                     $value['type_id'] = $this->m_typegoods->typeList($value['type_id']);
                 }
                 $value['attrs'] = json_decode($value['attrs'],true);
-                if(!isset($value['attrs'][$key]['titles'])){
+                $new_arr = multiToSingle($value['attrs']);          //降维处理
+                if($new_arr[0] == ''){
                     $value['attrs'] = [];
                 }
             }
