@@ -75,9 +75,7 @@ class Shop
             ->where($map)
             ->order('rank asc')
             ->field('id,title,image,price,intro')
-            ->limit(3)
             ->select();
-
         if($data){
             foreach ($data as &$volue){
                 $volue['image'] = ImgUrl($volue['image']);
