@@ -38,7 +38,7 @@ class Shop extends Model
      */
     public function getShop($shopid){
 
-        $data = $this->where('id',$shopid)->field('title,mobile,tel,adress,printer,printer_list')->find();
+        $data = $this->where('id',$shopid)->field('title,mobile,tel,adress,printer,printer_list,switch')->find();
 
         return json_decode(json_encode($data), true);
     }
