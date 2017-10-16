@@ -49,6 +49,7 @@ class Zl
                     'content'       => '冲刺经理'
                 ]
             ],
+            'img' => GET_IMG_URL.'lecturer/zl/img.jpg',
             'product'        => [
                 1               => [
                     'img'           => GET_IMG_URL.'lecturer/zl/product/1.jpg',
