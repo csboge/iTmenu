@@ -31,5 +31,8 @@ define('WX_URL_API', 'https://api.ai-life.me/api/Buy/notify/');
 // 回调网址
 define('WX_URL_DEMO', 'https://demo.ai-life.me/api/Buy/notify/');
 
+// 随机码
+define('GET_RAND', rand(1000,9999));
+
 // 加载框架引导文件
 require __DIR__ . '/../thinkphp/start.php';

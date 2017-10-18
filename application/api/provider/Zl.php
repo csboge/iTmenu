@@ -24,9 +24,9 @@ class Zl
         $data = [
             'name'          => '周莉',
             'explain'       => '平安资深主任',
-            'portrait'      => GET_IMG_URL.'lecturer/zl/portrait.jpg',
+            'portrait'      => GET_IMG_URL.'lecturer/zl/portrait.jpg?'.GET_RAND,
             'phone'         => '18906191509',
-            'bg'            => GET_IMG_URL.'lecturer/zl/bg.jpg',
+            'bg'            => GET_IMG_URL.'lecturer/zl/bg.jpg?'.GET_RAND,
             'deeds'         => [
                 1               => [
                     'title'         => '2015-12',
@@ -51,28 +51,28 @@ class Zl
             ],
             'product'        => [
                 1               => [
-                    'img'           => GET_IMG_URL.'lecturer/zl/product/1.jpg',
+                    'img'           => GET_IMG_URL.'lecturer/zl/product/1.jpg?'.GET_RAND,
                     'title'         => '平安福',
                     'type'          => 1
                 ],
                 2               => [
-                    'img'           => GET_IMG_URL.'lecturer/zl/product/2.jpg',
+                    'img'           => GET_IMG_URL.'lecturer/zl/product/2.jpg?'.GET_RAND,
                     'title'         => '玺越人生',
                     'type'          => 1
                 ],
                 3               => [
-                    'img'           => GET_IMG_URL.'lecturer/zl/product/3.jpg',
+                    'img'           => GET_IMG_URL.'lecturer/zl/product/3.jpg?'.GET_RAND,
                     'title'         => '儿童综合医疗',
                     'type'          => 1
                 ],
                 4               => [
-                    'img'           => GET_IMG_URL.'lecturer/zl/product/4.jpg',
+                    'img'           => GET_IMG_URL.'lecturer/zl/product/4.jpg?'.GET_RAND,
                     'title'         => '平安e生保2017',
                     'type'          => 1
                 ]
 
             ],
-            'image' => GET_IMG_URL.'lecturer/zl/image.jpg',
+            'image' => GET_IMG_URL.'lecturer/zl/image.jpg?'.GET_RAND,
             'join'          => [
                 '我们相遇相知......一路上的点点滴滴，',
                 '一直记在心中！携手共同创业.我们一起努力！',
@@ -94,21 +94,21 @@ class Zl
                 ]
             ],
             'banner'          => [
-                GET_IMG_URL.'lecturer/zl/banner/1.jpg',
-                GET_IMG_URL.'lecturer/zl/banner/2.jpg',
-                GET_IMG_URL.'lecturer/zl/banner/3.jpg',
-                GET_IMG_URL.'lecturer/zl/banner/4.jpg',
-                GET_IMG_URL.'lecturer/zl/banner/5.jpg'
+                GET_IMG_URL.'lecturer/zl/banner/1.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/banner/2.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/banner/3.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/banner/4.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/banner/5.jpg?'.GET_RAND
             ],
             'photo'          => [
-                GET_IMG_URL.'lecturer/zl/photo/1.jpg',
-                GET_IMG_URL.'lecturer/zl/photo/2.jpg',
-                GET_IMG_URL.'lecturer/zl/photo/3.jpg',
-                GET_IMG_URL.'lecturer/zl/photo/4.jpg',
-                GET_IMG_URL.'lecturer/zl/photo/5.jpg',
-                GET_IMG_URL.'lecturer/zl/photo/6.jpg',
-                GET_IMG_URL.'lecturer/zl/photo/7.jpg',
-                GET_IMG_URL.'lecturer/zl/photo/8.jpg',
+                GET_IMG_URL.'lecturer/zl/photo/1.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/photo/2.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/photo/3.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/photo/4.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/photo/5.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/photo/6.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/photo/7.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/photo/8.jpg?'.GET_RAND
             ],
         ];
 
