@@ -78,17 +78,43 @@ class Lecturer
         if(empty($id))return jsonData(0, '未接收到数据', []);
         $data = [
             1   => [
-                GET_IMG_URL.'lecturer/details/1.jpg'
+                GET_IMG_URL.'lecturer/details/tc3_paf1.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_paf2.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_paf3.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_paf4.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_paf5.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_paf6.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_paf7.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_paf8.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_paf9.jpg'
             ],
             2   => [
-                GET_IMG_URL.'lecturer/details/2.jpg'
+                GET_IMG_URL.'lecturer/details/tc3_xy1.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_xy2.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_xy3.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_xy4.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_xy5.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_xy6.jpg'
             ],
             3   => [
-                GET_IMG_URL.'lecturer/details/3.jpg'
+                GET_IMG_URL.'lecturer/details/tc3_et1.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_et2.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_et3.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_et4.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_et5.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_et6.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_et7.jpg'
             ],
             4   => [
-                GET_IMG_URL.'lecturer/details/4.jpg'
+                GET_IMG_URL.'lecturer/details/tc3_pa1.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_pa2.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_pa3.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_pa4.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_pa5.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_pa6.jpg',
+                GET_IMG_URL.'lecturer/details/tc3_pa7.jpg'
             ]
+
         ];
         return jsonData(1, 'ok', $data[$id]);
     }
