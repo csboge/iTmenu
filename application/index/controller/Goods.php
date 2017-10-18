@@ -196,9 +196,9 @@ class Goods extends Controller
 
     //菜品列表
     public function goods_index(){
-        $where = input('param.');
         $map = [];
-        if ($where) {
+        if (input('param.')) {
+            $where = input('param.');
 //            if (isset($where['start']) && isset($where['end'])) {
 //                $start = strtotime($where['start']);
 //                $end = strtotime($where['end']);
@@ -220,7 +220,7 @@ class Goods extends Controller
         $map['hd_status'] = 1;
         $map['shop_id'] = session('shop_id');
 //        echo '<pre>';print_r($map);exit;
-        $data = Db::name('goods')->where($map)->order('rec desc,status')->order('rank asc')->paginate(10);
+        $data = Db::name('goods')->where($map)->order('rank asc')->order('rec desc')->order('id desc')->paginate(10);
         $count = count_list('goods','shop_id',session('shop_id'));
         // 获取分页显示
         $page = $data->render();
