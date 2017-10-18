@@ -88,7 +88,7 @@ class Lecturer
             ],
             4   => [
                 GET_IMG_URL.'lecturer/details/4.jpg'
-
+            ]
         ];
         return jsonData(1, 'ok', $data[$id]);
     }
