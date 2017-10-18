@@ -97,8 +97,7 @@ class Zl
                 GET_IMG_URL.'lecturer/zl/banner/1.jpg?'.GET_RAND,
                 GET_IMG_URL.'lecturer/zl/banner/2.jpg?'.GET_RAND,
                 GET_IMG_URL.'lecturer/zl/banner/3.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zl/banner/4.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zl/banner/5.jpg?'.GET_RAND
+                GET_IMG_URL.'lecturer/zl/banner/4.jpg?'.GET_RAND
             ],
             'photo'          => [
                 GET_IMG_URL.'lecturer/zl/photo/1.jpg?'.GET_RAND,
@@ -108,7 +107,11 @@ class Zl
                 GET_IMG_URL.'lecturer/zl/photo/5.jpg?'.GET_RAND,
                 GET_IMG_URL.'lecturer/zl/photo/6.jpg?'.GET_RAND,
                 GET_IMG_URL.'lecturer/zl/photo/7.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zl/photo/8.jpg?'.GET_RAND
+                GET_IMG_URL.'lecturer/zl/photo/8.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/photo/9.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/photo/10.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/photo/11.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zl/photo/12.jpg?'.GET_RAND,
             ],
         ];
 
