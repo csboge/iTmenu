@@ -2,6 +2,8 @@
 namespace app\core\provider;
 
 //中央控制系统授权
+use app\core\model\TypeGoods;
+
 define('USER', 'zhongmin@csboge.com');	//*必填*：飞鹅云后台注册账号
 define('UKEY', 'kT79RSKyGm9JGye8');	    //*必填*: 飞鹅云注册账号后生成的UKEY
 
@@ -181,28 +183,46 @@ class BotPrinter
 
         $arr = json_decode($order_info['goods_list'], true);
 
+//        print_r($order_info);exit;
+
         $youhui     = $order_info['coupon_price']+$order_info['first_money']+$order_info['offset_money'];
 
         $shop       = $this->m_shop->getShop($order_info['shop_id']);                   //查询商户信息
-
-
         $sn         = $shop['printer'];
-
         foreach ($arr as &$value){
             $value['extras'] = $value['price']*$value['num'];
         }
 
-        $this->printer_one($order_info,$arr,$sn);
-
-        if($shop['printer_list']){
+        if($shop['switch'] == 0){                           //不分类整单小字体
+            $this->printer_one($order_info,$arr,$sn);
+        }elseif ($shop['switch'] == 1){                     //不分类整单大字体
+            $this->printer_two($order_info,$arr,$sn);
+        }elseif ($shop['switch'] == 2){                     //分类整单小字体
+            $this->printer_one($order_info,$arr,$sn);
+        }elseif ($shop['switch'] == 3){                     //分类整单大字体
+            $this->printer_two($order_info,$arr,$sn);
             $printe = json_decode($shop['printer_list'],true);
-            foreach ($printe as $item){
-                $this->printer_one($order_info,$arr,$item['number']);
+            foreach ($arr as $item){
+                if($item['is_canju'] == 0){
+                    foreach ($printe as $prin){
+                        if($item['type_id'] == 1 && $prin['template'] == 1){
+                            $suen = $prin['number'];
+                            $this->printer_three($order_info,$item,$suen);
+                        }elseif ($item['type_id'] == 2 && $prin['template'] == 2){
+                            $suen = $prin['number'];
+                            $this->printer_three($order_info,$item,$suen);
+                        }
+                    }
+                }
             }
         }
-
     }
 
+    /**
+     * 打印机模板一号
+     *
+     * 整单小字体
+     */
     public function printer_one($order_info,$arr,$sn){
         $orderInfo = '<CB>电子菜谱</CB><BR>';
         $orderInfo .= '名称　　　　　 单价  数量 金额<BR>';
@@ -232,17 +252,111 @@ class BotPrinter
                 $orderInfo .= $name_b."<BR>";
             }
         }
+        if(!empty($order_info['message'])){
+            $orderInfo .= '--------------------------------<BR>';
+            $orderInfo .= '备注：'.$order_info['message'].'<BR>';
+        }
         $orderInfo .= '--------------------------------<BR>';
         $orderInfo .= '桌位：'.$order_info['desk_sn'].'<BR>';
         $orderInfo .= '支付：'.$order_info['pay_price'].'元<BR>';
         $orderInfo .= '红包：'.$order_info['mode_money'].'元<BR>';
-        $orderInfo .= '下单时间：'.date('Y-m-d H:i:s', time()).'<BR>';
+        $orderInfo .= '下单时间：'.date('Y-m-d H:i:s',$order_info['created']).'<BR>';
 
 //		$orderInfo .= '地址：'.$shop['adress'].'<BR>';
 //		$orderInfo .= '联系电话：'.$shop['mobile'].'<BR>';
 //		$orderInfo .= '座机电话：'.$shop['tel'].'<BR>';
 //		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
+        $re = $this->wp_print($sn, $orderInfo, 1);
+    }
 
+
+    /**
+     * 打印机模板二号
+     *
+     * 整单大字体
+     */
+    public function printer_two($order_info,$arr,$sn){
+
+        $orderInfo = '<CB>电子菜谱</CB><BR>';
+        $orderInfo .= '名称　　　　　           数量<BR>';
+        $orderInfo .= '--------------------------------<BR>';
+        foreach($arr as $item){
+//            print_r($item);exit;
+            $length = strlen($item['name']);
+//            $length_price = strlen($item['price']);
+            if($length <= 18){
+                $length_cai = strlen($item['name']);
+                $len_cai = mb_strlen($item['name'],'utf-8');
+//                print_r($length_cai); echo  "<br>";
+//                print_r($len_cai);exit;
+                $a = (6-$len_cai)*2;
+                $b = $length_cai+$a;
+                $item['name'] = str_pad($item['name'],$b);
+                $orderInfo .= "<B>".$item['name'].$item['num'].'份'."</B><BR>";
+            }else{
+                $name_a = mb_substr($item['name'],0,4,'utf-8');
+                $length = strlen($name_a);
+                $len = mb_strlen($name_a,'utf-8');
+                $a = (6-$len)*2;
+                $b = $length+$a;
+                $name_a = str_pad($name_a,$b);
+                $name_b = mb_substr($item['name'],4,100,'utf-8');
+                $orderInfo .= "<B>".$name_a.$item['num'].'份'."</B><BR>";
+                $orderInfo .= "<B>".$name_b."</B><BR>";
+            }
+        }
+        if(!empty($order_info['message'])){
+            $orderInfo .= '--------------------------------<BR>';
+            $orderInfo .= '<B>备注：'.$order_info['message'].'</B><BR>';
+        }
+        $orderInfo .= '--------------------------------<BR>';
+        $orderInfo .= '桌位：'.$order_info['desk_sn'].'<BR>';
+        $orderInfo .= '支付：'.$order_info['pay_price'].'元<BR>';
+        $orderInfo .= '红包：'.$order_info['mode_money'].'元<BR>';
+        $orderInfo .= '下单时间：'.date('Y-m-d H:i:s',$order_info['created']).'<BR>';
+//        print_r($orderInfo);exit;
+//		$orderInfo .= '地址：'.$shop['adress'].'<BR>';
+//		$orderInfo .= '联系电话：'.$shop['mobile'].'<BR>';
+//		$orderInfo .= '座机电话：'.$shop['tel'].'<BR>';
+//		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
+        $re = $this->wp_print($sn, $orderInfo, 1);
+    }
+
+
+    /**
+     * 打印机模板三号
+     *
+     * 分单打印
+     */
+    public function printer_three($order_info,$arr,$sn){
+
+        $typegoods = new TypeGoods();
+        $name = $typegoods->typeList($arr['type_id']);
+        $orderInfo = '<CB>电子菜谱('.$name.')</CB><BR>';
+        $orderInfo .= '名称　　　　　           数量<BR>';
+        $orderInfo .= '--------------------------------<BR>';
+        $length = strlen($arr['name']);
+        if($length <= 18){
+            $length_cai = strlen($arr['name']);
+            $len_cai = mb_strlen($arr['name'],'utf-8');
+            $a = (6-$len_cai)*2;
+            $b = $length_cai+$a;
+            $arr['name'] = str_pad($arr['name'],$b);
+            $orderInfo .= "<B>".$arr['name'].$arr['num'].'份'."</B><BR>";
+        }else{
+            $name_a = mb_substr($arr['name'],0,4,'utf-8');
+            $length = strlen($name_a);
+            $len = mb_strlen($name_a,'utf-8');
+            $a = (6-$len)*2;
+            $b = $length+$a;
+            $name_a = str_pad($name_a,$b);
+            $name_b = mb_substr($arr['name'],4,100,'utf-8');
+            $orderInfo .= "<B>".$name_a.$arr['num'].'份'."</B><BR>";
+            $orderInfo .= "<B>".$name_b."</B><BR>";
+        }
+        $orderInfo .= '--------------------------------<BR>';
+        $orderInfo .= '桌位：'.$order_info['desk_sn'].'<BR>';
+        $orderInfo .= '下单时间：'.date('Y-m-d H:i:s',$order_info['created']).'<BR>';
         $re = $this->wp_print($sn, $orderInfo, 1);
     }
     
