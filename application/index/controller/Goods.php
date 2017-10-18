@@ -42,7 +42,7 @@ class Goods extends Controller
         $map['hd_status'] = 1;
         $map['shop_id'] = session('shop_id');
 //        echo "<pre>";print_r($map);exit;
-        $data = Db::name('category')->order('rank asc')->where($map)->paginate(10);
+        $data = Db::name('category')->order('rank asc')->order('id desc')->where($map)->paginate(10);
         $count = count_list('category','shop_id',session('shop_id'));
         $title = session('shop_title');
         // 获取分页显示
