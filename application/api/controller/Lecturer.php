@@ -78,33 +78,16 @@ class Lecturer
         if(empty($id))return jsonData(0, '未接收到数据', []);
         $data = [
             1   => [
-                GET_IMG_URL.'lecturer/details/tc3_child1.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_child2.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_child3.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_child4.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_child5.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_child6.jpg',
+                GET_IMG_URL.'lecturer/details/1.jpg'
             ],
             2   => [
-                GET_IMG_URL.'lecturer/details/tc3_eb1.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_eb2.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_eb3.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_eb4.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_eb5.jpg',
+                GET_IMG_URL.'lecturer/details/2.jpg'
             ],
             3   => [
-                GET_IMG_URL.'lecturer/details/tc3_fs1.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_fs2.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_fs3.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_fs4.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_fs5.jpg',
+                GET_IMG_URL.'lecturer/details/3.jpg'
             ],
             4   => [
-                GET_IMG_URL.'lecturer/details/tc3_hy1.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_hy2.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_hy3.jpg',
-                GET_IMG_URL.'lecturer/details/tc3_hy4.jpg',
-            ]
+                GET_IMG_URL.'lecturer/details/4.jpg'
 
         ];
         return jsonData(1, 'ok', $data[$id]);
