@@ -49,30 +49,30 @@ class Zl
                     'content'       => '冲刺经理'
                 ]
             ],
-            'img' => GET_IMG_URL.'lecturer/zl/img.jpg',
             'product'        => [
                 1               => [
+                    'img'           => GET_IMG_URL.'lecturer/zl/product/3.jpg',
+                    'title'         => '平安福',
+                    'type'          => 1
+                ],
+                2               => [
+                    'img'           => GET_IMG_URL.'lecturer/zl/product/4.jpg',
+                    'title'         => '玺越人生',
+                    'type'          => 1
+                ],
+                3               => [
                     'img'           => GET_IMG_URL.'lecturer/zl/product/1.jpg',
                     'title'         => '儿童综合医疗',
                     'type'          => 1
                 ],
-                2               => [
+                4               => [
                     'img'           => GET_IMG_URL.'lecturer/zl/product/2.jpg',
                     'title'         => '平安e生保2017',
-                    'type'          => 1
-                ],
-                3               => [
-                    'img'           => GET_IMG_URL.'lecturer/zl/product/3.jpg',
-                    'title'         => '福寿安康',
-                    'type'          => 1
-                ],
-                4               => [
-                    'img'           => GET_IMG_URL.'lecturer/zl/product/4.jpg',
-                    'title'         => '鸿运随行',
                     'type'          => 1
                 ]
 
             ],
+            'image' => GET_IMG_URL.'lecturer/zl/image.jpg',
             'join'          => [
                 '我们相遇相知......一路上的点点滴滴，',
                 '一直记在心中！携手共同创业.我们一起努力！',
@@ -97,9 +97,10 @@ class Zl
                 GET_IMG_URL.'lecturer/zl/banner/1.jpg',
                 GET_IMG_URL.'lecturer/zl/banner/2.jpg',
                 GET_IMG_URL.'lecturer/zl/banner/3.jpg',
-                GET_IMG_URL.'lecturer/zl/banner/4.jpg'
+                GET_IMG_URL.'lecturer/zl/banner/4.jpg',
+                GET_IMG_URL.'lecturer/zl/banner/5.jpg'
             ],
-            'image'          => [
+            'photo'          => [
                 GET_IMG_URL.'lecturer/zl/photo/1.jpg',
                 GET_IMG_URL.'lecturer/zl/photo/2.jpg',
                 GET_IMG_URL.'lecturer/zl/photo/3.jpg',
