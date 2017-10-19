@@ -22,7 +22,7 @@ class Zlf
     public function getUser()
     {
         $data = [
-            'name'          => '钟林飞',
+            'name'          => '萧鼎诚',
             'explain'       => '亚洲90后超级演说家',
             'portrait'      => GET_IMG_URL.'lecturer/zlf/portrait.jpg?'.GET_RAND,
             'phone'         => '18671621319',
