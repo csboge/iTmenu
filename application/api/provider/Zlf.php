@@ -23,7 +23,7 @@ class Zlf
     {
         $data = [
             'name'          => '钟林飞',
-            'explain'       => '好望角全国首席讲师',
+            'explain'       => '亚洲90后超级演说家',
             'portrait'      => GET_IMG_URL.'lecturer/zlf/portrait.jpg?'.GET_RAND,
             'phone'         => '18671621319',
             'banner'        => [
