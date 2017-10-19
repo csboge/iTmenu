@@ -180,7 +180,7 @@ class BotPrinter
         header("Content-type: text/html; charset=utf-8");
         //$printer    = new \app\core\provider\BotPrinter();
 
-
+        my_log('order_info',$order_info,'BotPronter/printOrderInfo',-1,'打印订单');
         $arr = json_decode($order_info['goods_list'], true);
 
 //        print_r($order_info);exit;
@@ -188,6 +188,8 @@ class BotPrinter
         $youhui     = $order_info['coupon_price']+$order_info['first_money']+$order_info['offset_money'];
 
         $shop       = $this->m_shop->getShop($order_info['shop_id']);                   //查询商户信息
+
+        my_log('$shop',$shop,'BotPronter/printOrderInfo',-1,'打印订单，查询商户信息');
         $sn         = $shop['printer'];
         foreach ($arr as &$value){
             $value['extras'] = $value['price']*$value['num'];
@@ -202,6 +204,7 @@ class BotPrinter
         }elseif ($shop['switch'] == 3){                     //分类整单大字体
             $this->printer_two($order_info,$arr,$sn);
             $printe = json_decode($shop['printer_list'],true);
+            my_log('$printe',$printe,'BotPronter/printOrderInfo',-1,'打印订单，打印机信息');
             foreach ($arr as $item){
                 if($item['is_canju'] == 0){
                     foreach ($printe as $prin){
