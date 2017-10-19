@@ -153,7 +153,6 @@ class Buy
         //生成 - 订单号
         $ordersn        = $this->p_order->getOrderSN();
 
-        my_log('$order_info',$order_info,$action_name,-1,'订单数据包');
         //转换数组
         $info = json_decode($order_info, true);
 
@@ -384,7 +383,6 @@ class Buy
         //当前模块控制器方法
         $action= $this->request->module().DS.$this->request->controller().DS.$this->request->action();
 
-        my_log('','',$action,-1,'微信回调');
         $redis = $this->redisFactory();
         $redis->set('notify_post_data', $xmlstring);
 
@@ -438,7 +436,6 @@ class Buy
 
                 //结束订单(事务处理)
                 $result = $this->p_order->endOrderStatus($order_info, $post_data);//******
-                my_log('$result',$result,$action,-1,'微信回调,结束订单');
                 if ($result) {
 
                     $printer    = new \app\core\provider\BotPrinter();
@@ -456,18 +453,18 @@ class Buy
                     //$printer->getWordsChip();
 
                     //启动打印机(队列版)
-                    if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
-                        
-                    }
+//                    if ($openid == 'opkjx0CFj1yEKskVzhmzXVHB3daY') {
+//
+//                    }
 
                     //2号  -- 殷宏华
-                    if ($openid == 'opkjx0L3kMBBrU413UHLyTyE_4is') {
-                        //$printer->getWords('217502989');
-
-
-                    }else{
-                        //$printer->printOrderInfo($order_info, $post_data);    
-                    }
+//                    if ($openid == 'opkjx0L3kMBBrU413UHLyTyE_4is') {
+//                        //$printer->getWords('217502989');
+//
+//
+//                    }else{
+//                        //$printer->printOrderInfo($order_info, $post_data);
+//                    }
 
                     //返回微信通知
                     $wechat->return_success();

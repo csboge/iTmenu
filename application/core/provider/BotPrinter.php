@@ -180,7 +180,6 @@ class BotPrinter
         header("Content-type: text/html; charset=utf-8");
         //$printer    = new \app\core\provider\BotPrinter();
 
-        my_log('order_info',$order_info,'BotPronter/printOrderInfo',-1,'打印订单');
         $arr = json_decode($order_info['goods_list'], true);
 
 //        print_r($order_info);exit;
@@ -189,22 +188,27 @@ class BotPrinter
 
         $shop       = $this->m_shop->getShop($order_info['shop_id']);                   //查询商户信息
 
-        my_log('$shop',$shop,'BotPronter/printOrderInfo',-1,'打印订单，查询商户信息');
         $sn         = $shop['printer'];
         foreach ($arr as &$value){
             $value['extras'] = $value['price']*$value['num'];
         }
 
-        if($shop['switch'] == 0){                           //不分类整单小字体
+        if($shop['switch'] == 0)
+        {                     //不分类整单小字体
             $this->printer_one($order_info,$arr,$sn);
-        }elseif ($shop['switch'] == 1){                     //不分类整单大字体
+        }
+        elseif ($shop['switch'] == 1)
+        {                     //不分类整单大字体
             $this->printer_two($order_info,$arr,$sn);
-        }elseif ($shop['switch'] == 2){                     //分类整单小字体
+        }
+        elseif ($shop['switch'] == 2)
+        {                     //分类整单小字体
             $this->printer_one($order_info,$arr,$sn);
-        }elseif ($shop['switch'] == 3){                     //分类整单大字体
+        }
+        elseif ($shop['switch'] == 3)
+        {                     //分类整单大字体
             $this->printer_two($order_info,$arr,$sn);
             $printe = json_decode($shop['printer_list'],true);
-            my_log('$printe',$printe,'BotPronter/printOrderInfo',-1,'打印订单，打印机信息');
             foreach ($arr as $item){
                 if($item['is_canju'] == 0){
                     foreach ($printe as $prin){

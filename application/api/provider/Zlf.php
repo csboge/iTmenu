@@ -24,14 +24,13 @@ class Zlf
         $data = [
             'name'          => '钟林飞',
             'explain'       => '好望角全国首席讲师',
-            'portrait'      => GET_IMG_URL.'lecturer/zlf/portrait.jpg',
+            'portrait'      => GET_IMG_URL.'lecturer/zlf/portrait.jpg?'.GET_RAND,
             'phone'         => '18671621319',
             'banner'        => [
-                'banner1'       => GET_IMG_URL.'lecturer/zlf/banner1.jpg',
-                'banner2'       => GET_IMG_URL.'lecturer/zlf/banner2.jpg',
-                'banner3'       => GET_IMG_URL.'lecturer/zlf/banner3.jpg',
-                'banner4'       => GET_IMG_URL.'lecturer/zlf/banner4.jpg',
-                'banner5'       => GET_IMG_URL.'lecturer/zlf/banner5.jpg',
+                'banner1'       => GET_IMG_URL.'lecturer/zlf/banner1.jpg?'.GET_RAND,
+                'banner2'       => GET_IMG_URL.'lecturer/zlf/banner2.jpg?'.GET_RAND,
+                'banner4'       => GET_IMG_URL.'lecturer/zlf/banner4.jpg?'.GET_RAND,
+                'banner5'       => GET_IMG_URL.'lecturer/zlf/banner5.jpg?'.GET_RAND,
             ],
             'deeds'         => [
                 1               => [

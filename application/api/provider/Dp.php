@@ -24,17 +24,17 @@ class Dp
         $data = [
             'name'          => '童鹏',
             'explain'       => '好望角集团湖北分总司总经理',
-            'portrait'      => GET_IMG_URL.'lecturer/dp/portrait.jpg',
+            'portrait'      => GET_IMG_URL.'lecturer/dp/portrait.jpg?'.GET_RAND,
             'phone'         => '18671621319',
             'banner'        => [
-                '1'             => GET_IMG_URL.'lecturer/dp/2.jpg',
-                '2'             => GET_IMG_URL.'lecturer/dp/4.jpg',
-                '3'             => GET_IMG_URL.'lecturer/dp/1.jpg',
-                '4'             => GET_IMG_URL.'lecturer/dp/3.jpg',
-                '5'             => GET_IMG_URL.'lecturer/dp/5.jpg',
-                '6'             => GET_IMG_URL.'lecturer/dp/6.jpg',
-                '7'             => GET_IMG_URL.'lecturer/dp/7.jpg',
-                '8'             => GET_IMG_URL.'lecturer/dp/8.jpg'
+                '1'             => GET_IMG_URL.'lecturer/dp/2.jpg?'.GET_RAND,
+                '2'             => GET_IMG_URL.'lecturer/dp/4.jpg?'.GET_RAND,
+                '3'             => GET_IMG_URL.'lecturer/dp/1.jpg?'.GET_RAND,
+                '4'             => GET_IMG_URL.'lecturer/dp/3.jpg?'.GET_RAND,
+                '5'             => GET_IMG_URL.'lecturer/dp/5.jpg?'.GET_RAND,
+                '6'             => GET_IMG_URL.'lecturer/dp/6.jpg?'.GET_RAND,
+                '7'             => GET_IMG_URL.'lecturer/dp/7.jpg?'.GET_RAND,
+                '8'             => GET_IMG_URL.'lecturer/dp/8.jpg?'.GET_RAND
             ],
             'describe'      => [
                 '他曾经做推销连200块的房租都交不起！',

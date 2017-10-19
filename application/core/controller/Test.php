@@ -185,82 +185,138 @@ class Test
         ];
 
         $order_info = [
-            "order_sn" => $ordersn,
-            "total_price" => 77,
-            "is_first" => 1,
-            "first_money" => 1,
-            "coupon_list_id" => 0,
-            "coupon_price" => 5,
-            "must_price" => 0,
-            "pay_price" => 19,
-            "order_money" => 0,
-            "offset_money" => 52,
-            "goods_price" => 77,
-            "desk_sn" => '001',
-            "user_count" => 1,
-            "user_list" => 0,
-            "message" => '',
-            "remark" => '',
-            "pay_way" => 0,
-            "mode_money" => 10,
-            "order_rate" => 0.02,
-            "goods_list" => '[
+            "total_price"=> 906,
+            "is_first"=> 0,
+            "first_money"=> 0,
+            "coupon_list_id"=> 0,
+            "coupon_price"=> 0,
+            "must_price"=> 906,
+            "pay_price"=> 924.12,
+            "order_money"=> 18.12,
+            "offset_money"=> 0,
+            "goods_price"=> 906,
+            "goods_list"=> '[
                 {
-                    "id": 1,
-                    "image": "http://img1.my-shop.cc/picture/20170909/dc6824f0c733f321c9ced0d063a6a42b.jpeg",
+                    "id": 152,
+                    "image": "http://img1.my-shop.cc/picture/20170921/4cec817f638a01be4f49cfb8bcb24147.jpeg",
                     "sale": 0,
-                    "attrs": "[{\'titles\':\'\',\'prices\':\'\'}]",
-                    "price": 15,
-                    "cat_id": 1,
-                    "package": 1,
-                    "rank": 1,
-                    "name": "腐竹烧肉",
-                    "num": 3,
-                    "count_price": 45
-                },
-                {
-                    "id": 2,
-                    "image": "http://img1.my-shop.cc/picture/20170909/796818169b22feeaa173867ec4e91508.jpeg",
-                    "sale": 0,
-                    "attrs": "[{\'titles\':\'\',\'prices\':\'\'}]",
-                    "price": 20,
-                    "cat_id": 1,
-                    "package": 1,
-                    "rank": 2,
-                    "name": "台湾卤肉",
+                    "attrs": {
+                        "titles": "大份",
+                        "prices": "150",
+                        "is_checked": true,
+                        "num": 1
+                    },
+                    "price": "150",
+                    "cat_id": 27,
+                    "package": 0,
+                    "rank": 0,
+                    "bowl": 0,
+                    "type_id": 2,
+                    "name": "巴拿马花蝴蝶(大份)",
                     "num": 1,
-                    "count_price": 20
+                    "spec_num": 0,
+                    "count_price": 150,
+                    "is_canju": 0
                 },
                 {
-                    "id": 1,
-                    "name": "餐具",
-                    "price": 2,
-                    "img_url": "",
-                    "cate_id": 2,
-                    "num": 5,
+                    "id": 152,
+                    "image": "http://img1.my-shop.cc/picture/20170921/4cec817f638a01be4f49cfb8bcb24147.jpeg",
+                    "sale": 0,
+                    "attrs": {
+                        "titles": "中份",
+                        "prices": "138",
+                        "is_checked": true,
+                        "num": 2
+                    },
+                    "price": "138",
+                    "cat_id": 27,
+                    "package": 0,
+                    "rank": 0,
+                    "bowl": 0,
+                    "type_id": 2,
+                    "name": "巴拿马花蝴蝶(中份)",
+                    "num": 2,
+                    "spec_num": 0,
+                    "count_price": 276,
+                    "is_canju": 0
+                },
+                {
+                    "id": 153,
+                    "image": "http://img1.my-shop.cc/picture/20170921/f196170bb0e2db9930dba49009b97bd4.jpeg",
+                    "sale": 0,
+                    "attrs": [],
+                    "price": 98,
+                    "cat_id": 27,
+                    "package": 0,
+                    "rank": 0,
+                    "bowl": 0,
+                    "type_id": 2,
+                    "name": "巴西咖啡",
+                    "num": 1,
+                    "count_price": 98,
+                    "is_canju": 0
+                },
+                {
+                    "id": 343,
+                    "image": "http://img1.my-shop.cc/picture/20170923/e623c054c038c2cb7c146359ae8b7ecc.jpeg",
+                    "sale": 0,
+                    "attrs": [],
+                    "price": 48,
+                    "cat_id": 53,
+                    "package": 0,
+                    "rank": 0,
+                    "bowl": 0,
+                    "type_id": 1,
+                    "name": "红烧排骨煲仔饭",
+                    "num": 1,
+                    "count_price": 48,
+                    "is_canju": 0
+                },
+                {
+                    "id": 388,
+                    "image": "http://img1.my-shop.cc/picture/20170927/5067d251ed2b8ea748be2d7243358afd.jpeg",
+                    "sale": 0,
+                    "attrs": [],
+                    "price": 28,
+                    "cat_id": 61,
+                    "package": 0,
+                    "rank": 0,
+                    "bowl": 0,
+                    "type_id": 1,
+                    "name": "红糖发糕",
+                    "num": 2,
+                    "count_price": 56,
+                    "is_canju": 0
+                },
+                {
+                    "id": 418,
+                    "price": 5,
+                    "bowl": 1,
+                    "name": "西餐餐具",
+                    "cate_id": 64,
+                    "img_url": "http://img1.my-shop.cc/picture/20171018/690494fdc0b9e776bf046e155736fdb1.jpeg",
+                    "num": 1,
                     "is_canju": true,
                     "is_change_item": true,
-                    "count_price": 10
-                },
-                {
-                    "id": 2,
-                    "name": "纸巾",
-                    "price": 1,
-                    "img_url": "",
-                    "cate_id": 2,
-                    "num": 2,
-                    "is_canju": true,
-                    "is_change_item": false,
-                    "count_price": 2
+                    "count_price": 5
                 }
-            ]'
+            ]',
+            "order_rate"=> 0.02,
+            "mode_rate"=> 0.08,
+            "order_sn"=> "2017101749509850",
+            "pay_way"=> 0,
+            "desk_sn"=> "1",
+            "message"=> "这个点真好吃",
+            "remark"=> "不吃辣; 少放辣",
+            "user_count"=> 3,
+            "mode_money"=> 73
         ];
 
         $info = [
 
-            'order_sn' => $ordersn,                    //是否老订单
+            'order_sn' => $order_info['order_sn'],                    //是否老订单
             'shop_id' => $ase['shop'],                             //商户id
-            'user_id' => $ase['user'],                             //顾客id
+            'user_id' => 1,                             //顾客id
 
             'desk_sn' => $order_info['desk_sn'],                    //桌位编号
             'user_count' => $order_info['user_count'],                 //就餐人数
@@ -289,7 +345,7 @@ class Test
 
             'goods_price' => $order_info['goods_price'],                //商品总价
             'goods_list' => $order_info['goods_list'],                 //购物车(商品列表)
-            'user_list' => $order_info['user_list'],                  //同桌用户
+//            'user_list' => $order_info['user_list'],                  //同桌用户
 
             'message' => $order_info['message'],                    //给商家留言
             'remark' => $order_info['remark'],                     //口味备注
@@ -302,9 +358,8 @@ class Test
             'updated' => time()
         ];
 
-
         $printer = new \app\core\provider\BotPrinter();
-//
+
 //        $aa = json_encode($info['goods_list'], true);
 ////        print_r($aa);exit;
         $printer->printOrderInfo($info, $post_data);
