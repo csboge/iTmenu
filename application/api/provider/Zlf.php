@@ -29,8 +29,12 @@ class Zlf
             'banner'        => [
                 'banner1'       => GET_IMG_URL.'lecturer/zlf/banner1.jpg?'.GET_RAND,
                 'banner2'       => GET_IMG_URL.'lecturer/zlf/banner2.jpg?'.GET_RAND,
-                'banner4'       => GET_IMG_URL.'lecturer/zlf/banner4.jpg?'.GET_RAND,
-                'banner5'       => GET_IMG_URL.'lecturer/zlf/banner5.jpg?'.GET_RAND,
+                'banner3'       => GET_IMG_URL.'lecturer/zlf/banner4.jpg?'.GET_RAND,
+                'banner4'       => GET_IMG_URL.'lecturer/zlf/banner5.jpg?'.GET_RAND,
+                'banner5'       => GET_IMG_URL.'lecturer/zlf/1.jpg?'.GET_RAND,
+                'banner6'       => GET_IMG_URL.'lecturer/zlf/2.jpg?'.GET_RAND,
+                'banner7'       => GET_IMG_URL.'lecturer/zlf/3.jpg?'.GET_RAND,
+                'banner8'       => GET_IMG_URL.'lecturer/zlf/4.jpg?'.GET_RAND,
             ],
             'deeds'         => [
                 1               => [
