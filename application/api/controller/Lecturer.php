@@ -17,7 +17,7 @@ class Lecturer
         \app\api\provider\Zlf           $p_zlf,
         \app\api\provider\Dp            $p_dp,
         \app\api\provider\Zl            $p_zl,
-        \app\api\provider\Xmf            $p_xmf
+        \app\api\provider\Xmf           $p_xmf
     )
     {
         //验证授权合法
@@ -72,7 +72,7 @@ class Lecturer
     }
 
 
-
+    //周莉 ** 个人资料详情页
     public function details(){
         $id = input('param.id/d');
         if(empty($id))return jsonData(0, '未接收到数据', []);
