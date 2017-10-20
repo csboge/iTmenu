@@ -56,15 +56,15 @@ class Zly
                     ],
                     [
                         'name'      => '古方纤秀包',
-                        'img'       => GET_IMG_URL.'lecturer/zly/index/details1.jpg?'.GET_RAND
+                        'img'       => GET_IMG_URL.'lecturer/zly/index/details2.jpg?'.GET_RAND
                     ],
                     [
                         'name'      => '古方养护包',
-                        'img'       => GET_IMG_URL.'lecturer/zly/index/details1.jpg?'.GET_RAND
+                        'img'       => GET_IMG_URL.'lecturer/zly/index/details3.jpg?'.GET_RAND
                     ],
                     [
                         'name'      => '肩颈暖护包',
-                        'img'       => GET_IMG_URL.'lecturer/zly/index/details1.jpg?'.GET_RAND
+                        'img'       => GET_IMG_URL.'lecturer/zly/index/details4.jpg?'.GET_RAND
                     ]
                 ]
             ],
