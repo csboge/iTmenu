@@ -47,7 +47,7 @@ class Category
     public function add(){
         $data = input('param.');
         if(empty($data)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+            return jsonDataList(0,'未接收到数据',[]);
         }
         $data['created'] = time();
         $res = Db::name('category')->insert($data);
@@ -70,14 +70,14 @@ class Category
     public function update(){
         $data = input('param.');
         if(empty($data)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+            return jsonDataList(0,'未接收到数据',[]);
         }
         $data['updated'] = time();
         $res = Db::name('category')->where('id',$data['id'])->update($data);
         if($res){
-            return json_encode(['code'=>1,'message'=>'OK','data'=>'','status'=>200]);
+            return jsonDataList(1,'OK',[]);
         }else{
-            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'','status'=>202]);
+            return jsonDataList(0,'数据添加失败',[]);
         }
     }
 
@@ -97,6 +97,7 @@ class Category
             'hd_status' => 1
         ];
         $data = Db::name('category')->where($map)->field('id,parent_id,name')->order('id desc')->select();
+
         if($data){
             foreach ($data as &$volue){
                 $volue['list'] = grt_category('category','parent_id',$volue['id']);
