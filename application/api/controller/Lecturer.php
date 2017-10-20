@@ -17,7 +17,8 @@ class Lecturer
         \app\api\provider\Zlf           $p_zlf,
         \app\api\provider\Dp            $p_dp,
         \app\api\provider\Zl            $p_zl,
-        \app\api\provider\Xmf           $p_xmf
+        \app\api\provider\Xmf           $p_xmf,
+        \app\api\provider\Zly           $p_zly
     )
     {
         //验证授权合法
@@ -41,6 +42,9 @@ class Lecturer
         //肖茂峰
         $this->p_xmf    = $p_xmf;
 
+        //张丽雅
+        $this->p_zly    = $p_zly;
+
     }
 
 
@@ -63,6 +67,10 @@ class Lecturer
         elseif ($id == 4)
         {
             $data = $this->p_xmf->getUser();            //获取 肖茂峰个人资料
+        }
+        elseif ($id == 5)
+        {
+            $data = $this->p_zly->getUser();            //获取 张丽雅个人资料
         }
         else
         {
