@@ -126,4 +126,34 @@ class Lecturer
         ];
         return jsonData(1, 'ok', $data[$id]);
     }
+
+    //张丽雅 ** 个人资料详情页
+    public function zly_details(){
+        $id = input('param.id/d');
+        if(empty($id))return jsonData(0, '未接收到数据', []);
+        $data = [
+            1   => [
+                GET_IMG_URL.'lecturer/zly/details/menu1_1.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zly/details/menu1_2.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zly/details/menu1_3.jpg?'.GET_RAND
+            ],
+            2   => [
+                GET_IMG_URL.'lecturer/zly/details/menu2_1.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zly/details/menu2_2.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zly/details/menu2_3.jpg?'.GET_RAND
+            ],
+            3   => [
+                GET_IMG_URL.'lecturer/zly/details/menu3_1.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zly/details/menu3_2.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zly/details/menu3_3.jpg?'.GET_RAND
+            ],
+            4   => [
+                GET_IMG_URL.'lecturer/zly/details/menu4_1.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zly/details/menu4_2.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zly/details/menu4_3.jpg?'.GET_RAND
+            ]
+
+        ];
+        return jsonData(1, 'ok', $data[$id]);
+    }
 }
