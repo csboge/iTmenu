@@ -36,7 +36,6 @@ class Category
         $this->p_auth   = $p_auth;
     }
 
-
     /***
      * 新增 -- 菜品分类
      * @参数 name         分类名称
@@ -92,7 +91,7 @@ class Category
             return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
         }
         $map = [
-            'shop_id' => $where['shop'],
+            'shop_id' => $where['shop_id'],
             'parent_id' => 0,
             'status' => 1,
             'hd_status' => 1
@@ -107,7 +106,4 @@ class Category
             return json_encode(['code'=>0,'message'=>'数据查看失败','data'=>'','status'=>202]);
         }
     }
-
-
-
 }

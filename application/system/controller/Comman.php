@@ -62,7 +62,6 @@ class Comman
      * 上传 -- 单个图片
      * @参数 file      图片
      */
-
     public function upload(){
         // 获取表单上传文件 例如上传了001.jpg
         $file = request()->file('file');
@@ -98,5 +97,4 @@ class Comman
             return json_encode(['code'=>0,'message'=>'数据上传失败','data'=>'','status'=>2000]);
         }
     }
-
 }
