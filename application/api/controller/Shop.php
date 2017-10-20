@@ -52,9 +52,6 @@ class Shop
         if($data){
             $data['logo'] = ImgUrl($data['logo']);
             $data['video'] = GET_VIDEO_URL.$data['video'];
-            if($data['spread']){
-                $data['spread'] = GET_VIDEO_URL.$data['spread'];
-            }
             return jsonData(1, 'OK', $data);
         }else{
             return jsonData(1, '未查到到数据', []);
