@@ -46,14 +46,14 @@ class Banner
     public function add(){
         $data = input('param.');
         if(empty($data)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+            return jsonDataList(0,'未接收到数据',[]);
         }
         $data['created'] = time();
         $res = Db::name('banner')->insert($data);
         if($res){
-            return json_encode(['code'=>1,'message'=>'OK','data'=>'','status'=>200]);
+            return jsonDataList(1,'OK',[]);
         }else{
-            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'','status'=>202]);
+            return jsonDataList(0,'数据添加失败',[]);
         }
     }
 
@@ -68,14 +68,14 @@ class Banner
     public function update(){
         $data = input('param.');
         if(empty($data)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+            return jsonDataList(0,'未接收到数据',[]);
         }
         $data['updated'] = time();
         $res = Db::name('banner')->where(['id'=>$data['id']])->update($data);
         if($res){
-            return json_encode(['code'=>1,'message'=>'OK','data'=>'','status'=>200]);
+            return jsonDataList(1,'OK',[]);
         }else{
-            return json_encode(['code'=>0,'message'=>'数据修改失败','data'=>'','status'=>202]);
+            return jsonDataList(0,'数据修改失败',[]);
         }
     }
 

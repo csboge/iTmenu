@@ -88,7 +88,7 @@ class Category
     public function category(){
         $where = input('param.');
         if(empty($where)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+            return jsonDataList(0,'未接收到数据',[]);
         }
         $map = [
             'shop_id' => $where['shop_id'],
@@ -101,9 +101,9 @@ class Category
             foreach ($data as &$volue){
                 $volue['list'] = grt_category('category','parent_id',$volue['id']);
             }
-            return json_encode(['code'=>1,'message'=>'OK','data'=>$data,'status'=>200]);
+            return jsonDataList(1,'OK',$data);
         }else{
-            return json_encode(['code'=>0,'message'=>'数据查看失败','data'=>'','status'=>202]);
+            return jsonDataList(0,'数据查看失败',[]);
         }
     }
 }
