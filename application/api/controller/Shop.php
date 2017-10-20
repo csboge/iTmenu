@@ -47,11 +47,14 @@ class Shop
         ];
         $data = Db::name('shop')
             ->where($map)
-            ->field('title,logo,mobile,tel,video,shop_hours,notice,is_first,adress,lng,Lat,stations,package')
+            ->field('title,logo,spread,mobile,tel,video,shop_hours,notice,is_first,adress,lng,Lat,stations,package')
             ->find();
         if($data){
             $data['logo'] = ImgUrl($data['logo']);
             $data['video'] = GET_VIDEO_URL.$data['video'];
+            if($data['spread']){
+                $data['spread'] = GET_VIDEO_URL.$data['spread'];
+            }
             return jsonData(1, 'OK', $data);
         }else{
             return jsonData(1, '未查到到数据', []);
