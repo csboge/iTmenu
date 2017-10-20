@@ -66,7 +66,7 @@ class Comman
         // 获取表单上传文件 例如上传了001.jpg
         $file = request()->file('file');
         if(empty($file)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+            return jsonDataList(0,'未接收到数据',[]);
         }
         // 移动到框架应用根目录/public/uploads/ 目录下
         $info = $file
@@ -88,13 +88,13 @@ class Comman
                     'id' => $res,
                     'path' =>GET_IMG_URL.'/picture/'.$info->getSaveName(),
                 ];
-                return json_encode(['code'=>1,'message'=>'OK','data'=>$post,'status'=>200]);
+                return jsonDataList(1,'OK',$post);
             }else{
-                return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'','status'=>202]);
+                return jsonDataList(0,'数据添加失败',[]);
             }
         }else{
             // 上传失败获取错误信息
-            return json_encode(['code'=>0,'message'=>'数据上传失败','data'=>'','status'=>2000]);
+            return jsonDataList(0,'数据上传失败',[]);
         }
     }
 }

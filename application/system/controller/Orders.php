@@ -59,7 +59,7 @@ class Orders
     public function orderList(){
         //获得商店id
         $shop     = $this->p_auth->getShopId();
-        if(!$shop)return ajaxSuccess(0,'未收到数据',[]);
+        if(!$shop)return jsonDataList(0,'未收到数据',[]);
         $tistics = $this->m_tistics->listTisticsOr($shop);                                        //获取商户收入统计
         if($tistics){
             foreach ($tistics as $key=>&$volue){
@@ -78,9 +78,9 @@ class Orders
                     }
                 }
             }
-            return ajaxSuccess(1,'收入统计',$tistics);
+            return jsonDataList(1,'收入统计',$tistics);
         }else{
-            return ajaxSuccess(1,'没有收入',null);
+            return jsonDataList(1,'没有收入',null);
         }
     }
 
@@ -92,7 +92,7 @@ class Orders
     public function todey(){
         //获得商店id
         $shop     = $this->p_auth->getShopId();
-        if(!$shop)return ajaxSuccess(0,'未收到数据',[]);
+        if(!$shop)return jsonDataList(0,'未收到数据',[]);
         $tistics = $this->m_tistics->toeles($shop);                                 //店铺收入
         $title = $this->m_shup->getShop($shop)['title'];                 //店名
         $people = $this->m_orders->ordersTistics($tistics['id']);        //付款人数，收款笔数
@@ -103,7 +103,7 @@ class Orders
             'title'         =>  $title,
             'people'        =>  $people
         ];
-        return ajaxSuccess(1,'当日收益',$arr);
+        return jsonDataList(1,'当日收益',$arr);
     }
 
     /***
@@ -114,12 +114,12 @@ class Orders
         //获得商店id
         $shop       = $this->p_auth->getShopId();
         $page       = input('param.page/d');
-        if(!$shop && !$page)return ajaxSuccess(0,'未收到数据',[]);
+        if(!$shop && !$page)return jsonDataList(0,'未收到数据',[]);
         $tistics = $this->m_tistics->listTistics($shop,$page);                    //店铺收入
         foreach ($tistics as &$time){
             $time['people'] = $this->m_orders->ordersTistics($time['id']);        //付款人数，收款笔数
             $time['single'] = round($time['money']/$time['people'],2);
         }
-        return ajaxSuccess(1,'日收益列表',$tistics);
+        return jsonDataList(1,'日收益列表',$tistics);
     }
 }

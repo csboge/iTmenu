@@ -52,9 +52,9 @@ class Category
         $data['created'] = time();
         $res = Db::name('category')->insert($data);
         if($res){
-            return json_encode(['code'=>1,'message'=>'OK','data'=>'','status'=>200]);
+            return jsonDataList(1,'OK',[]);
         }else{
-            return json_encode(['code'=>0,'message'=>'数据添加失败','data'=>'','status'=>202]);
+            return jsonDataList(0,'数据添加失败',[]);
         }
     }
 
@@ -104,7 +104,7 @@ class Category
             }
             return jsonDataList(1,'OK',$data);
         }else{
-            return jsonDataList(0,'数据查看失败',[]);
+            return jsonDataList(1,'数据查看失败',[]);
         }
     }
 }

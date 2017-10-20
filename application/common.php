@@ -105,11 +105,7 @@ function cut_str($str,$len,$suffix="..."){
     }
 }
 
-function ajaxSuccess($code, $message = '', $data = []){
-    $data = ['code'=>$code,'message'=>$message,'data'=>$data];
 
-    return json($data);
-}
 
 function shop_name($id){
     $db = new \think\Db;

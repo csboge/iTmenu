@@ -88,7 +88,7 @@ class Banner
     public function banner(){
         $data = input('param.');
         if(empty($data)){
-            return json_encode(['code'=>0,'message'=>'未接收到数据','data'=>'','status'=>404]);
+            return jsonDataList(0,'未接收到数据',[]);
         }
         $map = [
             'shop_id' => $data['shop_id'],
@@ -101,9 +101,9 @@ class Banner
             foreach ($res as &$volue){
                 $volue['image'] = ImgUrl($volue['image']);
             }
-            return json_encode(['code'=>1,'message'=>'OK','data'=>$res,'status'=>200]);
+            return jsonDataList(1,'OK',$res);
         }else{
-            return json_encode(['code'=>0,'message'=>'未查到数据','data'=>'','status'=>202]);
+            return jsonDataList(1,'未查到数据',[]);
         }
     }
 }
