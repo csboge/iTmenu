@@ -78,6 +78,15 @@ class Test
 
     }
 
+
+    public function asc(){
+        $files = input('param.');
+        $url = '';
+        $dir = '';
+        $filename = '';
+        $url = GrabImage($url,$dir,$filename);
+    }
+
     public function asddsa(){
         $ase = input('param.');
         $first_money = $this->p_wechat->code($ase['shop_id'],$ase['bagid']);
