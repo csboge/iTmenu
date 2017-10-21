@@ -80,11 +80,9 @@ class Test
 
 
     public function asc(){
-        $files = input('param.');
-        $url = '';
-        $dir = '';
-        $filename = '';
-        $url = GrabImage($url,$dir,$filename);
+        $imgpath="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1483602960&di=f93d78756010023602ecb700b802658f&src=http://pic.90sjimg.com/back_pic/u/00/38/54/05/560412efec2d6.jpg";
+        $img = GrabImage($imgpath,"D://img");//(图片地址,存放目录,存放显示文件名称)
+        print_r($img);
     }
 
     public function asddsa(){

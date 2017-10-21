@@ -132,25 +132,62 @@ class Lecturer
         $id = input('param.id/d');
         if(empty($id))return jsonData(0, '未接收到数据', []);
         $data = [
-            1   => [
-                GET_IMG_URL.'lecturer/zly/details/menu1_1.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/details/menu1_2.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/details/menu1_3.jpg?'.GET_RAND
+
+            [
+                'banner'    => [
+                    GET_IMG_URL.'lecturer/zly/details/menu1/1.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu1/2.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu1/3.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu1/4.png?'.GET_RAND,
+                ],
+                'content'   => [
+                    GET_IMG_URL.'lecturer/zly/details/menu1/menu1_1.jpg?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu1/menu1_2.jpg?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu1/menu1_3.jpg?'.GET_RAND
+                ]
+
             ],
-            2   => [
-                GET_IMG_URL.'lecturer/zly/details/menu2_1.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/details/menu2_2.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/details/menu2_3.jpg?'.GET_RAND
+            [
+                'banner'    => [
+                    GET_IMG_URL.'lecturer/zly/details/menu2/1.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu2/2.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu2/3.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu2/4.png?'.GET_RAND,
+                ],
+                'content'   => [
+                    GET_IMG_URL.'lecturer/zly/details/menu2/menu2_1.jpg?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu2/menu2_2.jpg?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu2/menu2_3.jpg?'.GET_RAND
+                ]
+
             ],
-            3   => [
-                GET_IMG_URL.'lecturer/zly/details/menu3_1.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/details/menu3_2.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/details/menu3_3.jpg?'.GET_RAND
+            [
+                'banner'    => [
+                    GET_IMG_URL.'lecturer/zly/details/menu3/1.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu3/2.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu3/3.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu3/4.png?'.GET_RAND,
+                ],
+                'content'   => [
+                    GET_IMG_URL.'lecturer/zly/details/menu3/menu3_1.jpg?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu3/menu3_2.jpg?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu3/menu3_3.jpg?'.GET_RAND
+                ]
+
             ],
-            4   => [
-                GET_IMG_URL.'lecturer/zly/details/menu4_1.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/details/menu4_2.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/details/menu4_3.jpg?'.GET_RAND
+            [
+                'banner'    => [
+                    GET_IMG_URL.'lecturer/zly/details/menu4/1.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu4/2.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu4/3.png?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu4/4.png?'.GET_RAND,
+                ],
+                'content'   => [
+                    GET_IMG_URL.'lecturer/zly/details/menu4/menu4_1.jpg?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu4/menu4_2.jpg?'.GET_RAND,
+                    GET_IMG_URL.'lecturer/zly/details/menu4/menu4_3.jpg?'.GET_RAND
+                ]
+
             ]
 
         ];

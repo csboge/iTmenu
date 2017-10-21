@@ -1,5 +1,11 @@
 <?php
-//下载文件到本地
+/**
+ * @param $url      string     文件路径
+ * @param $dir      string     指定路径
+ * @param string    $filename
+ * @return bool|string
+ */
+
 function GrabImage($url, $dir, $filename=''){
     if(empty($url)){
         return false;
