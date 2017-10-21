@@ -132,8 +132,7 @@ class Lecturer
         $id = input('param.id/d');
         if(empty($id))return jsonData(0, '未接收到数据', []);
         $data = [
-
-            [
+            1   => [
                 'banner'    => [
                     GET_IMG_URL.'lecturer/zly/details/menu1/1.png?'.GET_RAND,
                     GET_IMG_URL.'lecturer/zly/details/menu1/2.png?'.GET_RAND,
@@ -147,7 +146,7 @@ class Lecturer
                 ]
 
             ],
-            [
+            2   => [
                 'banner'    => [
                     GET_IMG_URL.'lecturer/zly/details/menu2/1.png?'.GET_RAND,
                     GET_IMG_URL.'lecturer/zly/details/menu2/2.png?'.GET_RAND,
@@ -161,7 +160,7 @@ class Lecturer
                 ]
 
             ],
-            [
+            3   => [
                 'banner'    => [
                     GET_IMG_URL.'lecturer/zly/details/menu3/1.png?'.GET_RAND,
                     GET_IMG_URL.'lecturer/zly/details/menu3/2.png?'.GET_RAND,
@@ -175,7 +174,7 @@ class Lecturer
                 ]
 
             ],
-            [
+            4   => [
                 'banner'    => [
                     GET_IMG_URL.'lecturer/zly/details/menu4/1.png?'.GET_RAND,
                     GET_IMG_URL.'lecturer/zly/details/menu4/2.png?'.GET_RAND,
