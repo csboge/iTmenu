@@ -171,7 +171,7 @@ class Test
 //        $openid         = $session['openid'];
         $userid = 1;//$session['userid'];
         $ase = input('param.');
-        $ordersn = $ase['orders'];//$this->p_order->getOrderSN();
+//        $ordersn = $ase['orders'];//$this->p_order->getOrderSN();
         $post_data = [
             "appid" => "wx3fcef4db43bcfaed",
             "bank_type" => "CFT",
