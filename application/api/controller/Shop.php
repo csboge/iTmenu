@@ -51,6 +51,9 @@ class Shop
             ->find();
         if($data){
             $data['logo'] = ImgUrl($data['logo']);
+            if($data['spread']){
+                $data['spread'] = GET_VIDEO_URL.$data['spread'];
+            }
             $data['video'] = GET_VIDEO_URL.$data['video'];
             return jsonData(1, 'OK', $data);
         }else{

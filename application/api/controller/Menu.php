@@ -126,9 +126,6 @@ class Menu
                 $value['name'] = $value['title'];
                 unset($value['title']);
                 $value['attrs'] = json_decode($value['attrs'],true);
-                if($value['spread']){
-                    $value['spread'] = GET_VIDEO_URL.$value['spread'];
-                }
                 $new_arr = multiToSingle($value['attrs']);          //降维处理
                 if($new_arr[0] == ''){
                     $value['attrs'] = [];
