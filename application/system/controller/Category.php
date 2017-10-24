@@ -94,7 +94,6 @@ class Category
             'shop_id' => $where['shop_id'],
             'parent_id' => 0,
             'status' => 1,
-            'hd_status' => 1
         ];
         $data = Db::name('category')->where($map)->field('id,parent_id,name')->order('id desc')->select();
 
