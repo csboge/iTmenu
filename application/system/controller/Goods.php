@@ -120,9 +120,11 @@ class Goods
                     $value['attrs'] = [];
                 }
             }
-            $res['count'] = $count;
-
-            return jsonDataList(1,'OK',$res);
+            $rew = [
+                'goods' => $res,
+                'count' => $count
+            ];
+            return jsonDataList(1,'OK',$rew);
         }else{
             return jsonDataList(0,'未查到数据',[]);
         }
