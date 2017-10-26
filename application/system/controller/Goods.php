@@ -99,14 +99,14 @@ class Goods
         }
         $map = [
             'shop_id' => $data['shop_id'],
-            'status' => 1,
             'hd_status' => 1
         ];
         $limit = $data['limit']?$data['limit']:10;
         $page = ($data['page']-1)*$limit;
         $res = Db::name('goods')
             ->where($map)
-            ->field('id,title,image,sale,attrs,price')
+            ->field('id,title,rank,image,sale,attrs,price,bowl,intro,status,sd_status,hd_status')
+            ->order('rank asc,status')
             ->order('id desc')
             ->limit($page,$limit)
             ->select();
