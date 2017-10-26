@@ -110,7 +110,7 @@ class Goods
             ->order('id desc')
             ->limit($page,$limit)
             ->select();
-//        print_r($res);exit;
+        $count = count_list('goods','shop_id',$data['shop_id']);
         if($res){
             foreach ($res as &$value){
                 $value['image'] = ImgUrl($value['image']);
@@ -120,6 +120,8 @@ class Goods
                     $value['attrs'] = [];
                 }
             }
+            $res['count'] = $count;
+
             return jsonDataList(1,'OK',$res);
         }else{
             return jsonDataList(0,'未查到数据',[]);
