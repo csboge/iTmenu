@@ -99,15 +99,26 @@ class Goods
         }
         $map = [
             'shop_id' => $data['shop_id'],
-            'cat_id' => $data['cat_id'],
             'status' => 1,
             'hd_status' => 1
         ];
-        $res = Db::name('goods')->where($map)->field('id,title,image,sale,attrs,price')->order('id desc')->select();
+        $limit = $data['limit']?$data['limit']:10;
+        $page = ($data['page']-1)*$limit;
+        $res = Db::name('goods')
+            ->where($map)
+            ->field('id,title,image,sale,attrs,price')
+            ->order('id desc')
+            ->limit($page,$limit)
+            ->select();
+//        print_r($res);exit;
         if($res){
-            foreach ($res as &$volue){
-                $volue['image'] = ImgUrl($volue['image']);
-                $volue['attrs'] = unserialize($volue['attrs']);
+            foreach ($res as &$value){
+                $value['image'] = ImgUrl($value['image']);
+                $value['attrs'] = json_decode($value['attrs'],true);
+                $new_arr = multiToSingle($value['attrs']);          //降维处理
+                if($new_arr[0] == ''){
+                    $value['attrs'] = [];
+                }
             }
             return jsonDataList(1,'OK',$res);
         }else{
