@@ -121,7 +121,7 @@ class Goods
                 }
             }
             $rew = [
-                'goods' => $res,
+                'list' => $res,
                 'count' => $count
             ];
             return jsonDataList(1,'OK',$rew);
