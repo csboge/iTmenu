@@ -22,6 +22,8 @@ define('GET_IMG_URL', 'http://img1.my-shop.cc/');
 
 //define('GET_IMG_URL', 'http://img.my-shop.cc/');
 
+//define('GET_IMG_URL', 'http://img.csboge.com/');
+
 // 配置音频域名
 define('GET_VIDEO_URL', 'https://static.my-shop.cc/');
 

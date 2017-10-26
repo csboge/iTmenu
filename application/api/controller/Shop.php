@@ -141,18 +141,49 @@ class Shop
      * 商户 - 生成转发二维码
      */
     public function cou(){
+        header('content-type:image/png');
 
-        $shop      =  $this->p_auth->getShopId();//获得商店id
+        $shop      =  7;//$this->p_auth->getShopId();//获得商店id
 
-        $bagid     =  $this->p_auth->getBagid();//获得红包id
+        $bagid     =  1;//$this->p_auth->getBagid();//获得红包id
 
         if(empty($shop) && empty($bagid))return jsonData(0, '未接收到数据', []);
 
-        $data['code']   = GET_IMG_URL.$this->p_wechat->code($shop,$bagid); //获取微信小程序二维码
+        $data['code']   = '../Uploads/'.$this->p_wechat->code($shop,$bagid); //获取微信小程序二维码
+//        $data['code']   = '../Uploads/picture/code/20171025/ae8fb27e0144ec6cd3534bb111ead5ab7.jpeg'; //获取微信小程序二维码
 
-        $data['back']   = GET_IMG_URL."picture/1.jpeg";
+        $data['back']   = "../Uploads/picture/1.jpeg";
 
-        return jsonData(1, 'OK', $data);
+        $name = md5(date('Ymd', time()).GET_RAND).'.png';
+
+        $url = ROOT_PATH . 'Uploads/picture/circle/' . DS . $name;
+
+        //小程序码缩小
+        $filename = $data['code'];
+        $per=0.58;
+        list($width, $height) = getimagesize($filename);
+        $n_w = $width*$per;
+        $n_h = $height*$per;
+        $new = imagecreatetruecolor($n_w, $n_h);
+        $img = imagecreatefromjpeg($filename);
+        //copy部分图像并调整
+        imagecopyresized($new, $img,0, 0,0, 0,$n_w, $n_h, $width, $height);
+        //图像输出新图片、另存为
+        imagejpeg($new, $url);
+
+
+        //合成外壳和小程序码
+        $code = '../Uploads/picture/circle/' . $name;
+        $im1 = imagecreatefromstring(file_get_contents($data['back']));
+        $im2 = imagecreatefromstring(file_get_contents($code));
+
+        imagecopymerge($im1, $im2, 221, 220, 0, 0, imagesx($im2), imagesy($im2), 100);
+
+        imagejpeg($im1,$url);
+
+        $name_url = GET_IMG_URL. 'picture/circle/' . $name;
+
+        return jsonData(1, 'OK', $name_url);
     }
 
 }

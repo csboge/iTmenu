@@ -152,10 +152,11 @@ class WeChat
             mkdir($PATH, 0777, true);
         }//判断目录是否存在，不存在则创建
         $name = md5(rand(100, 999) . time());
-        $imgPath = $PATH . $name . $shop_id . '.jpeg';
+        $imgPath = $PATH . $name . $shop_id . '.png';
+
         file_put_contents($imgPath, $result);       //保存图片
 
-        $paths = $urls . $name . $shop_id . '.jpeg';
+        $paths = $urls . $name . $shop_id . '.png';
 
         return $paths;
     }
