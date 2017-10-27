@@ -18,9 +18,9 @@ define('APP_PATH', __DIR__ . '/../application/');
 define('CONF_PATH', __DIR__.'/../config/');
 
 // 配置图片域名
-define('GET_IMG_URL', 'http://img1.my-shop.cc/');
+//define('GET_IMG_URL', 'http://img1.my-shop.cc/');
 
-//define('GET_IMG_URL', 'http://img.my-shop.cc/');
+define('GET_IMG_URL', 'http://img.my-shop.cc/');
 
 //define('GET_IMG_URL', 'http://img.csboge.com/');
 
