@@ -130,7 +130,6 @@ class Goods extends Controller
 
         $map['shop_id'] = session('shop_id');
         $map['hd_status'] = 1;
-        $map['sd_status'] = 1;
 
         $data = Db::name('package')->where($map)->order('rank asc')->paginate(10);
         $count = count_list('package','shop_id',session('shop_id'));
