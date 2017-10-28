@@ -116,6 +116,10 @@ class Comman
             ->where($map)
             ->select();
         if($data){
+            foreach ($data as &$value){
+                $value['created'] = date('Y-m-d H:i:s', $value['created']);
+                $value['updated'] = date('Y-m-d H:i:s', $value['updated']);
+            }
             return jsonDataList(1,'OK',$data);
         }else{
             return jsonDataList(0,'查询失败',[]);
@@ -140,6 +144,16 @@ class Comman
             ->where($map)
             ->select();
         if($data){
+            foreach ($data as &$value){
+                $value['image'] = ImgUrl($value['image']);
+                $value['created'] = date('Y-m-d H:i:s', $value['created']);
+                $value['updated'] = date('Y-m-d H:i:s', $value['updated']);
+                $value['attrs'] = json_decode($value['attrs'],true);
+                $new_arr = multiToSingle($value['attrs']);          //降维处理
+                if($new_arr[0] == ''){
+                    $value['attrs'] = [];
+                }
+            }
             return jsonDataList(1,'OK',$data);
         }else{
             return jsonDataList(0,'查询失败',[]);
