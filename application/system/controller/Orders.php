@@ -120,6 +120,11 @@ class Orders
             $time['people'] = $this->m_orders->ordersTistics($time['id']);        //付款人数，收款笔数
             $time['single'] = round($time['money']/$time['people'],2);
         }
-        return jsonDataList(1,'日收益列表',$tistics);
+        $count = count($tistics);
+        $data = [
+            'list' => $tistics,
+            'count' => $count
+        ];
+        return jsonDataList(1,'日收益列表',$data);
     }
 }
