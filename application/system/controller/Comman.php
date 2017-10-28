@@ -143,6 +143,9 @@ class Comman
         $data = Db::name('goods')
             ->where($map)
             ->select();
+        $count = Db::name('goods')
+            ->where($map)
+            ->count();
         if($data){
             foreach ($data as &$value){
                 $value['image'] = ImgUrl($value['image']);
@@ -154,7 +157,11 @@ class Comman
                     $value['attrs'] = [];
                 }
             }
-            return jsonDataList(1,'OK',$data);
+            $res = [
+                'list' => $data,
+                'count' => $count
+            ];
+            return jsonDataList(1,'OK',$res);
         }else{
             return jsonDataList(0,'查询失败',[]);
         }
