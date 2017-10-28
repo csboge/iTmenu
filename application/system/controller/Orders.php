@@ -97,9 +97,9 @@ class Orders
         $title = $this->m_shup->getShop($shop)['title'];                 //店名
         $people = $this->m_orders->ordersTistics($tistics['id']);        //付款人数，收款笔数
         $arr = [
-            'id'            =>  $tistics['id'],
-            'money'         =>  $tistics['money'],
-            'statistics'    =>  $tistics['statistics'],
+            'id'            =>  $shop,
+            'money'         =>  $tistics['money']?$tistics['money']:0,
+            'statistics'    =>  $tistics['statistics']?$tistics['statistics']:0,
             'title'         =>  $title,
             'people'        =>  $people
         ];
