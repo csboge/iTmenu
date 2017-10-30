@@ -94,7 +94,7 @@ class Zw
                 ]
             ],
             'human'         =>  [
-                'image'         => GET_IMG_URL.'lecturer/zw/index/bgS.jpg?'.GET_RAND,
+                'image'         => GET_IMG_URL.'lecturer/zw/index/bg.jpg?'.GET_RAND,
                 'title'         => '知人性',
                 'content'       => [
                     '通过站在人的角度思考企业的未来。',
