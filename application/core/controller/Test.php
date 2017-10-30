@@ -78,6 +78,18 @@ class Test
 
     }
 
+    public function ee(){
+        $printer = new \app\core\provider\BotPrinter();
+
+//        $aa = json_encode($info['goods_list'], true);
+////        print_r($aa);exit;
+//        $printer->printOrderInfo($info, $post_data);
+        $printer->getWords_one();
+        //结束订单(事务处理)
+//        $bay = new \app\core\provider\Orders();
+
+//        $result = $bay->endOrderStatus($info, $post_data);
+    }
 
     public function asc(){
         $imgpath="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1483602960&di=f93d78756010023602ecb700b802658f&src=http://pic.90sjimg.com/back_pic/u/00/38/54/05/560412efec2d6.jpg";
@@ -369,7 +381,8 @@ class Test
 
 //        $aa = json_encode($info['goods_list'], true);
 ////        print_r($aa);exit;
-        $printer->printOrderInfo($info, $post_data);
+//        $printer->printOrderInfo($info, $post_data);
+        $printer->getWords_one();
         //结束订单(事务处理)
 //        $bay = new \app\core\provider\Orders();
 

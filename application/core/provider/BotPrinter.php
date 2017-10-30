@@ -82,6 +82,27 @@ class BotPrinter
 
     }
 
+    function getWords_one($sn = ''){
+
+        //$printer    = new \app\core\provider\BotPrinter();
+        $sn         = ($sn) ? $sn : '217502439';
+
+        $orderInfo = '<B>外三</B>               压台单<BR>';
+        $orderInfo .= '<BR>';
+        $orderInfo .= '8-12 13:46     点单一       2人<BR>';
+        $orderInfo .= '--------------------------------<BR>';
+        $orderInfo .= '辣鸡火锅　　　　　 　       1份<BR>';
+        $orderInfo .= '--------------------------------<BR>';
+        $orderInfo .= '口味脆莴笋　　　　　 　     1份<BR>';
+        $orderInfo .= '--------------------------------<BR>';
+        $orderInfo .= '餐纸巾　　　　　 　         1盒<BR>';
+        $orderInfo .= '--------------------------------<BR>';
+        $orderInfo .= '餐位费　　　　　 　         2位<BR>';
+        $orderInfo .= '--------------------------------<BR>';
+        $re = $this->wp_print($sn, $orderInfo, 1);
+
+    }
+
 
 
     /**
