@@ -105,6 +105,7 @@ class Lecturer
         return jsonData(1, 'ok', $data);
     }
 
+    
     //周伟 ** 个人资料详情页
     public function zw_details(){
         $id = input('param.id/d');
