@@ -23,7 +23,7 @@ class Zw
     {
         $data = [
             'head_bg'       => GET_IMG_URL.'lecturer/zw/index/head_bg.jpg?'.GET_RAND,
-            'portrait'      => GET_IMG_URL.'lecturer/zw/index/portrait.jpg?'.GET_RAND,
+            'portrait'      => GET_IMG_URL.'lecturer/zw/index/portrait.png?'.GET_RAND,
             'name'          => '周伟',
             'phone'         => 15111276022,
             'explain'       => '好望角汇成商学院创始人',
