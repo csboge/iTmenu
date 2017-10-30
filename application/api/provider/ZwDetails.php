@@ -23,25 +23,25 @@ class ZwDetails
         $data = [
             1   => '',
             2   => [
-                GET_IMG_URL.'lecturer/zly/zw/details/2/rx1.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/zw/details/2/rx2.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/zw/details/2/rx3.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/zw/details/2/rx4.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/zw/details/2/rx5.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/zw/details/2/rx6.jpg?'.GET_RAND
+                GET_IMG_URL.'lecturer/zw/details/2/rx1.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zw/details/2/rx2.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zw/details/2/rx3.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zw/details/2/rx4.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zw/details/2/rx5.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zw/details/2/rx6.jpg?'.GET_RAND
             ],
             3   => '',
             4   => '',
             5   => [
-                GET_IMG_URL.'lecturer/zly/zw/details/5/t1.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/zw/details/5/t2.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/zw/details/5/t3.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/zw/details/5/t4.jpg?'.GET_RAND
+                GET_IMG_URL.'lecturer/zw/details/5/t1.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zw/details/5/t2.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zw/details/5/t3.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zw/details/5/t4.jpg?'.GET_RAND
             ],
             6   => [
-                GET_IMG_URL.'lecturer/zly/zw/details/6/l1.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/zw/details/6/l2.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/zly/zw/details/6/l3.jpg?'.GET_RAND
+                GET_IMG_URL.'lecturer/zw/details/6/l1.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zw/details/6/l2.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/zw/details/6/l3.jpg?'.GET_RAND
             ],
         ];
 
