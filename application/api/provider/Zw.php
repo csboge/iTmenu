@@ -28,34 +28,36 @@ class Zw
             'phone'         => 15111276022,
             'explain'       => '好望角汇成商学院创始人',
             'culture'       => [
-                'image'     => GET_IMG_URL.'lecturer/zw/index/culture.jpg?'.GET_RAND,
-                [
-                    'title'     => '我们的愿景',
-                    'content'   => '让中小企业花最少的钱学最落地的课程'
-                ],
-                [
-                    'title'     => '我们的使命',
-                    'content'   => '解救中小企业于水深火热之中'
-                ],
-                [
-                    'title'     => '我们的宗旨',
-                    'content'   => '经营人，影响人，成就人'
-                ],
-                [
-                    'title'     => '我们的精神',
-                    'content'   => '积极、学习、快乐、团结、成功'
-                ],
-                [
-                    'title'     => '我们的作风',
-                    'content'   => '指哪打哪，雷厉风行，没有借口，永不言败'
-                ],
-                [
-                    'title'     => '我们的核心价值观',
-                    'content'   => '为天地立心，为生民立命，为往圣继绝学，'
-                ],
-                [
-                    'title'     => '',
-                    'content'   => '为万世开太平为企业成功全力以赴......'
+                'image'     => GET_IMG_URL.'lecturer/zw/index/culture.png?'.GET_RAND,
+                'content'   => [
+                    [
+                        'title'     => '我们的愿景',
+                        'content'   => '让中小企业花最少的钱学最落地的课程'
+                    ],
+                    [
+                        'title'     => '我们的使命',
+                        'content'   => '解救中小企业于水深火热之中'
+                    ],
+                    [
+                        'title'     => '我们的宗旨',
+                        'content'   => '经营人，影响人，成就人'
+                    ],
+                    [
+                        'title'     => '我们的精神',
+                        'content'   => '积极、学习、快乐、团结、成功'
+                    ],
+                    [
+                        'title'     => '我们的作风',
+                        'content'   => '指哪打哪，雷厉风行，没有借口，永不言败'
+                    ],
+                    [
+                        'title'     => '我们的核心价值观',
+                        'content'   => '为天地立心，为生民立命，为往圣继绝学，'
+                    ],
+                    [
+                        'title'     => '',
+                        'content'   => '为万世开太平为企业成功全力以赴......'
+                    ]
                 ]
             ],
             'service'       => [
@@ -64,29 +66,31 @@ class Zw
             ],
             'boutique'       => [
                 'image'         => GET_IMG_URL.'lecturer/zw/index/class_title.jpg?'.GET_RAND,
-                [
-                    'title'     => '引流策略',
-                    'img'       => GET_IMG_URL.'lecturer/zw/index/item1.jpg?'.GET_RAND
-                ],
-                [
-                    'title'     => '赚钱模式',
-                    'img'       => GET_IMG_URL.'lecturer/zw/index/item2.jpg?'.GET_RAND
-                ],
-                [
-                    'title'     => '暴利营销',
-                    'img'       => GET_IMG_URL.'lecturer/zw/index/item3.jpg?'.GET_RAND
-                ],
-                [
-                    'title'     => '自动化营销',
-                    'img'       => GET_IMG_URL.'lecturer/zw/index/item4.jpg?'.GET_RAND
-                ],
-                [
-                    'title'     => '团队密训',
-                    'img'       => GET_IMG_URL.'lecturer/zw/index/item5.jpg?'.GET_RAND
-                ],
-                [
-                    'title'     => '狼性销售',
-                    'img'       => GET_IMG_URL.'lecturer/zw/index/item6.jpg?'.GET_RAND
+                'content'       => [
+                    [
+                        'title'     => '引流策略',
+                        'img'       => GET_IMG_URL.'lecturer/zw/index/item1.jpg?'.GET_RAND
+                    ],
+                    [
+                        'title'     => '赚钱模式',
+                        'img'       => GET_IMG_URL.'lecturer/zw/index/item2.jpg?'.GET_RAND
+                    ],
+                    [
+                        'title'     => '暴利营销',
+                        'img'       => GET_IMG_URL.'lecturer/zw/index/item3.jpg?'.GET_RAND
+                    ],
+                    [
+                        'title'     => '自动化营销',
+                        'img'       => GET_IMG_URL.'lecturer/zw/index/item4.jpg?'.GET_RAND
+                    ],
+                    [
+                        'title'     => '团队密训',
+                        'img'       => GET_IMG_URL.'lecturer/zw/index/item5.jpg?'.GET_RAND
+                    ],
+                    [
+                        'title'     => '狼性销售',
+                        'img'       => GET_IMG_URL.'lecturer/zw/index/item6.jpg?'.GET_RAND
+                    ]
                 ]
             ],
             'human'         =>  [
