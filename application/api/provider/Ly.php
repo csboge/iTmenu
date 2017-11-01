@@ -27,6 +27,7 @@ class Ly
             'portrait'      => GET_IMG_URL.'lecturer/ly/portrait.png?'.GET_RAND,
             'video'         => [
                 'mp4'       => GET_IMG_URL.'lecturer/ly/video.mp4?'.GET_RAND,
+                'cover'     => GET_IMG_URL.'lecturer/ly/cover.jpg?'.GET_RAND,
                 'content'   => [
                     '他曾经打工月收入只有300元',
                     '他曾经住过工地、睡过公园食不果腹...',
