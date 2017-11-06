@@ -83,7 +83,7 @@ class Goods
         if($res){
             return jsonDataList(1,'OK',[]);
         }else{
-            return jsonDataList(0,'数据添加失败',[]);
+            return jsonDataList(0,'数据修改失败',[]);
         }
     }
 
@@ -127,6 +127,77 @@ class Goods
             return jsonDataList(1,'OK',$rew);
         }else{
             return jsonDataList(0,'未查到数据',[]);
+        }
+    }
+
+    /***
+     * 添加 -- 菜品类型
+     */
+    public function add_type(){
+        $data = input('param.');
+        if(empty($data)){
+            return jsonDataList(0,'未接收到数据',[]);
+        }
+        $data['created'] = time();
+        $res = Db::name('type_goods')->insert($data);
+        if($res){
+            return jsonDataList(1,'OK',[]);
+        }else{
+            return jsonDataList(0,'数据添加失败',[]);
+        }
+    }
+
+    /***
+     * 修改 -- 菜品类型
+     */
+    public function update_type(){
+        $data = input('param.');
+        if(empty($data)){
+            return jsonDataList(0,'未接收到数据',[]);
+        }
+        if(empty($data)){
+            return jsonDataList(0,'未接收到数据',[]);
+        }
+        $data['updated'] = time();
+        $res = Db::name('type_goods')->where(['id'=>$data['id']])->update($data);
+        if($res){
+            return jsonDataList(1,'OK',[]);
+        }else{
+            return jsonDataList(0,'数据修改失败',[]);
+        }
+    }
+
+    /***
+     * 查看 -- 菜品类型
+     * @参数 shop_id      店铺id
+     */
+    public function lock(){
+        $data = input('param.shop_id');
+        if(empty($data)){
+            return jsonDataList(0,'未接收到数据',[]);
+        }
+        $res = Db::name('type_goods')->where('id',$data)->select();
+        if($res){
+            return jsonDataList(1,'OK',[]);
+        }else{
+            return jsonDataList(0,'数据查看失败',[]);
+        }
+    }
+
+    /***
+     * 删除 -- 菜品类型
+     * @参数 id      菜品类型id
+     */
+    public function delete(){
+        $data = input('param.id');
+        if(empty($data)){
+            return jsonDataList(0,'未接收到数据',[]);
+        }
+        $res = Db::name('type_goods')->where('id',$data)->delete();
+        if($res){
+            return jsonDataList(1,'OK',[]);
+        }else{
+            return jsonDataList(0,'删除成功',[]);
         }
     }
 }
