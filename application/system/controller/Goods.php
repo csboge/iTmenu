@@ -138,7 +138,6 @@ class Goods
         if(empty($data)){
             return jsonDataList(0,'未接收到数据',[]);
         }
-        $data['created'] = time();
         $res = Db::name('type_goods')->insert($data);
         if($res){
             return jsonDataList(1,'OK',[]);
@@ -155,10 +154,6 @@ class Goods
         if(empty($data)){
             return jsonDataList(0,'未接收到数据',[]);
         }
-        if(empty($data)){
-            return jsonDataList(0,'未接收到数据',[]);
-        }
-        $data['updated'] = time();
         $res = Db::name('type_goods')->where(['id'=>$data['id']])->update($data);
         if($res){
             return jsonDataList(1,'OK',[]);
