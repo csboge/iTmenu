@@ -173,7 +173,7 @@ class Goods
         }
         $res = Db::name('type_goods')->where('shop_id',$data)->select();
         if($res){
-            return jsonDataList(1,'OK',[]);
+            return jsonDataList(1,'OK',$res);
         }else{
             return jsonDataList(0,'数据查看失败',[]);
         }
