@@ -171,7 +171,7 @@ class Goods
         if(empty($data)){
             return jsonDataList(0,'未接收到数据',[]);
         }
-        $res = Db::name('type_goods')->where('id',$data)->select();
+        $res = Db::name('type_goods')->where('shop_id',$data)->select();
         if($res){
             return jsonDataList(1,'OK',[]);
         }else{
