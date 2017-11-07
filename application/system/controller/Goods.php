@@ -113,6 +113,7 @@ class Goods
         $count = count_list('goods','shop_id',$data['shop_id']);
         if($res){
             foreach ($res as &$value){
+                $value['img']   = $value['image'];
                 $value['image'] = ImgUrl($value['image']);
                 $value['attrs'] = json_decode($value['attrs'],true);
                 $new_arr = multiToSingle($value['attrs']);          //降维处理
