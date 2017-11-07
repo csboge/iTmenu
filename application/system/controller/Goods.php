@@ -106,8 +106,8 @@ class Goods
         $res = Db::name('goods')
             ->where($map)
             ->field('id,title,cat_id,rank,image,sale,attrs,type_id,price,bowl,intro,status,sd_status,hd_status')
-            ->order('rank asc,status')
             ->order('id desc')
+            ->order('rank asc,status')
             ->limit($page,$limit)
             ->select();
         $count = count_list('goods','shop_id',$data['shop_id']);
