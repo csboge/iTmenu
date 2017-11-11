@@ -68,6 +68,7 @@ class Comman
         if(empty($file)){
             return jsonDataList(0,'未接收到数据',[]);
         }
+        my_log('file',1,'comman/upload','0','上传测试');
         // 移动到框架应用根目录/public/uploads/ 目录下
         $info = $file
             ->validate([
@@ -75,18 +76,22 @@ class Comman
                 'ext'=>'jpg,png,gif,jpeg',
             ])
             ->move(ROOT_PATH . 'Uploads' . DS . 'picture');
+        my_log('file',1,'comman/upload','0','上传测试2');
         if($info){
             // 成功上传后 获取上传信息
+            my_log('file',1,'comman/upload','0','上传测试3');
             $data = [
                 'path' => 'picture' . DS . $info ->getSaveName(),
                 'status' => 1,
                 'create_time' => time()
             ];
+            my_log('file',1,'comman/upload','0','上传测试4');
             $res = Db::name('picture')->insertGetId($data);
             if($res){
+                my_log('file',1,'comman/upload','0','上传测试5');
                 $post = [
                     'id' => $res,
-                    'path' =>GET_IMG_URL.'/picture/'.$info ->getSaveName(),
+                    'path' =>GET_IMG_URL.'picture'. DS . $info ->getSaveName(),
                 ];
                 return jsonDataList(1,'OK',$post);
             }else{
@@ -139,7 +144,6 @@ class Comman
         $map['shop_id'] = $like['shop_id'];
         $map['hd_status'] = 1;
         $map['title'] = array('like', "%{$like['value']}%");
-//        print_r($map);exit;
         $data = Db::name('goods')
             ->where($map)
             ->select();
