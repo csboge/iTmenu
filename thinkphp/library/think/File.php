@@ -241,7 +241,7 @@ class File extends SplFileObject
         if (function_exists('exif_imagetype')) {
             return exif_imagetype($image);
         } else {
-            $info = getimagesize($image);
+            $info = @getimagesize($image);
             return $info[2];
         }
     }

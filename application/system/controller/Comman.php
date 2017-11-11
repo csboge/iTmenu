@@ -69,6 +69,7 @@ class Comman
             return jsonDataList(0,'未接收到数据',[]);
         }
         my_log('file',1,'comman/upload','0','上传测试');
+
         // 移动到框架应用根目录/public/uploads/ 目录下
         $info = $file
             ->validate([
@@ -76,6 +77,7 @@ class Comman
                 'ext'=>'jpg,png,gif,jpeg',
             ])
             ->move(ROOT_PATH . 'Uploads' . DS . 'picture');
+
         my_log('file',1,ROOT_PATH . 'Uploads' . DS . 'picture','0','上传测试2');
         if($info){
             // 成功上传后 获取上传信息
