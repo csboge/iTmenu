@@ -101,6 +101,7 @@ class Comman
             }
         }else{
             // 上传失败获取错误信息
+            my_log('上传测试6',1,ROOT_PATH . 'Uploads' . DS . 'picture','0',$info);
             return jsonDataList(0,'数据上传失败',[]);
         }
     }
