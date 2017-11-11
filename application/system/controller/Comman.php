@@ -78,7 +78,7 @@ class Comman
             ])
             ->move(ROOT_PATH . 'Uploads' . DS . 'picture');
 
-        my_log('file',1,ROOT_PATH . 'Uploads' . DS . 'picture','0','上传测试2');
+        my_log('file',1,ROOT_PATH . 'Uploads' . DS . 'picture','0',$info);
         if($info){
             // 成功上传后 获取上传信息
             my_log('file',1,'comman/upload','0','上传测试3');
