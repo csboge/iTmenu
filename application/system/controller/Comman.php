@@ -78,7 +78,7 @@ class Comman
         if($info){
             // 成功上传后 获取上传信息
             $data = [
-                'path' => 'picture' . DS . $info = $file->getSaveName(),
+                'path' => 'picture' . DS . $info ->getSaveName(),
                 'status' => 1,
                 'create_time' => time()
             ];
@@ -86,7 +86,7 @@ class Comman
             if($res){
                 $post = [
                     'id' => $res,
-                    'path' =>GET_IMG_URL.'/picture/'.$info = $file->getSaveName(),
+                    'path' =>GET_IMG_URL.'/picture/'.$info ->getSaveName(),
                 ];
                 return jsonDataList(1,'OK',$post);
             }else{
