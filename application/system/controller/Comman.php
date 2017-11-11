@@ -65,12 +65,10 @@ class Comman
      */
     public function upload(){
         // 获取表单上传文件 例如上传了001.jpg
-        $file = request()->file('file');
+        $file = request()->file("file");
         if(empty($file)){
             return jsonDataList(0,'未接收到数据',[]);
         }
-        my_log('file',1,'comman/upload','0','上传测试');
-
         // 移动到框架应用根目录/public/uploads/ 目录下
         $info = $file
             ->validate([
@@ -78,30 +76,26 @@ class Comman
                 'ext'=>'jpg,png,gif,jpeg',
             ])
             ->move(ROOT_PATH . 'Uploads' . DS . 'picture');
-
+        print_r($info);exit;
         my_log('file',1,ROOT_PATH . 'Uploads' . DS . 'picture','0',$info);
         try{
             // 成功上传后 获取上传信息
-            my_log('file',1,'comman/upload','0','上传测试3');
             $data = [
-                'path' => 'picture' . DS . $info = $file->getSaveName(),
+                'path' => 'picture' . DS . $info->getSaveName(),
                 'status' => 1,
                 'create_time' => time()
             ];
-            my_log('file',1,'comman/upload','0','上传测试4');
             $res = Db::name('picture')->insertGetId($data);
             if($res){
-                my_log('file',1,'comman/upload','0','上传测试5');
                 $post = [
                     'id' => $res,
-                    'path' =>GET_IMG_URL.'picture'. DS . $info = $file->getSaveName(),
+                    'path' =>GET_IMG_URL.'picture'. DS . $info->getSaveName(),
                 ];
                 return jsonDataList(1,'OK',$post);
             }else{
                 return jsonDataList(0,'数据添加失败',[]);
             }
         }catch (\Exception $e){
-            my_log('file',1,'comman/upload','0',$e->getMessage());
             return jsonDataList(0,'数据上传失败',[]);
         }
 //        if($info){
