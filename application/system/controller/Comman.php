@@ -84,7 +84,7 @@ class Comman
             // 成功上传后 获取上传信息
             my_log('file',1,'comman/upload','0','上传测试3');
             $data = [
-                'path' => 'picture' . DS . $info ->getSaveName(),
+                'path' => 'picture' . DS . $info = $file->getSaveName(),
                 'status' => 1,
                 'create_time' => time()
             ];
@@ -94,7 +94,7 @@ class Comman
                 my_log('file',1,'comman/upload','0','上传测试5');
                 $post = [
                     'id' => $res,
-                    'path' =>GET_IMG_URL.'picture'. DS . $info ->getSaveName(),
+                    'path' =>GET_IMG_URL.'picture'. DS . $info = $file->getSaveName(),
                 ];
                 return jsonDataList(1,'OK',$post);
             }else{
