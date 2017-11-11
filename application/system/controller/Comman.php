@@ -76,6 +76,7 @@ class Comman
                 'ext'=>'jpg,png,gif,jpeg',
             ])
             ->move(ROOT_PATH . 'Uploads' . DS . 'picture');
+        return $info;
         print_r($info);exit;
         my_log('file',1,ROOT_PATH . 'Uploads' . DS . 'picture','0',$info);
         try{
