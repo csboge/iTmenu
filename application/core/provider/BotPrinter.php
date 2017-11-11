@@ -203,8 +203,6 @@ class BotPrinter
 
         $arr = json_decode($order_info['goods_list'], true);
 
-//        print_r($order_info);exit;
-
         $youhui     = $order_info['coupon_price']+$order_info['first_money']+$order_info['offset_money'];
 
         $shop       = $this->m_shop->getShop($order_info['shop_id']);                   //查询商户信息
@@ -229,7 +227,19 @@ class BotPrinter
         elseif ($shop['switch'] == 3)
         {                     //分类整单大字体
             $this->printer_two($order_info,$arr,$sn);
+//            print_r($arr);exit;
             $printe = json_decode($shop['printer_list'],true);
+            $info = $this->fenlei($arr);
+//            print_r($info);exit;
+            foreach($printe as $est){
+                if($est['template'] == 1){
+                    $suen = $est['number'];
+                    $this->printer_four($order_info,$info['zhon'],$suen,1);
+                }elseif ($est['template'] == 2){
+                    $suen = $est['number'];
+                    $this->printer_four($order_info,$info['xi'],$suen,2);
+                }
+            }
             foreach ($arr as $item){
                 if($item['is_canju'] == 0){
                     foreach ($printe as $prin){
@@ -244,6 +254,22 @@ class BotPrinter
                 }
             }
         }
+    }
+
+    public function fenlei($arr){
+        $info = [];
+        foreach($arr as $item){
+            if($item['is_canju'] == 0){
+                if($item['type_id'] == 1){
+                    $info['zhon'][] = $item;
+                }
+                if($item['type_id'] == 2){
+                    $info['xi'][] = $item;
+                }
+            }
+
+        }
+        return $info;
     }
 
     /**
@@ -387,9 +413,61 @@ class BotPrinter
         $orderInfo .= '下单时间：'.date('Y-m-d H:i:s',$order_info['created']).'<BR>';
         $re = $this->wp_print($sn, $orderInfo, 1);
     }
-    
 
-    
+    /**
+     * 打印机模板四号
+     *
+     * 整单大字体
+     */
+    public function printer_four($order_info,$arr,$sn,$type){
+        $typegoods = new TypeGoods();
+        $name = $typegoods->typeList($type);
+        $orderInfo = '<CB>电子菜谱('.$name.')</CB><BR>';
+        $orderInfo .= '名称　　　　　           数量<BR>';
+        $orderInfo .= '--------------------------------<BR>';
+        foreach($arr as $item){
+//            print_r($item);exit;
+            $length = strlen($item['name']);
+//            $length_price = strlen($item['price']);
+            if($length <= 18){
+                $length_cai = strlen($item['name']);
+                $len_cai = mb_strlen($item['name'],'utf-8');
+//                print_r($length_cai); echo  "<br>";
+//                print_r($len_cai);exit;
+                $a = (6-$len_cai)*2;
+                $b = $length_cai+$a;
+                $item['name'] = str_pad($item['name'],$b);
+                $orderInfo .= "<B>".$item['name'].$item['num'].'份'."</B><BR>";
+            }else{
+                $name_a = mb_substr($item['name'],0,4,'utf-8');
+                $length = strlen($name_a);
+                $len = mb_strlen($name_a,'utf-8');
+                $a = (6-$len)*2;
+                $b = $length+$a;
+                $name_a = str_pad($name_a,$b);
+                $name_b = mb_substr($item['name'],4,100,'utf-8');
+                $orderInfo .= "<B>".$name_a.$item['num'].'份'."</B><BR>";
+                $orderInfo .= "<B>".$name_b."</B><BR>";
+            }
+        }
+        if(!empty($order_info['message'])){
+            $orderInfo .= '--------------------------------<BR>';
+            $orderInfo .= '<B>备注：'.$order_info['message'].'</B><BR>';
+        }
+        $orderInfo .= '--------------------------------<BR>';
+        $orderInfo .= '桌位：'.$order_info['desk_sn'].'<BR>';
+        $orderInfo .= '下单时间：'.date('Y-m-d H:i:s',$order_info['created']).'<BR>';
+//        print_r($orderInfo);exit;
+//		$orderInfo .= '地址：'.$shop['adress'].'<BR>';
+//		$orderInfo .= '联系电话：'.$shop['mobile'].'<BR>';
+//		$orderInfo .= '座机电话：'.$shop['tel'].'<BR>';
+//		$orderInfo .= '<QR>http://www.csboge.com</QR>';//把二维码字符串用标签套上即可自动生成二维码
+        $re = $this->wp_print($sn, $orderInfo, 1);
+    }
+
+
+
+
     /**
      * 添加打印机
      *
@@ -415,16 +493,13 @@ class BotPrinter
         else{
             return $this->client->getContent();
         }
-    }		
-            
-            
-            
-        
+    }
+
 
     /*
      *  方法1
-        拼凑订单内容时可参考如下格式
-        根据打印纸张的宽度，自行调整内容的格式，可参考下面的样例格式
+     *  拼凑订单内容时可参考如下格式
+     *  根据打印纸张的宽度，自行调整内容的格式，可参考下面的样例格式
      */
     function wp_print($printer_sn,$orderInfo,$times){
         
