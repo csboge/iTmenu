@@ -690,7 +690,7 @@ class Buy
 
             if ($result['order'] && $user_money !== 0 && $user_coupon !== 0) {
                 $josn = json_encode($result['order']);
-                my_log('orders',$user_coupon,'api/controller/buy/submitOffs',5,$josn);
+                my_log('orders',$josn,'api/controller/buy/submitOffs',5,'$user_money');
                 // 提交事务
                 Db::commit();
 
