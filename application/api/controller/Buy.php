@@ -654,13 +654,13 @@ class Buy
             'time_end' => ''
         ];
 
-
+        my_log('orders',$ordersn,'api/controller/buy/submitOffs',1,'打印测试');
         Db::startTrans();
 
         try {
             //新增订单
             $result['order']        = $this->p_order->initOrderData($ordersn, $shopid, $userid, $info['desk_sn'], $orderinfo);
-
+            my_log('orders',$result['order'],'api/controller/buy/submitOffs',2,'打印测试2新增订单');
 //            //判断统计表是否有当天的数据
 //            $ististics = $this->m_tistics->isTistics($orderinfo['shop_id'])?$this->m_tistics->isTistics($orderinfo['shop_id']):0;
 //            $money = $orderinfo['shop_price'];
@@ -678,6 +678,7 @@ class Buy
             if ($orderinfo['offset_money'] !== 0) {
                 //修改用户钱包余额
                 $user_money = $this->m_user->userMoney($orderinfo['user_id'], $orderinfo['offset_money']);
+                my_log('orders',$user_money,'api/controller/buy/submitOffs',3,'打印测试2修改用户钱包余额');
             } else {
                 $user_money = 'a';
             }
@@ -685,12 +686,14 @@ class Buy
             if ($orderinfo['coupon_list_id'] !== 0) {
                 //修改用户优惠券使用记录
                 $user_coupon = $this->m_couponlist->CouponStatus($orderinfo['user_id'], $orderinfo['coupon_list_id']);
+                my_log('orders',$user_coupon,'api/controller/buy/submitOffs',4,'打印测试2修改用户优惠券使用记录');
             } else {
                 $user_coupon = 'a';
             }
 
 
             if ($result['order'] && $user_money !== 0 && $user_coupon !== 0) {
+                my_log('orders',$user_coupon,'api/controller/buy/submitOffs',5,'打印测试2修改用户优惠券使用记录');
                 // 提交事务
                 Db::commit();
 
@@ -698,6 +701,8 @@ class Buy
 
 //                    $printer->getWords('217502439');
                 $printer->printOrderInfo($result['order'],$post_data);
+
+                my_log('orders',$user_coupon,'api/controller/buy/submitOffs',6,'打印测试2修改用户优惠券使用记录');
 
                 return jsonData(1, 'OK',$result);
             } else {
