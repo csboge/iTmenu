@@ -235,20 +235,22 @@ class BotPrinter
         elseif ($shop['switch'] == 3)
         {                     //分类整单大字体
             $this->printer_two($order_info,$arr,$sn);
-            
-            print_r($arr);exit;
+
+//            print_r($arr);exit;
 
             $info = $this->fenlei($arr);
-//            print_r($info);exit;
-            foreach($printe as $est){
-                if($est['template'] == 1){
-                    $suen = $est['number'];
-                    $this->printer_four($order_info,$info['zhon'],$suen,1);
-                }elseif ($est['template'] == 2){
-                    $suen = $est['number'];
-                    $this->printer_four($order_info,$info['xi'],$suen,2);
+            if($info){
+                foreach($printe as $est){
+                    if($est['template'] == 1){
+                        $suen = $est['number'];
+                        $this->printer_four($order_info,$info['zhon'],$suen,1);
+                    }elseif ($est['template'] == 2){
+                        $suen = $est['number'];
+                        $this->printer_four($order_info,$info['xi'],$suen,2);
+                    }
                 }
             }
+
             foreach ($arr as $item){
                 if($item['is_canju'] == 0){
                     foreach ($printe as $prin){
