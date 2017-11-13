@@ -694,6 +694,7 @@ class Buy
 
                 $printer    = new \app\core\provider\BotPrinter();
 
+//                    $printer->getWords('217502439');
                 $printer->printOrderInfo($result['order'],$post_data);
 
                 my_log('orders',$user_coupon,'api/controller/buy/submitOffs',6,'打印测试2修改用户优惠券使用记录');

@@ -222,7 +222,6 @@ class BotPrinter
                     $this->printer_five($order_info,$arr,$suen);
                 }
             }
-
         }
         elseif ($shop['switch'] == 1)
         {                     //不分类整单大字体

@@ -275,7 +275,7 @@ class Goods extends Controller
         $info = Db::name('category')->where(['hd_status'=>1,'status'=>1,'shop_id'=>session('shop_id')])->select();
         $list = Db::name('package')->where(['hd_status'=>1,'sd_status'=>1,'shop_id'=>session('shop_id')])->select();
         $typeId = new TypeGoods();
-        $type = $typeId->typeId();
+        $type = $typeId->typeId(session('shop_id'));
         $this->assign('type',$type);
         $this->assign('info',$info);
         $this->assign('list',$list);
