@@ -213,7 +213,7 @@ class BotPrinter
         }
         $printe = json_decode($shop['printer_list'],true);
 
-//        print_r($arr);exit;
+        print_r($arr);exit;
         if($shop['switch'] == 0)
         {                     //不分类整单小字体
             $this->printer_one($order_info,$arr,$sn);
