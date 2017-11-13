@@ -6,6 +6,7 @@ use think\Request;
 use think\Db;
 use think\File;
 
+
 /**
  * 后台公共接口
  *
@@ -83,6 +84,7 @@ class Comman
                 'status' => 1,
                 'create_time' => time()
             ];
+            print_r($data);exit;
             $res = Db::name('picture')->insertGetId($data);
             if($res){
                 $post = [
