@@ -213,7 +213,6 @@ class BotPrinter
         }
         $printe = json_decode($shop['printer_list'],true);
 
-        print_r($arr);exit;
         if($shop['switch'] == 0)
         {                     //不分类整单小字体
             $this->printer_one($order_info,$arr,$sn);
@@ -236,7 +235,8 @@ class BotPrinter
         elseif ($shop['switch'] == 3)
         {                     //分类整单大字体
             $this->printer_two($order_info,$arr,$sn);
-//            print_r($arr);exit;
+            
+            print_r($arr);exit;
 
             $info = $this->fenlei($arr);
 //            print_r($info);exit;
