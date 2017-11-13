@@ -689,14 +689,11 @@ class Buy
 
 
             if ($result['order'] && $user_money !== 0 && $user_coupon !== 0) {
-                $josn = json_encode($result['order']);
-                my_log('orders',$josn,'api/controller/buy/submitOffs',5,'$user_money');
                 // 提交事务
                 Db::commit();
 
                 $printer    = new \app\core\provider\BotPrinter();
 
-//                    $printer->getWords('217502439');
                 $printer->printOrderInfo($result['order'],$post_data);
 
                 my_log('orders',$user_coupon,'api/controller/buy/submitOffs',6,'打印测试2修改用户优惠券使用记录');

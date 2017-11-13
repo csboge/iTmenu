@@ -235,9 +235,6 @@ class BotPrinter
         elseif ($shop['switch'] == 3)
         {                     //分类整单大字体
             $this->printer_two($order_info,$arr,$sn);
-
-//            print_r($arr);exit;
-
             $info = $this->fenlei($arr);
             if($info){
                 foreach($printe as $est){
@@ -250,7 +247,6 @@ class BotPrinter
                     }
                 }
             }
-
             foreach ($arr as $item){
                 if($item['is_canju'] == 0){
                     foreach ($printe as $prin){
