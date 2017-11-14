@@ -51,6 +51,7 @@
             <th>分类</th>
             <th>套餐</th>
             <th>名称</th>
+            <th>类型</th>
             <th>图片</th>
             <th>介绍</th>
             <th>销量</th>
@@ -80,6 +81,7 @@
                 {/if}
             </td>
             <td>{$vo.title}</td>
+            <td>{:get_type($vo.type_id)}</td>
             <td><img style="width: 65px;height: 45px" src="{:ImgUrl($vo.image)}"/></td>
             <td>{:cut_str($vo.intro,8)}</td>
             <td>{$vo.sale}</td>

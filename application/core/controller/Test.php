@@ -377,12 +377,44 @@ class Test
             'updated' => time()
         ];
 
+        $info = [
+            "order_sn"=> "2017111355529956",
+            "shop_id"=> 7,
+            "user_id"=> 3,
+            "desk_sn"=> "1",
+            "user_count"=> 3,
+            "is_first"=> 0,
+            "first_money"=> 0,
+            "mode_rate"=> 0.08,
+            "mode_money"=> 2,
+            "total_price"=> 15,
+            "coupon_list_id"=> 0,
+            "coupon_price"=> 0,
+            "must_price"=> 15,
+            "pay_price"=> 15,
+            "order_rate"=> 0.02,
+            "order_money"=> 0,
+            "offset_money"=> 0,
+            "shop_price"=> 13,
+            "goods_price"=> 15,
+            "goods_list"=> "[{\"id\":420,\"image\":\"http://img1.my-shop.cc/picture/20171107/f6f075d8874bff1f66a040b4494e5d4a.jpeg\",\"sale\":0,\"attrs\":[],\"price\":15,\"cat_id\":66,\"package\":0,\"rank\":0,\"bowl\":0,\"type_id\":3,\"name\":\"65e06bd453e465b99152\",\"num\":1,\"count_price\":15,\"is_canju\":0}]",
+            "user_list"=> "",
+            "message"=> "",
+            "remark"=> "",
+            "pay_way"=> 1,
+            "pay_time"=> 1510546119,
+            "status"=> 0,
+            "created"=> 1510546119,
+            "updated"=> 1510546119
+
+        ];
+
         $printer = new \app\core\provider\BotPrinter();
 
 //        $aa = json_encode($info['goods_list'], true);
 ////        print_r($aa);exit;
-//        $printer->printOrderInfo($info, $post_data);
-        $printer->getWords_one();
+        $printer->printOrderInfo($info, $post_data);
+//        $printer->getWords_one();
         //结束订单(事务处理)
 //        $bay = new \app\core\provider\Orders();
 

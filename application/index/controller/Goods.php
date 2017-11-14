@@ -218,8 +218,9 @@ class Goods extends Controller
         }
         $map['hd_status'] = 1;
         $map['shop_id'] = session('shop_id');
-//        echo '<pre>';print_r($map);exit;
         $data = Db::name('goods')->where($map)->order('rank asc')->order('rec desc')->order('id desc')->paginate(10);
+//        echo '<pre>';print_r($aa);exit;
+
         $count = count_list('goods','shop_id',session('shop_id'));
         // 获取分页显示
         $page = $data->render();

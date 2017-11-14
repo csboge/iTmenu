@@ -105,6 +105,19 @@ function cut_str($str,$len,$suffix="..."){
     }
 }
 
+//查询菜品类型
+function get_type($id){
+    $map = [
+        'id'    => $id
+    ];
+    $db = new \think\Db;
+    $data = $db::name('type_goods')->where($map)->field('name')->find();
+    if($data){
+        return $data['name'];
+    }
+    return false;
+}
+
 
 
 function shop_name($id){
