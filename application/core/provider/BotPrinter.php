@@ -248,13 +248,15 @@ class BotPrinter
             }
             foreach ($arr as $item){
                 if($item['is_canju'] == 0){
-                    foreach ($printe as $prin){
-                        if($item['type_id'] == 1 && $prin['template'] == 1){
-                            $suen = $prin['number'];
-                            $this->printer_three($order_info,$item,$suen);
-                        }elseif ($item['type_id'] == 2 && $prin['template'] == 2){
-                            $suen = $prin['number'];
-                            $this->printer_three($order_info,$item,$suen);
+                    if($printe){
+                        foreach ($printe as $prin){
+                            if($item['type_id'] == 1 && $prin['template'] == 1){
+                                $suen = $prin['number'];
+                                $this->printer_three($order_info,$item,$suen);
+                            }elseif ($item['type_id'] == 2 && $prin['template'] == 2){
+                                $suen = $prin['number'];
+                                $this->printer_three($order_info,$item,$suen);
+                            }
                         }
                     }
                 }
