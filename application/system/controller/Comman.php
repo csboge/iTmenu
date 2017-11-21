@@ -81,21 +81,32 @@ class Comman
             //如果不是通过HTTP POST上传的
             return false;
         }
-        $url = GET_IMG_URL.'picture'.DS.date('Ymd',time()).DS; //上传文件的存放路径
+        $url = 'picture'.DS.date('Ymd',time()).DS; //上传文件的存放路径
         $upload_path = ROOT_PATH . 'Uploads'.DS.'picture'.DS.date('Ymd',time()).DS; //上传文件的存放路径
         if (!is_dir($upload_path)) {
             mkdir($upload_path, 0777, true);
         }//判断目录是否存在，不存在则创建
         //开始移动文件到相应的文件夹
-        if(move_uploaded_file($file['tmp_name'],$upload_path.$file['name'])){
-            return jsonDataList(1,'ok',$url.$name);
+        if(move_uploaded_file($file['tmp_name'],$upload_path.$name)){
+            // 成功上传后 获取上传信息
+            $data = [
+                'path' => 'picture' . DS . $url.$name,
+                'status' => 1,
+                'create_time' => time()
+            ];
+            $res = Db::name('picture')->insertGetId($data);
+            if($res){
+                $post = [
+                    'id' => $res,
+                    'path' =>GET_IMG_URL.$url.$name,
+                ];
+                return jsonDataList(1,'OK',$post);
+            }else {
+                return jsonDataList(0, '数据添加失败', []);
+            }
         }else{
             return jsonDataList(0,'上传失败');
         }
-
-
-
-
 
 //        $file = input("param.file");
 //        print_r($file);exit;
@@ -132,33 +143,6 @@ class Comman
 //            return jsonDataList(0,'数据上传失败',[]);
 //        }
 
-
-
-//        if($info){
-//            // 成功上传后 获取上传信息
-//            my_log('file',1,'comman/upload','0','上传测试3');
-//            $data = [
-//                'path' => 'picture' . DS . $info ->getSaveName(),
-//                'status' => 1,
-//                'create_time' => time()
-//            ];
-//            my_log('file',1,'comman/upload','0','上传测试4');
-//            $res = Db::name('picture')->insertGetId($data);
-//            if($res){
-//                my_log('file',1,'comman/upload','0','上传测试5');
-//                $post = [
-//                    'id' => $res,
-//                    'path' =>GET_IMG_URL.'picture'. DS . $info ->getSaveName(),
-//                ];
-//                return jsonDataList(1,'OK',$post);
-//            }else{
-//                return jsonDataList(0,'数据添加失败',[]);
-//            }
-//        }else{
-//            // 上传失败获取错误信息
-//            my_log('上传测试6',1,ROOT_PATH . 'Uploads' . DS . 'picture','0',$info);
-//            return jsonDataList(0,'数据上传失败',[]);
-//        }
     }
 
     /***
