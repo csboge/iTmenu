@@ -4,7 +4,7 @@ namespace app\system\controller;
 use Symfony\Component\Yaml\Escaper;
 use think\Request;
 use think\Db;
-use think\File;
+
 
 
 /**
@@ -77,6 +77,7 @@ class Comman
                 'ext'=>'jpg,png,gif,jpeg',
             ])
             ->move(ROOT_PATH . 'Uploads' . DS . 'picture');
+        print_r($info);exit;
         try{
             // 成功上传后 获取上传信息
             $data = [
@@ -84,7 +85,6 @@ class Comman
                 'status' => 1,
                 'create_time' => time()
             ];
-            print_r($data);exit;
             $res = Db::name('picture')->insertGetId($data);
             if($res){
                 $post = [
