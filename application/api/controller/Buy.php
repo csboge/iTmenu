@@ -705,11 +705,11 @@ class Buy
                 Db::rollback();
                 //订单错误
 
-                my_log('orders',$ordersn,'api/controller/buy/submitOffs',-1,'执行出错~~事务回滚'.$tistics.$tistics_id);
+                my_log('orders',$ordersn,'api/controller/buy/submitOffs',-1,'执行出错~~事务回滚');
 
                 $this->m_order->error_log($orderinfo['order_sn']);
 
-                return jsonData(0, '出现错误~~事务回滚1',$tistics.$tistics_id);
+                return jsonData(0, '出现错误~~事务回滚1','');
             }
         } catch (\Exception $e) {
             // 回滚事务

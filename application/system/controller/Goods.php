@@ -89,8 +89,9 @@ class Goods
 
     /***
      * 查看 -- 菜品
-     * @参数 shop_id      店铺id
-     * @参数 cat_id       分类id
+     * @参数  shop_id      店铺id
+     * @参数  page         页码
+     * @参数  limit        条数
      */
     public function goods(){
         $data = input('param.');
