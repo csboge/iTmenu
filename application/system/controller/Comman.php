@@ -67,6 +67,7 @@ class Comman
     public function upload(){
         // 获取表单上传文件 例如上传了001.jpg
         $file = request()->file("file");
+        return jsonDataList(1,'数据上传失败',$file);
         if(empty($file)){
             return jsonDataList(0,'未接收到数据',[]);
         }
