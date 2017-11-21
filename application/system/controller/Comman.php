@@ -90,7 +90,7 @@ class Comman
         if(move_uploaded_file($file['tmp_name'],$upload_path.$name)){
             // 成功上传后 获取上传信息
             $data = [
-                'path' => 'picture' . DS . $url.$name,
+                'path' =>  $url.$name,
                 'status' => 1,
                 'create_time' => time()
             ];
