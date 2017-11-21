@@ -67,8 +67,9 @@ class Comman
     public function upload(){
         // 获取表单上传文件 例如上传了001.jpg
         $file = request()->file("file");
-        return jsonDataList(1,'数据上传失败',$file);
-        if(empty($file)){
+        $data = input('param.pdata');
+        return jsonDataList(1,'数据上传失败',$data);
+        if(!$file){
             return jsonDataList(0,'未接收到数据',[]);
         }
         // 移动到框架应用根目录/public/uploads/ 目录下
