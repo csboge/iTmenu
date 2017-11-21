@@ -77,7 +77,7 @@ class Comman
                 'ext'=>'jpg,png,gif,jpeg',
             ])
             ->move(ROOT_PATH . 'Uploads' . DS . 'picture');
-        print_r($info);exit;
+        return jsonDataList(1,'数据上传失败',$info);
         try{
             // 成功上传后 获取上传信息
             $data = [
