@@ -67,40 +67,73 @@ class Comman
      */
     public function upload(){
         // 获取表单上传文件 例如上传了001.jpg
-        $file = request()->file("file");
-//        $data = input('param.pdata');
-        return jsonDataList(1,'数据上传失败',$file);
-        if(!$file){
-            return jsonDataList(0,'未接收到数据',[]);
+        $file = $_FILES['file'];
+        $name = $file['name'];
+        $type = strtolower(substr($name,strrpos($name,'.')+1)); //得到文件类型，并且都转化成小写
+        $allow_type = array('jpg','jpeg','gif','png'); //定义允许上传的类型
+        //判断文件类型是否被允许上传
+        if(!in_array($type, $allow_type)){
+            //如果不被允许，则直接停止程序运行
+            return false;
         }
-        // 移动到框架应用根目录/public/uploads/ 目录下
-        $info = $file
-            ->validate([
-                'size'=>145678,
-                'ext'=>'jpg,png,gif,jpeg',
-            ])
-            ->move(ROOT_PATH . 'Uploads' . DS . 'picture');
-        return jsonDataList(1,'数据上传失败',$info);
-        try{
-            // 成功上传后 获取上传信息
-            $data = [
-                'path' => 'picture' . DS . $info->getSaveName(),
-                'status' => 1,
-                'create_time' => time()
-            ];
-            $res = Db::name('picture')->insertGetId($data);
-            if($res){
-                $post = [
-                    'id' => $res,
-                    'path' =>GET_IMG_URL.'picture'. DS . $info->getSaveName(),
-                ];
-                return jsonDataList(1,'OK',$post);
-            }else{
-                return jsonDataList(0,'数据添加失败',[]);
-            }
-        }catch (\Exception $e){
-            return jsonDataList(0,'数据上传失败',[]);
+        //判断是否是通过HTTP POST上传的
+        if(!is_uploaded_file($file['tmp_name'])){
+            //如果不是通过HTTP POST上传的
+            return false;
         }
+        $url = GET_IMG_URL.'picture'.DS.date('Ymd',time()).DS; //上传文件的存放路径
+        $upload_path = ROOT_PATH . 'Uploads'.DS.'picture'.DS.date('Ymd',time()).DS; //上传文件的存放路径
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0777, true);
+        }//判断目录是否存在，不存在则创建
+        //开始移动文件到相应的文件夹
+        if(move_uploaded_file($file['tmp_name'],$upload_path.$file['name'])){
+            return jsonDataList(1,'ok',$url.$name);
+        }else{
+            return jsonDataList(0,'上传失败');
+        }
+
+
+
+
+
+//        $file = input("param.file");
+//        print_r($file);exit;
+//        return jsonDataList(1,'数据上传失败',$file);
+//        if(!$file){
+//            return jsonDataList(0,'未接收到数据',[]);
+//        }
+//        // 移动到框架应用根目录/public/uploads/ 目录下
+//        $info = $file
+//            ->validate([
+//                'size'=>145678,
+//                'ext'=>'jpg,png,gif,jpeg',
+//            ])
+//            ->move(ROOT_PATH . 'Uploads' . DS . 'picture');
+////        return jsonDataList(1,'数据上传失败',$info);
+//        try{
+//            // 成功上传后 获取上传信息
+//            $data = [
+//                'path' => 'picture' . DS . $info->getSaveName(),
+//                'status' => 1,
+//                'create_time' => time()
+//            ];
+//            $res = Db::name('picture')->insertGetId($data);
+//            if($res){
+//                $post = [
+//                    'id' => $res,
+//                    'path' =>GET_IMG_URL.'picture'. DS . $info->getSaveName(),
+//                ];
+//                return jsonDataList(1,'OK',$post);
+//            }else{
+//                return jsonDataList(0,'数据添加失败',[]);
+//            }
+//        }catch (\Exception $e){
+//            return jsonDataList(0,'数据上传失败',[]);
+//        }
+
+
+
 //        if($info){
 //            // 成功上传后 获取上传信息
 //            my_log('file',1,'comman/upload','0','上传测试3');
