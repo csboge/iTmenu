@@ -79,7 +79,7 @@ class Member
 
 
         if (!$session) {
-            return jsonData(0, '请求失败,请重新发起');
+            return jsonData(0, '请求失败,请重新发起',$session);
         }
 
         //微信 **用户信息
