@@ -39,7 +39,6 @@ class WeChat
     function getSessionKey($jscode)
     {
 
-        print_r($jscode);exit;
         /**
          * 初始请求
          *
