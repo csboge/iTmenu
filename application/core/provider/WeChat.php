@@ -38,6 +38,8 @@ class WeChat
      */
     function getSessionKey($jscode)
     {
+
+        return jsonData(0, '请求失败,请重新发起',$jscode);
         /**
          * 初始请求
          *
