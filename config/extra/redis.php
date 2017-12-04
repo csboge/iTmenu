@@ -21,7 +21,7 @@ return [
         'version' => '2.8.24',
 
         // Optional. Use it only if Redis server requires password (AUTH)
-        //'password' => '',
+        'password' => 'bg#zgtdb',
 
         // Optional. Use it, if you want to select not default db (db != 0) on connect
         'database' => 0,
