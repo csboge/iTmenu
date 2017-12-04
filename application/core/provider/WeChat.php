@@ -61,6 +61,7 @@ class WeChat
             return false;
 
         }else{
+            print_r($path);exit;
             $json = $client->getContent();
             $data = json_decode($json, true);
 
