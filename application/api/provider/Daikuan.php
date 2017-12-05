@@ -22,11 +22,11 @@ class Daikuan
     public function getUser()
     {
         $data = [
-            'log'           => GET_IMG_URL.'lecturer/daikuan/zhezhao/logo.jpg'.GET_RAND,
+            'log'           => GET_IMG_URL.'lecturer/daikuan/zhezhao/logo.png?'.GET_RAND,
             'banner'       => [
-                GET_IMG_URL.'lecturer/daikuan/zhezhao/banner/1.jpg'.GET_RAND,
-                GET_IMG_URL.'lecturer/daikuan/zhezhao/banner/2.jpg'.GET_RAND,
-                GET_IMG_URL.'lecturer/daikuan/zhezhao/banner/3.jpg'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/banner/1.png?'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/banner/2.png?'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/banner/3.png?'.GET_RAND,
             ],
             'info'      => [
                 'title'     =>  '汉中汉邦汽车贸易有限责任公司',
@@ -39,11 +39,11 @@ class Daikuan
                 'phone'     =>  '15111097623',
             ],
             'image'     => [
-                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/4.jpg'.GET_RAND,
-                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/5.jpg'.GET_RAND,
-                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/6.jpg'.GET_RAND,
-                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/7.jpg'.GET_RAND,
-                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/8.jpg'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/4.png?'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/5.png?'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/6.png?'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/7.png?'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/8.png?'.GET_RAND,
             ]
         ];
 
