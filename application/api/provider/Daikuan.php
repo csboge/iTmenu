@@ -22,28 +22,28 @@ class Daikuan
     public function getUser()
     {
         $data = [
-            'log'           => GET_IMG_URL.'lecturer/daikuan/logo.jpg'.GET_RAND,
+            'log'           => GET_IMG_URL.'lecturer/daikuan/zhezhao/logo.jpg'.GET_RAND,
             'banner'       => [
-                'http://img.my-shop.cc/daikuan/1.jpg',
-                'http://img.my-shop.cc/daikuan/4.jpg',
-                'http://img.my-shop.cc/daikuan/7.jpg'
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/banner/1.jpg'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/banner/2.jpg'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/banner/3.jpg'.GET_RAND,
             ],
             'info'      => [
-                'title'     =>  '长沙微粒贷款服务中心',
-                'industry'     =>  '全款房，按揭房，全款车，按揭车，社保公积金，打卡工资，保单，微粒贷，大专学历，淘宝4颗心，长沙本地人，满足其中一项就可以联系我拿钱。',
+                'title'     =>  '汉中汉邦汽车贸易有限责任公司',
+                'industry'     =>  '浙江众泰汽车制造有限公司始建于2003年，是一家以汽车整车及发动机、模具、钣金件、变速器等汽车关键零部件的研发制造为核心业务和发展方向的现代化民营企业集团。具有国内外先进水平的冲压、焊装、涂装',
                 'address'     =>  '芙蓉区芙蓉中路二段80号顺天财富大厦',
-                'mapname'     =>  '长沙微粒贷款服务中心',
+                'mapname'     =>  '汉中汉邦汽车贸易有限责任公司',
                 'latitude'     =>  '28.1895100000',
                 'longitude'     =>  '112.9868500000',
                 'time'     =>  '09:00-21:00',
                 'phone'     =>  '15111097623',
             ],
             'image'     => [
-                'http://img.my-shop.cc/daikuan/5.jpg',
-                'http://img.my-shop.cc/daikuan/8.jpg',
-                'http://img.my-shop.cc/daikuan/2.jpg',
-                'http://img.my-shop.cc/daikuan/6.jpg',
-                'http://img.my-shop.cc/daikuan/3.jpg'
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/4.jpg'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/5.jpg'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/6.jpg'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/7.jpg'.GET_RAND,
+                GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/8.jpg'.GET_RAND,
             ]
         ];
 
