@@ -23,7 +23,8 @@ class Lecturer
         \app\api\provider\ZlyDetails    $p_zlydetails,
         \app\api\provider\Zw            $p_zw,
         \app\api\provider\ZwDetails     $p_zwdetails,
-        \app\api\provider\Ly            $p_ly
+        \app\api\provider\Ly            $p_ly,
+        \app\api\provider\Daikuan       $p_daikuan
     )
     {
         //验证授权合法
@@ -53,6 +54,8 @@ class Lecturer
         $this->p_zwdetails      = $p_zwdetails;     //周伟详情
 
         $this->p_ly             = $p_ly;            //卢煜
+
+        $this->p_daikuan        = $p_daikuan;       //贷款
     }
 
 
@@ -87,6 +90,10 @@ class Lecturer
         elseif ($id == 7)
         {
             $data = $this->p_ly->getUser();             //获取 卢煜个人资料
+        }
+        elseif ($id == 8)
+        {
+            $data = $this->p_daikuan->getUser();        //获取 贷款资料
         }
         else
         {
