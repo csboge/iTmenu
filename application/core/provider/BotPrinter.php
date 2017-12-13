@@ -270,33 +270,35 @@ class BotPrinter
                     {
                         foreach ($printe as $prin)
                         {
-                            if($item['type_id'] == 1 && $prin['template'] == 1)
+                            if($item['type_id'] ==  $prin['template'])
                             {
                                 $suen = $prin['number'];
                                 //分单打印
+
                                 $this->printer_three($order_info,$item,$suen);
                             }
-                            elseif ($item['type_id'] == 2 && $prin['template'] == 2)
-                            {
-                                $suen = $prin['number'];
-                                $this->printer_three($order_info,$item,$suen);
-                            }elseif ($item['type_id'] == 3 && $prin['template'] == 3)
-                            {
-                                $suen = $prin['number'];
-                                $this->printer_three($order_info,$item,$suen);
-                            }elseif ($item['type_id'] == 4 && $prin['template'] == 4)
-                            {
-                                $suen = $prin['number'];
-                                $this->printer_three($order_info,$item,$suen);
-                            }elseif ($item['type_id'] == 5 && $prin['template'] == 5)
-                            {
-                                $suen = $prin['number'];
-                                $this->printer_three($order_info,$item,$suen);
-                            }
+//                            elseif ($item['type_id'] == 2 && $prin['template'] == 2)
+//                            {
+//                                $suen = $prin['number'];
+//                                $this->printer_three($order_info,$item,$suen);
+//                            }elseif ($item['type_id'] == 3 && $prin['template'] == 3)
+//                            {
+//                                $suen = $prin['number'];
+//                                $this->printer_three($order_info,$item,$suen);
+//                            }elseif ($item['type_id'] == 4 && $prin['template'] == 4)
+//                            {
+//                                $suen = $prin['number'];
+//                                $this->printer_three($order_info,$item,$suen);
+//                            }elseif ($item['type_id'] == 5 && $prin['template'] == 5)
+//                            {
+//                                $suen = $prin['number'];
+//                                $this->printer_three($order_info,$item,$suen);
+//                            }
                         }
                     }
                 }
             }
+
         }
     }
 
