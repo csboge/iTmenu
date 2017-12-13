@@ -182,7 +182,7 @@ class Test
 //        $session        = $this->p_auth->session();
 //        $openid         = $session['openid'];
         $userid = 1;//$session['userid'];
-        $shop = input('param.shop');
+//        $shop = input('param.shop');
 //        $ordersn = $ase['orders'];//$this->p_order->getOrderSN();
         $post_data = [
             "appid" => "wx3fcef4db43bcfaed",
@@ -206,7 +206,7 @@ class Test
 
         $info = [
             "total_price"=> 378,
-            'shop_id' => $shop,
+            'shop_id' => 10,
             "is_first"=> 0,
             "first_money"=> 0,
             "coupon_list_id"=> 0,
