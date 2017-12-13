@@ -214,46 +214,82 @@ class BotPrinter
         $printe = json_decode($shop['printer_list'],true);
 
         if($shop['switch'] == 0)
-        {                     //不分类整单小字体
+        {
+            //不分类整单小字体
             $this->printer_one($order_info,$arr,$sn);
-            foreach ($printe as $prin){
-                if($prin['template'] == 1){
+            foreach ($printe as $prin)
+            {
+                if($prin['template'] == 1)
+                {
                     $suen = $prin['number'];
                     $this->printer_five($order_info,$arr,$suen);
                 }
             }
         }
         elseif ($shop['switch'] == 1)
-        {                     //不分类整单大字体
+        {
+            //不分类整单大字体
             $this->printer_two($order_info,$arr,$sn);
         }
         elseif ($shop['switch'] == 2)
-        {                     //分类整单小字体
+        {
+            //分类整单小字体
             $this->printer_one($order_info,$arr,$sn);
         }
         elseif ($shop['switch'] == 3)
-        {                     //分类整单大字体
+        {
+            //分类整单大字体
             $this->printer_two($order_info,$arr,$sn);
-            $info = $this->fenlei($arr);
-            if($info){
-                foreach($printe as $est){
-                    if($est['template'] == 1){
-                        $suen = $est['number'];
-                        $this->printer_four($order_info,$info['zhon'],$suen,1);
-                    }elseif ($est['template'] == 2){
-                        $suen = $est['number'];
-                        $this->printer_four($order_info,$info['xi'],$suen,2);
-                    }
-                }
-            }
-            foreach ($arr as $item){
-                if($item['is_canju'] == 0){
-                    if($printe){
-                        foreach ($printe as $prin){
-                            if($item['type_id'] == 1 && $prin['template'] == 1){
+
+            //对菜品进行分类处理
+//            $info = $this->fenlei($arr);
+//          // 打印分单菜品的总和
+//            if(!$info)
+//            {
+//                foreach($printe as $est)
+//                {
+//                    if($est['template'] == 1)
+//                    {
+//                        $suen = $est['number'];
+//                        //分机整单大字体
+//                        $this->printer_four($order_info,$info['zhon'],$suen,1);
+//                    }
+//                    elseif ($est['template'] == 2)
+//                    {
+//                        $suen = $est['number'];
+//                        $this->printer_four($order_info,$info['xi'],$suen,2);
+//                    }
+//                }
+//            }
+
+            foreach ($arr as $item)
+            {
+                if($item['is_canju'] == 0)
+                {
+                    if($printe)
+                    {
+                        foreach ($printe as $prin)
+                        {
+                            if($item['type_id'] == 1 && $prin['template'] == 1)
+                            {
+                                $suen = $prin['number'];
+                                //分单打印
+                                $this->printer_three($order_info,$item,$suen);
+                            }
+                            elseif ($item['type_id'] == 2 && $prin['template'] == 2)
+                            {
                                 $suen = $prin['number'];
                                 $this->printer_three($order_info,$item,$suen);
-                            }elseif ($item['type_id'] == 2 && $prin['template'] == 2){
+                            }elseif ($item['type_id'] == 3 && $prin['template'] == 3)
+                            {
+                                $suen = $prin['number'];
+                                $this->printer_three($order_info,$item,$suen);
+                            }elseif ($item['type_id'] == 4 && $prin['template'] == 4)
+                            {
+                                $suen = $prin['number'];
+                                $this->printer_three($order_info,$item,$suen);
+                            }elseif ($item['type_id'] == 5 && $prin['template'] == 5)
+                            {
                                 $suen = $prin['number'];
                                 $this->printer_three($order_info,$item,$suen);
                             }
@@ -264,6 +300,11 @@ class BotPrinter
         }
     }
 
+    /**
+     * 对菜品进行分类处理
+     * @param $arr
+     * @return array
+     */
     public function fenlei($arr){
         $info = [];
         foreach($arr as $item){
@@ -273,6 +314,15 @@ class BotPrinter
                 }
                 if($item['type_id'] == 2){
                     $info['xi'][] = $item;
+                }
+                if($item['type_id'] == 3){
+                    $info['yin'][] = $item;
+                }
+                if($item['type_id'] == 4){
+                    $info['jiu'][] = $item;
+                }
+                if($item['type_id'] == 5){
+                    $info['bao'][] = $item;
                 }
             }
 

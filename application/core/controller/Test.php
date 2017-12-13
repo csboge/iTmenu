@@ -182,7 +182,7 @@ class Test
 //        $session        = $this->p_auth->session();
 //        $openid         = $session['openid'];
         $userid = 1;//$session['userid'];
-        $ase = input('param.');
+        $shop = input('param.shop');
 //        $ordersn = $ase['orders'];//$this->p_order->getOrderSN();
         $post_data = [
             "appid" => "wx3fcef4db43bcfaed",
@@ -203,183 +203,10 @@ class Test
             "transaction_id" => "4009722001201709131868745134"
         ];
 
-        $order_info = [
-            "total_price"=> 906,
-            "is_first"=> 0,
-            "first_money"=> 0,
-            "coupon_list_id"=> 0,
-            "coupon_price"=> 0,
-            "must_price"=> 906,
-            "pay_price"=> 924.12,
-            "order_money"=> 18.12,
-            "offset_money"=> 0,
-            "goods_price"=> 906,
-            "goods_list"=> '[
-                {
-                    "id": 152,
-                    "image": "http://img1.my-shop.cc/picture/20170921/4cec817f638a01be4f49cfb8bcb24147.jpeg",
-                    "sale": 0,
-                    "attrs": {
-                        "titles": "大份",
-                        "prices": "150",
-                        "is_checked": true,
-                        "num": 1
-                    },
-                    "price": "150",
-                    "cat_id": 27,
-                    "package": 0,
-                    "rank": 0,
-                    "bowl": 0,
-                    "type_id": 2,
-                    "name": "巴拿马花蝴蝶(大份)",
-                    "num": 1,
-                    "spec_num": 0,
-                    "count_price": 150,
-                    "is_canju": 0
-                },
-                {
-                    "id": 152,
-                    "image": "http://img1.my-shop.cc/picture/20170921/4cec817f638a01be4f49cfb8bcb24147.jpeg",
-                    "sale": 0,
-                    "attrs": {
-                        "titles": "中份",
-                        "prices": "138",
-                        "is_checked": true,
-                        "num": 2
-                    },
-                    "price": "138",
-                    "cat_id": 27,
-                    "package": 0,
-                    "rank": 0,
-                    "bowl": 0,
-                    "type_id": 2,
-                    "name": "巴拿马花蝴蝶(中份)",
-                    "num": 2,
-                    "spec_num": 0,
-                    "count_price": 276,
-                    "is_canju": 0
-                },
-                {
-                    "id": 153,
-                    "image": "http://img1.my-shop.cc/picture/20170921/f196170bb0e2db9930dba49009b97bd4.jpeg",
-                    "sale": 0,
-                    "attrs": [],
-                    "price": 98,
-                    "cat_id": 27,
-                    "package": 0,
-                    "rank": 0,
-                    "bowl": 0,
-                    "type_id": 2,
-                    "name": "巴西咖啡",
-                    "num": 1,
-                    "count_price": 98,
-                    "is_canju": 0
-                },
-                {
-                    "id": 343,
-                    "image": "http://img1.my-shop.cc/picture/20170923/e623c054c038c2cb7c146359ae8b7ecc.jpeg",
-                    "sale": 0,
-                    "attrs": [],
-                    "price": 48,
-                    "cat_id": 53,
-                    "package": 0,
-                    "rank": 0,
-                    "bowl": 0,
-                    "type_id": 1,
-                    "name": "红烧排骨煲仔饭",
-                    "num": 1,
-                    "count_price": 48,
-                    "is_canju": 0
-                },
-                {
-                    "id": 388,
-                    "image": "http://img1.my-shop.cc/picture/20170927/5067d251ed2b8ea748be2d7243358afd.jpeg",
-                    "sale": 0,
-                    "attrs": [],
-                    "price": 28,
-                    "cat_id": 61,
-                    "package": 0,
-                    "rank": 0,
-                    "bowl": 0,
-                    "type_id": 1,
-                    "name": "红糖发糕",
-                    "num": 2,
-                    "count_price": 56,
-                    "is_canju": 0
-                },
-                {
-                    "id": 418,
-                    "price": 5,
-                    "bowl": 1,
-                    "name": "西餐餐具",
-                    "cate_id": 64,
-                    "img_url": "http://img1.my-shop.cc/picture/20171018/690494fdc0b9e776bf046e155736fdb1.jpeg",
-                    "num": 1,
-                    "is_canju": true,
-                    "is_change_item": true,
-                    "count_price": 5
-                }
-            ]',
-            "order_rate"=> 0.02,
-            "mode_rate"=> 0.08,
-            "order_sn"=> "2017101749509850",
-            "pay_way"=> 0,
-            "desk_sn"=> "1",
-            "message"=> "这个点真好吃",
-            "remark"=> "不吃辣; 少放辣",
-            "user_count"=> 3,
-            "mode_money"=> 73
-        ];
-
-        $info = [
-
-            'order_sn' => $order_info['order_sn'],                    //是否老订单
-            'shop_id' => $ase['shop'],                             //商户id
-            'user_id' => 1,                             //顾客id
-
-            'desk_sn' => $order_info['desk_sn'],                    //桌位编号
-            'user_count' => $order_info['user_count'],                 //就餐人数
-
-
-            'is_first' => $order_info['is_first'],                   //首次消费       0 等于首次消费
-            'first_money' => $order_info['first_money'],                //首次立减金额
-
-            'mode_rate' => $order_info['must_price'],                                //红包比率
-            'mode_money' => $order_info['mode_money'],          //红包金额
-
-
-            //￥ = goods_price
-            'total_price' => $order_info['total_price'],                //总价
-            'coupon_list_id' => $order_info['coupon_list_id'],             //优惠卷id
-            'coupon_price' => $order_info['coupon_price'],               //优惠金额
-
-            'must_price' => $order_info['must_price'],                 //应该支付金额
-            'pay_price' => $order_info['pay_price'],                  //实际支付金额
-
-            'order_rate' => $order_info['order_rate'],                                //手续费比率
-            'order_money' => $order_info['order_money'],                //手续费金额
-
-            'offset_money' => $order_info['offset_money'],               //使用红包抵扣金额
-            'shop_price' => $order_info['must_price'],                 //商家实际到账金额
-
-            'goods_price' => $order_info['goods_price'],                //商品总价
-            'goods_list' => $order_info['goods_list'],                 //购物车(商品列表)
-//            'user_list' => $order_info['user_list'],                  //同桌用户
-
-            'message' => $order_info['message'],                    //给商家留言
-            'remark' => $order_info['remark'],                     //口味备注
-
-            'pay_way' => $order_info['pay_way'],                    //支付方式
-            'pay_time' => 0,                                   //支付完成时间
-
-
-            'created' => time(),
-            'updated' => time()
-        ];
 
         $info = [
             "total_price"=> 378,
-            'shop_id' => 7,
+            'shop_id' => $shop,
             "is_first"=> 0,
             "first_money"=> 0,
             "coupon_list_id"=> 0,
@@ -400,7 +227,7 @@ class Test
                     \"package\": 0,
                     \"rank\": 0,
                     \"bowl\": 0,
-                    \"type_id\": 3,
+                    \"type_id\": 1,
                     \"name\": \"无比古方酒\",
                     \"num\": 1,
                     \"count_price\": 15,
@@ -416,7 +243,7 @@ class Test
                     \"package\": 0,
                     \"rank\": 0,
                     \"bowl\": 0,
-                    \"type_id\": 1,
+                    \"type_id\": 2,
                     \"name\": \"蒜茸粉丝蒸秋葵\",
                     \"num\": 1,
                     \"count_price\": 29,
@@ -432,7 +259,7 @@ class Test
                     \"package\": 0,
                     \"rank\": 0,
                     \"bowl\": 0,
-                    \"type_id\": 2,
+                    \"type_id\": 3,
                     \"name\": \"法式鹅肝配鱼仔酱\",
                     \"num\": 1,
                     \"count_price\": 138,
@@ -448,7 +275,7 @@ class Test
                     \"package\": 0,
                     \"rank\": 0,
                     \"bowl\": 0,
-                    \"type_id\": 3,
+                    \"type_id\": 4,
                     \"name\": \"百威\",
                     \"num\": 1,
                     \"count_price\": 12,
@@ -464,7 +291,7 @@ class Test
                     \"package\": 0,
                     \"rank\": 0,
                     \"bowl\": 0,
-                    \"type_id\": 1,
+                    \"type_id\": 5,
                     \"name\": \"开胃萝卜皮\",
                     \"num\": 1,
                     \"count_price\": 26,
@@ -480,7 +307,7 @@ class Test
                     \"package\": 0,
                     \"rank\": 0,
                     \"bowl\": 0,
-                    \"type_id\": 3,
+                    \"type_id\": 1,
                     \"name\": \"班古伯爵红葡萄酒\",
                     \"num\": 1,
                     \"count_price\": 158,
