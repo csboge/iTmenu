@@ -35,8 +35,15 @@ class Index extends Controller
 
 
     public function index(){
-        if($this->request->param('shop_id')){
-            $shop_id = $this->request->param('shop_id');
+
+        if($this->request->param('shop_id') || session('shop_id')){
+
+            if(session('shop_id')){
+                $shop_id = session('shop_id');
+            }else{
+                $shop_id = $this->request->param('shop_id');
+
+            }
 
             //获取订单统计数据
             $order = $this->m_order->orderStatistics($shop_id);
@@ -80,6 +87,7 @@ class Index extends Controller
 
             $this->assign('info',$info);
             $this->assign('order',$order);
+
         }else{
             $this->redirect('Index/login');
         }
