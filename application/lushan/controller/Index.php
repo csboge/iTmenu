@@ -39,7 +39,10 @@ class Index extends Controller
             $shop_id = $this->request->param('shop_id');
 
             //获取订单统计数据
-            $orderStatistics = $this->m_order->orderStatistics($shop_id);
+            $order = $this->m_order->orderStatistics($shop_id);
+
+            $order['total_price']   = $order['total_price']?$order['total_price']:0;
+            $order['shop_price']    = $order['shop_price']?$order['shop_price']:0;
 
             $info = [
                 [
@@ -76,7 +79,7 @@ class Index extends Controller
             ];
 
             $this->assign('info',$info);
-            $this->assign('order',$orderStatistics);
+            $this->assign('order',$order);
         }else{
             $this->redirect('Index/login');
         }
