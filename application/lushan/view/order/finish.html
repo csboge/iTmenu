@@ -1,0 +1,93 @@
+{extend name="base" /}
+{block name="content"}
+<!-- 右侧主体开始 -->
+<xblock class="page-content">
+    <xblock>
+        <div style="margin-left: 20px">
+            已处理订单列表
+        </div>
+    </xblock>
+    <!-- 右侧内容框架，更改从这里开始 -->
+
+
+    <table class="layui-table">
+        <thead>
+        <tr>
+
+            <th>订单号</th>
+            <th>下单用户</th>
+            <th>桌位号</th>
+            <th>就餐人数</th>
+            <th>总价</th>
+            <th>入账价</th>
+            <th>口味备注</th>
+            <th>下单留言</th>
+            <th>创建时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='list' id='vo'}
+        <tr>
+
+            <td>{$vo.order_sn}</td>
+            <td>{:userName($vo.user_id)}</td>
+            <td>{$vo.desk_sn}</td>
+            <td>{$vo.user_count}</td>
+            <td>{$vo.total_price}</td>
+            <td>{$vo.shop_price}</td>
+            <td>{$vo.remark}</td>
+            <td>{$vo.message}</td>
+            <td>{$vo.created|date="Y-m-d H:i:s",###}</td>
+
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <xblock id="table-block" style="height: 38px;">
+        <span class="x-right" style="line-height:40px">共有数据：{$count} 条</span>
+    </xblock>
+    {$page}
+    <!-- 右侧内容框架，更改从这里结束 -->
+    <!-- 右侧内容框架，更改从这里结束 -->
+</xblock>
+<script>
+    function is_den(order_sn,total_price) {
+        //prompt层
+        layer.confirm('确认要打折吗？',function(index){
+            console.log(order_sn,total_price);
+            layer.prompt({title: '请输入折扣', formType: 3}, function(discount, index){
+                var shop_price= total_price * (discount/10);
+                shop_price = shop_price.toFixed(2);
+                var url = "{:url('Order/endOrder')}";
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    data: {order_sn: order_sn, shop_price: shop_price},
+                    success: function (res) {
+                        console.log(res);
+                        if (res == true) {
+                            layer.msg('成功', {icon: 1, time: 1000});
+                            setTimeout(function () {
+                                console.log(1111111111111111111111111111);
+                                location.href = "{:url('Order/stay')}"
+                            }, 1500)
+                        }else {
+                            layer.msg('失败', {icon: 2, time: 1000});
+                            location.href = "{:url('Order/stay')}"
+                        }
+                    }
+                });
+            })
+
+        },function(index){
+            console.log(order_sn,total_price);
+        });
+
+    }
+</script>
+{/block}
+{block name="footer"}
+{/block}
+{block name="background"}
+{/block}
+

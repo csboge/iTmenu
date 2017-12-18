@@ -27,4 +27,15 @@ class UserAdmin extends Model
         return $rew;
     }
 
+    /**
+     * 通过用户名查询信息
+     * @param $username
+     * @return array|false|\PDOStatement|string|Model
+     */
+    public function isUserName($username){
+
+        $rew = $this->where('username',$username)->find();
+        return $rew;
+    }
+
 }

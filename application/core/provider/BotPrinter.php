@@ -239,28 +239,7 @@ class BotPrinter
         elseif ($shop['switch'] == 3)
         {
             //分类整单大字体
-            $this->printer_two($order_info,$arr,$sn);
-
-            //对菜品进行分类处理
-//            $info = $this->fenlei($arr);
-//          // 打印分单菜品的总和
-//            if(!$info)
-//            {
-//                foreach($printe as $est)
-//                {
-//                    if($est['template'] == 1)
-//                    {
-//                        $suen = $est['number'];
-//                        //分机整单大字体
-//                        $this->printer_four($order_info,$info['zhon'],$suen,1);
-//                    }
-//                    elseif ($est['template'] == 2)
-//                    {
-//                        $suen = $est['number'];
-//                        $this->printer_four($order_info,$info['xi'],$suen,2);
-//                    }
-//                }
-//            }
+            $this->printer_two($order_info,$arr,$sn,1);
 
             foreach ($arr as $item)
             {
@@ -277,23 +256,6 @@ class BotPrinter
 
                                 $this->printer_three($order_info,$item,$suen);
                             }
-//                            elseif ($item['type_id'] == 2 && $prin['template'] == 2)
-//                            {
-//                                $suen = $prin['number'];
-//                                $this->printer_three($order_info,$item,$suen);
-//                            }elseif ($item['type_id'] == 3 && $prin['template'] == 3)
-//                            {
-//                                $suen = $prin['number'];
-//                                $this->printer_three($order_info,$item,$suen);
-//                            }elseif ($item['type_id'] == 4 && $prin['template'] == 4)
-//                            {
-//                                $suen = $prin['number'];
-//                                $this->printer_three($order_info,$item,$suen);
-//                            }elseif ($item['type_id'] == 5 && $prin['template'] == 5)
-//                            {
-//                                $suen = $prin['number'];
-//                                $this->printer_three($order_info,$item,$suen);
-//                            }
                         }
                     }
                 }
@@ -389,34 +351,50 @@ class BotPrinter
      *
      * 整单大字体
      */
-    public function printer_two($order_info,$arr,$sn){
+    public function printer_two($order_info,$arr,$sn,$is_price = false){
 
+        print_r($arr);
         $orderInfo = '<CB>电子菜谱</CB><BR>';
-        $orderInfo .= '名称　　　　　           数量<BR>';
+        if($is_price == true){
+            $orderInfo .= '名称　　　　　  数量      价格<BR>';
+        }else{
+            $orderInfo .= '名称　　　　　           数量<BR>';
+        }
         $orderInfo .= '--------------------------------<BR>';
         foreach($arr as $item){
-//            print_r($item);exit;
             $length = strlen($item['name']);
-//            $length_price = strlen($item['price']);
+
             if($length <= 18){
                 $length_cai = strlen($item['name']);
                 $len_cai = mb_strlen($item['name'],'utf-8');
-//                print_r($length_cai); echo  "<br>";
-//                print_r($len_cai);exit;
+
                 $a = (6-$len_cai)*2;
                 $b = $length_cai+$a;
                 $item['name'] = str_pad($item['name'],$b);
-                $orderInfo .= "<B>".$item['name'].$item['num'].'份'."</B><BR>";
+                if($is_price == true){
+                    $orderInfo .= "<B>".$item['name'].$item['num'].'份   '.$item['count_price'].'元'."</B><BR>";
+
+                }else{
+                    $orderInfo .= "<B>".$item['name'].$item['num'].'份'."</B><BR>";
+
+                }
             }else{
                 $name_a = mb_substr($item['name'],0,4,'utf-8');
                 $length = strlen($name_a);
                 $len = mb_strlen($name_a,'utf-8');
+
                 $a = (6-$len)*2;
                 $b = $length+$a;
+
                 $name_a = str_pad($name_a,$b);
                 $name_b = mb_substr($item['name'],4,100,'utf-8');
-                $orderInfo .= "<B>".$name_a.$item['num'].'份'."</B><BR>";
-                $orderInfo .= "<B>".$name_b."</B><BR>";
+                if($is_price == true){
+                    $orderInfo .= "<B>".$name_a.$item['num'].'份   '.$item['count_price'].'元'."</B><BR>";
+                    $orderInfo .= "<B>".$name_b."</B><BR>";
+                }else{
+                    $orderInfo .= "<B>".$name_a.$item['num'].'份'."</B><BR>";
+                    $orderInfo .= "<B>".$name_b."</B><BR>";
+                }
             }
         }
         if(!empty($order_info['message'])){
@@ -427,7 +405,8 @@ class BotPrinter
         $orderInfo .= '桌位：'.$order_info['desk_sn'].'<BR>';
         $orderInfo .= '支付：'.$order_info['pay_price'].'元<BR>';
         $orderInfo .= '下单时间：'.date('Y-m-d H:i:s',$order_info['created']).'<BR>';
-//        print_r($orderInfo);exit;
+
+        print_r($orderInfo);exit;
 //		$orderInfo .= '地址：'.$shop['adress'].'<BR>';
 //		$orderInfo .= '联系电话：'.$shop['mobile'].'<BR>';
 //		$orderInfo .= '座机电话：'.$shop['tel'].'<BR>';

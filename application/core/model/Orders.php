@@ -244,4 +244,113 @@ class Orders extends Model
         return json_decode(json_encode($row), true);
     }
 
+
+    /**
+     * 查询商家完成支付的总订单
+     * @param $shop_id
+     * @return int|string
+     */
+    public function orderStatistics($shop_id){
+        $map = [
+            'shop_id'       => $shop_id,
+            'status'        => 1,
+            'is_complete'   => 1
+        ];
+
+        $mas = [
+            'shop_id'       => $shop_id,
+            'status'        => 1
+        ];
+        $data['count']          = $this->where($mas)->count();
+        $data['total_price']    = $this->where($mas)->sum('total_price');
+        $data['shop_price']     = $this->where($map)->sum('shop_price');
+
+        return $data;
+    }
+
+    /**
+     * 待处理订单查询
+     * @param $shop_id
+     */
+    public function orderStay($shop_id){
+        $map = [
+            'shop_id'       => $shop_id,
+            'status'        => 1,
+            'is_complete'   => 0
+        ];
+
+        $data = $this->where($map)->paginate(10);
+
+        return $data;
+    }
+
+
+    /**
+     * 待处理订单查询的总条数
+     * @param $shop_id
+     */
+    public function orderStayCount($shop_id){
+        $map = [
+            'shop_id'       => $shop_id,
+            'status'        => 1,
+            'is_complete'   => 0
+        ];
+
+        $data = $this->where($map)->count();
+
+        return $data;
+    }
+
+
+    /**
+     * 结束订单
+     * @param $order_sn
+     * @param $shop_price
+     * @return $this
+     */
+    public function endOrder($order_sn,$shop_price){
+        $map = [
+            'order_sn'      => $order_sn
+        ];
+
+        $rew = $this->where($map)->update(['shop_price'=>$shop_price,'is_complete'=>1]);
+
+        return $rew;
+    }
+
+
+    /**
+     * 已处理订单查询
+     * @param $shop_id
+     * @return \think\paginator\Collection
+     */
+    public function orderFinish($shop_id){
+        $map = [
+            'shop_id'       => $shop_id,
+            'status'        => 1,
+            'is_complete'   => 1
+        ];
+
+        $data = $this->where($map)->paginate(10);
+
+        return $data;
+    }
+
+
+    /**
+     * 已处理订单查询的总条数
+     * @param $shop_id
+     */
+    public function orderFinishCount($shop_id){
+        $map = [
+            'shop_id'       => $shop_id,
+            'status'        => 1,
+            'is_complete'   => 1
+        ];
+
+        $data = $this->where($map)->count();
+
+        return $data;
+    }
+
 }
