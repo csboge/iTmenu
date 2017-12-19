@@ -45,7 +45,7 @@ class Daikuan
                 GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/7.jpg?'.GET_RAND,
                 GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/8.jpg?'.GET_RAND,
             ],
-            'tagging'       => ''
+            'tagging'       => '长沙伯格网络 －技术支持'
         ];
 
         //返回内容
