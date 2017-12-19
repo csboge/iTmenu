@@ -1,19 +1,15 @@
 <?php
 namespace app\api\controller;
 
-use think\Request;
 
 class Lecturer
 {
-    private     $p_auth;
 
     /***
      * 公共 - 注入依赖
      *
      */
     public function __construct(
-        Request                         $request,
-        \app\core\provider\Auth         $p_auth,
         \app\api\provider\Zlf           $p_zlf,
         \app\api\provider\Dp            $p_dp,
         \app\api\provider\Zl            $p_zl,
@@ -28,12 +24,10 @@ class Lecturer
     )
     {
         //验证授权合法
-        $p_auth->check($request, [
-            'public' => ['*'],
-            'private'=> []
-        ]);
-
-        $this->p_auth           = $p_auth;          //授权服务
+//        $p_auth->check($request, [
+//            'public' => ['*'],
+//            'private'=> []
+//        ]);
 
         $this->p_zlf            = $p_zlf;           //钟林飞
 
