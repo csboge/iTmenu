@@ -22,7 +22,7 @@ class Daikuan
     public function getUser()
     {
         $data = [
-            'log'           => GET_IMG_URL.'lecturer/daikuan/logo.png?'.GET_RAND,
+            'log'           => GET_IMG_URL.'lecturer/daikuan/logo.jpg?'.GET_RAND,
             'banner'       => [
                 GET_IMG_URL.'lecturer/daikuan/zhezhao/banner/1.jpg?'.GET_RAND,
                 GET_IMG_URL.'lecturer/daikuan/zhezhao/banner/2.jpg?'.GET_RAND,
