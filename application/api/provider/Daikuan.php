@@ -44,7 +44,8 @@ class Daikuan
                 GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/6.jpg?'.GET_RAND,
                 GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/7.jpg?'.GET_RAND,
                 GET_IMG_URL.'lecturer/daikuan/zhezhao/chanping/8.jpg?'.GET_RAND,
-            ]
+            ],
+            'tagging'       => ''
         ];
 
         //返回内容

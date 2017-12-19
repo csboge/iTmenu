@@ -53,6 +53,13 @@ class Lecturer
     }
 
 
+    public function _empty($name)
+    {
+        $data = $this->p_daikuan->getUser();        //获取 贷款资料
+
+        return jsonData(1, 'ok', $data);
+    }
+
     public function index()
     {
         $id = input('param.id/d');
@@ -87,7 +94,7 @@ class Lecturer
         }
         elseif ($id == 8)
         {
-            $data = 11111111111;//$this->p_daikuan->getUser();        //获取 贷款资料
+            $data = $this->p_daikuan->getUser();        //获取 贷款资料
         }
         else
         {
