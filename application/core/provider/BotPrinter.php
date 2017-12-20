@@ -353,7 +353,6 @@ class BotPrinter
      */
     public function printer_two($order_info,$arr,$sn,$is_price = false){
 
-        print_r($arr);
         $orderInfo = '<CB>电子菜谱</CB><BR>';
         if($is_price == true){
             $orderInfo .= '名称　　　　　  数量      价格<BR>';
