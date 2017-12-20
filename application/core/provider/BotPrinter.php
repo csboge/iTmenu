@@ -406,7 +406,6 @@ class BotPrinter
         $orderInfo .= '支付：'.$order_info['pay_price'].'元<BR>';
         $orderInfo .= '下单时间：'.date('Y-m-d H:i:s',$order_info['created']).'<BR>';
 
-        print_r($orderInfo);exit;
 //		$orderInfo .= '地址：'.$shop['adress'].'<BR>';
 //		$orderInfo .= '联系电话：'.$shop['mobile'].'<BR>';
 //		$orderInfo .= '座机电话：'.$shop['tel'].'<BR>';
