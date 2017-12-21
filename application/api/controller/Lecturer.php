@@ -100,6 +100,7 @@ class Lecturer
         {
             $data = [];
         }
+        $data['type_class'] = 0;
         return jsonData(1, 'ok', $data);
     }
 
