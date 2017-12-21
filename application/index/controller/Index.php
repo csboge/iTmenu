@@ -36,7 +36,7 @@ class Index
 
     public function index()
     {
-        if(session('username') == 'admin'){
+        if(session('username') == 'user'){
             return view();
         }
         return view('login');
