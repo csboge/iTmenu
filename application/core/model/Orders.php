@@ -275,11 +275,10 @@ class Orders extends Model
     public function orderStay($shop_id){
         $map = [
             'shop_id'       => $shop_id,
-            'status'        => 1,
             'is_complete'   => 0
         ];
 
-        $data = $this->where($map)->paginate(10);
+        $data = $this->where($map)->order('created desc')->paginate(10);
 
         return $data;
     }
@@ -292,7 +291,6 @@ class Orders extends Model
     public function orderStayCount($shop_id){
         $map = [
             'shop_id'       => $shop_id,
-            'status'        => 1,
             'is_complete'   => 0
         ];
 
@@ -331,7 +329,7 @@ class Orders extends Model
             'is_complete'   => 1
         ];
 
-        $data = $this->where($map)->paginate(10);
+        $data = $this->where($map)->order('created desc')->paginate(10);
 
         return $data;
     }
