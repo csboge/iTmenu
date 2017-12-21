@@ -15,6 +15,7 @@ class Index
     public function __construct(
         Request                         $request,
         \app\core\provider\User         $p_user,
+        \app\core\model\UserAdmin       $m_useradmin,
         \app\core\provider\Auth         $p_auth
     )
     {
@@ -28,20 +29,55 @@ class Index
         //$this->session  = $p_auth->session();
 
         //用户服务
-        $this->p_user = $p_user;
+        $this->p_user           = $p_user;
+        $this->m_useradmin      = $m_useradmin;
 
     }
 
     public function index()
     {
-        return view();
+        if(session('username') == 'admin'){
+            return view();
+        }
+        return view('login');
     }
 
 
     public function login()
     {
 
-//        $re = $this->p_user->getCode(15084852913);
+        if(input('post.')){
+
+            $data = input('post.');
+
+            if(empty($data))
+            {
+                return json(array('code'=>-1,'message'=>'传输错误，请重新尝试'));
+            }
+
+            $admin = $this->m_useradmin->isUserName($data['username']);
+
+            if(empty($admin))
+            {
+                return json(array('code'=>-2,'message'=>'用户名错误'));
+            }
+
+            if($admin['type'] !== 1){
+                return json(array('code'=>-3,'message'=>'不是管理员'));
+            }
+            $rand = $admin['rand'];
+
+            $password = tplus_ucenter_md5($data['password'],$rand);//加密
+
+            if($admin['password'] !== $password)
+            {
+                return json(array('code'=>-4,'message'=>'密码错误'));
+            }
+
+            session('username',$data['username']);
+
+            return json(array('code'=>1,'message'=>'登录成功'));
+        }
 
         return view();
 

@@ -64,6 +64,30 @@
     $(function  () {
         layui.use('form', function(){
             var form = layui.form();
+            //监听提交
+            form.on('submit(login)', function(data){
+                $.ajax({
+                    url:"{:url('Index/login')}",
+                    type:"post",
+                    data:data.field,
+                    success:function (res) {
+                        if(res.code == 1){
+                            layer.msg(res.message,{icon:1,time:1000});
+                            setTimeout(function () {
+                                location.href = "../Index/index.html"
+                            },1500)
+                        }else if(res.code < 0){
+                            layer.msg(res.message,{icon:2,time:1000});
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    })
+    /*$(function  () {
+        layui.use('form', function(){
+            var form = layui.form();
             jq = layui.jquery;
             //监听提交
 
@@ -90,7 +114,7 @@
                 return false;
             });
         });
-    })
+    })*/
 
 
 </script>
