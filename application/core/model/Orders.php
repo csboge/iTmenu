@@ -325,7 +325,6 @@ class Orders extends Model
     public function orderFinish($shop_id){
         $map = [
             'shop_id'       => $shop_id,
-            'status'        => 1,
             'is_complete'   => 1
         ];
 
@@ -342,7 +341,6 @@ class Orders extends Model
     public function orderFinishCount($shop_id){
         $map = [
             'shop_id'       => $shop_id,
-            'status'        => 1,
             'is_complete'   => 1
         ];
 
