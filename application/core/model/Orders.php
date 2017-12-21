@@ -253,13 +253,11 @@ class Orders extends Model
     public function orderStatistics($shop_id){
         $map = [
             'shop_id'       => $shop_id,
-            'status'        => 1,
             'is_complete'   => 1
         ];
 
         $mas = [
             'shop_id'       => $shop_id,
-            'status'        => 1
         ];
         $data['count']          = $this->where($mas)->count();
         $data['total_price']    = $this->where($mas)->sum('total_price');
