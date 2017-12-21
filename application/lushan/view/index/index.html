@@ -18,6 +18,8 @@
             <tr>
                 <th>统计</th>
                 <th>总订单数</th>
+                <th>已结算订单数</th>
+                <th>未结算订单数</th>
                 <th>总消费</th>
                 <th>净收入</th>
             </tr>
@@ -26,6 +28,8 @@
             <tr>
                 <td>总数</td>
                 <td>{$order.count}</td>
+                <td>{$order.yes}</td>
+                <td>{$order.not}</td>
                 <td>{$order.total_price}</td>
                 <td>{$order.shop_price}</td>
             </tr>

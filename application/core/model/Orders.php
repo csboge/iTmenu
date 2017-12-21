@@ -259,7 +259,14 @@ class Orders extends Model
         $mas = [
             'shop_id'       => $shop_id,
         ];
+        $mad = [
+            'shop_id'       => $shop_id,
+            'is_complete'   => 0
+        ];
+
         $data['count']          = $this->where($mas)->count();
+        $data['yes']            = $this->where($map)->count();
+        $data['not']            = $this->where($mad)->count();
         $data['total_price']    = $this->where($mas)->sum('total_price');
         $data['shop_price']     = $this->where($map)->sum('shop_price');
 
