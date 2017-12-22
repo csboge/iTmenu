@@ -27,7 +27,7 @@ function coupon($id){
  * 上传 -- ceshi
  * @参数 file      文件
  */
-function upload_video($file){
+function upload_videos($file){
     $info = $file
         ->validate([
             'size'=>145678,
