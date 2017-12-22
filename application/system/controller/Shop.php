@@ -51,7 +51,7 @@ class Shop
 
 
     public function shopInfo(){
-        $shop_id = input('shop_id/d');
+        $shop_id     = $this->p_auth->getShopId();
         if($shop_id){
             return jsonDataList(0,'未接收到数据',[]);
         }
