@@ -95,7 +95,7 @@ class Category
             'parent_id' => 0,
             'hd_status' => 1,
         ];
-        $data = Db::name('category')->where($map)->field('id,parent_id,name')->order('id desc')->select();
+        $data = Db::name('category')->where($map)->field('id,rank,parent_id,name')->order(['rank'=>'asc','id'=>'desc'])->select();
 
         if($data){
             foreach ($data as &$volue){
