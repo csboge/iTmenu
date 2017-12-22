@@ -56,7 +56,7 @@ class Shop
             return jsonDataList(0,'未接收到数据',[]);
         }
 
-        $shop = $this->m_shop->getShop($shop_id);
+        $shop = $this->m_shop->getSystemShop($shop_id);
 
         return jsonDataList(1,'OK',$shop);
 

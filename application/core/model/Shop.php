@@ -25,7 +25,7 @@ class Shop extends Model
     public function isShopMoney($shopid){
         $row = $this->where('id',$shopid)->field('is_first')->find();
 
-        return json_decode(json_encode($row), true);
+        return $row;
     }
 
     /**
@@ -40,7 +40,7 @@ class Shop extends Model
 
         $data = $this->where('id',$shopid)->field('title,mobile,tel,adress,printer,printer_list,switch')->find();
 
-        return json_decode(json_encode($data), true);
+        return $data;
     }
 
     /**
@@ -54,7 +54,23 @@ class Shop extends Model
     public function isOnline($shopid){
         $data = $this->where('id',$shopid)->field('status')->find();
 
-        return json_decode(json_encode($data), true);
+        return $data;
+    }
+
+
+    /**
+     * 查询商户信息
+     *
+     * @param   string   $shopid    商户id
+     *
+     * @return   array    商户信息
+     *
+     */
+    public function getSystemShop($shopid){
+
+        $data = $this->where('id',$shopid)->find();
+
+        return $data;
     }
 
 
