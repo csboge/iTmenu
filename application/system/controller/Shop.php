@@ -52,13 +52,13 @@ class Shop
 
     public function shopInfo(){
         $shop_id     = $this->p_auth->getShopId();
-        if($shop_id){
+        if(!$shop_id){
             return jsonDataList(0,'未接收到数据',[]);
         }
 
         $shop = $this->m_shop->getShop($shop_id);
 
-        return jsonDataList(1,'登录成功',$shop);
+        return jsonDataList(1,'OK',$shop);
 
     }
 
