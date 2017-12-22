@@ -96,8 +96,8 @@ class Shop
      */
     public function getAudio()
     {
-        $data = input('param.');
-        print_r($data);exit;
+        $data = request()->file('audio');
+        
         $data = upload_videos($data);
 
         if($data){
