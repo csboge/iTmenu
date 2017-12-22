@@ -91,16 +91,26 @@ class Coupon
      * @参数 cat_id       分类id
      */
     public function banner(){
-        $data = input('param.');
-        if(empty($data)){
+        $shop_id    = input('param.shop_id/d');
+        $cat_id     = input('param.cat_id/d');
+        if(empty($shop_id)){
             return jsonDataList(0,'未接收到数据',[]);
         }
-        $map = [
-            'shop_id' => $data['shop_id'],
-            'cat_id' => $data['cat_id'],
-            'status' => 1,
-            'hd_status' => 1
-        ];
+
+        if($cat_id){
+            $map = [
+                'shop_id' => $shop_id,
+                'cat_id' => $cat_id,
+                'status' => 1,
+                'hd_status' => 1
+            ];
+        }else{
+            $map = [
+                'shop_id' => $shop_id,
+                'status' => 1,
+                'hd_status' => 1
+            ];
+        }
         $res = Db::name('banner')->where($map)->field('id,cat_id,image,url')->order('id desc')->select();
         if($res){
             foreach ($res as &$volue){

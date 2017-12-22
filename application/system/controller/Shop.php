@@ -50,6 +50,10 @@ class Shop
     }
 
 
+    /**
+     * 查看商铺信息
+     * @return array
+     */
     public function shopInfo(){
         $shop_id     = $this->p_auth->getShopId();
         if(!$shop_id){
@@ -57,13 +61,31 @@ class Shop
         }
 
         $shop = $this->m_shop->getSystemShop($shop_id);
-
+        $shop['logo'] = ImgUrl($shop['logo']);
+        if($shop['spread']){
+            $shop['spread'] = GET_VIDEO_URL.$shop['spread'];
+        }
+        $shop['video'] = GET_VIDEO_URL.$shop['video'];
         return jsonDataList(1,'OK',$shop);
 
     }
 
+    /**
+     * 修改商铺信息
+     * @return array
+     */
     public function updateShop(){
-
+        $data = input('param.');
+        if(empty($data)){
+            return jsonDataList(0,'未接收到数据',[]);
+        }
+        $data['updated'] = time();
+        $res = $this->m_shop->update($data);
+        if($res){
+            return jsonDataList(1,'OK',[]);
+        }else{
+            return jsonDataList(0,'数据修改失败',[]);
+        }
     }
 
 
