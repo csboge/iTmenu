@@ -79,6 +79,7 @@ class Shop
         if(empty($data)){
             return jsonDataList(0,'未接收到数据',[]);
         }
+
         $data['updated'] = time();
         $res = $this->m_shop->update($data);
         if($res){
@@ -88,5 +89,22 @@ class Shop
         }
     }
 
+
+    /**
+     * 音频上传
+     * @return array
+     */
+    public function getAudio()
+    {
+        $data = input('param.audio');
+        $data = upload_video($data);
+
+        if($data){
+            return jsonDataList(1,'OK',GET_VIDEO_URL.$data);
+        }else{
+            return jsonDataList(0,'数据修改失败',[]);
+        }
+
+    }
 
 }
