@@ -97,6 +97,7 @@ class Shop
     public function getAudio()
     {
         $data = input('param.audio');
+        return jsonDataList(0,'数据修改失败',$data);
         $data = upload_video($data);
 
         if($data){
