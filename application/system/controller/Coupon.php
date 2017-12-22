@@ -84,6 +84,27 @@ class Coupon
         }
     }
 
+    /**
+     * 新增轮播图
+     * @return array
+     */
+    public function addBanner(){
+        $data = input('param.');
+        if(empty($data)){
+            return jsonDataList(0,'未接收到数据',[]);
+        }
+        if(!$data['shop_id'] || !$data['cat_id']){
+            return jsonDataList(0,'参数不完整',[]);
+        }
+        $data['created'] = time();
+        $res = Db::name('banner')->insertGetId($data);
+        if($res){
+            return jsonDataList(1,'OK',[]);
+        }else{
+            return jsonDataList(0,'数据修改失败',[]);
+        }
+    }
+
 
     /***
      * 查看 -- 轮播图
