@@ -61,7 +61,8 @@ class Shop
         }
 
         $shop = $this->m_shop->getSystemShop($shop_id);
-        $shop['logos'] = ImgUrl($shop['logo']);
+        $shop['logo_id']    = $shop['logo'];
+        $shop['logo'] = ImgUrl($shop['logo']);
         if($shop['spread']){
             $shop['spread'] = GET_VIDEO_URL.$shop['spread'];
         }
