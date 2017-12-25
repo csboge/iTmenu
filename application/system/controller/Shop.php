@@ -61,7 +61,7 @@ class Shop
         }
 
         $shop = $this->m_shop->getSystemShop($shop_id);
-        $shop['logo'] = ImgUrl($shop['logo']);
+        $shop['logos'] = ImgUrl($shop['logo']);
         if($shop['spread']){
             $shop['spread'] = GET_VIDEO_URL.$shop['spread'];
         }
@@ -85,8 +85,7 @@ class Shop
         $data['id'] = $data['shop_id'];
         unset($data['shop_id']);
         $data['updated'] = time();
-        
-        $res = $this->m_shop->update($data);
+        $res = $this->m_shop->where('id',$data['id'])->update($data);
         if($res){
             return jsonDataList(1,'OK',[]);
         }else{
