@@ -81,7 +81,7 @@ class Shop
         }
 
         $data['updated'] = time();
-        $res = $this->m_shop->update($data);
+        $res = $this->m_shop->where('id',$data['shop_id'])->update($data);
         if($res){
             return jsonDataList(1,'OK',[]);
         }else{
@@ -97,7 +97,7 @@ class Shop
     public function getAudio()
     {
         $data = request()->file('audio');
-        
+
         $data = upload_videos($data);
 
         if($data){
