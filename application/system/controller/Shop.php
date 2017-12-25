@@ -79,9 +79,10 @@ class Shop
         if(empty($data)){
             return jsonDataList(0,'未接收到数据',[]);
         }
-
+        $data['id'] = $data['shop_id'];
+        unset($data['shop_id']);
         $data['updated'] = time();
-        $res = $this->m_shop->where('id',$data['shop_id'])->update($data);
+        $res = $this->m_shop->where('id',$data['id'])->update($data);
         if($res){
             return jsonDataList(1,'OK',[]);
         }else{
