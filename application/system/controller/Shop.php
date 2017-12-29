@@ -105,10 +105,10 @@ class Shop
         if($data){
             // $arr = $this->m_shop->where('id',$shop_id)->update(['video'=>$data]);
             // if($arr){
-                return jsonDataList(1,'OK',GET_VIDEO_URL.$data);
+            return jsonDataList(1,'OK',GET_VIDEO_URL.$data);
             // }else{
                 // ret urn jsonDataList(0,'数据修改失败',[]);
-            }
+            // }
         }else{
             return jsonDataList(-1,'数据修改失败',[]);
         }
