@@ -107,7 +107,7 @@ class Shop
             // if($arr){
                 return jsonDataList(1,'OK',GET_VIDEO_URL.$data);
             // }else{
-                // return jsonDataList(0,'数据修改失败',[]);
+                // ret urn jsonDataList(0,'数据修改失败',[]);
             }
         }else{
             return jsonDataList(-1,'数据修改失败',[]);
