@@ -103,7 +103,7 @@ class Shop
         $data = upload_videos($data);
 
         if($data){
-            $arr = $this->m_shop->where('id',$shop_id)->update(['video'=>$data]);
+            // $arr = $this->m_shop->where('id',$shop_id)->update(['video'=>$data]);
             if($arr){
                 return jsonDataList(1,'OK',GET_VIDEO_URL.$data);
             }else{
