@@ -106,7 +106,6 @@ class Goods
         $page = ($data['page']-1)*$limit;
         $res = Db::name('goods')
             ->where($map)
-            ->field('id,title,cat_id,rank,image,sale,attrs,type_id,price,bowl,intro,status,sd_status,hd_status')
             ->order('id desc')
             ->order('rank asc,status')
             ->limit($page,$limit)
