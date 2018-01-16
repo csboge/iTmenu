@@ -50,7 +50,7 @@ class Ly
                     'content'   => '巡回全中国做演讲'
                 ],
                 [
-                    'titile'    => '25岁',
+                    'titile'    => '23岁',
                     'content'   => '进公司7天就 可以上台演讲'
                 ],
                 [
