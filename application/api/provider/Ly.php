@@ -73,8 +73,8 @@ class Ly
             ],
             'picture'        => [
                 GET_IMG_URL.'lecturer/ly/min1.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/ly/min2.jpg?'.GET_RAND,
-                GET_IMG_URL.'lecturer/ly/min3.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/ly/min2-1.jpg?'.GET_RAND,
+                GET_IMG_URL.'lecturer/ly/min3-1.jpg?'.GET_RAND,
                 GET_IMG_URL.'lecturer/ly/min4.jpg?'.GET_RAND,
                 GET_IMG_URL.'lecturer/ly/min5.jpg?'.GET_RAND,
                 GET_IMG_URL.'lecturer/ly/min6.jpg?'.GET_RAND

@@ -13,7 +13,7 @@ class Xmf
     /**
      * 获得信息内容
      *
-     * @return  string 
+     * @return  string
      *
      */
     public function getUser()
