@@ -26,7 +26,7 @@ class Ly
             'explain'       => '中国青年创业导师',
             'portrait'      => GET_IMG_URL.'lecturer/ly/portrait.png?'.GET_RAND,
             'video'         => [
-                'mp4'       => GET_IMG_URL.'lecturer/ly/video.mp4?'.GET_RAND,
+                'mp4'       => GET_IMG_URL.'lecturer/ly/video-1.mp4?'.GET_RAND,
                 'cover'     => GET_IMG_URL.'lecturer/ly/cover.jpg?'.GET_RAND,
                 'content'   => [
                     '他曾经打工月收入只有300元',
